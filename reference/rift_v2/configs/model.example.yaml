@@ -1,0 +1,4 @@
+provider: anthropic
+model: claude-sonnet-4-6
+env_var: ANTHROPIC_API_KEY   # if unset, E2-live is reported as NOT_RUN_LIVE_LLM
+max_repair_attempts: 1

@@ -1,0 +1,6 @@
+--- a/src/app/cfg.py
++++ b/src/app/cfg.py
+@@ -1,2 +1,2 @@
+ def setting(d, key):
+-    return d[key]
++    return d.get(key)

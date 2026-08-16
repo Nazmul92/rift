@@ -1,0 +1,27 @@
+# Pinned test / lint / type-check toolchain for the riftagent product tree.
+#
+# Exact pins including the transitive closure, resolved and verified on
+# python:3.12-slim (Python 3.12.14, linux/amd64) — the reference environment.
+# Hashes are omitted for the same reason as the reference snapshot: ruff and
+# mypy publish per-platform wheels, so a hash-locked file would bind this tree
+# to one architecture.
+#
+#     python -m pip install -e . -r requirements-dev.txt
+#     python -m pytest tests -q
+#     python -m ruff check src tests benchmark
+#     python -m mypy src
+
+mypy==2.3.1
+pytest==9.1.1
+ruff==0.16.3
+
+# transitive, pinned for reproducibility
+ast_serialize==0.8.0
+iniconfig==2.3.0
+librt==0.15.0
+mypy_extensions==1.1.0
+packaging==26.3
+pathspec==1.1.1
+pluggy==1.6.0
+Pygments==2.20.0
+typing_extensions==4.16.0

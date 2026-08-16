@@ -1,0 +1,11 @@
+✓ Verified against approved checks
+  Counterfactual gate:  baseline=FAIL → candidate=PASS → withdrawal=FAIL
+  Preservation checks:  none declared
+  NOT run:              full repository suite
+  NOT run:              preservation checks (none declared)
+  Sandbox:              partial — linux without usable bubblewrap: env allowlist, rlimits, timeout, process-group kill
+  Authorities:          spec=not_applicable  partial_sandbox=--allow-partial-sandbox
+  Spend:                10 commands, 3.8s, tokens not_applicable (no model is invoked by verify)
+  patch c65603dc70a8  checks b94f85ffd2dc  contract b8319a9a94b2
+  uncertainty: repository code executed under a partial sandbox: side effects outside the worktree were possible and are not accounted for
+  uncertainty: no preservation checks were declared, so this receipt says nothing about regressions elsewhere in the repository

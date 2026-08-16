@@ -1,0 +1,10 @@
+diff --git a/pyparsing/core.py b/pyparsing/core.py
+index 6e8f389..74172d3 100644
+--- a/pyparsing/core.py
++++ b/pyparsing/core.py
+@@ -6957,3 +6957,5 @@ traceParseAction = replaced_by_pep8("traceParseAction", trace_parse_action)
+ conditionAsParseAction = replaced_by_pep8("conditionAsParseAction", condition_as_parse_action)
+ tokenMap = replaced_by_pep8("tokenMap", token_map)
+ # fmt: on
++
++# fix applied

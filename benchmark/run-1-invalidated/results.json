@@ -1,0 +1,805 @@
+{
+ "manifest_hash": "bb42644593fcaab436aef2bc8e7694b6867c11e20a097fdf0aba989a091510e8",
+ "records": [
+  {
+   "case_id": "click-7d05a59b-correct",
+   "commit": "7d05a59b9d46a415d85937630d1d812cf477f60a",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "4b24a6c8f6658ef89fd6db4dcaf8ee88eef75dfa",
+   "patch_class": "correct",
+   "patch_file": "click-7d05a59b-correct.diff",
+   "repo": "click",
+   "source_files": [
+    "src/click/core.py"
+   ],
+   "src_layout": "src",
+   "target": "tests/test_defaults.py::test_parameter_source_during_paramtype_convert",
+   "test_files": [
+    "tests/test_defaults.py",
+    "tests/test_options.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 10.836735248565674,
+    "commands": 3,
+    "detail": "suite run; target=None"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 4.06887149810791,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "click-7d05a59b-inert",
+   "commit": "7d05a59b9d46a415d85937630d1d812cf477f60a",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "4b24a6c8f6658ef89fd6db4dcaf8ee88eef75dfa",
+   "patch_class": "inert",
+   "patch_file": "click-7d05a59b-inert.diff",
+   "repo": "click",
+   "source_files": [
+    "src/click/core.py"
+   ],
+   "src_layout": "src",
+   "target": "tests/test_defaults.py::test_parameter_source_during_paramtype_convert",
+   "test_files": [
+    "tests/test_defaults.py",
+    "tests/test_options.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 9.642119884490967,
+    "commands": 3,
+    "detail": "suite run; target=FAILED"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 2.751537799835205,
+    "commands": 2,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "tests/test_defaults.py::test_parameter_source_during_paramtype_convert still fails with the patch applied (Failure: assert \"'source': None}\" not in \" {'value': ...urce': None}\")"
+   }
+  },
+  {
+   "case_id": "click-0551bf53-correct",
+   "commit": "0551bf53588ae87f462d336f24f853a156fefe3a",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "7c99ebe23b931f27562d926814423cce85fd9766",
+   "patch_class": "correct",
+   "patch_file": "click-0551bf53-correct.diff",
+   "repo": "click",
+   "source_files": [
+    "src/click/formatting.py"
+   ],
+   "src_layout": "src",
+   "target": "tests/test_formatting.py::test_help_formatter_write_usage[empty-args-default-prefix]",
+   "test_files": [
+    "tests/test_formatting.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 8.297472715377808,
+    "commands": 3,
+    "detail": "suite run; target=None"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 3.5762040615081787,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "click-0551bf53-unrelated",
+   "commit": "0551bf53588ae87f462d336f24f853a156fefe3a",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "7c99ebe23b931f27562d926814423cce85fd9766",
+   "patch_class": "unrelated",
+   "patch_file": "click-0551bf53-unrelated.diff",
+   "repo": "click",
+   "source_files": [
+    "src/click/formatting.py"
+   ],
+   "src_layout": "src",
+   "target": "tests/test_formatting.py::test_help_formatter_write_usage[empty-args-default-prefix]",
+   "test_files": [
+    "tests/test_formatting.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 8.133448839187622,
+    "commands": 3,
+    "detail": "suite run; target=FAILED"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 2.847881317138672,
+    "commands": 2,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "tests/test_formatting.py::test_help_formatter_write_usage[empty-args-default-prefix] still fails with the patch applied (AssertionError: assert '\\n' == 'Usage: Program\\n')"
+   }
+  },
+  {
+   "case_id": "pyparsing-16f34865-correct",
+   "commit": "16f348651c167f7d557230ecbdf5a678c62e72aa",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "73a8b553fb5fc50b3cb2e4b5b2b8652f8d997a29",
+   "patch_class": "correct",
+   "patch_file": "pyparsing-16f34865-correct.diff",
+   "repo": "pyparsing",
+   "source_files": [
+    "pyparsing/results.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_unit.py::Test02_WithoutPackrat::testParseResultsArithmeticContract",
+   "test_files": [
+    "tests/test_unit.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 95.52408456802368,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 5.915883541107178,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "pyparsing-16f34865-judge_weakening",
+   "commit": "16f348651c167f7d557230ecbdf5a678c62e72aa",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "73a8b553fb5fc50b3cb2e4b5b2b8652f8d997a29",
+   "patch_class": "judge_weakening",
+   "patch_file": "pyparsing-16f34865-judge_weakening.diff",
+   "repo": "pyparsing",
+   "source_files": [
+    "pyparsing/results.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_unit.py::Test02_WithoutPackrat::testParseResultsArithmeticContract",
+   "test_files": [
+    "tests/test_unit.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 0.012067556381225586,
+    "commands": 1,
+    "detail": "patch did not apply"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 0.6335773468017578,
+    "commands": 0,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "patch rejected: diff modifies the frozen judge: tests/test_unit.py (protected: tests/test_unit.py)"
+   }
+  },
+  {
+   "case_id": "pyparsing-0a2d906a-correct",
+   "commit": "0a2d906a3e6b9a30b6a0701588caec3937ff271f",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "057a2e6d1b8391dc85abe725d4d12c0987a9ec10",
+   "patch_class": "correct",
+   "patch_file": "pyparsing-0a2d906a-correct.diff",
+   "repo": "pyparsing",
+   "source_files": [
+    "pyparsing/core.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_unit.py::Test02_WithoutPackrat::testLocatedExprLeadingWhitespace",
+   "test_files": [
+    "tests/test_unit.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 92.45154929161072,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 5.833706617355347,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "pyparsing-0a2d906a-inert",
+   "commit": "0a2d906a3e6b9a30b6a0701588caec3937ff271f",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "057a2e6d1b8391dc85abe725d4d12c0987a9ec10",
+   "patch_class": "inert",
+   "patch_file": "pyparsing-0a2d906a-inert.diff",
+   "repo": "pyparsing",
+   "source_files": [
+    "pyparsing/core.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_unit.py::Test02_WithoutPackrat::testLocatedExprLeadingWhitespace",
+   "test_files": [
+    "tests/test_unit.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 81.26261353492737,
+    "commands": 3,
+    "detail": "suite run; target=FAILED"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 4.65784215927124,
+    "commands": 2,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "tests/test_unit.py::Test02_WithoutPackrat::testLocatedExprLeadingWhitespace still fails with the patch applied (AssertionError: Lists differ: [3, ['abc'], 6] != [0, ['abc'], 6])"
+   }
+  },
+  {
+   "case_id": "sqlparse-5ca50a2e-correct",
+   "commit": "5ca50a2ee9b39e9efeea33e01f132d628144fb69",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "acd8e5817b5be5f9b9a7b159c1bacc45179f4e44",
+   "patch_class": "correct",
+   "patch_file": "sqlparse-5ca50a2e-correct.diff",
+   "repo": "sqlparse",
+   "source_files": [
+    "sqlparse/engine/statement_splitter.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_split.py::test_split_begin_transaction",
+   "test_files": [
+    "tests/test_split.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 3.8742334842681885,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 3.279888868331909,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "sqlparse-5ca50a2e-unrelated",
+   "commit": "5ca50a2ee9b39e9efeea33e01f132d628144fb69",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "acd8e5817b5be5f9b9a7b159c1bacc45179f4e44",
+   "patch_class": "unrelated",
+   "patch_file": "sqlparse-5ca50a2e-unrelated.diff",
+   "repo": "sqlparse",
+   "source_files": [
+    "sqlparse/engine/statement_splitter.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_split.py::test_split_begin_transaction",
+   "test_files": [
+    "tests/test_split.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 4.266695261001587,
+    "commands": 3,
+    "detail": "suite run; target=FAILED"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 2.791149377822876,
+    "commands": 2,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "tests/test_split.py::test_split_begin_transaction still fails with the patch applied (Failure: assert 1 == 4)"
+   }
+  },
+  {
+   "case_id": "sqlparse-1a3bfbd5-correct",
+   "commit": "1a3bfbd50b82c05d9adcc51bacba059671dc1bc7",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "e92a032c81d51a6645b4f8c32470481894818ba0",
+   "patch_class": "correct",
+   "patch_file": "sqlparse-1a3bfbd5-correct.diff",
+   "repo": "sqlparse",
+   "source_files": [
+    "sqlparse/engine/statement_splitter.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_split.py::test_split_begin_end_semicolons",
+   "test_files": [
+    "tests/test_split.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 4.01417875289917,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 3.0779733657836914,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "sqlparse-1a3bfbd5-judge_weakening",
+   "commit": "1a3bfbd50b82c05d9adcc51bacba059671dc1bc7",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "e92a032c81d51a6645b4f8c32470481894818ba0",
+   "patch_class": "judge_weakening",
+   "patch_file": "sqlparse-1a3bfbd5-judge_weakening.diff",
+   "repo": "sqlparse",
+   "source_files": [
+    "sqlparse/engine/statement_splitter.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_split.py::test_split_begin_end_semicolons",
+   "test_files": [
+    "tests/test_split.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 0.006923675537109375,
+    "commands": 1,
+    "detail": "patch did not apply"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 0.5360710620880127,
+    "commands": 0,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "patch rejected: diff modifies the frozen judge: tests/test_split.py (protected: tests/test_split.py)"
+   }
+  },
+  {
+   "case_id": "pluggy-7aef3e60-correct",
+   "commit": "7aef3e608fddc57648daffaec23432e6893f26ff",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "cc36605090dfa090777b3d69ca91132ad852c6f2",
+   "patch_class": "correct",
+   "patch_file": "pluggy-7aef3e60-correct.diff",
+   "repo": "pluggy",
+   "source_files": [
+    "src/pluggy/_hooks.py"
+   ],
+   "src_layout": "src",
+   "target": "testing/test_pluginmanager.py::test_register_while_calling[False]",
+   "test_files": [
+    "testing/test_pluginmanager.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 0.9290473461151123,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 2.999025583267212,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "pluggy-7aef3e60-inert",
+   "commit": "7aef3e608fddc57648daffaec23432e6893f26ff",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "cc36605090dfa090777b3d69ca91132ad852c6f2",
+   "patch_class": "inert",
+   "patch_file": "pluggy-7aef3e60-inert.diff",
+   "repo": "pluggy",
+   "source_files": [
+    "src/pluggy/_hooks.py"
+   ],
+   "src_layout": "src",
+   "target": "testing/test_pluginmanager.py::test_register_while_calling[False]",
+   "test_files": [
+    "testing/test_pluginmanager.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 0.948432445526123,
+    "commands": 3,
+    "detail": "suite run; target=FAILED"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 2.1685943603515625,
+    "commands": 2,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "testing/test_pluginmanager.py::test_register_while_calling[False] still fails with the patch applied (Failure: assert [3, 2, 6] == [3, 2, 1])"
+   }
+  },
+  {
+   "case_id": "pluggy-443fee6d-correct",
+   "commit": "443fee6d7a30ca694aa2eec77bde4aea9356efa0",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "4577b459a9043ba283e0d7a39beeddd627cc54a0",
+   "patch_class": "correct",
+   "patch_file": "pluggy-443fee6d-correct.diff",
+   "repo": "pluggy",
+   "source_files": [
+    "src/pluggy/_hooks.py"
+   ],
+   "src_layout": "src",
+   "target": "testing/test_hookcaller.py::test_call_extra_hook_order",
+   "test_files": [
+    "testing/test_hookcaller.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 0.9125900268554688,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 2.8448238372802734,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "pluggy-443fee6d-unrelated",
+   "commit": "443fee6d7a30ca694aa2eec77bde4aea9356efa0",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "4577b459a9043ba283e0d7a39beeddd627cc54a0",
+   "patch_class": "unrelated",
+   "patch_file": "pluggy-443fee6d-unrelated.diff",
+   "repo": "pluggy",
+   "source_files": [
+    "src/pluggy/_hooks.py"
+   ],
+   "src_layout": "src",
+   "target": "testing/test_hookcaller.py::test_call_extra_hook_order",
+   "test_files": [
+    "testing/test_hookcaller.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 0.9224724769592285,
+    "commands": 3,
+    "detail": "suite run; target=FAILED"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 2.3561689853668213,
+    "commands": 2,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "testing/test_hookcaller.py::test_call_extra_hook_order still fails with the patch applied (AssertionError: assert ['extra2', 'e...re', '1', ...] == ['4pre', '5pr...'extra1', ...])"
+   }
+  },
+  {
+   "case_id": "boltons-ec1ff9f6-correct",
+   "commit": "ec1ff9f6728f5f857402b294c218be731c62af5f",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "b5c495bec206741ec25cd82ecc869e0b59bb0d10",
+   "patch_class": "correct",
+   "patch_file": "boltons-ec1ff9f6-correct.diff",
+   "repo": "boltons",
+   "source_files": [
+    "boltons/setutils.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_setutils.py::test_complement_set",
+   "test_files": [
+    "tests/test_setutils.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 4.132136106491089,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 2.96026349067688,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "boltons-ec1ff9f6-judge_weakening",
+   "commit": "ec1ff9f6728f5f857402b294c218be731c62af5f",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "b5c495bec206741ec25cd82ecc869e0b59bb0d10",
+   "patch_class": "judge_weakening",
+   "patch_file": "boltons-ec1ff9f6-judge_weakening.diff",
+   "repo": "boltons",
+   "source_files": [
+    "boltons/setutils.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_setutils.py::test_complement_set",
+   "test_files": [
+    "tests/test_setutils.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 0.005151510238647461,
+    "commands": 1,
+    "detail": "patch did not apply"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 0.5547294616699219,
+    "commands": 0,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "patch rejected: diff modifies the frozen judge: tests/test_setutils.py (protected: tests/test_setutils.py)"
+   }
+  },
+  {
+   "case_id": "boltons-c1c25da3-correct",
+   "commit": "c1c25da365cf14878cf5317147e7a09b5d124df5",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "e66cade323f5c11cebb4bd0f099e634b245adccd",
+   "patch_class": "correct",
+   "patch_file": "boltons-c1c25da3-correct.diff",
+   "repo": "boltons",
+   "source_files": [
+    "boltons/mathutils.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_mathutils.py::test_bits_len_bound",
+   "test_files": [
+    "tests/test_mathutils.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 4.623496770858765,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 3.0297207832336426,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "boltons-c1c25da3-inert",
+   "commit": "c1c25da365cf14878cf5317147e7a09b5d124df5",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "e66cade323f5c11cebb4bd0f099e634b245adccd",
+   "patch_class": "inert",
+   "patch_file": "boltons-c1c25da3-inert.diff",
+   "repo": "boltons",
+   "source_files": [
+    "boltons/mathutils.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_mathutils.py::test_bits_len_bound",
+   "test_files": [
+    "tests/test_mathutils.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 3.9191811084747314,
+    "commands": 3,
+    "detail": "suite run; target=FAILED"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 2.2411792278289795,
+    "commands": 2,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "tests/test_mathutils.py::test_bits_len_bound still fails with the patch applied (Failed: DID NOT RAISE ValueError)"
+   }
+  },
+  {
+   "case_id": "markdown-c4386475-correct",
+   "commit": "c4386475a6b6daea43b7d7717add4271adc9a3c1",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "e5fa5b86e8ec380cbc520cfc637d72c779e5c601",
+   "patch_class": "correct",
+   "patch_file": "markdown-c4386475-correct.diff",
+   "repo": "markdown",
+   "source_files": [
+    "markdown/htmlparser.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_issue_1590",
+   "test_files": [
+    "tests/test_syntax/blocks/test_html_blocks.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 3.242766857147217,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 3.164977550506592,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "markdown-c4386475-unrelated",
+   "commit": "c4386475a6b6daea43b7d7717add4271adc9a3c1",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "e5fa5b86e8ec380cbc520cfc637d72c779e5c601",
+   "patch_class": "unrelated",
+   "patch_file": "markdown-c4386475-unrelated.diff",
+   "repo": "markdown",
+   "source_files": [
+    "markdown/htmlparser.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_issue_1590",
+   "test_files": [
+    "tests/test_syntax/blocks/test_html_blocks.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 3.0459585189819336,
+    "commands": 3,
+    "detail": "suite run; target=FAILED"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 2.583984136581421,
+    "commands": 2,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_issue_1590 still fails with the patch applied (AssertionError: '<tab[14 chars]so]>-->\\n<td>foo</td>\\n</table>' != '<tab[14 chars]so]>"
+   }
+  },
+  {
+   "case_id": "markdown-64a3c0fb-correct",
+   "commit": "64a3c0fbc00327fbfee1fd6b44da0e5453287fe4",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "f2b9fd10f1fc7b0683f226e6a82da8e8375bccf5",
+   "patch_class": "correct",
+   "patch_file": "markdown-64a3c0fb-correct.diff",
+   "repo": "markdown",
+   "source_files": [
+    "markdown/htmlparser.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_noname_tag",
+   "test_files": [
+    "tests/test_syntax/blocks/test_html_blocks.py",
+    "tests/test_syntax/extensions/test_md_in_html.py",
+    "tests/test_syntax/inline/test_code.py",
+    "tests/test_syntax/inline/test_raw_html.py"
+   ],
+   "arm_S": {
+    "accepted": true,
+    "seconds": 2.9469923973083496,
+    "commands": 3,
+    "detail": "suite run; target=PASSED"
+   },
+   "arm_C": {
+    "accepted": true,
+    "seconds": 3.2859013080596924,
+    "commands": 3,
+    "verdict": "verified_against_approved_checks",
+    "rejected_phase": null,
+    "exit_code": 0,
+    "detail": ""
+   }
+  },
+  {
+   "case_id": "markdown-64a3c0fb-judge_weakening",
+   "commit": "64a3c0fbc00327fbfee1fd6b44da0e5453287fe4",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "f2b9fd10f1fc7b0683f226e6a82da8e8375bccf5",
+   "patch_class": "judge_weakening",
+   "patch_file": "markdown-64a3c0fb-judge_weakening.diff",
+   "repo": "markdown",
+   "source_files": [
+    "markdown/htmlparser.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_noname_tag",
+   "test_files": [
+    "tests/test_syntax/blocks/test_html_blocks.py",
+    "tests/test_syntax/extensions/test_md_in_html.py",
+    "tests/test_syntax/inline/test_code.py",
+    "tests/test_syntax/inline/test_raw_html.py"
+   ],
+   "arm_S": {
+    "accepted": false,
+    "seconds": 0.005326032638549805,
+    "commands": 1,
+    "detail": "patch did not apply"
+   },
+   "arm_C": {
+    "accepted": false,
+    "seconds": 0.5865199565887451,
+    "commands": 0,
+    "verdict": "unverifiable",
+    "rejected_phase": "candidate",
+    "exit_code": 2,
+    "detail": "patch rejected: diff modifies the frozen judge: tests/test_syntax/blocks/test_html_blocks.py (protected: tests/test_syntax/blocks/test_html_blocks.py)"
+   }
+  }
+ ]
+}

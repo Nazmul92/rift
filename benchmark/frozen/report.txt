@@ -1,0 +1,20 @@
+M1a verify benchmark
+manifest 3ad13690d474c42c  cases 24  usable 24  errored 0
+repositories: ['boltons', 'chardet', 'click', 'markdown', 'pyparsing', 'sqlparse']
+
+correct patches        : 12
+known-bad patches      : 12  ['inert', 'judge_weakening', 'unrelated']
+
+                            arm S (standard)   arm C (counterfactual)
+correct-patch acceptance    75.0%               83.3%
+incorrect-patch acceptance   25.0%                0.0%
+false rejection (correct)    25.0%               16.7%
+
+correct-patch retention of arm S: 111.1% (acceptance floor: 90%)
+arm S:    639.6s total, 72 commands
+arm C:     61.6s total, 47 commands
+
+known-bad acceptance by class:
+  inert              n= 4  S accepted 0   C accepted 0
+  judge_weakening    n= 4  S accepted 3   C accepted 0
+  unrelated          n= 4  S accepted 0   C accepted 0

@@ -1,0 +1,18 @@
+# Declared BEFORE experiments; not tuned on final-test results.
+score:
+  lambda_intervention: 1.0
+  lambda_description_length: 0.002
+  lambda_planning_regret: 0.0   # declared 0; see DESIGN_LIMITS.md
+budgets:
+  identification_actions: 420
+  max_probes: 10
+  transfer_actions: 300
+partitions:
+  development: "seed % 3 == 0"
+  held_out_instantiation: "seed % 3 == 1"
+  held_out_composition: "composition families, any seed"
+seeds:
+  e1_pairs_per_family: 10
+  e2_seeds_per_family: 6
+  e3_seeds_per_family: 5
+  e4_per_suite_seeds: 5

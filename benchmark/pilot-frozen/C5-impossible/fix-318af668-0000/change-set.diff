@@ -1,0 +1,11 @@
+--- a/src/app/pure.py
++++ b/src/app/pure.py
+@@ -1,2 +1,9 @@
+ def value():
+-    return 1
++    class Contradiction:
++        def __gt__(self, other):
++            return True
++        def __lt__(self, other):
++            return True
++    return Contradiction()

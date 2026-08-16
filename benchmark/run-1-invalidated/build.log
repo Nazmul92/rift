@@ -1,0 +1,505 @@
+[click] 51 candidate commits
+[click] accepted click-7d05a59b target=tests/test_defaults.py::test_parameter_source_during_paramtype_convert (+inert)
+[click] accepted click-0551bf53 target=tests/test_formatting.py::test_help_formatter_write_usage[empty-args-default-prefix] (+unrelated)
+[pyparsing] 36 candidate commits
+[pyparsing] accepted pyparsing-16f34865 target=tests/test_unit.py::Test02_WithoutPackrat::testParseResultsArithmeticContract (+judge_weakening)
+[pyparsing] accepted pyparsing-0a2d906a target=tests/test_unit.py::Test02_WithoutPackrat::testLocatedExprLeadingWhitespace (+inert)
+[sqlparse] 29 candidate commits
+[sqlparse] accepted sqlparse-5ca50a2e target=tests/test_split.py::test_split_begin_transaction (+unrelated)
+[sqlparse] accepted sqlparse-1a3bfbd5 target=tests/test_split.py::test_split_begin_end_semicolons (+judge_weakening)
+[pluggy] 24 candidate commits
+[pluggy] accepted pluggy-7aef3e60 target=testing/test_pluginmanager.py::test_register_while_calling[False] (+inert)
+[pluggy] accepted pluggy-443fee6d target=testing/test_hookcaller.py::test_call_extra_hook_order (+unrelated)
+[boltons] cloning
+[boltons] 51 candidate commits
+[boltons] accepted boltons-ec1ff9f6 target=tests/test_setutils.py::test_complement_set (+judge_weakening)
+[boltons] accepted boltons-c1c25da3 target=tests/test_mathutils.py::test_bits_len_bound (+inert)
+[markdown] cloning
+[markdown] 47 candidate commits
+[markdown] accepted markdown-c4386475 target=tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_issue_1590 (+unrelated)
+[markdown] accepted markdown-64a3c0fb target=tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_noname_tag (+judge_weakening)
+[chardet] cloning
+[chardet] 47 candidate commits
+[attrs] 31 candidate commits
+
+frozen manifest: 24 cases across 6 repositories ['boltons', 'click', 'markdown', 'pluggy', 'pyparsing', 'sqlparse']
+hash bb42644593fcaab4
+[1/24] click-7d05a59b-correct (correct)
+Note: switching to '7c99ebe23b931f27562d926814423cce85fd9766'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=True (verified_against_approved_checks)
+[2/24] click-7d05a59b-inert (inert)
+Note: switching to '7c99ebe23b931f27562d926814423cce85fd9766'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[3/24] click-0551bf53-correct (correct)
+Note: switching to '7c99ebe23b931f27562d926814423cce85fd9766'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=True (verified_against_approved_checks)
+[4/24] click-0551bf53-unrelated (unrelated)
+Note: switching to '7c99ebe23b931f27562d926814423cce85fd9766'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[5/24] pyparsing-16f34865-correct (correct)
+Note: switching to '057a2e6d1b8391dc85abe725d4d12c0987a9ec10'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[6/24] pyparsing-16f34865-judge_weakening (judge_weakening)
+Note: switching to '057a2e6d1b8391dc85abe725d4d12c0987a9ec10'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[7/24] pyparsing-0a2d906a-correct (correct)
+Note: switching to '057a2e6d1b8391dc85abe725d4d12c0987a9ec10'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[8/24] pyparsing-0a2d906a-inert (inert)
+Note: switching to '057a2e6d1b8391dc85abe725d4d12c0987a9ec10'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[9/24] sqlparse-5ca50a2e-correct (correct)
+Note: switching to 'e92a032c81d51a6645b4f8c32470481894818ba0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[10/24] sqlparse-5ca50a2e-unrelated (unrelated)
+Note: switching to 'e92a032c81d51a6645b4f8c32470481894818ba0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[11/24] sqlparse-1a3bfbd5-correct (correct)
+Note: switching to 'e92a032c81d51a6645b4f8c32470481894818ba0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[12/24] sqlparse-1a3bfbd5-judge_weakening (judge_weakening)
+Note: switching to 'e92a032c81d51a6645b4f8c32470481894818ba0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[13/24] pluggy-7aef3e60-correct (correct)
+Note: switching to '4577b459a9043ba283e0d7a39beeddd627cc54a0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[14/24] pluggy-7aef3e60-inert (inert)
+Note: switching to '4577b459a9043ba283e0d7a39beeddd627cc54a0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[15/24] pluggy-443fee6d-correct (correct)
+Note: switching to '4577b459a9043ba283e0d7a39beeddd627cc54a0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[16/24] pluggy-443fee6d-unrelated (unrelated)
+Note: switching to '4577b459a9043ba283e0d7a39beeddd627cc54a0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[17/24] boltons-ec1ff9f6-correct (correct)
+Note: switching to 'e66cade323f5c11cebb4bd0f099e634b245adccd'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[18/24] boltons-ec1ff9f6-judge_weakening (judge_weakening)
+Note: switching to 'e66cade323f5c11cebb4bd0f099e634b245adccd'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[19/24] boltons-c1c25da3-correct (correct)
+Note: switching to 'e66cade323f5c11cebb4bd0f099e634b245adccd'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[20/24] boltons-c1c25da3-inert (inert)
+Note: switching to 'e66cade323f5c11cebb4bd0f099e634b245adccd'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[21/24] markdown-c4386475-correct (correct)
+Note: switching to 'f2b9fd10f1fc7b0683f226e6a82da8e8375bccf5'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[22/24] markdown-c4386475-unrelated (unrelated)
+Note: switching to 'f2b9fd10f1fc7b0683f226e6a82da8e8375bccf5'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[23/24] markdown-64a3c0fb-correct (correct)
+Note: switching to 'f2b9fd10f1fc7b0683f226e6a82da8e8375bccf5'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[24/24] markdown-64a3c0fb-judge_weakening (judge_weakening)
+Note: switching to 'f2b9fd10f1fc7b0683f226e6a82da8e8375bccf5'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+
+wrote 24 records
+M1a verify benchmark
+manifest bb42644593fcaab4  cases 24  usable 24  errored 0
+repositories: ['boltons', 'click', 'markdown', 'pluggy', 'pyparsing', 'sqlparse']
+
+correct patches        : 12
+known-bad patches      : 12  ['inert', 'judge_weakening', 'unrelated']
+
+                            arm S (standard)   arm C (counterfactual)
+correct-patch acceptance    83.3%              100.0%
+incorrect-patch acceptance    0.0%                0.0%
+false rejection (correct)    16.7%                0.0%
+
+correct-patch retention of arm S: 120.0% (acceptance floor: 90%)
+arm S:    344.0s total, 64 commands
+arm C:     68.7s total, 52 commands
+
+known-bad acceptance by class:
+  inert              n= 4  S accepted 0   C accepted 0
+  judge_weakening    n= 4  S accepted 0   C accepted 0
+  unrelated          n= 4  S accepted 0   C accepted 0
+PIPELINE_DONE

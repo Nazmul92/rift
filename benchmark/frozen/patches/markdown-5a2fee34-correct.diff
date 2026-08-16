@@ -1,0 +1,13 @@
+diff --git a/markdown/extensions/admonition.py b/markdown/extensions/admonition.py
+index ce8492f..0d1250f 100644
+--- a/markdown/extensions/admonition.py
++++ b/markdown/extensions/admonition.py
+@@ -69,7 +69,7 @@ class AdmonitionProcessor(BlockProcessor):
+ 
+         sibling = self.lastChild(parent)
+ 
+-        if sibling is None or sibling.get('class', '').find(self.CLASSNAME) == -1:
++        if sibling is None or sibling.tag != 'div' or sibling.get('class', '').find(self.CLASSNAME) == -1:
+             sibling = None
+         else:
+             # If the last child is a list and the content is sufficiently indented

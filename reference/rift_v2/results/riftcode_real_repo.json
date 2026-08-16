@@ -1,0 +1,115 @@
+{
+ "repo": "pallets/click",
+ "commit": "8b44edf",
+ "cases": [
+  {
+   "case": "R1_order_dependence",
+   "target": "tests/test_utils/test_echo_via_pager.py::test_echo_via_pager[test0-cat]",
+   "ambient": {},
+   "ground_truth": "first:tests/test_termui.py",
+   "status": "identified",
+   "cause": "first:tests/",
+   "condition": {
+    "op": "or",
+    "args": [
+     {
+      "var": "z4"
+     },
+     {
+      "var": "z5"
+     }
+    ]
+   },
+   "handles": [
+    "unsetenv:DEBIAN_FRONTEND",
+    "unsetenv:IS_SANDBOX",
+    "clear:.pytest_cache",
+    "clear:__pycache__",
+    "first:tests/",
+    "first:tests/test_utils/",
+    "first:tests/test_arguments.py",
+    "first:tests/test_basic.py"
+   ],
+   "probes": 5,
+   "bisected_to": "first:tests/test_termui.py",
+   "bisect_rounds": 5,
+   "gate": {
+    "verdict": "verified",
+    "phases": {
+     "baseline": "blocked",
+     "with_fix": "pass",
+     "reverted": "blocked"
+    }
+   },
+   "commands": 7,
+   "seconds": 7.6,
+   "wall": 21.1,
+   "verdict_vs_ground_truth": "correct"
+  },
+  {
+   "case": "R2_missing_binary_less",
+   "target": "tests/test_utils/test_echo_via_pager.py::test_echo_via_pager[test0-less]",
+   "ambient": {},
+   "ground_truth": null,
+   "status": "identified",
+   "cause": null,
+   "condition": {
+    "const": false
+   },
+   "handles": [
+    "unsetenv:DEBIAN_FRONTEND",
+    "unsetenv:IS_SANDBOX",
+    "clear:.pytest_cache",
+    "clear:__pycache__",
+    "first:tests/",
+    "first:tests/test_utils/",
+    "first:tests/test_arguments.py",
+    "first:tests/test_basic.py"
+   ],
+   "probes": 12,
+   "gate": {
+    "verdict": "not_applicable"
+   },
+   "commands": 16,
+   "seconds": 10.1,
+   "wall": 10.6,
+   "verdict_vs_ground_truth": "honest_miss"
+  },
+  {
+   "case": "R3_env_pollution",
+   "target": "tests/test_commands.py::test_custom_parser",
+   "ambient": {
+    "COLUMNS": "20"
+   },
+   "ground_truth": "unsetenv:COLUMNS",
+   "status": "identified",
+   "cause": "unsetenv:COLUMNS",
+   "condition": {
+    "var": "z0"
+   },
+   "handles": [
+    "unsetenv:COLUMNS",
+    "unsetenv:DEBIAN_FRONTEND",
+    "clear:.pytest_cache",
+    "clear:__pycache__",
+    "first:tests/",
+    "first:tests/test_utils/",
+    "first:tests/test_arguments.py",
+    "first:tests/test_basic.py"
+   ],
+   "probes": 12,
+   "gate": {
+    "verdict": "verified",
+    "phases": {
+     "baseline": "blocked",
+     "with_fix": "pass",
+     "reverted": "blocked"
+    }
+   },
+   "commands": 16,
+   "seconds": 9.7,
+   "wall": 10.6,
+   "verdict_vs_ground_truth": "correct"
+  }
+ ]
+}

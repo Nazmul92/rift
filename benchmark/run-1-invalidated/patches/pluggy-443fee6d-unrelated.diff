@@ -1,0 +1,10 @@
+diff --git a/src/pluggy/__init__.py b/src/pluggy/__init__.py
+index 9d9e873..9f32cef 100644
+--- a/src/pluggy/__init__.py
++++ b/src/pluggy/__init__.py
+@@ -31,3 +31,5 @@ from ._hooks import (
+     HookimplOpts,
+     HookImpl,
+ )
++
++# unrelated edit

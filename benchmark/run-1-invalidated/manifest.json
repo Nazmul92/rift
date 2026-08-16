@@ -1,0 +1,450 @@
+{
+ "arms": {
+  "C": "rift verify; accept only on verified_against_approved_checks",
+  "S": "apply the patch, run the repository suite, accept if the target node passed"
+ },
+ "cases": [
+  {
+   "case_id": "click-7d05a59b-correct",
+   "commit": "7d05a59b9d46a415d85937630d1d812cf477f60a",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "4b24a6c8f6658ef89fd6db4dcaf8ee88eef75dfa",
+   "patch_class": "correct",
+   "patch_file": "click-7d05a59b-correct.diff",
+   "repo": "click",
+   "source_files": [
+    "src/click/core.py"
+   ],
+   "src_layout": "src",
+   "target": "tests/test_defaults.py::test_parameter_source_during_paramtype_convert",
+   "test_files": [
+    "tests/test_defaults.py",
+    "tests/test_options.py"
+   ]
+  },
+  {
+   "case_id": "click-7d05a59b-inert",
+   "commit": "7d05a59b9d46a415d85937630d1d812cf477f60a",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "4b24a6c8f6658ef89fd6db4dcaf8ee88eef75dfa",
+   "patch_class": "inert",
+   "patch_file": "click-7d05a59b-inert.diff",
+   "repo": "click",
+   "source_files": [
+    "src/click/core.py"
+   ],
+   "src_layout": "src",
+   "target": "tests/test_defaults.py::test_parameter_source_during_paramtype_convert",
+   "test_files": [
+    "tests/test_defaults.py",
+    "tests/test_options.py"
+   ]
+  },
+  {
+   "case_id": "click-0551bf53-correct",
+   "commit": "0551bf53588ae87f462d336f24f853a156fefe3a",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "7c99ebe23b931f27562d926814423cce85fd9766",
+   "patch_class": "correct",
+   "patch_file": "click-0551bf53-correct.diff",
+   "repo": "click",
+   "source_files": [
+    "src/click/formatting.py"
+   ],
+   "src_layout": "src",
+   "target": "tests/test_formatting.py::test_help_formatter_write_usage[empty-args-default-prefix]",
+   "test_files": [
+    "tests/test_formatting.py"
+   ]
+  },
+  {
+   "case_id": "click-0551bf53-unrelated",
+   "commit": "0551bf53588ae87f462d336f24f853a156fefe3a",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "7c99ebe23b931f27562d926814423cce85fd9766",
+   "patch_class": "unrelated",
+   "patch_file": "click-0551bf53-unrelated.diff",
+   "repo": "click",
+   "source_files": [
+    "src/click/formatting.py"
+   ],
+   "src_layout": "src",
+   "target": "tests/test_formatting.py::test_help_formatter_write_usage[empty-args-default-prefix]",
+   "test_files": [
+    "tests/test_formatting.py"
+   ]
+  },
+  {
+   "case_id": "pyparsing-16f34865-correct",
+   "commit": "16f348651c167f7d557230ecbdf5a678c62e72aa",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "73a8b553fb5fc50b3cb2e4b5b2b8652f8d997a29",
+   "patch_class": "correct",
+   "patch_file": "pyparsing-16f34865-correct.diff",
+   "repo": "pyparsing",
+   "source_files": [
+    "pyparsing/results.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_unit.py::Test02_WithoutPackrat::testParseResultsArithmeticContract",
+   "test_files": [
+    "tests/test_unit.py"
+   ]
+  },
+  {
+   "case_id": "pyparsing-16f34865-judge_weakening",
+   "commit": "16f348651c167f7d557230ecbdf5a678c62e72aa",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "73a8b553fb5fc50b3cb2e4b5b2b8652f8d997a29",
+   "patch_class": "judge_weakening",
+   "patch_file": "pyparsing-16f34865-judge_weakening.diff",
+   "repo": "pyparsing",
+   "source_files": [
+    "pyparsing/results.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_unit.py::Test02_WithoutPackrat::testParseResultsArithmeticContract",
+   "test_files": [
+    "tests/test_unit.py"
+   ]
+  },
+  {
+   "case_id": "pyparsing-0a2d906a-correct",
+   "commit": "0a2d906a3e6b9a30b6a0701588caec3937ff271f",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "057a2e6d1b8391dc85abe725d4d12c0987a9ec10",
+   "patch_class": "correct",
+   "patch_file": "pyparsing-0a2d906a-correct.diff",
+   "repo": "pyparsing",
+   "source_files": [
+    "pyparsing/core.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_unit.py::Test02_WithoutPackrat::testLocatedExprLeadingWhitespace",
+   "test_files": [
+    "tests/test_unit.py"
+   ]
+  },
+  {
+   "case_id": "pyparsing-0a2d906a-inert",
+   "commit": "0a2d906a3e6b9a30b6a0701588caec3937ff271f",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "057a2e6d1b8391dc85abe725d4d12c0987a9ec10",
+   "patch_class": "inert",
+   "patch_file": "pyparsing-0a2d906a-inert.diff",
+   "repo": "pyparsing",
+   "source_files": [
+    "pyparsing/core.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_unit.py::Test02_WithoutPackrat::testLocatedExprLeadingWhitespace",
+   "test_files": [
+    "tests/test_unit.py"
+   ]
+  },
+  {
+   "case_id": "sqlparse-5ca50a2e-correct",
+   "commit": "5ca50a2ee9b39e9efeea33e01f132d628144fb69",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "acd8e5817b5be5f9b9a7b159c1bacc45179f4e44",
+   "patch_class": "correct",
+   "patch_file": "sqlparse-5ca50a2e-correct.diff",
+   "repo": "sqlparse",
+   "source_files": [
+    "sqlparse/engine/statement_splitter.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_split.py::test_split_begin_transaction",
+   "test_files": [
+    "tests/test_split.py"
+   ]
+  },
+  {
+   "case_id": "sqlparse-5ca50a2e-unrelated",
+   "commit": "5ca50a2ee9b39e9efeea33e01f132d628144fb69",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "acd8e5817b5be5f9b9a7b159c1bacc45179f4e44",
+   "patch_class": "unrelated",
+   "patch_file": "sqlparse-5ca50a2e-unrelated.diff",
+   "repo": "sqlparse",
+   "source_files": [
+    "sqlparse/engine/statement_splitter.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_split.py::test_split_begin_transaction",
+   "test_files": [
+    "tests/test_split.py"
+   ]
+  },
+  {
+   "case_id": "sqlparse-1a3bfbd5-correct",
+   "commit": "1a3bfbd50b82c05d9adcc51bacba059671dc1bc7",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "e92a032c81d51a6645b4f8c32470481894818ba0",
+   "patch_class": "correct",
+   "patch_file": "sqlparse-1a3bfbd5-correct.diff",
+   "repo": "sqlparse",
+   "source_files": [
+    "sqlparse/engine/statement_splitter.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_split.py::test_split_begin_end_semicolons",
+   "test_files": [
+    "tests/test_split.py"
+   ]
+  },
+  {
+   "case_id": "sqlparse-1a3bfbd5-judge_weakening",
+   "commit": "1a3bfbd50b82c05d9adcc51bacba059671dc1bc7",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "e92a032c81d51a6645b4f8c32470481894818ba0",
+   "patch_class": "judge_weakening",
+   "patch_file": "sqlparse-1a3bfbd5-judge_weakening.diff",
+   "repo": "sqlparse",
+   "source_files": [
+    "sqlparse/engine/statement_splitter.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_split.py::test_split_begin_end_semicolons",
+   "test_files": [
+    "tests/test_split.py"
+   ]
+  },
+  {
+   "case_id": "pluggy-7aef3e60-correct",
+   "commit": "7aef3e608fddc57648daffaec23432e6893f26ff",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "cc36605090dfa090777b3d69ca91132ad852c6f2",
+   "patch_class": "correct",
+   "patch_file": "pluggy-7aef3e60-correct.diff",
+   "repo": "pluggy",
+   "source_files": [
+    "src/pluggy/_hooks.py"
+   ],
+   "src_layout": "src",
+   "target": "testing/test_pluginmanager.py::test_register_while_calling[False]",
+   "test_files": [
+    "testing/test_pluginmanager.py"
+   ]
+  },
+  {
+   "case_id": "pluggy-7aef3e60-inert",
+   "commit": "7aef3e608fddc57648daffaec23432e6893f26ff",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "cc36605090dfa090777b3d69ca91132ad852c6f2",
+   "patch_class": "inert",
+   "patch_file": "pluggy-7aef3e60-inert.diff",
+   "repo": "pluggy",
+   "source_files": [
+    "src/pluggy/_hooks.py"
+   ],
+   "src_layout": "src",
+   "target": "testing/test_pluginmanager.py::test_register_while_calling[False]",
+   "test_files": [
+    "testing/test_pluginmanager.py"
+   ]
+  },
+  {
+   "case_id": "pluggy-443fee6d-correct",
+   "commit": "443fee6d7a30ca694aa2eec77bde4aea9356efa0",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "4577b459a9043ba283e0d7a39beeddd627cc54a0",
+   "patch_class": "correct",
+   "patch_file": "pluggy-443fee6d-correct.diff",
+   "repo": "pluggy",
+   "source_files": [
+    "src/pluggy/_hooks.py"
+   ],
+   "src_layout": "src",
+   "target": "testing/test_hookcaller.py::test_call_extra_hook_order",
+   "test_files": [
+    "testing/test_hookcaller.py"
+   ]
+  },
+  {
+   "case_id": "pluggy-443fee6d-unrelated",
+   "commit": "443fee6d7a30ca694aa2eec77bde4aea9356efa0",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "4577b459a9043ba283e0d7a39beeddd627cc54a0",
+   "patch_class": "unrelated",
+   "patch_file": "pluggy-443fee6d-unrelated.diff",
+   "repo": "pluggy",
+   "source_files": [
+    "src/pluggy/_hooks.py"
+   ],
+   "src_layout": "src",
+   "target": "testing/test_hookcaller.py::test_call_extra_hook_order",
+   "test_files": [
+    "testing/test_hookcaller.py"
+   ]
+  },
+  {
+   "case_id": "boltons-ec1ff9f6-correct",
+   "commit": "ec1ff9f6728f5f857402b294c218be731c62af5f",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "b5c495bec206741ec25cd82ecc869e0b59bb0d10",
+   "patch_class": "correct",
+   "patch_file": "boltons-ec1ff9f6-correct.diff",
+   "repo": "boltons",
+   "source_files": [
+    "boltons/setutils.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_setutils.py::test_complement_set",
+   "test_files": [
+    "tests/test_setutils.py"
+   ]
+  },
+  {
+   "case_id": "boltons-ec1ff9f6-judge_weakening",
+   "commit": "ec1ff9f6728f5f857402b294c218be731c62af5f",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "b5c495bec206741ec25cd82ecc869e0b59bb0d10",
+   "patch_class": "judge_weakening",
+   "patch_file": "boltons-ec1ff9f6-judge_weakening.diff",
+   "repo": "boltons",
+   "source_files": [
+    "boltons/setutils.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_setutils.py::test_complement_set",
+   "test_files": [
+    "tests/test_setutils.py"
+   ]
+  },
+  {
+   "case_id": "boltons-c1c25da3-correct",
+   "commit": "c1c25da365cf14878cf5317147e7a09b5d124df5",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "e66cade323f5c11cebb4bd0f099e634b245adccd",
+   "patch_class": "correct",
+   "patch_file": "boltons-c1c25da3-correct.diff",
+   "repo": "boltons",
+   "source_files": [
+    "boltons/mathutils.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_mathutils.py::test_bits_len_bound",
+   "test_files": [
+    "tests/test_mathutils.py"
+   ]
+  },
+  {
+   "case_id": "boltons-c1c25da3-inert",
+   "commit": "c1c25da365cf14878cf5317147e7a09b5d124df5",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "e66cade323f5c11cebb4bd0f099e634b245adccd",
+   "patch_class": "inert",
+   "patch_file": "boltons-c1c25da3-inert.diff",
+   "repo": "boltons",
+   "source_files": [
+    "boltons/mathutils.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_mathutils.py::test_bits_len_bound",
+   "test_files": [
+    "tests/test_mathutils.py"
+   ]
+  },
+  {
+   "case_id": "markdown-c4386475-correct",
+   "commit": "c4386475a6b6daea43b7d7717add4271adc9a3c1",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "e5fa5b86e8ec380cbc520cfc637d72c779e5c601",
+   "patch_class": "correct",
+   "patch_file": "markdown-c4386475-correct.diff",
+   "repo": "markdown",
+   "source_files": [
+    "markdown/htmlparser.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_issue_1590",
+   "test_files": [
+    "tests/test_syntax/blocks/test_html_blocks.py"
+   ]
+  },
+  {
+   "case_id": "markdown-c4386475-unrelated",
+   "commit": "c4386475a6b6daea43b7d7717add4271adc9a3c1",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "e5fa5b86e8ec380cbc520cfc637d72c779e5c601",
+   "patch_class": "unrelated",
+   "patch_file": "markdown-c4386475-unrelated.diff",
+   "repo": "markdown",
+   "source_files": [
+    "markdown/htmlparser.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_issue_1590",
+   "test_files": [
+    "tests/test_syntax/blocks/test_html_blocks.py"
+   ]
+  },
+  {
+   "case_id": "markdown-64a3c0fb-correct",
+   "commit": "64a3c0fbc00327fbfee1fd6b44da0e5453287fe4",
+   "expected_accept": true,
+   "note": "the project's own fix for this test",
+   "parent": "f2b9fd10f1fc7b0683f226e6a82da8e8375bccf5",
+   "patch_class": "correct",
+   "patch_file": "markdown-64a3c0fb-correct.diff",
+   "repo": "markdown",
+   "source_files": [
+    "markdown/htmlparser.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_noname_tag",
+   "test_files": [
+    "tests/test_syntax/blocks/test_html_blocks.py",
+    "tests/test_syntax/extensions/test_md_in_html.py",
+    "tests/test_syntax/inline/test_code.py",
+    "tests/test_syntax/inline/test_raw_html.py"
+   ]
+  },
+  {
+   "case_id": "markdown-64a3c0fb-judge_weakening",
+   "commit": "64a3c0fbc00327fbfee1fd6b44da0e5453287fe4",
+   "expected_accept": false,
+   "note": "known-bad patch derived from the same case",
+   "parent": "f2b9fd10f1fc7b0683f226e6a82da8e8375bccf5",
+   "patch_class": "judge_weakening",
+   "patch_file": "markdown-64a3c0fb-judge_weakening.diff",
+   "repo": "markdown",
+   "source_files": [
+    "markdown/htmlparser.py"
+   ],
+   "src_layout": "",
+   "target": "tests/test_syntax/blocks/test_html_blocks.py::TestHTMLBlocks::test_noname_tag",
+   "test_files": [
+    "tests/test_syntax/blocks/test_html_blocks.py",
+    "tests/test_syntax/extensions/test_md_in_html.py",
+    "tests/test_syntax/inline/test_code.py",
+    "tests/test_syntax/inline/test_raw_html.py"
+   ]
+  }
+ ],
+ "manifest_hash": "bb42644593fcaab436aef2bc8e7694b6867c11e20a097fdf0aba989a091510e8",
+ "schema": 1
+}

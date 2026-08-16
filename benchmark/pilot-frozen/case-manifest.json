@@ -1,0 +1,75 @@
+{
+  "cases": [
+    {
+      "files": {
+        "src/app/__init__.py": "e3b0c44298fc1c14",
+        "src/app/calc.py": "e1a894022d1a0829",
+        "tests/test_calc.py": "b5c3936faae42864"
+      },
+      "id": "C1-sign",
+      "predeclared_fixable": true,
+      "rationale": "a single wrong operator in the implementation",
+      "target": "tests/test_calc.py::test_add"
+    },
+    {
+      "files": {
+        "src/app/__init__.py": "e3b0c44298fc1c14",
+        "src/app/text.py": "ce28dadbadd2c002",
+        "tests/test_text.py": "edac42bf143c7a3e"
+      },
+      "id": "C2-offbyone",
+      "predeclared_fixable": true,
+      "rationale": "an off-by-one slice bound",
+      "target": "tests/test_text.py::test_first_n"
+    },
+    {
+      "files": {
+        "src/app/__init__.py": "e3b0c44298fc1c14",
+        "src/app/cfg.py": "d8198dbcc6d80de4",
+        "tests/test_cfg.py": "34e2febc8bdd0e3d"
+      },
+      "id": "C3-default",
+      "predeclared_fixable": true,
+      "rationale": "a missing default on a dict lookup",
+      "target": "tests/test_cfg.py::test_missing_key_is_none"
+    },
+    {
+      "dispute": "labelled unfixable because the target passes in isolation; that is a limitation of the bare-target gate, not task truth. With an ordering precondition in the frozen reproducer the case is gateable. Excluded from scoring; artifacts and spend retained as unscored operational evidence.",
+      "files": {
+        "src/app/__init__.py": "e3b0c44298fc1c14",
+        "src/app/registry.py": "d3d3375886e5d382",
+        "tests/test_a_pollute.py": "176759883e5fbf8d",
+        "tests/test_target.py": "86eddbdf7e89bd87"
+      },
+      "id": "C4-order",
+      "predeclared_fixable": false,
+      "rationale": "order-dependent pollution from a neighbouring test; no patch to the target module fixes it, and the test alone already passes",
+      "status": "GROUND_TRUTH_DISPUTED",
+      "target": "tests/test_target.py::test_clean"
+    },
+    {
+      "files": {
+        "src/app/__init__.py": "e3b0c44298fc1c14",
+        "src/app/pure.py": "5d080563b5728727",
+        "tests/test_pure.py": "ecfb7f3d6777bf8d"
+      },
+      "id": "C5-impossible",
+      "invalidation": "labelled unsatisfiable, but satisfiable by a pathological object whose __gt__ and __lt__ both return True. Excluded from scoring; replacement deferred and must be STRUCTURALLY unsatisfiable.",
+      "predeclared_fixable": false,
+      "rationale": "the test asserts a contradiction; no implementation satisfies it, and the test is frozen",
+      "status": "GROUND_TRUTH_INVALID",
+      "target": "tests/test_pure.py::test_contradiction"
+    }
+  ],
+  "label_evidence_standard": {
+    "fixable": "independently reviewed correct patch passing the frozen reproducer and preservation checks",
+    "insufficient": "an unsuccessful model patch search does not prove unfixability; use GROUND_TRUTH_DISPUTED and exclude",
+    "unfixable": "reviewed structural argument that no permitted patch satisfies change and preservation together"
+  },
+  "note": "predeclared before execution; see labels below",
+  "scored_set": [
+    "C1-sign",
+    "C2-offbyone",
+    "C3-default"
+  ]
+}

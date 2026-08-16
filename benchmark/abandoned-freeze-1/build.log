@@ -1,0 +1,120 @@
++ python -u benchmark/verify_bench.py --out /bench/frozen --work /bench/repos --staging /bench/staging build --pairs 12 --per-repo 3 --scan 250
+[click] cloning
+[click] 67 candidate commits
+[click] accepted click-07c909f2 target=tests/test_utils/test_style.py::test_styling[styles44-\x1b[38;5;0mx y\x1b[0m] (+inert)
+[click] accepted click-82f377c5 target=tests/test_commands.py::test_deprecated_empty_help_no_leading_space[-True] (+unrelated)
+[click] accepted click-b7e5fd4c target=tests/test_shell_completion.py::test_full_complete[fish-env4-plain,a\nplain,b\tbee\n] (+judge_weakening)
+[pyparsing] cloning
+[pyparsing] 39 candidate commits
+[pyparsing] accepted pyparsing-51560cab target=tests/test_unit.py::Test02_WithoutPackrat::testBoundedRepetitionLargeUpperBound (+inert)
+[pyparsing] accepted pyparsing-a6ae98ba target=tests/test_unit.py::Test02_WithoutPackrat::testEmptyDictReturnsDictWhenCallingAsDict (+unrelated)
+[pyparsing] accepted pyparsing-92f52e2c target=tests/test_unit.py::Test02_WithoutPackrat::testParseResultsDeepcopy4 (+judge_weakening)
+[sqlparse] cloning
+[sqlparse] 34 candidate commits
+[sqlparse] accepted sqlparse-f66d12c2 target=tests/test_parse.py::test_get_real_name_multi_part_dotted (+inert)
+[sqlparse] accepted sqlparse-1bcb2d9e target=tests/test_regressions.py::test_materialized_view_issue752 (+unrelated)
+[sqlparse] accepted sqlparse-111b35cf target=tests/test_grouping.py::test_grouping_alias_ctas_lowercase_as (+judge_weakening)
+[pluggy] cloning
+[pluggy] 28 candidate commits
+[pluggy] accepted pluggy-20d8143f target=testing/test_pluginmanager.py::test_get_hookcallers_no_duplicates (+inert)
+[pluggy] accepted pluggy-9cf2eaa5 target=testing/test_multicall.py::test_wrapper_stopiteration_passtrough[True] (+unrelated)
+[attrs] cloning
+[attrs] 29 candidate commits
+
+frozen manifest: 22 cases across 4 repositories ['click', 'pluggy', 'pyparsing', 'sqlparse']
+hash d8244949996b7cc0
++ python -u benchmark/verify_bench.py --out /bench/frozen --work /bench/repos --staging /bench/staging run
+[1/22] click-07c909f2-correct (correct)
+Note: switching to '5b1aba82745cbde04c75e0bab995e5ddf0804196'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=True   C accepted=True (verified_against_approved_checks)
+[2/22] click-07c909f2-inert (inert)
+Note: switching to '5b1aba82745cbde04c75e0bab995e5ddf0804196'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[3/22] click-82f377c5-correct (correct)
+Note: switching to '5b1aba82745cbde04c75e0bab995e5ddf0804196'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=True (verified_against_approved_checks)
+[4/22] click-82f377c5-unrelated (unrelated)
+Note: switching to '5b1aba82745cbde04c75e0bab995e5ddf0804196'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+    S accepted=False   C accepted=False (unverifiable)
+[5/22] click-b7e5fd4c-correct (correct)
+Note: switching to '5b1aba82745cbde04c75e0bab995e5ddf0804196'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "riftagent"
+version = "0.1.0a1"
+description = "Counterfactual verification of external patches against pytest checks"
+requires-python = ">=3.12"
+# No runtime dependencies. The four gate phases are subprocess calls and the
+# ledger is JSONL; nothing here has earned a dependency yet.
+dependencies = []
+
+[project.scripts]
+rift = "riftagent.app:main"
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1", "ruff==0.16.3", "mypy==2.3.1"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["riftagent*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+# `build/` is a setuptools scratch copy of the runtime. Linting it would report
+# every finding twice and mask which copy is authoritative.
+# Frozen evidence is never reformatted: the artifact must stay byte-identical
+# to what actually ran, and a linter rewriting it would silently alter the
+# record it exists to preserve.
+extend-exclude = ["reference", "build", "benchmark/pilot-frozen", "benchmark/frozen", "benchmark/run-1-invalidated"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+allow_untyped_defs = true
+check_untyped_defs = false
+exclude = "(reference/|build/|benchmark/)"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["reference", ".rift", "benchmark", "build"]
+markers = ["slow: takes tens of seconds (process-tree termination, packaging)"]

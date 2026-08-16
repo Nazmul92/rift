@@ -1,0 +1,10 @@
+diff --git a/src/pluggy/_hooks.py b/src/pluggy/_hooks.py
+index 6623c14..eab4613 100644
+--- a/src/pluggy/_hooks.py
++++ b/src/pluggy/_hooks.py
+@@ -697,3 +697,5 @@ class HookSpec:
+         self.argnames, self.kwargnames = varnames(self.function)
+         self.opts = opts
+         self.warn_on_impl = opts.get("warn_on_impl")
++
++# fix applied

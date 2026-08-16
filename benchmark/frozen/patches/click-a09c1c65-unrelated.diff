@@ -1,0 +1,10 @@
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index 64be7e0..f3ed36e 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -124,3 +124,5 @@ def __getattr__(name: str) -> object:
+         return importlib.metadata.version("click")
+ 
+     raise AttributeError(name)
++
++# unrelated edit

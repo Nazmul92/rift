@@ -1,0 +1,62 @@
+task fix-318af668-0000  verb=fix  repo=/cal/C5-impossible
+sandbox partial — linux without usable bubblewrap: env allowlist, rlimits, timeout, process-group kill
+authority explicit --allow-partial-sandbox
+checks frozen c166bd86755e  1 change, 0 preservation
+protected conftest.py, pyproject.toml, pytest.ini, setup.cfg, tests/test_pure.py, tox.ini
+contract f9f73f06a9b1  tree abb716e89f5a
+context 1 collected node(s)
+▶ pytest tests/test_pure.py::test_contradiction  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  Failure: assert (1 > 0 and 1 < 0)
+handles 2 discovered: unsetenv:GPG_KEY, unsetenv:PYTHON_SHA256
+theories 51 over 3 role(s), 6 probe(s) available
+▶ pytest tests/test_pure.py::test_contradiction [fresh[r0+r1]x1]  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  Failure: assert (1 > 0 and 1 < 0)
+  probe fresh[r0+r1]x1  applied unsetenv:GPG_KEY, unsetenv:PYTHON_SHA256 → blocked
+  eliminated 10 theory/theories via fresh[r0+r1]x1
+▶ pytest tests/test_pure.py::test_contradiction [fresh[none]x3]  (diagnosis)
+  0.4s  exit=1
+▶ pytest tests/test_pure.py::test_contradiction [fresh[none]x3]  (diagnosis)
+  0.4s  exit=1
+▶ pytest tests/test_pure.py::test_contradiction [fresh[none]x3]  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  Failure: assert (1 > 0 and 1 < 0)
+  probe fresh[none]x3  applied nothing → blocked
+  eliminated 5 theory/theories via fresh[none]x3
+▶ pytest tests/test_pure.py::test_contradiction [same[none]x1]  (diagnosis)
+  0.3s  exit=1
+  → FAIL  [1/1]  Failure: assert (1 > 0 and 1 < 0)
+  probe same[none]x1  applied nothing → blocked
+  eliminated 5 theory/theories via same[none]x1
+▶ pytest tests/test_pure.py::test_contradiction [same[none]x1]  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  Failure: assert (1 > 0 and 1 < 0)
+  probe same[none]x1  applied nothing → blocked
+  eliminated 5 theory/theories via same[none]x1
+diagnosis underdetermined for tests/test_pure.py::test_contradiction
+context 1 file(s), 26 chars: src/app/pure.py
+  withheld: tests/test_pure.py (protected or excluded)
+model → propose_change (claude-haiku-4-5-20251001)
+model ← propose_change  usage 404 in / 849 out  finish=stop
+patch 99b8a7fddbd5  1 file(s): src/app/pure.py
+▶ pytest tests/test_pure.py::test_contradiction  (baseline)
+  0.3s  exit=1
+  → FAIL  [1/1]  Failure: assert (1 > 0 and 1 < 0)
+  baseline signature frozen: Failure: assert (1 > 0 and 1 < 0)
+✓ gate baseline
+✗ patch rejected — the patch does not apply to the baseline tree: git apply --check failed (forward) at every strip level: -p1: error: corrupt patch at line 12; -p0: error: corrupt patch at line 12
+✗ gate candidate — the patch does not apply to the baseline tree: git apply --check failed (forward) at every strip level: -p1: error: corrupt patch at line 12; -p0: error: corrupt patch at line 12
+
+✗ Unverifiable
+  the patch does not apply to the baseline tree: git apply --check failed (forward) at every strip level: -p1: error: corrupt patch at line 12; -p0: error: corrupt patch at line 12
+  Counterfactual gate:  baseline=FAIL
+  Preservation checks:  none declared
+  NOT run:              full repository suite
+  NOT run:              preservation checks (none declared)
+  Sandbox:              partial — linux without usable bubblewrap: env allowlist, rlimits, timeout, process-group kill
+  Authorities:          spec=not_applicable  partial_sandbox=--allow-partial-sandbox
+  Spend:                8 commands, 3.0s, tokens not_applicable (no model is invoked by verify)
+  patch 99b8a7fddbd5  checks c166bd86755e  contract f9f73f06a9b1
+  uncertainty: repository code executed under a partial sandbox: side effects outside the worktree were possible and are not accounted for
+  uncertainty: no preservation checks were declared, so this receipt says nothing about regressions elsewhere in the repository

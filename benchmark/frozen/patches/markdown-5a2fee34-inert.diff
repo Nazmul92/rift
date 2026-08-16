@@ -1,0 +1,10 @@
+diff --git a/markdown/extensions/admonition.py b/markdown/extensions/admonition.py
+index ce8492f..1b4ef09 100644
+--- a/markdown/extensions/admonition.py
++++ b/markdown/extensions/admonition.py
+@@ -168,3 +168,5 @@ class AdmonitionProcessor(BlockProcessor):
+ 
+ def makeExtension(**kwargs):  # pragma: no cover
+     return AdmonitionExtension(**kwargs)
++
++# fix applied

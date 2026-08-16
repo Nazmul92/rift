@@ -1,0 +1,145 @@
+diff --git a/scripts/compare_detectors.py b/scripts/compare_detectors.py
+index 61b9c8d..363381a 100644
+--- a/scripts/compare_detectors.py
++++ b/scripts/compare_detectors.py
+@@ -225,8 +225,8 @@ def _measure_memory_subprocess(
+ 
+ def _record_result(  # noqa: PLR0913
+     detector_stats: dict,
+-    expected_encoding: str,
+-    expected_language: str,
++    expected_encoding: str | None,
++    expected_language: str | None,
+     filepath: Path,
+     detected: str | None,
+     detected_language: str | None,
+@@ -247,6 +247,9 @@ def _record_result(  # noqa: PLR0913
+         )
+ 
+     # Language tracking (independent of encoding accuracy)
++    # Skip for binary files (expected_language is None).
++    if expected_language is None:
++        return
+     detector_stats["lang_total"] += 1
+     detector_stats["per_enc"][expected_encoding]["lang_total"] += 1
+     normalized = normalize_language(detected_language)
+diff --git a/scripts/diagnose_accuracy.py b/scripts/diagnose_accuracy.py
+index d37454e..456bb12 100644
+--- a/scripts/diagnose_accuracy.py
++++ b/scripts/diagnose_accuracy.py
+@@ -77,7 +77,11 @@ def main() -> None:
+         size = len(data)
+         short_path = f"{filepath.parent.name}/{filepath.name}"
+ 
+-        norm_expected = normalize_encoding_name(expected_encoding)
++        norm_expected = (
++            "None"
++            if expected_encoding is None
++            else normalize_encoding_name(expected_encoding)
++        )
+ 
+         total += 1
+         enc_total[norm_expected] += 1
+@@ -89,7 +93,7 @@ def main() -> None:
+             enc_correct[norm_expected] += 1
+         else:
+             failures[norm_expected].append((detected, confidence, size, short_path))
+-            if detected is None:
++            if detected is None and expected_encoding is not None:
+                 none_results.append((expected_encoding, language, size, short_path))
+ 
+     # ---- Overall summary ----
+diff --git a/scripts/utils.py b/scripts/utils.py
+index eacd194..a36ab8c 100644
+--- a/scripts/utils.py
++++ b/scripts/utils.py
+@@ -169,7 +169,9 @@ def normalize_language(detected_language: str | None) -> str | None:
+     return ISO_TO_LANGUAGE.get(detected_language.lower(), detected_language.lower())
+ 
+ 
+-def collect_test_files(data_dir: Path) -> list[tuple[str, str, Path]]:
++def collect_test_files(
++    data_dir: Path,
++) -> list[tuple[str | None, str | None, Path]]:
+     """Collect (encoding, language, filepath) tuples from test data.
+ 
+     Directory name format: "{encoding}-{language}" e.g. "utf-8-english",
+@@ -177,15 +179,23 @@ def collect_test_files(data_dir: Path) -> list[tuple[str, str, Path]]:
+ 
+     Since all language names are single words (no hyphens), we can reliably
+     split on the last hyphen to separate encoding from language.
++
++    The binary test directory is named "None-None"; its encoding and language
++    are returned as Python ``None`` rather than the string ``"None"``.
+     """
+-    test_files: list[tuple[str, str, Path]] = []
++    test_files: list[tuple[str | None, str | None, Path]] = []
+     for encoding_dir in sorted(data_dir.iterdir()):
+         if not encoding_dir.is_dir():
+             continue
+         parts = encoding_dir.name.rsplit("-", 1)
+         if len(parts) != 2:
+             continue
+-        encoding_name, language = parts
++        encoding_name: str | None = parts[0]
++        language: str | None = parts[1]
++        if encoding_name == "None":
++            encoding_name = None
++        if language == "None":
++            language = None
+         test_files.extend(
+             (encoding_name, language, filepath)
+             for filepath in sorted(encoding_dir.iterdir())
+diff --git a/src/chardet/equivalences.py b/src/chardet/equivalences.py
+index d3dc0f2..bd17bae 100644
+--- a/src/chardet/equivalences.py
++++ b/src/chardet/equivalences.py
+@@ -141,7 +141,7 @@ def _build_bidir_index() -> dict[str, frozenset[str]]:
+ _NORMALIZED_BIDIR: dict[str, frozenset[str]] = _build_bidir_index()
+ 
+ 
+-def is_correct(expected: str, detected: str | None) -> bool:
++def is_correct(expected: str | None, detected: str | None) -> bool:
+     """Check whether *detected* is an acceptable answer for *expected*.
+ 
+     Acceptable means:
+@@ -150,10 +150,12 @@ def is_correct(expected: str, detected: str | None) -> bool:
+     2. Both belong to the same bidirectional byte-order group, OR
+     3. *detected* is a known superset of *expected*.
+ 
+-    :param expected: The expected encoding name.
++    :param expected: The expected encoding name, or ``None`` for binary files.
+     :param detected: The detected encoding name, or ``None``.
+     :returns: ``True`` if the detection is acceptable.
+     """
++    if expected is None:
++        return detected is None
+     if detected is None:
+         return False
+     norm_exp = normalize_encoding_name(expected)
+@@ -206,7 +208,9 @@ def _chars_equivalent(a: str, b: str) -> bool:
+     return _strip_combining(a) == _strip_combining(b)
+ 
+ 
+-def is_equivalent_detection(data: bytes, expected: str, detected: str | None) -> bool:
++def is_equivalent_detection(
++    data: bytes, expected: str | None, detected: str | None
++) -> bool:
+     """Check whether *detected* produces functionally identical text to *expected*.
+ 
+     Returns ``True`` when:
+@@ -222,11 +226,13 @@ def is_equivalent_detection(data: bytes, expected: str, detected: str | None) ->
+     or either encoding cannot decode *data*.
+ 
+     :param data: The raw byte data that was detected.
+-    :param expected: The expected encoding name.
++    :param expected: The expected encoding name, or ``None`` for binary files.
+     :param detected: The detected encoding name, or ``None``.
+     :returns: ``True`` if decoding with *detected* yields functionally identical
+         text to decoding with *expected*.
+     """
++    if expected is None:
++        return detected is None
+     if detected is None:
+         return False
+ 

@@ -1,0 +1,22 @@
+# Secrets — never commit
+.env
+.env.local
+*.key
+
+# Task state and derived artifacts
+.rift/
+
+# Benchmark working trees (cloned repositories, staged copies).
+# The frozen manifests, patches, results and reports under benchmark/frozen/,
+# benchmark/run-1-invalidated/ and benchmark/abandoned-freeze-1/ are evidence
+# and ARE committed.
+benchmark/work/
+
+# Tooling
+build/
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+*.egg-info/

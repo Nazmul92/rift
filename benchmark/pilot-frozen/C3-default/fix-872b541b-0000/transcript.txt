@@ -1,0 +1,70 @@
+task fix-872b541b-0000  verb=fix  repo=/cal/C3-default
+sandbox partial — linux without usable bubblewrap: env allowlist, rlimits, timeout, process-group kill
+authority explicit --allow-partial-sandbox
+checks frozen b94f85ffd2dc  1 change, 0 preservation
+protected conftest.py, pyproject.toml, pytest.ini, setup.cfg, tests/test_cfg.py, tox.ini
+contract b8319a9a94b2  tree ac3bf3726253
+context 1 collected node(s)
+▶ pytest tests/test_cfg.py::test_missing_key_is_none  (diagnosis)
+  0.3s  exit=1
+  → FAIL  [1/1]  KeyError: 'absent'
+handles 2 discovered: unsetenv:GPG_KEY, unsetenv:PYTHON_SHA256
+theories 51 over 3 role(s), 6 probe(s) available
+▶ pytest tests/test_cfg.py::test_missing_key_is_none [fresh[r0+r1]x1]  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  KeyError: 'absent'
+  probe fresh[r0+r1]x1  applied unsetenv:GPG_KEY, unsetenv:PYTHON_SHA256 → blocked
+  eliminated 10 theory/theories via fresh[r0+r1]x1
+▶ pytest tests/test_cfg.py::test_missing_key_is_none [fresh[none]x3]  (diagnosis)
+  0.3s  exit=1
+▶ pytest tests/test_cfg.py::test_missing_key_is_none [fresh[none]x3]  (diagnosis)
+  0.3s  exit=1
+▶ pytest tests/test_cfg.py::test_missing_key_is_none [fresh[none]x3]  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  KeyError: 'absent'
+  probe fresh[none]x3  applied nothing → blocked
+  eliminated 5 theory/theories via fresh[none]x3
+▶ pytest tests/test_cfg.py::test_missing_key_is_none [same[none]x1]  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  KeyError: 'absent'
+  probe same[none]x1  applied nothing → blocked
+  eliminated 5 theory/theories via same[none]x1
+▶ pytest tests/test_cfg.py::test_missing_key_is_none [same[none]x1]  (diagnosis)
+  0.5s  exit=1
+  → FAIL  [1/1]  KeyError: 'absent'
+  probe same[none]x1  applied nothing → blocked
+  eliminated 5 theory/theories via same[none]x1
+diagnosis underdetermined for tests/test_cfg.py::test_missing_key_is_none
+context 1 file(s), 39 chars: src/app/cfg.py
+  withheld: tests/test_cfg.py (protected or excluded)
+model → propose_change (claude-haiku-4-5-20251001)
+model ← propose_change  usage 561 in / 109 out  finish=stop
+patch c65603dc70a8  1 file(s): src/app/cfg.py
+▶ pytest tests/test_cfg.py::test_missing_key_is_none  (baseline)
+  0.3s  exit=1
+  → FAIL  [1/1]  KeyError: 'absent'
+  baseline signature frozen: KeyError: 'absent'
+✓ gate baseline
+▶ pytest tests/test_cfg.py::test_missing_key_is_none  (candidate)
+  0.4s  exit=0
+  → PASS  [1/1]
+✓ gate candidate
+▶ pytest tests/test_cfg.py::test_missing_key_is_none  (withdrawal)
+  0.4s  exit=1
+  → FAIL  [1/1]  KeyError: 'absent'
+✓ gate withdrawal
+  reloaded change-set.diff → c65603dc70a8
+✓ gate reapply
+✓ gate preservation
+
+✓ Verified against approved checks
+  Counterfactual gate:  baseline=FAIL → candidate=PASS → withdrawal=FAIL
+  Preservation checks:  none declared
+  NOT run:              full repository suite
+  NOT run:              preservation checks (none declared)
+  Sandbox:              partial — linux without usable bubblewrap: env allowlist, rlimits, timeout, process-group kill
+  Authorities:          spec=not_applicable  partial_sandbox=--allow-partial-sandbox
+  Spend:                10 commands, 3.8s, tokens not_applicable (no model is invoked by verify)
+  patch c65603dc70a8  checks b94f85ffd2dc  contract b8319a9a94b2
+  uncertainty: repository code executed under a partial sandbox: side effects outside the worktree were possible and are not accounted for
+  uncertainty: no preservation checks were declared, so this receipt says nothing about regressions elsewhere in the repository

@@ -1,0 +1,10 @@
+diff --git a/markdown/__init__.py b/markdown/__init__.py
+index 9674d6e..00fd40c 100644
+--- a/markdown/__init__.py
++++ b/markdown/__init__.py
+@@ -46,3 +46,5 @@ from .__meta__ import __version__, __version_info__  # noqa
+ from .extensions import Extension  # noqa
+ 
+ __all__ = ['Markdown', 'markdown', 'markdownFromFile']
++
++# unrelated edit

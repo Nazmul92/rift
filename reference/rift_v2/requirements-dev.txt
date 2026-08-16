@@ -1,0 +1,30 @@
+# Pinned test / lint / type-check toolchain for the rift_v2 reference snapshot.
+#
+# Exact pins including transitive dependencies, so `pip install -r` resolves
+# identically in a clean environment. Resolved and verified on
+# python:3.12-slim (Python 3.12.14, linux/amd64), the M0 reference environment.
+#
+#     python -m pip install -r requirements-dev.txt
+#     PYTHONPATH=src python -m pytest tests -q
+#     python -m ruff check src tests
+#     python -m ruff format --check src tests
+#     python -m mypy src
+#
+# Hashes are deliberately omitted: ruff and mypy publish per-platform wheels,
+# so a hash-locked file would pin this snapshot to linux/amd64 and fail for a
+# reviewer on another architecture. Versions are exact; artifacts are not.
+
+mypy==2.3.1
+pytest==9.1.1
+ruff==0.16.3
+
+# transitive, pinned for reproducibility
+ast_serialize==0.8.0
+iniconfig==2.3.0
+librt==0.15.0
+mypy_extensions==1.1.0
+packaging==26.3
+pathspec==1.1.1
+pluggy==1.6.0
+Pygments==2.20.0
+typing_extensions==4.16.0

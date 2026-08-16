@@ -1,0 +1,49 @@
+task fix-9f22a7fa-0000  verb=fix  repo=/cal/C4-order
+sandbox partial — linux without usable bubblewrap: env allowlist, rlimits, timeout, process-group kill
+authority explicit --allow-partial-sandbox
+checks frozen 3f2d738bcf20  1 change, 0 preservation
+protected conftest.py, pyproject.toml, pytest.ini, setup.cfg, tests/test_target.py, tox.ini
+contract ad1cb32e59e0  tree 14afc1f0989b
+context 2 collected node(s)
+▶ pytest tests/test_target.py::test_clean  (diagnosis)
+  0.3s  exit=0
+  → PASS  [1/1]
+handles 4 discovered: unsetenv:GPG_KEY, unsetenv:PYTHON_SHA256, first:tests/, first:tests/test_a_pollute.py
+theories 123 over 5 role(s), 10 probe(s) available
+▶ pytest tests/test_target.py::test_clean [fresh[r0+r1]x1]  (diagnosis)
+  0.6s  exit=0
+  → PASS  [1/1]
+  probe fresh[r0+r1]x1  applied unsetenv:GPG_KEY, unsetenv:PYTHON_SHA256 → pass
+  eliminated 18 theory/theories via fresh[r0+r1]x1
+▶ pytest tests/test_target.py::test_clean [fresh[r2]x1]  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  AssertionError: assert {'leak': 1} == {}
+  probe fresh[r2]x1  applied first:tests/ → blocked
+  eliminated 19 theory/theories via fresh[r2]x1
+▶ pytest tests/test_target.py::test_clean [fresh[r3]x1]  (diagnosis)
+  0.4s  exit=1
+  → FAIL  [1/1]  AssertionError: assert {'leak': 1} == {}
+  probe fresh[r3]x1  applied first:tests/test_a_pollute.py → blocked
+  eliminated 7 theory/theories via fresh[r3]x1
+cause supported (interventional, gate not_applicable): first:tests/test_a_pollute.py
+diagnosis diagnosis_supported for tests/test_target.py::test_clean
+context 1 file(s), 51 chars: src/app/registry.py
+  withheld: tests/test_target.py (protected or excluded)
+model → propose_change (claude-haiku-4-5-20251001)
+model ← propose_change  usage 288 in / 442 out  finish=stop
+model ✗ propose_change rejected — malformed JSON object: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+✗ gate candidate — no proposal survived validation; no patch was produced
+
+✗ Unverifiable
+  no proposal survived validation; no patch was produced
+  Counterfactual gate:  baseline=FAIL
+  Preservation checks:  none declared
+  NOT run:              full repository suite
+  NOT run:              preservation checks (none declared)
+  NOT run:              tests/test_target.py::test_clean (change, not run)
+  Sandbox:              partial — linux without usable bubblewrap: env allowlist, rlimits, timeout, process-group kill
+  Authorities:          spec=not_applicable  partial_sandbox=--allow-partial-sandbox
+  Spend:                4 commands, 1.7s, tokens not_applicable (no model is invoked by verify)
+  patch   checks 3f2d738bcf20  contract ad1cb32e59e0
+  uncertainty: repository code executed under a partial sandbox: side effects outside the worktree were possible and are not accounted for
+  uncertainty: no preservation checks were declared, so this receipt says nothing about regressions elsewhere in the repository

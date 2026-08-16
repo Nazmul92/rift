@@ -1,0 +1,12 @@
+✗ Unverifiable
+  the patch does not apply to the baseline tree: git apply --check failed (forward) at every strip level: -p1: error: corrupt patch at line 12; -p0: error: corrupt patch at line 12
+  Counterfactual gate:  baseline=FAIL
+  Preservation checks:  none declared
+  NOT run:              full repository suite
+  NOT run:              preservation checks (none declared)
+  Sandbox:              partial — linux without usable bubblewrap: env allowlist, rlimits, timeout, process-group kill
+  Authorities:          spec=not_applicable  partial_sandbox=--allow-partial-sandbox
+  Spend:                8 commands, 3.0s, tokens not_applicable (no model is invoked by verify)
+  patch 99b8a7fddbd5  checks c166bd86755e  contract f9f73f06a9b1
+  uncertainty: repository code executed under a partial sandbox: side effects outside the worktree were possible and are not accounted for
+  uncertainty: no preservation checks were declared, so this receipt says nothing about regressions elsewhere in the repository

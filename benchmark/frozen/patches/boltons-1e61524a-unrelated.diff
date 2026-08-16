@@ -1,0 +1,9 @@
+diff --git a/boltons/__init__.py b/boltons/__init__.py
+index d67804a..2dc5380 100644
+--- a/boltons/__init__.py
++++ b/boltons/__init__.py
+@@ -1 +1,2 @@
+-__version__ = '26.0.1dev'
+\ No newline at end of file
++__version__ = '26.0.1dev'
++# unrelated edit

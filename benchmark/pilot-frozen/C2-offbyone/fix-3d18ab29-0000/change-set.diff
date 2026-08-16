@@ -1,0 +1,6 @@
+--- src/app/text.py
++++ src/app/text.py
+@@ -1,2 +1,2 @@
+ def first_n(items, n):
+-    return items[: n - 1]
++    return items[:n]
