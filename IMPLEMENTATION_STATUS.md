@@ -2464,3 +2464,266 @@ runtime and there is nothing to compare that digest against.
 Nothing broader is claimed. In particular, D1 means the path was **never**
 demonstrated for a repair that adds a file, and the single passing fixture
 modifies an existing one.
+
+---
+
+## M1 closing pass — item 0: governance and status correction
+
+Appended; nothing above is modified.
+
+### Source corrections made, and their evidence status
+
+**Withdrawal and reapplication now use phase-state hashes.** `withdrawn_state`
+is compared against the ledger-reduced `baseline_state`, and
+`decide_reapply(candidate_state, reapplied_state, …)` replaces the whole-tree
+comparison. Whole-tree hashes remain recorded as `tree_hash` artifacts and no
+longer determine any verdict.
+
+Why it mattered: `withdrawn_tree = wt.hash()` executes *before* the withdrawal
+episode's `reset_episode`, so candidate-run debris was still present and the
+gate would reject with *"the candidate phase left tracked changes behind and
+the counterfactual is not sound"* — for a log file.
+
+**The sandbox normalisation preserved meaning.** 164 blank-only lines were
+removed from `sandbox.py` under six equivalence checks: both versions parse,
+`ast.dump(..., include_attributes=False)` identical, semantic token streams
+identical, both compile, deletions only, and **nonblank count unchanged at
+533**. Before `dd33aded9a93f80c…` (872/533/339); after `4ac88ea49bee4754…`
+(708/533/175). `ruff format` then restored 7 separator lines and the AST was
+re-verified identical.
+
+**Neither correction is yet backed by a dedicated consuming-path regression
+test.** The existing suites pass, but no fixture creates runtime debris during
+candidate execution, so nothing currently fails if either comparison is
+reverted to whole-tree. That is the same defect class as D6 — a fix whose
+absence no test would notice — and it is why item 1 of this directive exists.
+Until those tests land, the phase-state corrections are **implemented but
+unproven**.
+
+### Reverse authority mismatch: DAR-001
+
+`_repair_basis()` exists in `app.py` and emits `repair_basis`, `diagnosis`,
+`reproducer`, `reproducer_hash` and `claim_scope` on every `fix` receipt.
+
+`DESIGN_AMENDMENT_RECORD.md` DAR-001 still reads **`Status: NOT IMPLEMENTED`**.
+
+This is the mismatch inverted: previously code ran ahead of governance in the
+sense that rules lived only in code; here governance is stale in the opposite
+direction — it denies a behaviour the runtime already has. A reader consulting
+the DAR would conclude the field cannot appear, and would have no basis for
+interpreting it when it does.
+
+**DAR-001 is deliberately NOT marked implemented in this pass.** Its receipt
+and ledger-replay evidence (item 4) does not exist, and marking it implemented
+on the strength of the code being present would repeat exactly the error this
+project keeps correcting. The status line will change when the byte-identical
+replay tests for both `repair_basis` values pass, and not before.
+
+DAR-007 likewise stays open: v1.2.4 has not been produced.
+
+---
+
+## M1 closing pass — items 1 and 2 of the correction directive
+
+Appended; nothing above is modified.
+
+### Item 2 (previous directive) — two vacuous tests deleted
+
+`test_restoring_whole_tree_withdrawal_authority_rejects_at_withdrawal` and
+`test_restoring_whole_tree_reapply_authority_rejects_at_reapply` are removed,
+with the `capture` / `del capture` / `assert Worktree is not None` ceremony.
+
+Their dictionaries were never populated, so `trees.get("withdrawal", "w")` and
+`captured.get("cand", "c")` returned literal constants and the inequality was
+manufactured. Both would have passed with the production code absent. They were
+written *after* the previous pair had already been rejected for the same defect,
+which is the part worth recording: the failure was mine, twice, in successive
+passes.
+
+The genuine provenance-spy tests remain and carry the evidence — they capture
+the production call sites' actual arguments and compare them against the
+ledger-recorded `state_hash` values, and each fixture separately asserts that
+its whole-tree hashes *differ* while its phase-state hashes match, so it
+provably discriminates the two authorities.
+
+### Item 1 — cause-supported file-adding fixture, closed
+
+Three hand-written attempts at the two-file diff were rejected
+(`corrupt patch`): a wrong hunk count, an escaped docstring, and blank context
+lines emitted without their leading space. **The harness was never the problem.**
+The suite already contained a passing `/dev/null` new-file patch, so new-file
+changes were supported all along; the literal was invalid.
+
+The patch is now generated mechanically from a temporary git repository —
+`git add -N src/app/staging.py` then `git diff --binary --no-renames` — and
+**proven before embedding**:
+
+```
+forward --check: 0    added file present: True
+reverse --check: 0    added file gone:    True
+```
+
+618 bytes, embedded exactly. After wrapping the literal for line length the
+value was re-evaluated and asserted byte-identical rather than assumed.
+
+`test_a_cause_supported_repair_that_adds_a_file` passes and asserts, without
+conditional branches:
+
+- the target passes in isolation;
+- diagnosis yields `diagnosis_supported` with `support: interventional`;
+- **the contract references exactly one supporting probe, and that probe
+  applies exactly one handle** — this is a claim about the *supporting* probe,
+  not about how many diagnostic probes ran overall; several did;
+- the frozen contract carries that probe's event id and signature;
+- `REPRODUCER_FROZEN` exists and the receipt carries `repair_basis:
+  cause_supported`, `diagnosis: supported`, and the frozen reproducer hash;
+- touched paths are exactly `{src/app/staging.py, src/app/registry.py}` — the
+  patch adds an implementation module and modifies implementation code, and
+  touches no target test, precondition test, runner configuration or other
+  judge artifact;
+- baseline, candidate, withdrawal, reapply and preservation all pass;
+- `withdrawal.state_hash == baseline.state_hash` (added path absent),
+  `reapply.state_hash == candidate.state_hash` (present), and
+  `withdrawal.state_hash != candidate.state_hash`, which stops the first two
+  assertions from holding vacuously;
+- a spy on `_validate_reproducer` confirms **before and after invocation for all
+  five phases**, proving the fixture reaches the consuming integrity path rather
+  than passing because `reproducer is None`.
+
+That last assertion is what the earlier file-adding test lacked. It used a plain
+wrong-operator bug, so diagnosis came out `underdetermined`, no contract was
+frozen, `_validate_reproducer` never ran, and the test proved file-adding only
+for a bare-target repair.
+
+### Targeted and static evidence only
+
+- 42 tests: `test_reproduction_contract.py` (36) + `test_phase_state_authority.py` (6)
+- `ruff check`, `ruff format --check`, `mypy` — clean
+- Runtime **8,204 / 8,600**; these items added no runtime lines
+
+This is not a gate and is not milestone evidence.
+
+### Status at this point
+
+`BLOCKED`. Outstanding: the feature-removal cycle, `propose_hypotheses`, the
+bounded repair loop, both `repair_basis` replay paths, v1.2.4 and DAR closure,
+M1-R04 and the acceptance matrix, the final three-run gate, and the sanitized
+ZIP.
+
+---
+
+## Feature-removal evidence (item 2)
+
+Each mutation ran in a **fresh disposable copy** of the exact tree, deleted
+before the next began. The authoritative working tree was never mutated.
+
+```
+authoritative digest BEFORE: c145e7ff56b0868f95585c761480e377df8fdfaa1875b9f5b165bcbacb89c8f2
+authoritative digest AFTER : c145e7ff56b0868f95585c761480e377df8fdfaa1875b9f5b165bcbacb89c8f2
+authoritative tree unchanged: True
+```
+
+### The false-green incident, recorded because it nearly became evidence
+
+The first run reported **all four removals undetected**. Before writing that
+down I checked which module the copy actually imported:
+
+```
+imported from: /w/src/riftagent/__init__.py
+```
+
+The editable install points at the authoritative tree, so pytest inside the copy
+was executing the **original** package. No mutation had taken effect, and all
+four "undetected" results were artifacts of my harness.
+
+The harness now redirects `PYTHONPATH` to the copy's `src` and **asserts
+`riftagent.__file__` resolves under the copy before running the test**. Without
+that assertion every result below would have been false evidence in the
+opposite direction from the usual failure — a green that looked like a finding
+about the tests rather than about the harness.
+
+### Results
+
+| Removal | Detecting test | Result |
+|---|---|---|
+| withdrawal authority reverted to whole-tree operands | `test_withdrawal_decision_receives_the_recorded_phase_state_hashes` | **RED**, exit=1 |
+| reapplication authority reverted to whole-tree operands | `test_reapply_decision_receives_the_recorded_phase_state_hashes` | **RED**, exit=1 |
+| reset no longer preserves patch-owned paths (D1) | `test_a_file_adding_repair_passes_end_to_end` | **RED**, exit=1 |
+| `raise SandboxError` → `pass` in the removal-error branch | `test_a_gate_phase_cleanup_failure_is_governed` | **GREEN — not detected** |
+
+Command form, per mutation:
+
+```
+python -m pytest <test> -q -p no:cacheprovider --no-header -x
+   cwd=<disposable copy>   PYTHONPATH=<copy>/src
+```
+
+### The fourth mutation, and precisely what is and is not proven
+
+`test_a_gate_phase_cleanup_failure_is_governed` monkeypatches
+`app.reset_episode` to raise directly. It therefore exercises the **caller's**
+handling of a raised `SandboxError` and never enters `reset_episode`'s own
+error path. Replacing the `raise` inside that function removes code the test
+never executes, so the test stays green.
+
+- **Proven:** when `reset_episode` raises, the gate blocks, emits no successful
+  `EPISODE_RESET` for the failing phase, runs no later phase, makes no model
+  request, and emits a scoped receipt.
+- **Not proven:** that a real `OSError` during debris removal becomes a
+  `SandboxError` rather than being swallowed.
+
+No removal check is claimed for the fourth mutation. Item 2 stays **open** until
+the test drives the real `reset_episode` — by making the underlying filesystem
+operation fail rather than substituting the function — and the mutation is
+recorded red.
+
+### Note on the reviewed archive
+
+`23c0de8a8be6530af3294ee696125bea27c7914700739de50a3c0c060bb88aba` cannot be
+verified here. The ZIP pipeline has never run in this workspace, so no archive
+was produced by this runtime to compare against.
+
+---
+
+## Fourth removal check â€” closed
+
+`test_a_gate_phase_cleanup_failure_is_governed` was rewritten to drive the
+production `reset_episode` instead of substituting it. `Path.unlink` raises a
+real `OSError` for the known debris file `calc.cache` and delegates for
+everything else, so the failure originates inside the function under test.
+
+The test now additionally proves the real function was entered and that the
+intended removal was actually attempted â€” without those two assertions it could
+pass while the `OSError` arose somewhere incidental.
+
+Mutation rerun, fresh disposable copy, imported package asserted to resolve
+under the copy:
+
+```
+authoritative digest BEFORE: 8d20f39dea7a6f5c65271cffb88615c64dae7716197abaaf169be72efc702a34
+mutation : raise SandboxError -> pass, in the removal-error branch
+test     : test_a_gate_phase_cleanup_failure_is_governed
+result   : RED (expected), exit=1
+authoritative digest AFTER : 8d20f39dea7a6f5c65271cffb88615c64dae7716197abaaf169be72efc702a34
+authoritative tree unchanged: True
+removals not detected: 0
+```
+
+The digest differs from the earlier run because the test file changed between
+them; it is unchanged across this mutation, which is what the check requires.
+
+**Item 2 is closed.** All four removals have recorded red evidence:
+
+| Removal | Test | Result |
+|---|---|---|
+| withdrawal authority â†’ whole-tree | `test_withdrawal_decision_receives_the_recorded_phase_state_hashes` | RED |
+| reapplication authority â†’ whole-tree | `test_reapply_decision_receives_the_recorded_phase_state_hashes` | RED |
+| reset stops preserving patch-owned paths | `test_a_file_adding_repair_passes_end_to_end` | RED |
+| removal error swallowed instead of raised | `test_a_gate_phase_cleanup_failure_is_governed` | RED |
+
+Both halves are now proven separately: the caller stops the gate when
+`reset_episode` raises, and `reset_episode` raises rather than swallowing a real
+filesystem failure.
+
+Targeted evidence: 6 tests in `test_phase_state_authority.py`, ruff and mypy
+clean. Runtime **8,204 / 8,600**, unchanged â€” this item added no runtime lines.

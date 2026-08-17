@@ -217,9 +217,30 @@ def decide_withdrawal(result: CheckResult, frozen: Signature | None) -> PhaseDec
     return PhaseDecision(True, "")
 
 
+def decide_withdrawal_state(withdrawn_state: str, baseline_state: str) -> PhaseDecision:
+    """Did reversing the patch restore the baseline phase state?
+
+    Phase state, not whole tree: runtime debris written by the candidate is
+    still present at this point and is cleared by the withdrawal episode's
+    reset. Judging on a whole-tree hash rejects a sound counterfactual because
+    of a log file.
+
+    Both operands cover the manifest plus the paths the patch owns, so a
+    patch-added file that reversal failed to remove is visible here as a path
+    that is present when it should be absent.
+    """
+    if baseline_state and withdrawn_state != baseline_state:
+        return PhaseDecision(
+            False,
+            "withdrawing the patch did not restore the baseline state; the candidate phase left "
+            "changes behind and the counterfactual is not sound",
+        )
+    return PhaseDecision(True, "")
+
+
 def decide_reapply(
-    candidate_tree_hash: str,
-    reapplied_tree_hash: str,
+    candidate_state_hash: str,
+    reapplied_state_hash: str,
     frozen_patch_hash: str,
     reloaded_patch_hash: str,
 ) -> PhaseDecision:
@@ -243,10 +264,10 @@ def decide_reapply(
             f"the durable ChangeSet no longer hashes to its accepted value "
             f"(accepted {frozen_patch_hash[:12]}…, reloaded {reloaded_patch_hash[:12]}…)",
         )
-    if candidate_tree_hash != reapplied_tree_hash:
+    if candidate_state_hash != reapplied_state_hash:
         return PhaseDecision(
             False,
-            "tree after reapplication differs from the gated candidate tree",
+            "phase state after reapplication differs from the gated candidate tree",
         )
     return PhaseDecision(True, "")
 
@@ -393,6 +414,7 @@ __all__ = [
     "decide_preservation",
     "decide_reapply",
     "decide_withdrawal",
+    "decide_withdrawal_state",
     "derive_verdict",
     "validate_patch",
 ]

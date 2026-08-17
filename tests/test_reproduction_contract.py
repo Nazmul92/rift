@@ -881,3 +881,125 @@ def test_source_drift_during_the_gate_stops_it(tmp_path: Path, capsys, fake_prov
     assert kinds.index("infrastructure_blocked") > max(
         i for i, k in enumerate(kinds) if k == "model_request_started"
     ), "a model request followed the integrity stop"
+
+
+# --------------------------------------------------------------------------
+# cause-supported repair that ADDS a file
+#
+# The earlier file-adding fixture used a plain wrong-operator bug, so diagnosis
+# came out `underdetermined`, no ReproductionContract was frozen, and
+# `_validate_reproducer` never ran. It therefore proved file-adding only for a
+# bare-target repair — not for the combination that produced the state-membership
+# defect: frozen reproducer + patch-added path + baseline/withdrawal universe.
+#
+# This one is order-dependent, so diagnosis yields an interventional cause and a
+# frozen contract, and the repair adds `src/app/staging.py`.
+# --------------------------------------------------------------------------
+
+# Generated mechanically from a temporary git repository and proven to apply
+# forward and in reverse before being embedded. Hand-written multi-file
+# diffs with a /dev/null hunk were rejected three times; the harness was
+# never the problem, the literal was.
+CAUSE_SUPPORTED_ADDING_FIX = (
+    "diff --git a/src/app/registry.py b/src/app/registry.py\n"
+    "index 9fe110c..2786c6f 100644\n"
+    "--- a/src/app/registry.py\n"
+    "+++ b/src/app/registry.py\n"
+    "@@ -1,9 +1,11 @@\n"
+    "+from app.staging import stage\n"
+    "+\n"
+    " REGISTRY: dict = {}\n"
+    " _PENDING: dict = {}\n"
+    " \n"
+    " \n"
+    " def put(k, v):\n"
+    "-    REGISTRY[k] = v\n"
+    "+    stage(_PENDING, k, v)\n"
+    " \n"
+    " \n"
+    " def commit():\n"
+    "diff --git a/src/app/staging.py b/src/app/staging.py\n"
+    "new file mode 100644\n"
+    "index 0000000..30e60a5\n"
+    "--- /dev/null\n"
+    "+++ b/src/app/staging.py\n"
+    "@@ -0,0 +1,4 @@\n"
+    "+# Write staging, so an uncommitted put cannot leak into another test.\n"
+    "+def stage(pending, key, value):\n"
+    "+    pending[key] = value\n"
+    "+    return pending\n"
+)
+
+
+def test_a_cause_supported_repair_that_adds_a_file(tmp_path: Path, capsys, fake_provider, monkeypatch):
+    """The combination the state-membership defect actually broke."""
+    import riftagent.app as app
+
+    seen: list[tuple[str, str]] = []
+    real_validate = app._validate_reproducer
+
+    def spy(flow, wt, phase, reproducer, source_digest, expected_tree, when, state_paths=frozenset()):
+        seen.append((phase.value, when))
+        return real_validate(flow, wt, phase, reproducer, source_digest, expected_tree, when, state_paths)
+
+    monkeypatch.setattr(app, "_validate_reproducer", spy)
+    fake_provider.change_diff = CAUSE_SUPPORTED_ADDING_FIX
+    repo = build_repo(tmp_path / "cause-add", ORDERING_REPO)
+    code, receipt = run_fix(repo, capsys)
+    events = ledger_of(repo)
+
+    # 1. the target passes alone
+    first = next(e for e in events if e["kind"] == "check_result")
+    assert first["payload"]["result"]["outcome"] == "passed"
+
+    # 2. an interventional cause, and 3. an exact supporting probe
+    diagnosis = next(e for e in events if e["kind"] == "diagnosis_emitted")["payload"]["diagnosis"]
+    assert diagnosis["status"] == Verdict.DIAGNOSIS_SUPPORTED.value
+    assert diagnosis["support"] == "interventional"
+
+    # 4. the contract exists and 5. references that probe
+    frozen = next(e for e in events if e["kind"] == "reproducer_frozen")
+    contract = frozen["payload"]["reproducer"]
+    assert len(contract["supporting_event_ids"]) == 1
+    probe = next(e for e in events if e["event_id"] == contract["supporting_event_ids"][0])
+    assert probe["kind"] == "probe_selected"
+    assert len(probe["payload"]["applied"]) == 1
+    assert {c["kind"] + ":" + c["arg"] for c in contract["preconditions"]} == set(probe["payload"]["applied"])
+    assert contract["signature"] == probe["payload"]["observation"]["signature"]
+
+    # 6/7. the patch adds a module and touches no judge artifact
+    changeset = next(e for e in events if e["kind"] == "changeset_registered")
+    touched = set(changeset["payload"]["changeset"]["touched_paths"])
+    assert "src/app/staging.py" in touched
+    assert touched == {"src/app/staging.py", "src/app/registry.py"}, touched
+
+    # 8. the receipt reports the supported basis and the frozen reproducer
+    assert receipt["repair_basis"] == "cause_supported"
+    assert receipt["diagnosis"] == "supported"
+    assert receipt["reproducer_hash"] == frozen["payload"]["reproducer_hash"]
+
+    # 9. every phase executed with its required outcome
+    passed = {e["payload"]["phase"] for e in events if e["kind"] == "gate_phase_finished" and e["payload"]["passed"]}
+    assert passed >= {"baseline", "candidate", "withdrawal", "reapply", "preservation"}, receipt.get("reason")
+    assert receipt["verdict"] == Verdict.VERIFIED_AGAINST_APPROVED_CHECKS.value
+    assert code == 0
+
+    # 10. the added path is absent at baseline/withdrawal, present at
+    # candidate/reapply — the membership the defect got wrong.
+    art = {
+        e["payload"]["phase"]: e["payload"]["artifacts"]
+        for e in events
+        if e["kind"] == "gate_phase_finished" and e["payload"].get("artifacts")
+    }
+    assert art["withdrawal"]["state_hash"] == art["baseline"]["state_hash"]
+    assert art["reapply"]["state_hash"] == art["candidate"]["state_hash"]
+    assert art["withdrawal"]["state_hash"] != art["candidate"]["state_hash"], (
+        "baseline and candidate states are equal, so the added path is outside the hashed universe"
+    )
+
+    # 11. the integrity path really ran — not skipped because reproducer is None
+    for phase in ("baseline", "candidate", "withdrawal", "reapply", "preservation"):
+        assert (phase, "before") in seen, f"_validate_reproducer did not run before {phase}"
+    for phase in ("baseline", "candidate", "withdrawal", "reapply"):
+        assert (phase, "after") in seen, f"_validate_reproducer did not run after {phase}"
+    assert ("preservation", "after") in seen

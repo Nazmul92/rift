@@ -816,7 +816,8 @@ def run_episode(
     reproducer: ReproductionContract | None,
     repo_root: Path | None = None,
     expected_tree: str | None = None,
-    patch_paths: frozenset[str] = frozenset(),
+    state_paths: frozenset[str] = frozenset(),
+    patch_owned: frozenset[str] = frozenset(),
 ) -> CheckResult:
     """Execute one gate phase as a clean, deterministic episode.
 
@@ -838,11 +839,17 @@ def run_episode(
     # once at gate entry cannot see drift that happens mid-gate, and a digest
     # read back off the contract cannot see drift at all.
     source_digest = tree_hash(repo_root) if repo_root is not None else ""
+    # `state_paths` is what the phase-state hash covers — the same universe in
+    # every phase, so the values are comparable. `patch_owned` is what the reset
+    # must preserve, which is empty at baseline and withdrawal because no patch
+    # is applied there. Collapsing the two made withdrawal validate a
+    # manifest-only hash against a manifest-plus-touched expectation, which can
+    # only ever match when the patch adds no file.
     if reproducer is not None:
-        _validate_reproducer(flow, wt, phase, reproducer, source_digest, expected_tree, "before", patch_paths)
+        _validate_reproducer(flow, wt, phase, reproducer, source_digest, expected_tree, "before", state_paths)
 
     try:
-        cleared, restored = reset_episode(wt, patch_paths)
+        cleared, restored = reset_episode(wt, patch_owned)
     except SandboxError as exc:
         # No successful EPISODE_RESET is emitted. The phase never started from a
         # clean episode, so nothing measured after it would mean anything, and
@@ -857,7 +864,7 @@ def run_episode(
             "phase": phase.value,
             "cleared": cleared,
             "restored": restored,
-            "patch_owned": sorted(patch_paths),
+            "patch_owned": sorted(patch_owned),
             "scope": "runtime-created state; baseline and patch-owned files preserved",
         },
     )
@@ -906,7 +913,7 @@ def run_episode(
         tree_hash(repo_root) if repo_root is not None else source_digest,
         expected_tree,
         "after",
-        patch_paths,
+        state_paths,
     )
     result = CheckResult(
         check_id=check.check_id,
@@ -967,14 +974,16 @@ def _run_gate(flow: Flow, req: VerifyRequest, td: Path) -> int:
         if not budget_left():
             return _finish(flow, td)
         with Worktree(req.repo_root, "baseline") as wt:
+            # Computed before execution: it is both the expectation this phase
+            # validates against and the value withdrawal must return to.
+            baseline_state = wt.phase_state_hash(patch_paths)
             result = run_episode(
-                flow, wt, change_check, GatePhase.BASELINE, reproducer, req.repo_root, wt.phase_state_hash()
+                flow, wt, change_check, GatePhase.BASELINE, reproducer, req.repo_root, baseline_state, patch_paths
             )
             decision = kernel.decide_baseline(change_check, result)
             if decision.passed and result.signature is not None:
                 flow.append(EventKind.SIGNATURE_FROZEN, {"signature": result.signature.to_dict()})
             baseline_tree = wt.hash()
-            baseline_state = wt.phase_state_hash()
         if not flow.finish_phase(
             GatePhase.BASELINE, decision, {"tree_hash": baseline_tree, "state_hash": baseline_state}
         ):
@@ -1036,9 +1045,21 @@ def _run_gate(flow: Flow, req: VerifyRequest, td: Path) -> int:
         candidate_tree = wt.hash()
         candidate_state = wt.phase_state_hash(patch_paths)
         result = run_episode(
-            flow, wt, change_check, GatePhase.CANDIDATE, reproducer, req.repo_root, candidate_state, patch_paths
+            flow,
+            wt,
+            change_check,
+            GatePhase.CANDIDATE,
+            reproducer,
+            req.repo_root,
+            candidate_state,
+            patch_paths,
+            patch_paths,
         )
-        if not flow.finish_phase(GatePhase.CANDIDATE, kernel.decide_candidate(result), {"tree_hash": candidate_tree}):
+        if not flow.finish_phase(
+            GatePhase.CANDIDATE,
+            kernel.decide_candidate(result),
+            {"tree_hash": candidate_tree, "state_hash": candidate_state},
+        ):
             return _finish(flow, td)
 
         # withdrawal — reverse the exact patch in the same tree
@@ -1067,16 +1088,20 @@ def _run_gate(flow: Flow, req: VerifyRequest, td: Path) -> int:
         # clears it at the start of the withdrawal episode below — and judging
         # the counterfactual on a whole-tree hash would reject the patch for
         # debris. The whole-tree hash stays only as a recorded artifact.
-        withdrawn_state = wt.phase_state_hash()
-        if baseline_state and withdrawn_state != baseline_state:
-            decision = kernel.PhaseDecision(
-                False,
-                "withdrawing the patch did not restore the baseline tree; the candidate phase left "
-                "tracked changes behind and the counterfactual is not sound",
-            )
+        withdrawn_state = wt.phase_state_hash(patch_paths)
+        state_decision = kernel.decide_withdrawal_state(withdrawn_state, baseline_state)
+        if not state_decision.passed:
+            decision = state_decision
         else:
             result = run_episode(
-                flow, wt, change_check, GatePhase.WITHDRAWAL, reproducer, req.repo_root, baseline_state or None
+                flow,
+                wt,
+                change_check,
+                GatePhase.WITHDRAWAL,
+                reproducer,
+                req.repo_root,
+                baseline_state or None,
+                patch_paths,
             )
             decision = kernel.decide_withdrawal(result, frozen_sig)
         if not flow.finish_phase(
@@ -1132,6 +1157,7 @@ def _run_gate(flow: Flow, req: VerifyRequest, td: Path) -> int:
                 reproducer,
                 req.repo_root,
                 candidate_state or None,
+                patch_paths,
                 patch_paths,
             )
             behaviour = kernel.decide_candidate(result)
