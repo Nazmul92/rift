@@ -371,8 +371,9 @@ not independent execution state.
 - Run tests against the installed wheel, not only source-tree imports.
 - Run Ruff and mypy with pinned versions.
 - Generate CLI help and a short README showing each verb and every verdict.
-- Measure runtime line count at M1a, M1 and M2 against the ~8,000-line M2
-  disclosure ceiling; report tests/fixtures/benchmarks separately.
+- Measure runtime line count at M1a, M1 and M2 against the 8,600-line M2
+  disclosure ceiling (amended once from ~8,000; DAR-008); report
+  tests/fixtures/benchmarks separately.
 - Keep benchmark harnesses and fixtures outside the six runtime modules.
 - Record all actually executed commands and skipped external checks in
   `IMPLEMENTATION_STATUS.md`.

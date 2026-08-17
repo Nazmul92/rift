@@ -3395,3 +3395,391 @@ other ten are missing tests, which is a different thing and must not be reported
 under a status that reads as substantially complete.
 
 M1 is closer than it has been, and it is not done.
+
+---
+
+## Correction — M1-R01 was misclassified, and the gap count was wrong
+
+Appended before any further change is made; nothing above is modified.
+
+### M1-R01 is not an environment disclosure
+
+The previous entry recorded M1-R01 as `NOT_RUN_PTY_UNAVAILABLE` on the strength
+of two measurements, and drew the wrong conclusion from them:
+
+```
+stdout is a tty : False
+pty module      : importable
+```
+
+`pty` being importable means **PTY support is available in this environment**.
+`sys.stdout.isatty() == False` describes only the process pytest happened to run
+in, and says nothing about whether a test could allocate a PTY and drive the CLI
+through it. The row's disclosure exists for an environment that *cannot* provide
+a PTY; this one can.
+
+`NOT_RUN_PTY_UNAVAILABLE` is therefore **invalid and withdrawn**. M1-R01 is a
+genuine evidence gap: no test drives the renderer through a PTY, and none was
+prevented from doing so.
+
+This is the same error class the walk was written to expose, committed inside
+the walk itself: a measurement was taken, and then a conclusion was drawn that
+the measurement did not support.
+
+### Corrected accounting for the 47 M1 rows
+
+| | Previous entry | Corrected |
+|---|---|---|
+| pass with dedicated evidence | 35 | **35** |
+| genuine evidence gaps | 10 | **11** |
+| valid environment disclosures | 2 (X06, R01) | **1 (X06 only)** |
+
+The eleven gaps: **M1-F02, F05, F06, F07, F09, F15, F16, X02, R01, R07, R09.**
+
+The one valid disclosure is **M1-X06**, `NOT_RUN_FULL_SANDBOX_UNAVAILABLE`:
+`bwrap` is absent from the reference container and `probe_isolation()` reports
+`partial`. The row is "required where supported" and it is not supported here.
+
+### A second error in the same entry
+
+The closing status read *"The seven substantive evidence gaps:"* and then listed
+ten row ids. The count was stale text left over from an earlier draft; the list
+was correct at the time and is now eleven. **Eleven** is the number, and the ids
+above are the list.
+
+Both corrections are recorded rather than edited into the entries above, which
+stand as written.
+
+### Rulings recorded
+
+Four rulings were issued on the previous entry and are binding on the work that
+follows:
+
+1. **The +400-line amendment to 9,000 is declined.** Single-attempt `fix` is
+   accepted for M1 exactly as DAR-010 governs it. BM-06 must measure the
+   shipped behaviour; if candidate failures materially reduce yield, that
+   evidence can justify the repair loop later. Moving the benchmark target
+   before the measurement is what this avoids. DAR-010's status is unchanged —
+   it already records the loop as NOT IMPLEMENTED and governs the terminal
+   classes for whoever implements it later.
+2. **The authority files are to be synchronized**, every active reference, not
+   only the authority list: `CLAUDE.md` v1.2.3 → v1.2.4 and 8,000 → 8,600
+   including the line-budget instruction, and `ACCEPTANCE_MATRIX.md` P-05. This
+   is synchronization, not redesign, and it is now authorized — the previous
+   entry deliberately left both files untouched and recorded the conflict.
+3. **M1-R01 is a gap**, as corrected above.
+4. **The eleven gaps are to be closed**, beginning with F15/F16 and then the
+   F06 trigger mismatch. The current frozen-tree gate and handoff archive become
+   historical the moment that work lands, and both must be re-run afterwards.
+
+### On the uploaded review snapshot
+
+A file was uploaded for review with these properties:
+
+```
+sha256  92e15cfc84d69e1d5096b5c9c8a861406a87a4d0da762812125f77c33b8cc3b2
+bytes   2,831,387
+entries 686, including working-tree, cache, build and repository metadata
+```
+
+**This runtime did not produce that file.** The only archive it has ever built
+is the one recorded in item 7, verified again before this entry was written:
+
+```
+sha256  53d77f23488170feb3dc3617a3549a1068c8209eb043bc23940ecbe870a99cba
+bytes   527,846
+entries 158, of which 0 match any excluded path
+path    RIFT/riftagent-m1-handoff.zip   (outside the repository, deliberately)
+```
+
+The two are different artifacts. The uploaded snapshot is treated as a review
+snapshot only and is not distributed. Nothing in this record is evidence about
+its contents, and no claim here should be read as describing it.
+
+---
+
+## Closing the eleven evidence gaps
+
+Appended; nothing above is modified.
+
+### Authority synchronization, as ruled
+
+| File | Change |
+|---|---|
+| `CLAUDE.md` line 4 | read `riftagent_design_v1.2.4.md` before changing code |
+| `CLAUDE.md` authority order | v1.2.4 first; the DAR second; v1.2.3 named as superseded-and-retained |
+| `CLAUDE.md` line-budget instruction | "approaches 8,600 runtime lines by M2 — amended once from 8,000 with measurements, see DAR-008" |
+| `ACCEPTANCE_MATRIX.md` P-05 | 8,600-line ceiling, DAR-008 cited |
+| `IMPLEMENTATION_PLAN.md` §measurement | 8,600, DAR-008 cited |
+
+The plan file was not named in the ruling. It carried an active
+"~8,000-line M2 disclosure ceiling" instruction, which is the same class of stale
+reference and would have recreated the mismatch the ruling exists to remove, so
+it was synchronized too and is disclosed here rather than done silently. The only
+remaining v1.2.3 and 8,000 strings in those files are the historical clauses that
+*describe* the supersession and the amendment.
+
+### Two runtime corrections, both required by rows
+
+**M1-F06 — `propose_handles` fired on the wrong trigger.** It was issued once per
+task *before any probing*. That is bounded, but it is not the signal v1.2.4 §8
+and §13 name. It now fires on the representation-inadequate signal, and on
+either of the two forms the design gives it: no handle discovered at all, or
+every enumerated theory contradicted. On the second, the widened set rebuilds the
+role map, grammar and probe set, re-scores against the evidence already recorded,
+and re-enters the loop. Roles are positional, so appending keeps `r0..rN` bound
+to the handles every recorded observation was made against.
+
+**M1-R07 — an interrupt left the process tree running.** `run_argv` killed the
+tree only on `TimeoutExpired`. The child is started in its own session precisely
+so a stray signal cannot reach it, which also means a terminal's Ctrl-C never
+does: the interpreter exited and the child and its descendants kept running,
+holding the worktree open. `run_argv` now kills the tree on any `BaseException`
+unwinding through it and re-raises unchanged.
+
+Both are proven by removal, each in a fresh disposable copy with the imported
+package asserted to resolve under it:
+
+```
+authoritative digest BEFORE: ecdabb19ae53d4128114557dde85d9495506121b6acfd02c6d8327405670b183
+
+M1-R07: the interrupt no longer kills the child process tree      RED, exit=1
+M1-F06: propose_handles is issued up front again                  RED, exit=1
+M1-F06: the widened handles are not merged into the theory space  RED, exit=1
+
+authoritative digest AFTER : ecdabb19ae53d4128114557dde85d9495506121b6acfd02c6d8327405670b183
+authoritative tree unchanged: True
+removals not detected: 0
+```
+
+### The rows, one by one
+
+Nine of the eleven are closed. Every test names its row.
+
+| Row | Evidence now | Note |
+|---|---|---|
+| M1-F02 | `test_acceptance_gaps::test_f02_a_failure_with_the_wrong_signature_cannot_satisfy_baseline` | three controls: matching signature accepted, passing target refused for a *different* stated reason, no prediction means nothing to mismatch. Asserted at the kernel boundary because `build_checkset` sets no predicted signature for `fix`/`verify` — a limit of the fixture surface, stated rather than hidden behind an end-to-end test that would not reach the branch |
+| M1-F05 | `::test_f05_disagreement_per_cost_is_deterministic_and_prefers_the_informative_probe` | identical choice across eight rng seeds; the chosen probe is one the live theories genuinely disagree about; distinguishable from `cheapest`, which is what makes the benchmark's B-versus-C arms a test of selection |
+| M1-F06 | `::test_f06_all_contradicted_triggers_one_bounded_handles_request`, `::test_f06_the_receipt_sums_every_request_not_just_the_last` | exactly one request; ordered *after* the theory space and the observation that contradicted it; widened set is the deterministic one plus the model's handle in that order; still-contradicted stays `representation_inadequate` |
+| M1-F07 | `::test_f07_a_novel_executable_primitive_is_refused` (8 kinds) | plus a positive control that approved primitives are still accepted |
+| M1-X02 | `::test_x02_a_handle_carrying_an_executable_key_is_refused` (7 keys), `::test_x02_a_handle_argument_cannot_carry_a_path_escape_or_shell_metacharacter` | the kind is legal in these cases, so only the key check can reject them |
+| M1-F09 | `::test_f09_a_why_ledger_contains_no_patch_and_no_gate_phase` | asserts the *absence* of `changeset_registered`, `changeset_rejected`, `gate_phase_finished` and `signature_frozen`, with a positive control that the ledger does contain what `why` does do |
+| M1-R01 | `test_streaming_pty.py` (2 tests) | driven through a real `pty.openpty()`. Ordering *and* arrival times: a runtime that buffered everything and flushed at exit fails the >0.25s spread assertion. The second test holds every streamed claim against the settled projection |
+| M1-R07 | `::test_r07_an_interrupt_kills_the_child_process_tree` | grandchild included; the process group is asserted **alive before** the interrupt and gone after, so the check cannot pass against a pid that never ran |
+| M1-R09 | `::test_r09_a_resumed_task_repeats_no_interrupted_model_request` | the adapter is replaced with a spy that fails the test if it is called at all; the fixture first asserts it really is an interrupted request (a started request with no settlement) |
+
+### M1-F15 and M1-F16 are not closed, and are not test gaps
+
+This is the substantive finding of the pass. The observational branch is
+**correct and unreachable**, proven three ways and recorded as **DAR-011**:
+
+1. `discover_handles` never yields an assertion primitive — asserted against
+   missing-module, missing-file and missing-binary failures.
+2. `compile_handles` compiles `dep_assert:*` and `file_assert:*` to output
+   **byte-identical to applying nothing**, while an intervention handle differs.
+3. Therefore no trace the runtime can produce supports an assertion-only cause,
+   and the simplest surviving theory is `const False` —
+   `representation_inadequate`.
+
+So `support: observational` is a verdict this runtime cannot emit, and DAR-002's
+stop is a branch no run can enter. Both rows are tested to the limit of what is
+reachable — the rule proven correct when fed, the `cmd_fix` stop proven at the
+only seam that reaches it, the unreachability proven — and **neither is claimed
+closed**. Claiming otherwise on the strength of a synthetic feed would be
+manufacturing evidence for a path no run can take.
+
+A narrower finding fell out of it, recorded in DAR-011 because it is
+load-bearing and was not designed deliberately: a theory can score `supported`
+while being behaviourally constant and still syntactically naming a role
+(`z0 and not n0`, both latents set by the same role), so `cause_of` returns that
+role's handle. Only the description-length tiebreak in `min(j, dl)` keeps it out
+of the diagnosis. That tiebreak is part of this rule's enforcement and is now
+asserted rather than assumed.
+
+One test was corrected mid-pass rather than left as written: my first attempt
+asserted that no theory over an assertion role could ever score `supported`,
+which is false — the tiebreak, not the scorer, is what protects the diagnosis.
+The assertion now sits where the property actually holds.
+
+### One test relocated, not weakened
+
+`test_fix_and_spend::test_reservation_and_settlement_are_both_durable` asserted
+`all_charged > t["charged_usd"]` — "the diagnosis request was not charged" —
+which silently depended on `propose_handles` firing unconditionally. With the
+trigger corrected that fixture makes exactly one charged request, so the
+assertion became false.
+
+It now asserts `receipt.requests == len(settled)` and pins the count at one for
+that fixture, and the multi-request property it was really testing — that the
+receipt sums every request rather than reporting the last — moved to
+`test_f06_the_receipt_sums_every_request_not_just_the_last`, where more than one
+request genuinely occurs. The property is asserted more strongly than before, in
+the place where it is real.
+
+### Corrected row accounting
+
+| | After the walk | Now |
+|---|---|---|
+| pass with dedicated evidence | 35 | **44** |
+| genuine evidence gaps | 11 | **2 (M1-F15, M1-F16)**, both reclassified as an unimplemented governed branch |
+| valid environment disclosures | 1 (X06) | **1 (X06)** |
+
+### Targeted evidence
+
+```
+python -m pytest -q                       496 passed, 5 skipped in 491.17s
+python -m ruff check src tests benchmark  All checks passed
+python -m ruff format --check             34 files already formatted
+python -m mypy src                        Success: no issues found in 8 source files
+```
+
+Reference environment, `python:3.12-slim`. Not a gate; the three-run gate follows
+on the frozen tree. The 5 skips are the four `NOT_RUN_NETWORK_UNAVAILABLE`
+Django tests, recorded passing separately against the pinned checkout, and one
+pre-existing skip.
+
+**Runtime: 8,510 / 8,600.** 48 lines added by the two corrections; 90 remain. No
+live provider request; charged spend unchanged at **$0.068157**.
+
+---
+
+## Correction — the M1-R07 test was flaky, and the gate caught it
+
+Appended; nothing above is modified.
+
+The first frozen-tree gate on the corrected tree **failed at run 1** and is
+discarded rather than reported:
+
+```
+START digest c414cc4ca88185a07ba4c0d91ece2a02739a0ccb8aa34fc8301f1d4aa53de8b2 (175 files)
+run 1  pytest  rc=1  484.994s  1 failed, 495 passed, 5 skipped
+FAILED tests/test_acceptance_gaps.py::test_r07_an_interrupt_kills_the_child_process_tree
+GATE FAILED at run 1 on pytest. The sequence restarts from run 1.
+```
+
+**The failure was the test, not the runtime.** It asserted that the child's
+process *group* stopped existing, by polling `os.killpg(pgid, 0)` for a
+`ProcessLookupError`. A process that has been killed but not yet reaped is a
+zombie: it still answers signal 0 and still counts as a member of its group,
+while being exactly as dead as the row requires. `run_argv` kills the tree and
+re-raises the interrupt immediately, so it never reaps — correctly, since the
+interpreter is unwinding.
+
+That made the assertion a race on *reaping*, not on killing. In isolation the
+zombie was reaped promptly and the test passed; under full-suite load it was
+not, and the test failed. It passed five consecutive targeted runs before the
+gate ran, which is precisely why the gate exists and why a targeted green is not
+milestone evidence.
+
+The test now asserts the property the row actually states — no descendant of the
+interrupted command is still *running* — and reads liveness from `/proc`, where
+a zombie reports state `Z` and is correctly counted as dead. It watches the
+**grandchild**, because killing the child alone would leave the grandchild
+orphaned and running, which is the failure the row is about. The control is
+strengthened to assert both the child and the grandchild are running before the
+interrupt.
+
+The removal mutation still records RED, so the test continues to fail if the
+runtime fix is reverted.
+
+This is the second time in this project that a test passed in isolation and was
+wrong. The first was manufactured inequality from an unpopulated dictionary; this
+one is a real assertion about the wrong property. Both were caught by a gate
+rather than by review of the diff.
+
+The gate restarts from run 1 on the corrected tree.
+
+---
+
+## The frozen-tree gate, re-run on the corrected tree
+
+Appended; nothing above is modified.
+
+### One attempt before this was killed, not failed
+
+A gate started on this exact tree and died mid-run when the Docker daemon
+stopped:
+
+```
+START digest bd86c62a89cf606662acafe93c289d7479071a40b1588be1f38ffa5dc8ad9d7c (175 files)
+error waiting for container: unexpected EOF
+```
+
+That is `infrastructure_blocked`, not a red test, and it yields no evidence in
+either direction. The sequence restarted from run 1 rather than resuming: a
+sequence spanning a daemon restart is not three consecutive runs on a stable
+tree. Recorded because an unexplained gap between a START digest and a result
+is exactly the kind of hole a reader should not have to guess about.
+
+The restarted gate's START digest is byte-identical to the killed attempt's,
+which is the evidence that nothing moved during the outage.
+
+### The gate
+
+```
+START digest bd86c62a89cf606662acafe93c289d7479071a40b1588be1f38ffa5dc8ad9d7c (175 files)
+
+run 1  pytest               rc=0  465.779s  496 passed, 5 skipped in 464.68s
+run 1  ruff check           rc=0    0.322s  All checks passed!
+run 1  ruff format --check  rc=0    0.130s  34 files already formatted
+run 1  mypy                 rc=0    2.425s  Success: no issues found in 8 source files
+run 2  pytest               rc=0  461.235s  496 passed, 5 skipped in 459.97s
+run 2  ruff check           rc=0    0.264s  All checks passed!
+run 2  ruff format --check  rc=0    0.148s  34 files already formatted
+run 2  mypy                 rc=0    1.863s  Success: no issues found in 8 source files
+run 3  pytest               rc=0  435.655s  496 passed, 5 skipped in 434.51s
+run 3  ruff check           rc=0    0.315s  All checks passed!
+run 3  ruff format --check  rc=0    0.203s  34 files already formatted
+run 3  mypy                 rc=0    1.559s  Success: no issues found in 8 source files
+
+END digest   bd86c62a89cf606662acafe93c289d7479071a40b1588be1f38ffa5dc8ad9d7c (175 files)
+equal: True
+```
+
+496 passed against 459 at the previous gate: 37 tests added closing the rows.
+The 5 skips are the four `NOT_RUN_NETWORK_UNAVAILABLE` Django tests — recorded
+passing separately against the pinned checkout — and one pre-existing skip.
+
+**The caveat this gate carries**, stated as before rather than discovered later:
+it proves the tests present are deterministic across three runs, that the tree
+did not move, and that lint and types are clean. It does **not** speak to
+M1-F15 and M1-F16, whose branch no run can enter (DAR-011), nor to M1-X06, which
+this environment cannot support. It is worth more than the previous gate only
+because the suite beneath it now reaches nine rows it did not reach before.
+
+The `test_r07` flake that failed the first attempt on this tree would have been
+invisible to a targeted run; it took a full-suite gate to surface it. That is the
+second time a gate has caught something no amount of reading the diff would
+have.
+
+**Runtime: 8,510 / 8,600.**
+
+---
+
+## The sanitized handoff archive, rebuilt
+
+The previous archive `53d77f23…` is historical: the tree has changed since, and
+an archive that no longer corresponds to a gated tree is not a handoff.
+
+Built through the identical one-pipeline path — `records.archive_manifest()` →
+create → extract, install and run its own suite → SHA-256 of that same file. The
+build script lives outside the repository, so producing it adds nothing to the
+tree it archives, and timestamps and modes are fixed so the archive is
+reproducible rather than merely asserted.
+
+### The archive tree versus the gated tree
+
+Exactly one file differs — this one, which gained the gate record above. The
+claim is checkable:
+
+```
+gated tree, all 175 files                      bd86c62a89cf606662acafe93c289d7479071a40b1588be1f38ffa5dc8ad9d7c
+gated tree, excluding IMPLEMENTATION_STATUS.md 4658d741e160a88db86a545fc0675f09fae436d9610932c063fc78a68876c047  (174 files)
+```
+
+The second digest is recomputed after the archive is built and must be
+unchanged. If it is, nothing but this record moved between the gate and the
+archive.
+
+The archive's own SHA-256 is reported in the session output and not here: a
+digest cannot be contained in the file it describes.

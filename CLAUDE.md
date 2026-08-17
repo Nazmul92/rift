@@ -1,13 +1,17 @@
 # Claude Code implementation contract — riftagent v1
 
 You are implementing riftagent, not reviewing or redesigning it. Read this
-file completely, then read `riftagent_design_v1.2.3.md` completely before
+file completely, then read `riftagent_design_v1.2.4.md` completely before
 changing code. Read `IMPLEMENTATION_PLAN.md` and `ACCEPTANCE_MATRIX.md` next.
 The existing research prototype is under `reference/rift_v2/`.
 
 ## Authority and conflict order
 
-1. `riftagent_design_v1.2.3.md` is the product and architecture authority.
+1. `riftagent_design_v1.2.4.md` is the product and architecture authority.
+   `DESIGN_AMENDMENT_RECORD.md` records the derivation of every clause it
+   amends and is where a new amendment is written first.
+   `riftagent_design_v1.2.3.md` is superseded for those clauses, byte-identical,
+   and retained as history.
 2. This file fixes implementation boundaries left open by the design.
 3. `IMPLEMENTATION_PLAN.md` fixes milestone scope and exit gates.
 4. `ACCEPTANCE_MATRIX.md` fixes the minimum executable acceptance evidence.
@@ -123,7 +127,8 @@ pyproject.toml
 
 Small `__init__`, `__main__`, test fixtures, and packaging files do not count
 against the six-module target. Do not split modules merely for aesthetics. If
-the implementation approaches 8,000 runtime lines by M2, remove accidental
+the implementation approaches 8,600 runtime lines by M2 — amended once from
+8,000 with measurements, see DAR-008 — remove accidental
 abstractions before adding more. Tests, fixtures, and benchmark harnesses are
 measured separately; the runtime figure must include all shipped support code.
 

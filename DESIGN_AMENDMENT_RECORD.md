@@ -317,3 +317,57 @@ be recorded, charged, and keep its rejected ChangeSet.
 so.** The cost of the gap is that a `fix` whose first patch is behaviourally
 wrong abstains where a bounded retry might have succeeded — a narrower product,
 not an overstated one.
+
+## DAR-011 — the observational branch is correct and unreachable
+
+**Qualifies** DAR-002, which reads `Status: IMPLEMENTED (cmd_fix, observational
+branch)`, and **amends** v1.2.4 §9 and §13, which define the observational
+verdict and the stop it triggers.
+
+The branch is implemented and it behaves correctly when it is reached. It cannot
+be reached. Three mechanical facts, each now asserted by a test:
+
+1. **`kernel.discover_handles` never yields an assertion primitive.** It
+   enumerates `env`, `unsetenv`, `clear` and `first` only. A missing module, a
+   missing file and a missing binary all produce zero assertion handles, which
+   is asserted against all three failure shapes.
+2. **`checks.compile_handles` compiles an assertion to nothing.** Its output for
+   `dep_assert:*` and `file_assert:*` is byte-identical to its output for
+   applying nothing at all, while an intervention handle is not. The comment
+   there has always said assertions are skipped; the consequence had not been
+   drawn.
+3. **Therefore no trace the runtime can produce supports an assertion-only
+   cause.** Every probe that "applies" an assertion observes exactly what
+   applying nothing observes, and against such a trace the simplest surviving
+   theory is `const False` — `representation_inadequate`, which attributes
+   nothing to the repository.
+
+So `diagnosis_supported` with `support: observational` is a verdict this runtime
+cannot emit, and DAR-002's stop is a branch no run can enter. The design clause
+that requires it — "for an assertion-supported environmental finding that has no
+safe apply/withdraw intervention, emit `diagnosis_supported` with `support:
+observational` and `gate: not_applicable`" — is **specified and unimplemented**,
+not implemented and untested.
+
+What it would take is a mechanism that does not exist: evaluating an assertion
+as an *observation* — is this module importable, does this path exist — and
+recording its result as evidence, rather than treating it as something to apply.
+That is new kernel and runner behaviour, not a wiring change, and it is not
+attempted here.
+
+One narrower finding, recorded because it is load-bearing and was not designed
+deliberately. A theory can score `supported` while being behaviourally constant
+and still *syntactically* naming a role — `z0 and not n0`, with both latents set
+by the same role, is always false yet mentions `r0`, so `cause_of` returns that
+role's handle. What keeps such a theory out of the diagnosis is the
+description-length tiebreak in `min(j, dl)`: the behaviourally identical
+`const False` is simpler and wins. If that weighting ever changed, an
+assertion-only cause could surface from a trace in which the assertion did
+nothing. The tiebreak is therefore part of this rule's enforcement, and it is
+now asserted rather than assumed.
+
+**Status: GOVERNED; the observational verdict is NOT REACHABLE.** M1-F15 and
+M1-F16 stay open on that basis, and neither is claimed closed by a test that
+feeds the branch synthetically. Both are tested to the limit of what is
+reachable: the rule is proven correct when fed, the stop in `cmd_fix` is proven
+at the only seam that can reach it, and the unreachability itself is proven.

@@ -408,6 +408,14 @@ def run_argv(
         timed_out = True
         _kill_tree(proc, job)
         stdout, stderr = proc.communicate()
+    except BaseException:
+        # Ctrl-C, or anything else unwinding through here. The child was started
+        # in its own session precisely so a stray signal cannot reach it, which
+        # also means the terminal's SIGINT never does: without this the
+        # interpreter exits and the whole process tree keeps running, holding
+        # the worktree open. The interrupt is re-raised unchanged.
+        _kill_tree(proc, job)
+        raise
     finally:
         if job is not None:
             job.close()

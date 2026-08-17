@@ -434,11 +434,18 @@ def test_reservation_and_settlement_are_both_durable(tmp_path: Path, capsys, pro
     for key in ("prompt", "messages", "content", "diff"):
         assert key not in r and key not in t, f"{key} leaked into a spend event"
 
-    # The receipt derives its figure by joining, never by copying — and it sums
-    # every request the task made, diagnosis included, not just the last one.
-    all_charged = sum(e["charged_usd"] for e in events if e["kind"] == "settled")
+    # The receipt derives its figure by joining, never by copying, and it sums
+    # every settled request rather than reporting the last one.
+    settled = [e for e in events if e["kind"] == "settled"]
+    all_charged = sum(e["charged_usd"] for e in settled)
     assert receipt["spend"]["charged_usd"] == pytest.approx(all_charged)
-    assert all_charged > t["charged_usd"], "the diagnosis request was not charged"
+    assert receipt["spend"]["requests"] == len(settled)
+    # This fixture locates its cause, so `propose_handles` is never triggered
+    # and `propose_change` is the only charged request. The multi-request half
+    # of the sum — that it is not merely the last request's figure — is asserted
+    # where two requests genuinely occur, in
+    # `test_acceptance_gaps.py::test_f06_all_contradicted_triggers_one_bounded_handles_request`.
+    assert len(settled) == 1, [e.get("request_id") for e in settled]
     assert receipt["spend"]["authoritative"] == ".rift/spend.jsonl"
 
 

@@ -1871,7 +1871,13 @@ def run_diagnosis(
             req.node_id,
             ambient_env=dict(os.environ),
         )
-        if req.use_model and spend is not None:
+        # `propose_handles` fires on the representation-inadequate signal, and
+        # the design names two of them: no handle exists at all, or every theory
+        # gets contradicted. This is the first; the second is in the loop below.
+        # One bounded request serves both, so a task asks at most once.
+        asked_handles = False
+        if not handles and req.use_model and spend is not None:
+            asked_handles = True
             handles = _extend_handles_with_model(
                 flow, handles, baseline.failure_text, req.node_id, spend, flow.ledger.task_id
             )
@@ -1931,6 +1937,40 @@ def run_diagnosis(
         asked_model = False
         for _ in range(max(0, req.max_probes)):
             live = [s for s in scored if s.status != "contradicted"]
+            if not live and not asked_handles and req.use_model and spend is not None:
+                # Every theory contradicted, including "nothing here helps": the
+                # action space cannot express what is happening. One bounded
+                # `propose_handles` request may widen it; the loop is then
+                # re-entered and the widened space is *experimented on*. If it
+                # is still contradicted the verdict is
+                # `representation_inadequate`, which attributes nothing to the
+                # repository.
+                asked_handles = True
+                widened = _extend_handles_with_model(
+                    flow, handles, baseline.failure_text, req.node_id, spend, flow.ledger.task_id
+                )
+                if len(widened) > len(handles):
+                    # Roles are positional, so appending keeps r0..rN bound to
+                    # the same handles and every observation already recorded
+                    # stays valid against the rebuilt theory space.
+                    handles = widened
+                    flow.append(
+                        EventKind.HANDLES_DISCOVERED,
+                        {
+                            "handles": [h.to_dict() for h in handles],
+                            "count": len(handles),
+                            "origin": "model, requested after every enumerated theory was contradicted",
+                        },
+                    )
+                    mapping, roles = kernel.role_map(handles)
+                    hypotheses = kernel.code_grammar(roles)
+                    probes = kernel.generate_probes(roles)
+                    scored = [kernel.score(h, ev) for h in hypotheses]
+                    notes.append(
+                        "every theory was contradicted, so the action space was widened once and "
+                        "the surviving theories were re-tested against the same evidence"
+                    )
+                    continue
             if len(kernel.future_classes(live, probes, ev)) <= 1:
                 # The governed ambiguity point. Deterministic discovery has
                 # already run in full — the enumerated grammar, every probe the
