@@ -1928,10 +1928,60 @@ def run_diagnosis(
 
         # 4. Probe until one behavioural class remains, the budget is gone, or
         #    no probe can separate what is left.
+        asked_model = False
         for _ in range(max(0, req.max_probes)):
             live = [s for s in scored if s.status != "contradicted"]
             if len(kernel.future_classes(live, probes, ev)) <= 1:
-                break
+                # The governed ambiguity point. Deterministic discovery has
+                # already run in full — the enumerated grammar, every probe the
+                # budget allowed — and no remaining experiment can separate what
+                # survives. One bounded `propose_hypotheses` request may widen
+                # the theory space here, and nowhere else.
+                #
+                # It is not requested when the evidence already supports a
+                # cause. Widening the space at that point could only split one
+                # behavioural class into two and turn a supported diagnosis into
+                # `underdetermined` — paying for a request in order to know less.
+                settled_now = kernel.derive_diagnosis(scored, probes, ev, mapping, [])
+                if asked_model or not req.use_model or spend is None:
+                    break
+                if settled_now.status is Verdict.DIAGNOSIS_SUPPORTED:
+                    notes.append("the evidence already supported a cause, so no model theories were requested")
+                    break
+                asked_model = True
+                extra = _extend_hypotheses_with_model(
+                    flow,
+                    hypotheses,
+                    roles,
+                    handles,
+                    ev,
+                    baseline.failure_text,
+                    req.node_id,
+                    spend,
+                    flow.ledger.task_id,
+                )
+                if not extra:
+                    break
+                hypotheses = hypotheses + extra
+                flow.append(
+                    EventKind.HYPOTHESES_PROPOSED,
+                    {
+                        "count": len(hypotheses),
+                        "roles": roles,
+                        "probe_candidates": len(probes),
+                        "model_proposed": [h["hypothesis_id"] for h in extra],
+                        "origin": ("model, requested where no remaining probe could separate the enumerated theories"),
+                    },
+                )
+                notes.append(
+                    f"{len(extra)} model-proposed theor{'y' if len(extra) == 1 else 'ies'} were added "
+                    "where the enumerated space stalled, and scored against the same evidence"
+                )
+                # Scored against the evidence already recorded, by the same
+                # function and with no allowance for origin. If they survive
+                # that, the loop continues and *experiments* on them.
+                scored = [kernel.score(h, ev) for h in hypotheses]
+                continue
             if flow.projection().commands >= req.budgets.max_commands:
                 flow.append(EventKind.BUDGET_EXHAUSTED, {"limit": "max_commands", "value": req.budgets.max_commands})
                 notes.append("the probe budget was exhausted before the theories were separated")
@@ -2142,6 +2192,97 @@ def _extend_handles_with_model(
     return out
 
 
+def _extend_hypotheses_with_model(
+    flow: Flow,
+    hypotheses: list[dict[str, Any]],
+    roles: list[str],
+    handles: list[Handle],
+    ev: kernel.Evidence,
+    failure_text: str,
+    node_id: str,
+    spend: SpendLedger,
+    task_id: str,
+) -> list[dict[str, Any]]:
+    """Ask a configured model for additional theories, once.
+
+    The model's authority here is to *widen the theory space*, never to settle
+    it. Every proposal is validated into the closed IR, refused if it collides
+    with a theory already enumerated, and then scored by `kernel.score` against
+    the observations already recorded — the same scoring the deterministic
+    theories get, with no allowance for where a theory came from. A model theory
+    that mispredicts one observed outcome is contradicted immediately.
+
+    Returns the *additional* hypotheses only. An unavailable, refused, invalid
+    or empty response returns an empty list, and the caller is unchanged by it.
+    """
+    try:
+        config = llm.ProviderConfig.from_env()
+    except llm.ModelUnavailable as exc:
+        flow.append(
+            EventKind.MODEL_UNAVAILABLE,
+            {"reason": str(exc), "operation": "propose_hypotheses", "effect": "enumerated theories only"},
+        )
+        return []
+
+    messages = llm.hypotheses_prompt(node_id, failure_text, roles, handles, ev.observed)
+    max_output = 1600
+    request_id = content_hash({"t": task_id, "op": "propose_hypotheses"})[:16]
+    try:
+        reservation_id, _amount = spend.reserve(request_id, task_id, 0, token_ceiling(messages), max_output)
+    except BudgetRefused as exc:
+        flow.append(
+            EventKind.SPEND_REFUSED,
+            {"reason": str(exc), "operation": "propose_hypotheses", "request_id": request_id, "scope": spend.scope},
+        )
+        return []
+    flow.append(
+        EventKind.SPEND_RESERVED,
+        {
+            "operation": "propose_hypotheses",
+            "request_id": request_id,
+            "spend_event_id": reservation_id,
+            "scope": spend.scope,
+        },
+    )
+    flow.append(EventKind.MODEL_REQUEST_STARTED, {"operation": "propose_hypotheses", "model": config.model})
+    try:
+        reply = llm.post_chat(config, messages, max_output_tokens=max_output)
+    except (llm.ModelUnavailable, llm.ModelResponseInvalid) as exc:
+        # The request may have been served and billed even though nothing usable
+        # came back, so the full reservation is charged rather than released.
+        settled = spend.settle(request_id, task_id, 0, ModelUsage())
+        flow.append(
+            EventKind.SPEND_SETTLED,
+            {"operation": "propose_hypotheses", "request_id": request_id, "spend_event_id": settled["event_id"]},
+        )
+        flow.append(
+            EventKind.MODEL_UNAVAILABLE,
+            {"reason": str(exc), "operation": "propose_hypotheses", "effect": "enumerated theories only"},
+        )
+        return []
+
+    flow.append(EventKind.MODEL_RESPONSE_RECEIVED, {"operation": "propose_hypotheses", **reply.redacted()})
+    settled = spend.settle(request_id, task_id, 0, reply.usage)
+    flow.append(
+        EventKind.SPEND_SETTLED,
+        {"operation": "propose_hypotheses", "request_id": request_id, "spend_event_id": settled["event_id"]},
+    )
+    try:
+        proposed = llm.validate_hypotheses(llm.extract_json(reply.text), roles)
+    except (llm.ModelResponseInvalid, ValidationError) as exc:
+        flow.append(
+            EventKind.MODEL_RESPONSE_INVALID,
+            {"reason": str(exc), "operation": "propose_hypotheses", "effect": "enumerated theories only"},
+        )
+        return []
+
+    # An id already in use is refused rather than renamed. Renaming would put a
+    # value into the theory space that the model did not return, and the
+    # elimination record in the ledger names theories by id.
+    known = {h["hypothesis_id"] for h in hypotheses}
+    return [h for h in proposed if h["hypothesis_id"] not in known]
+
+
 def emit_diagnosis_receipt(flow: Flow, td: Path, diagnosis: Diagnosis, target: str) -> tuple[dict, int]:
     """The `why` receipt.
 
@@ -2174,6 +2315,9 @@ def emit_diagnosis_receipt(flow: Flow, td: Path, diagnosis: Diagnosis, target: s
     ).to_dict()
     receipt["diagnosis"] = diagnosis.to_dict()
     receipt["rejected_phase"] = None
+    # `why` can now spend, so its receipt must show what it spent — derived by
+    # joining this task's references to the authoritative spend ledger.
+    receipt["spend"] = _spend_summary(flow, proj)
     flow.append(EventKind.RECEIPT_EMITTED, {"receipt": receipt})
     write_artifacts(td, flow.ledger.path, receipt, proj)
     return receipt, _diagnosis_exit_code(diagnosis)
@@ -2296,8 +2440,28 @@ def cmd_why(args: argparse.Namespace) -> int:
     )
     flow.append(EventKind.CONTRACT_FROZEN, {"contract": contract.to_dict(), "contract_hash": contract.content_hash})
 
+    # `why` draws on the same scope-keyed authorization as `fix`. Without a
+    # ledger here the two optional diagnosis requests could not be reserved, so
+    # `why` made no model request at all and `--no-model` governed nothing on
+    # this path.
+    spend = SpendLedger(
+        spend_ledger_path(repo_root),
+        scope=args.scope or content_hash({"repo": str(repo_root), "verb": "why"})[:16],
+        limit_usd=args.max_usd,
+        pricing=_pricing_from_args(args),
+    )
+    flow.append(
+        EventKind.CONTEXT_SELECTED,
+        {
+            "scope": spend.scope,
+            "limit_usd": spend.limit_usd,
+            "remaining_usd_at_start": round(spend.remaining_usd(), 8),
+            "selection": "authorization scope for cross-task spend",
+        },
+    )
+
     try:
-        diagnosis = run_diagnosis(flow, req, td)
+        diagnosis = run_diagnosis(flow, req, td, spend=spend)
     except SandboxError as exc:
         flow.append(EventKind.INFRASTRUCTURE_BLOCKED, {"reason": str(exc)})
         diagnosis = Diagnosis(Verdict.INFRASTRUCTURE_BLOCKED, None, GateStatus.NOT_APPLICABLE, (), 0, (), (str(exc),))
@@ -2436,6 +2600,12 @@ def excerpt(source: str, cited: list[int], wanted: set[str]) -> tuple[str, list[
     used = 0
     kept: list[tuple[int, int]] = []
     for lo, hi in spans:
+        if hi < lo:
+            # An empty file clamps to (1, 0). Emitting it would spend one of the
+            # six context slots on a header with no content and record a line
+            # range that describes nothing — a manifest entry claiming bytes
+            # were sent when none were.
+            continue
         body = "\n".join(lines[lo - 1 : hi])
         if used + len(body) > MAX_EXCERPT_CHARS:
             break
@@ -2563,9 +2733,8 @@ def select_context(
     # when nothing raised inside them.
     wanted = imported_names(root, target_file)
     for rel in ordered:
-        if rel in seen or len(chosen) >= MAX_CONTEXT_FILES:
+        if len(chosen) >= MAX_CONTEXT_FILES:
             continue
-        seen.add(rel)
         path = (root / rel).resolve()
         try:
             path.relative_to(root)
@@ -2574,6 +2743,16 @@ def select_context(
             continue
         if not path.is_file():
             continue
+        posix = path.relative_to(root).as_posix()
+        if posix in seen:
+            # Deduplication is on the *resolved* path, not the name it arrived
+            # under. One file can be named twice — a traceback cites it by
+            # absolute path and the target's import graph by repository-relative
+            # path — and keying on the raw string sent its bytes twice and spent
+            # two of the six slots on one file, while the manifest listed it
+            # twice against a single line-range entry.
+            continue
+        seen.add(posix)
         parts = path.relative_to(root).parts
         if ".rift" in parts or ".git" in parts or path.relative_to(root).as_posix() in protected:
             skipped.append(f"{rel} (protected or excluded)")
@@ -2583,7 +2762,6 @@ def select_context(
         except (UnicodeDecodeError, OSError):
             skipped.append(f"{rel} (unreadable as UTF-8)")
             continue
-        posix = path.relative_to(root).as_posix()
         text, ranges = excerpt(text, sorted(set(lines_for.get(rel, []))), wanted)
         text, counts = redact(text)
         for name, n in counts.items():
@@ -3229,8 +3407,13 @@ def build_parser() -> argparse.ArgumentParser:
     w.add_argument(
         "--no-model",
         action="store_true",
-        help="skip the optional propose_handles request and use discovered handles only",
+        help="skip the optional propose_handles and propose_hypotheses requests, and diagnose "
+        "from discovered handles and the enumerated theory space only",
     )
+    w.add_argument("--max-usd", type=float, default=0.50, help="cumulative USD authorization for the scope")
+    w.add_argument("--scope", default="", help="frozen authorization scope shared by every task in a run")
+    w.add_argument("--price-input", type=float, default=1.0, help="USD per 1M input tokens (frozen, configured)")
+    w.add_argument("--price-output", type=float, default=5.0, help="USD per 1M output tokens")
     w.add_argument("--yes", action="store_true", help="accepted for interface stability; grants no authority here")
     w.add_argument(
         "--allow-partial-sandbox",

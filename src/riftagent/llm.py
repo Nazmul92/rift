@@ -52,6 +52,9 @@ MAX_HANDLES = 8
 # Bounded context. The tail of a traceback carries the signal; the head is
 # usually setup noise, and an unbounded prompt is an unbounded bill.
 FAILURE_TEXT_CHARS = 6000
+# The trace shown to `propose_hypotheses`. Bounded for the same reason, and the
+# tail is the part the remaining ambiguity is about.
+MAX_OBSERVATIONS = 40
 
 
 class ModelUnavailable(RuntimeError):
@@ -361,6 +364,77 @@ def handles_prompt(failure_text: str, node_id: str, existing: list[Handle]) -> l
     ]
 
 
+_HYPOTHESES_SYSTEM = (
+    "You propose theories in a closed intermediate representation, not prose and not fixes. "
+    "Reply with exactly one JSON object and no prose. "
+    'Shape: {"hypotheses": [{"hypothesis_id": "<unique string>", "roles": [<the exact role list '
+    'given>], "target_role": "rT", "latents": [...], "condition": {...}}]}. '
+    "A latent is either "
+    '{"name": "<id>", "type": "bool", "init": false, "set_on": {"event": "applied", "role": "<role>"}, '
+    '"reset_on": null} or '
+    '{"name": "<id>", "type": "counter", "max": <1-16>, "inc_on": {"event": "run", "role": null}}. '
+    'An event is {"event": "applied"|"run", "role": "<role>"|null}. '
+    'A condition is one of {"const": true|false}, {"var": "<latent name>"}, '
+    '{"op": "ge", "var": "<counter name>", "value": <int>}, {"op": "not", "arg": <condition>}, '
+    '{"op": "and", "args": [<condition>, <condition>]}, {"op": "or", "args": [<condition>, <condition>]}. '
+    "The condition predicts the target run's outcome: true means it passes, false means it fails. "
+    "Latent state resets at every episode boundary. No other field is accepted anywhere at any "
+    "depth, and no other operator exists. "
+    f"Return {MIN_HYPOTHESES}-{MAX_HYPOTHESES} hypotheses, each with a distinct hypothesis_id. "
+    "Do not include a confidence, certainty, probability, score or likelihood field; a response "
+    "containing one is discarded. "
+    "Your theories decide nothing: each one is scored against the observations already recorded "
+    "and against further experiments this runtime chooses to run. A theory that mispredicts one "
+    "observed outcome is eliminated."
+)
+
+
+def hypotheses_prompt(
+    node_id: str,
+    failure_text: str,
+    roles: list[str],
+    handles: list[Handle],
+    observed: list[dict[str, Any]],
+) -> list[dict[str, str]]:
+    """Build the `propose_hypotheses` request.
+
+    The role→handle mapping is disclosed. The kernel's role anonymity exists so
+    that *scoring* cannot read a label — `execute` and `score` see r0..rN and
+    never a name — and that invariant is untouched by telling the proposer what
+    each role varies. Withholding it would ask for theories about symbols with
+    no referent.
+
+    The recorded observations are included because a theory is only worth
+    proposing against evidence that already exists; every one of them is
+    replayed against the proposal by `kernel.score` regardless of what the
+    prompt said.
+    """
+    # `zip` pairs r0..rN with the handles they were built from and drops the
+    # target role, which has no handle behind it.
+    varies = "\n".join(f"  {role} = {h.kind}:{h.arg}" for role, h in zip(roles, handles, strict=False))
+    trace = "\n".join(
+        f"  applied [{'+'.join(o.get('applied') or ()) or 'nothing'}] "
+        f"x{o.get('repeats', 1)} → target {o.get('outcome', '?')}"
+        for o in observed[-MAX_OBSERVATIONS:]
+    )
+    return [
+        {"role": "system", "content": _HYPOTHESES_SYSTEM},
+        {
+            "role": "user",
+            "content": (
+                f"Failing test: {node_id}\n"
+                f"Roles (use exactly this list, in this order): {roles}\n"
+                f"What each role varies:\n{varies or '  (none)'}\n\n"
+                f"Experiments already run and their observed outcomes:\n{trace or '  (none)'}\n\n"
+                "The enumerated theory space could not be narrowed to one behavioural class by any "
+                "remaining experiment. Propose theories it does not already contain.\n\n"
+                f"Observed failure output (truncated to the last {FAILURE_TEXT_CHARS} characters):\n"
+                f"{failure_text[-FAILURE_TEXT_CHARS:]}"
+            ),
+        },
+    ]
+
+
 _CHANGE_SYSTEM = (
     "You propose one source change. Reply with exactly one JSON object and no prose. "
     'Shape: {"diff": "<unified diff>", "summary": "<one sentence>"}. '
@@ -510,6 +584,7 @@ __all__ = [
     "change_prompt",
     "extract_json",
     "handles_prompt",
+    "hypotheses_prompt",
     "post_chat",
     "validate_change",
     "validate_handles",

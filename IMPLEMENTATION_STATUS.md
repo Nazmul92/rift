@@ -2727,3 +2727,671 @@ filesystem failure.
 
 Targeted evidence: 6 tests in `test_phase_state_authority.py`, ruff and mypy
 clean. Runtime **8,204 / 8,600**, unchanged â€” this item added no runtime lines.
+
+---
+
+## M1 completion pass — opened
+
+Appended before any change is made, so the intent is durable ahead of the work
+rather than reconstructed after it. Nothing above is modified.
+
+Entry state, measured now:
+
+```
+runtime : 8,204 / 8,600 across 8 modules
+git     : 43f584d, clean
+spend   : $0.068157 charged, historical; no live request is authorized in this pass
+```
+
+Work admitted for this pass, in order: (1) bounded `propose_hypotheses` at the
+governed ambiguity point; (2) bounded post-gate repair loop, or the disclosed
+single-attempt fallback if it cannot fit honestly under 8,600; (3) byte-identical
+ledger-replay evidence for both `repair_basis` values, and only then DAR-001;
+(4) consolidated v1.2.4 and DAR-007 closure; (5) M1-R04 and a per-row walk of
+the M1 acceptance matrix; (6) a three-run frozen-tree gate; (7) the sanitized
+ZIP produced as one pipeline.
+
+Two facts recorded in advance, because both bound what this pass can honestly
+claim:
+
+- **The remaining ceiling is 396 lines.** Item 1 is estimated at ~130. Item 2,
+  implemented honestly, is not only a loop: `records.reduce` keeps one global
+  `completed_phases`, one `changeset`, one `failed_phase` and one receipt, so a
+  second gate attempt inside one task requires attempt-scoped phase reduction,
+  per-attempt durable ChangeSet records, and resume semantics over both. That is
+  the load-bearing replay path for every command. The estimate is re-measured
+  after item 1 lands, and the fallback is taken if the honest cost exceeds what
+  is left.
+- **No gate exists yet for this tree.** Any green reported below before item 6
+  is targeted evidence for the code path named, and nothing wider.
+
+---
+
+## Item 1 — bounded `propose_hypotheses`, wired into the shared diagnosis flow
+
+Appended; nothing above is modified.
+
+### What was wired
+
+`llm.validate_hypotheses` had no call site. It now has exactly one, in
+`run_diagnosis` — the function both `fix` and `why` use — at the point the
+directive names: the loop break on
+`len(kernel.future_classes(live, probes, ev)) <= 1`.
+
+Deterministic discovery runs first and in full: the enumerated grammar, the
+role map, and every probe the budget allowed. The request is made only where no
+remaining experiment can separate what survives, at most once per task, through
+the same reserve → request → settle → validate → merge sequence
+`_extend_handles_with_model` established. `llm.hypotheses_prompt` is new
+alongside `handles_prompt`. No new module, no orchestration layer.
+
+Returned theories are merged into the same list the enumerated ones live in and
+rescored by `kernel.score` against the evidence already recorded, with no
+allowance for origin. If they survive that, the loop **continues** and runs
+further experiments on them. A model theory is therefore tested, never trusted;
+one that mispredicts a single observed outcome is contradicted like any other.
+
+An id already in use is refused rather than renamed: renaming would put a value
+into the theory space the model did not return, and the ledger names eliminated
+theories by id.
+
+### The defect found while wiring it
+
+`cmd_why` constructed **no `SpendLedger` and passed none** to `run_diagnosis`.
+Since both optional diagnosis requests are guarded on `spend is not None`,
+`why` has never been able to make any model request — while carrying a
+`--no-model` flag whose help text said it "skips the optional propose_handles
+request". The flag governed nothing on that path.
+
+`why` now builds the same scope-keyed ledger `fix` does, takes `--max-usd`,
+`--scope`, `--price-input` and `--price-output`, and its receipt carries the
+`spend` block derived from `.rift/spend.jsonl`. `_resume_why` still passes
+`use_model=False`: a resumed diagnosis makes no fresh request, because an
+interrupted request may not be repeated without explicit authorization.
+
+### The no-downgrade rule, and how it is enforced
+
+The rule is that empty or invalid output must never erase or downgrade an
+already-supported deterministic diagnosis. Enforcement is stronger than
+handling the empty case: **where the evidence already supports a cause, no
+request is made at all.** Widening the theory space there could only split one
+behavioural class into two and turn `diagnosis_supported` into
+`underdetermined` — paying for a request in order to know less. Where nothing
+is supported, an empty, invalid, refused or interrupted response returns an
+empty list and the caller is unchanged by it.
+
+### Evidence
+
+Eight tests in `tests/test_propose_hypotheses.py`, all driving the real CLI
+against a fake HTTP provider: valid, empty, invalid, budget-refused,
+interrupted, the `fix`/`why` shared-flow check, an argument-provenance check,
+and the no-downgrade guard.
+
+Two of them are calibrated deliberately:
+
+- The fake **cannot answer validly without reading the roles out of the prompt**
+  — `validate_hypotheses` refuses any hypothesis whose `roles` differ from the
+  discovered set — so a valid reply is itself evidence that the request carried
+  them. The provenance test additionally asserts, against the body the provider
+  actually received, that every discovered handle behind a role is named and
+  that every recorded observation appears in the trace.
+- One proposed theory is unconditional PASS, so it is contradicted by the
+  observed baseline failure alone, whatever else the run saw. Its id appearing
+  in `diagnosis.contradicted` can only happen by going through `kernel.score`.
+  That is the assertion that the merge is real rather than a logged event.
+
+The no-downgrade test asserts an absence, so it carries a positive control: the
+note *"the evidence already supported a cause, so no model theories were
+requested"* is appended only at the ambiguity point with a live provider and a
+live ledger. Without the wiring the note is absent and the test fails, so it
+cannot pass vacuously.
+
+The fixture needs `--max-probes 16`. At the default 8 this repository ends the
+loop by **probe exhaustion**, which is a different stop and deliberately not one
+at which a request is made.
+
+### Feature-removal evidence
+
+Five mutations, each in a fresh disposable copy deleted before the next, each
+asserting `riftagent.__file__` resolves under the copy before running:
+
+```
+authoritative digest BEFORE: a87456f48fc185ff7304b64f3721d331fc8dbce81cd03975970a4c8e28788c14
+
+the ambiguity-point call site is removed (the loop simply breaks)   RED, exit=1
+the returned theories are not merged into the theory space          RED, exit=1
+the no-downgrade guard is removed                                   RED, exit=1
+`why` is given no spend ledger                                      RED, exit=1
+the response bypasses validate_hypotheses                           RED, exit=1
+
+authoritative digest AFTER : a87456f48fc185ff7304b64f3721d331fc8dbce81cd03975970a4c8e28788c14
+authoritative tree unchanged: True
+removals not detected: 0
+```
+
+### Targeted evidence only
+
+```
+python -m pytest tests/test_propose_hypotheses.py -q   8 passed in 41.85s
+python -m ruff check src tests benchmark               All checks passed
+python -m ruff format src tests benchmark              2 files reformatted
+python -m mypy src                                     Success: 8 source files
+```
+
+Reference environment, `python:3.12-slim`. This is not a gate and is not
+milestone evidence. No live provider request was made; charged spend is
+unchanged at **$0.068157**.
+
+**Runtime: 8,448 / 8,600.** 244 lines added: roughly 70 in `llm.py` (prompt
+builder and system message), 90 in `app.py` for
+`_extend_hypotheses_with_model`, 55 at the call site, and 29 for the `why`
+spend ledger and its arguments.
+
+---
+
+## Item 2 — the bounded repair loop is NOT implemented; the fallback is taken
+
+Appended; nothing above is modified. This is a disclosure, not a claim.
+
+**152 runtime lines remain under the 8,600 ceiling.** The post-gate repair loop
+does not fit in them honestly, and the reason is not the loop itself — it is
+that a second gate attempt inside one task contradicts four single-attempt
+assumptions the replay path of *every* command rests on.
+
+Measured against the delivered code, not estimated in the abstract:
+
+| Component | Where | Lines |
+|---|---|---|
+| attempt-scoped phase reduction: a new event kind, and clearing `completed_phases`, `failed_phase`, `failed_phase_reason` and the per-phase artifacts on each attempt | `records.reduce`, `EventKind`, `LiveRenderer` | 30–45 |
+| per-attempt durable ChangeSet records, so each rejected patch is kept | `records.changeset_record` and its call sites in `run_gate`, `write_artifacts`, `_resume_fix` | 20–30 |
+| repairable-versus-terminal classification carried on the phase decision itself, set by every `kernel.decide_*` | `kernel.PhaseDecision` and 8 decision sites | 35–50 |
+| the loop, plus suppressing receipt emission until the final attempt across the 14 early returns in `_run_gate` | `cmd_fix`, `run_gate`, `_finish` | 25–40 |
+| resume: which attempt was in flight, and whether it may be retried | `_resume_fix` | 20–30 |
+| **total** | | **130–195** |
+
+The mid-point exceeds what is left. Two further facts decide it rather than
+merely tighten it:
+
+1. The classification cannot be a string match on `failed_phase_reason` in
+   `app.py`. A WITHDRAWAL failure is wrong-signature (repairable), state
+   mismatch (terminal), or non-reversible (terminal); a CANDIDATE failure is
+   behavioural (repairable), non-applying, or infrastructure. Deciding that
+   from prose in the application loop would move a verdict rule out of the
+   kernel — the one boundary this project has been most careful about.
+2. `changeset_record` and `records.reduce` are the load-bearing replay path for
+   `verify`, `fix` and `resume` alike, and `test_ledger_is_the_only_durable_state`
+   asserts the exact derived-file set. Half-applying a change there is precisely
+   how the worst defects in this project got in.
+
+**Single-attempt `fix` is kept.** The already-governed fallback stands: the
+pre-gate retry over structurally invalid proposals remains — `--max-attempts`,
+each attempt charged and recorded — and a candidate that fails the gate
+behaviourally is rejected with its scoped receipt and no second proposal.
+
+What this costs, stated plainly: a `fix` whose first patch is behaviourally
+wrong abstains where a bounded retry might have succeeded. That is a narrower
+milestone, not an overstated one.
+
+The smallest honest amendment that would carry item 2 is **+400 lines, to
+9,000**. It is not taken here: there is no second ceiling amendment, and taking
+one unilaterally is the governance failure this record exists to prevent.
+
+---
+
+## Item 3 — `repair_basis` receipt and ledger-replay evidence, both values
+
+Appended; nothing above is modified.
+
+Four tests in `tests/test_repair_basis_replay.py`. The assertion that carries
+the weight is not that the field is present — it is that the value is a
+**projection of the ledger**. Each run re-reads `ledger.jsonl` from disk,
+reduces it, and recomputes `_repair_basis(proj)`, then asserts every recomputed
+key equals the receipt's. A field carried in a variable rather than derived
+would not survive that.
+
+| Test | What it fixes in place |
+|---|---|
+| `test_cause_supported_replays_byte_identically` | ordering fixture → `verified_against_approved_checks`, `repair_basis: cause_supported`, and the receipt's `reproducer_hash` equals the `REPRODUCER_FROZEN` event's |
+| `test_diagnosis_unresolved_replays_byte_identically` | unconditional-defect fixture → same verdict, `repair_basis: diagnosis_unresolved`, no `reproducer_frozen` event exists, `reproducer: "bare target"`, empty hash, and the recorded diagnosis is itself unresolved with no causes |
+| `test_a_supported_cause_without_a_frozen_reproducer_may_not_claim_the_stronger_basis` | the conjunct no end-to-end fixture reaches, asserted at the projection boundary with a positive control in both directions |
+| `test_the_two_bases_differ_on_the_same_code_path` | the control: both fixtures through the same command, same verdict, different basis, different claim scope |
+
+For both bases the transcript and receipt text replay byte-identically from the
+events alone, and a second reduction of the same bytes reproduces the same
+block.
+
+The unresolved fixture's patch is generated mechanically by `make_diff` from the
+fixture repository at test time, never hand-written. Three hand-written diffs
+were rejected as corrupt earlier in this project; nothing is embedded here.
+
+Three removals, fresh disposable copy each, imported package asserted under the
+copy:
+
+```
+authoritative digest BEFORE: 74ea65f99f0adc5be2c526a5643c4857762e76ef5445301d5dcc097bea97cb9d
+
+the repair basis is not emitted onto the receipt at all       RED, exit=1
+the unresolved branch returns the cause_supported value       RED, exit=1
+the frozen-reproducer conjunct is removed                     RED, exit=1
+
+authoritative digest AFTER : 74ea65f99f0adc5be2c526a5643c4857762e76ef5445301d5dcc097bea97cb9d
+authoritative tree unchanged: True
+removals not detected: 0
+```
+
+The third mutation was **not detected** on its first run, against the
+end-to-end unresolved test, and the reason is recorded rather than papered over:
+in that fixture the diagnosis is `representation_inadequate`, so the first two
+conditions already fail and the reproducer conjunct is not load-bearing there.
+A projection-level test was added for it, with a positive control. It proves the
+rule; it does not prove the runtime reaches that state, and no fixture in this
+suite does.
+
+**DAR-001 is now marked IMPLEMENTED**, and not before. One correction went into
+that entry: the DAR prose said `unresolved_diagnosis`; the emitted value is
+`diagnosis_unresolved`.
+
+---
+
+## Item 4 — `riftagent_design_v1.2.4.md`, the authority index, and DAR closure
+
+`riftagent_design_v1.2.4.md` exists: 858 lines, `sha256 85a948ba…`, built from
+v1.2.3 by sixteen splices, each asserted present and unique before it was made
+and asserted to have changed the text after. v1.2.3 was re-hashed afterwards:
+
+```
+v1.2.3 sha256 before: 0718ebabf34002f744b44ba2cbf919ffd84c231d4964175bb8d1e033b6feff3d
+v1.2.3 sha256 after : 0718ebabf34002f744b44ba2cbf919ffd84c231d4964175bb8d1e033b6feff3d   unchanged=True
+```
+
+What v1.2.4 carries, by clause: DAR-001 (§8 operation table, §9 repair basis);
+DAR-002 (§13 observational stop); DAR-003 and DAR-006 (§15 `GROUND_TRUTH_INVALID`
+and the C5 Goodhart worked example); DAR-004 and DAR-005 (§5 spend ledger, §11
+scope-keyed authorization); DAR-008 (§3 P5 and §16 ceiling); DAR-009 (§5
+ReproductionContract); DAR-010 (§7.3 repair policy).
+
+The authority index now reads v1.2.4 first, this record second, v1.2.3 third
+with its hash. Three amendments were opened in this pass:
+
+- **DAR-008** — the ceiling amended once from ~8,000 to 8,600, with the
+  measurement that justified it, and the explicit refusal of a second amendment.
+- **DAR-009** — the ReproductionContract as a durable record. It was added to
+  the runtime during M1 and lived only in code and this status file; §5 named
+  five records and did not include it. That is precisely the authority mismatch
+  the DAR exists to close.
+- **DAR-010** — §7.3 said "configured retry budget; then abstain", which reads
+  as a post-gate repair round. The runtime retries pre-gate only. v1.2.4 now
+  says what the product does and names what was dropped, and the terminal versus
+  repairable classes are governed there for whoever implements it later.
+
+**DAR-007 is CLOSED.** The condition the directive set — document, runtime and
+tests agree — is met by correcting the document where they did not, rather than
+by leaving §7.3 describing a behaviour that does not exist.
+
+### One authority conflict, recorded and not resolved unilaterally
+
+`CLAUDE.md` §"Authority and conflict order" names `riftagent_design_v1.2.3.md`
+as the product and architecture authority, and `ACCEPTANCE_MATRIX.md` row P-05
+still states the "~8,000-line M2 disclosure ceiling". Both now disagree with the
+DAR authority index and DAR-008.
+
+Neither file was edited. `CLAUDE.md` is the implementation contract and the
+matrix fixes the acceptance evidence; amending either to match my own work is
+the wrong direction of authority. Smallest proposed resolution, for the
+reviewer:
+
+1. `CLAUDE.md` line 1 of the authority order → `riftagent_design_v1.2.4.md`.
+2. `ACCEPTANCE_MATRIX.md` P-05 → "at or below the 8,600-line M2 disclosure
+   ceiling (DAR-008)".
+
+---
+
+## Item 5 — M1-R04, then every M1 row walked individually
+
+### M1-R04 — run, with the pinned repository
+
+Not `NOT_RUN`. The reference container reached the network and the repository
+was pinned by tag and recorded by commit:
+
+```
+repository : https://github.com/django/django
+tag        : 5.0.6
+commit     : 2719a7f8c161233f45d34b624a9df9392c86cc1b
+scale      : 2,774 Python files, 17,060,221 bytes
+command    : RIFT_LARGE_REPO=/tmp/django python -m pytest tests/test_django_scale_context.py -q
+result     : 4 passed in 0.74s
+```
+
+`tests/test_django_scale_context.py` skips with exactly
+`NOT_RUN_NETWORK_UNAVAILABLE` when `RIFT_LARGE_REPO` is unset, so the main suite
+stays network-free and credential-free. Both paths were exercised; the skip
+message was read back from the run, not assumed.
+
+Measured selection against a real traceback naming three Django modules:
+
+```
+files  : django/http/request.py, django/utils/text.py, django/core/exceptions.py,
+         django/test/__init__.py, django/utils/functional.py,
+         django/utils/translation/__init__.py
+chars  : 4,033 of a 60,000 cap        raw bytes of the three cited files: 48,655
+skipped: django/utils/__init__.py (nothing to excerpt)
+```
+
+The caps held **while every cited file survived**, which is the half a selector
+returning nothing would also satisfy. The test asserts both, plus the scale of
+the checkout itself, so it cannot pass quietly against a small repository.
+
+### Two defects the row surfaced, both fixed
+
+Neither would have been found by the existing fixtures, because both need a
+repository with empty `__init__.py` files and a traceback carrying absolute
+paths.
+
+**1. An empty file was selected as a context slot.** `excerpt` clamps an empty
+file's window to `(1, 0)`, and the resulting text — a bare `# lines 1-0` header —
+is not whitespace, so it passed the "nothing to excerpt" guard. The manifest
+recorded `django/utils/__init__.py: [[1, 0]]`: a line range describing nothing,
+against a file from which nothing was sent, holding one of six slots. Spans with
+`hi < lo` are now skipped, and the file is correctly reported as skipped.
+
+**2. One file was sent twice.** Deduplication keyed on the *name a path arrived
+under*, not the resolved path. A traceback cites by absolute path and the import
+graph by repository-relative path, so `django/core/exceptions.py` appeared twice
+in `files` against one entry in `line_ranges` — its bytes sent twice, two of six
+slots spent on one file, and a manifest that disagreed with itself.
+Deduplication is now on the resolved posix path.
+
+The first attempt at fix 2 was wrong and the full suite caught it: the
+raw-string `seen.add(rel)` at the top of the loop poisoned the new resolved-path
+check, so *every* file was skipped and six tests went red. Recorded because the
+sequence is the point — the correction was found by running the suite, not by
+reading the diff.
+
+Both fixes are asserted in `test_context_stays_within_caps_while_the_cited_files_survive`
+(4b and 4c), which would have caught either.
+
+### The per-row walk — M1-S, M1-X, M1-F, M1-R
+
+Every row below names the tests that carry it. Rows with **no dedicated
+evidence** are marked and are not credited to a loosely related test.
+
+#### M1 — structural boundaries
+
+| Row | Evidence | State |
+|---|---|---|
+| M1-S01 | `test_v01_structure::test_kernel_imports_no_loop_provider_or_execution_authority`, `::test_no_runtime_module_imports_a_provider_or_the_network[kernel.py]`, `::test_only_llm_may_reach_the_network[kernel.py]` | pass |
+| M1-S02 | `test_v01_structure::test_kernel_exposes_no_callable_injection_point` | pass |
+| M1-S03 | `test_v01_structure::test_llm_imports_no_kernel_sandbox_or_checks`, `::test_llm_and_kernel_share_contracts_only_through_records` | pass |
+| M1-S04 | `test_v01_structure::test_no_orchestration_or_checkpoint_dependency`, `::test_runtime_declares_no_dependencies`, `::test_no_provider_sdk_is_shipped` | pass |
+| M1-S05 | `test_v09_v10_ledger_replay::test_phase_and_budgets_reconstruct_only_from_events`, `::test_a_prefix_of_the_ledger_reduces_to_the_phase_reached` | pass |
+| M1-S06 | `test_v09_v10_ledger_replay::test_ledger_is_the_only_durable_state`, `test_task_allocation::test_no_counter_file_or_state_database_is_created` | pass |
+| M1-S07 | `test_m1_entry_corrections::test_f3_changeset_record_is_written_before_acceptance_is_recorded`, `test_cause_refinement::test_a_crash_before_the_receipt_is_resumable`, `test_v09_v10_ledger_replay::test_resume_completes_a_task_interrupted_after_the_baseline` | pass |
+| M1-S08 | `test_v09_v10_ledger_replay::test_sequence_breaks_fail_closed`, `::test_a_malformed_middle_line_fails_closed`, `::test_a_tampered_event_fails_closed`, `::test_torn_final_line_is_tolerated_and_disclosed` | pass |
+| M1-S09 | `test_v09_v10_ledger_replay::test_settled_transcript_replays_byte_identically`, `::test_receipt_text_replays_byte_identically`, `::test_replay_subcommand_reproduces_the_transcript`, `test_repair_basis_replay` (both bases) | pass |
+
+#### M1 — command and sandbox boundary
+
+| Row | Evidence | State |
+|---|---|---|
+| M1-X01 | `test_v01_structure::test_no_runtime_path_uses_a_shell[*]`, all 8 modules | pass |
+| M1-X02 | `test_v08_patch_validation::test_a_shell_string_is_not_a_patch`; `llm.validate_handles` refuses `command`/`argv`/`script`/`code`/`shell`/`run`/`exec` and `validate_hypotheses` refuses the confidence family, the latter covered exhaustively by `test_ir_closed_schema` | **partial** — the handle-level banned-key refusal has no dedicated test |
+| M1-X03 | `test_worktree_non_git::test_worktree_falls_back_to_a_disposable_copy`, `::test_rift_state_never_enters_the_copy`, `test_why_diagnosis::test_the_repository_is_not_modified` | pass |
+| M1-X04 | `test_v11_v14_authority_and_process_tree::test_child_environment_is_built_by_allowlist`, `test_gate_end_to_end::test_environment_allowlist_excludes_credentials`, `test_why_diagnosis::test_env_is_not_inherited_into_the_probe`, `test_fix_and_spend::test_no_credential_reaches_the_ledger_or_the_repository` | pass |
+| M1-X05 | `test_v11_v14_authority_and_process_tree::test_v13_timeout_terminates_the_whole_process_tree`, `::test_v13_posix_uses_a_process_group`, `::test_v14_windows_uses_a_tested_whole_tree_mechanism`, `::test_execution_is_refused_when_the_tree_cannot_be_controlled` | pass |
+| M1-X06 | probe: `bwrap` is absent from the reference container; `probe_isolation()` reports `partial — linux without usable bubblewrap` | **NOT_RUN_FULL_SANDBOX_UNAVAILABLE** — the row is "required where supported"; it is not supported here |
+| M1-X07 | `test_v11_v14_authority_and_process_tree::test_v11_yes_cannot_authorise_partial_isolation`, `::test_v12_partial_execution_requires_the_explicit_flag`, `::test_v12_authorities_are_recorded_separately` | pass |
+| M1-X08 | `test_v11_v14_authority_and_process_tree::test_receipt_states_the_isolation_level_actually_used` | pass |
+| M1-X09 | `test_v08_patch_validation::test_escaping_paths_are_rejected[*]` (6 cases), `::test_binary_patches_are_rejected`, `::test_symlink_creation_is_rejected`, `::test_paths_under_a_protected_directory_are_rejected` | pass |
+
+#### M1 — fix/why correctness
+
+| Row | Evidence | State |
+|---|---|---|
+| M1-F01 | `test_gate_end_to_end::test_v02_baseline_failure_reproduces_and_freezes_its_signature`, `::test_v02_named_exception_types_are_captured` | pass |
+| M1-F02 | `kernel.decide_baseline` refuses a baseline whose signature does not match a predicted one | **no dedicated test** — `build_checkset` sets no predicted signature for `fix`/`verify`, so no fixture reaches the branch |
+| M1-F03 | `test_gate_end_to_end::test_v06_unobservable_target_cannot_satisfy_the_gate[*]`, `::test_v06_import_error_is_not_a_target_failure`, `test_m1_entry_corrections::test_f2_*` | pass |
+| M1-F04 | `test_why_diagnosis::test_a_cause_is_never_reported_without_support`, `test_propose_hypotheses::test_valid_hypotheses_are_requested_at_the_ambiguity_point_and_scored` (a proposed theory is contradicted by observed evidence, not by preference) | pass |
+| M1-F05 | `kernel.select_probe` implements disagreement-per-cost | **no dedicated test** — no unit or golden test fixes the selection or its determinism |
+| M1-F06 | `fix` and `why` issue one bounded `propose_handles`; `test_fix_and_spend` exercises the request path | **deviation** — the request is made once per task before probing, not on the all-contradicted signal the row names. The bound holds; the trigger differs from the row |
+| M1-F07 | `llm.validate_handles` requires `handle.kind in Primitive` and refuses executable keys | **no dedicated test** |
+| M1-F08 | `test_why_diagnosis::test_a_verdict_is_always_from_the_scoped_vocabulary[*]`, `test_propose_hypotheses::test_an_invalid_response_is_refused_and_the_diagnosis_is_unchanged` (ends `representation_inadequate`/`underdetermined`, never a guessed cause) | pass |
+| M1-F09 | `test_why_diagnosis::test_the_repository_is_not_modified` proves nothing was applied, and the receipt asserts `gate: not_applicable` | **partial** — the row asks for a call or ledger assertion, and nothing asserts the *absence* of `changeset_registered` and `gate_phase_finished` from a `why` ledger. A receipt field is a claim; the ledger is the evidence |
+| M1-F10 | `test_gate_end_to_end::test_v07_semantically_inert_order_masked_patch_is_rejected`, `test_fix_and_spend::test_an_inert_patch_is_rejected_by_the_counterfactual`, `test_reproduction_contract::test_rift_fix_repairs_an_ordering_failure_end_to_end` | pass |
+| M1-F11 | `test_gate_end_to_end::test_v04_withdrawal_restores_the_original_failure_signature` | pass |
+| M1-F12 | `test_gate_end_to_end::test_v05_exact_patch_is_reapplied_before_preservation`, `test_m1_entry_corrections::test_f3_tampered_durable_changeset_is_caught_on_reload`, `::test_f3_deleted_durable_changeset_blocks_rather_than_improvises` | pass |
+| M1-F13 | `test_gate_end_to_end::test_regression_is_blocked_and_not_silently_repaired` | pass |
+| M1-F14 | `test_gate_end_to_end::test_no_bare_verified_verdict_exists`, `test_why_diagnosis::test_a_verdict_is_always_from_the_scoped_vocabulary[*]` | pass |
+| M1-F15 | `test_why_diagnosis::test_a_cause_is_never_reported_without_support` asserts the observational rule **inside `if d["support"] == observational`** | **conditional, therefore no evidence** — no fixture in the suite is known to reach the observational branch, so the assertion may never execute. This is the same defect class as the earlier ordering test that accepted baseline rejection as success |
+| M1-F16 | `test_benchmark_accounting::test_errored_cases_are_excluded_and_disclosed_never_counted_as_passes`, `::test_report_recomputes_rates_from_raw_records`; `DAR-002` stops `fix` before patch generation on the observational branch | **partial** — accounting is tested; that an observational `fix` earns no fix credit is not, for the same reason as M1-F15 |
+
+#### M1 — streaming, context, cost and recovery
+
+| Row | Evidence | State |
+|---|---|---|
+| M1-R01 | probe: `sys.stdout.isatty()` is False under this harness; `pty` is importable but no PTY test exists. Renderer and replay unit tests pass (`test_v09_v10_ledger_replay::test_transcript_contains_no_transient_clock_output`, `::test_every_settled_line_comes_from_an_event`) | **NOT_RUN_PTY_UNAVAILABLE**, which the row explicitly permits, with the renderer/replay half passing |
+| M1-R02 | `test_v09_v10_ledger_replay::test_every_settled_line_comes_from_an_event` | pass |
+| M1-R03 | `test_fix_and_spend::test_context_selection_is_by_citation_and_is_bounded`, `::test_pytest_style_frames_are_recognised`, `::test_the_implementation_file_reaches_the_prompt`, `test_scope_context_release::test_excerpt_sends_a_window_not_the_file`, `::test_windows_merge_and_elision_is_marked`, `::test_the_excerpt_is_bounded` | pass |
+| M1-R04 | `test_django_scale_context` (4 tests) against Django 5.0.6 `2719a7f8` | pass |
+| M1-R05 | `test_fix_and_spend::test_protected_and_rift_paths_never_enter_context`, `test_scope_context_release::test_credential_shapes_are_redacted[*]` (6), `::test_a_private_key_block_is_redacted_whole`, `::test_the_manifest_records_ranges_and_counts_but_never_values` | pass |
+| M1-R06 | `test_fix_and_spend::test_absent_usage_retains_the_full_reservation[*]`, `::test_missing_provider_usage_retains_the_whole_reservation`, `::test_reported_usage_is_charged_and_the_rest_released` | pass |
+| M1-R07 | `test_cause_refinement::test_a_crash_before_the_receipt_is_resumable` injects `KeyboardInterrupt` and proves the ledger replays | **partial** — the "kills child processes" half has no test; process-tree termination is proven for *timeout* (M1-X05), not for interrupt |
+| M1-R08 | `test_cause_refinement::test_resume_inherits_the_observations_already_paid_for` | pass |
+| M1-R09 | `_resume_why` passes `use_model=False` and `_resume_fix` does not re-request | **no dedicated test** — no fixture interrupts between `model_request_started` and its response and then resumes |
+| M1-R10 | `test_v09_v10_ledger_replay::test_drift_invalidates_recorded_evidence`, `test_cause_refinement::test_resume_discards_observations_after_tracked_drift`, `test_reproduction_contract::test_tracked_drift_invalidates_the_reproducer`, `::test_source_drift_during_the_gate_stops_it` | pass |
+| M1-R11 | `test_v09_v10_ledger_replay::test_resume_requires_a_choice_when_several_tasks_are_incomplete`, `test_task_allocation::test_resume_discovers_every_incomplete_task` | pass |
+| M1-R12 | `test_cause_refinement::test_an_exhausted_budget_stops_refinement_and_says_so`, `test_v11_v14_authority_and_process_tree::test_blocked_isolation_still_produces_a_replayable_receipt`, `test_reproduction_contract::test_a_cleanup_failure_stops_fail_closed` | pass |
+| M1-R13 | `test_fix_and_spend::test_no_model_configured_is_an_explicit_abstention`, `test_propose_hypotheses::test_a_refused_budget_stops_the_request_before_it_is_sent` | pass |
+
+### The walk's result, counted
+
+47 M1 rows: 9 structural, 9 sandbox, 16 fix/why, 13 recovery.
+
+**35 pass with dedicated evidence. 12 do not.** Two of the twelve are
+environment disclosures the matrix explicitly permits. The other ten are
+evidence gaps, and not one of them was disclosed before this walk:
+
+| Row | Class |
+|---|---|
+| M1-F02 | code exists; no fixture reaches the branch (`build_checkset` sets no predicted signature for `fix`/`verify`) |
+| M1-F05 | code exists; no test at all |
+| M1-F07 | code exists; no test at all |
+| M1-R09 | code exists; no test at all |
+| M1-F06 | implemented and bounded, but triggered once per task rather than on the all-contradicted signal the row names |
+| M1-X02 | half tested — the patch half is covered, the handle banned-key half is not |
+| M1-F09 | half tested — nothing asserts the absence of gate events from a `why` ledger |
+| M1-R07 | half tested — replayability after interrupt is proven, child-process termination on interrupt is not |
+| M1-F15 | the assertion sits inside a conditional that may never execute |
+| M1-F16 | inherits F15's gap |
+| M1-X06 | `NOT_RUN_FULL_SANDBOX_UNAVAILABLE` (environment) |
+| M1-R01 | `NOT_RUN_PTY_UNAVAILABLE` (environment, permitted by the row) |
+
+This is the finding of item 5, and it is why the walk was demanded row by row
+instead of summarised: the suite is large, green and deterministic, and a
+summary of it would have read as complete. **M1-F15 is the most serious.** A
+conditional assertion is indistinguishable from no assertion, and this project
+has already shipped that exact mistake once, in the ordering test that accepted
+baseline rejection as success.
+
+None of the ten is fixed in this pass. Fixing them is runtime and test work that
+would need its own measurement against the 8,600-line ceiling, and adding
+fixtures now would invalidate the frozen-tree gate below rather than strengthen
+it. They are handed to review as named, individually reproducible gaps.
+
+---
+
+## Item 6 — the frozen-tree gate
+
+Appended; nothing above is modified. Three consecutive runs of pytest, ruff
+check, ruff format --check and mypy on an untouched tree, in the reference
+environment (`python:3.12-slim`, Python 3.12, linux/amd64). The digest was taken
+before run 1 and after run 3, and re-verified after the sequence.
+
+```
+START digest 1b7988378593cf8661ef4d3ef2477113028cad66745689eb3e501a6e5381a59c (173 files)
+
+run 1  pytest               rc=0  456.803s  459 passed, 5 skipped in 455.85s
+run 1  ruff check           rc=0    0.397s  All checks passed!
+run 1  ruff format --check  rc=0    0.184s  32 files already formatted
+run 1  mypy                 rc=0    2.823s  Success: no issues found in 8 source files
+run 2  pytest               rc=0  444.344s  459 passed, 5 skipped in 443.24s
+run 2  ruff check           rc=0    0.281s  All checks passed!
+run 2  ruff format --check  rc=0    0.132s  32 files already formatted
+run 2  mypy                 rc=0    2.011s  Success: no issues found in 8 source files
+run 3  pytest               rc=0  462.384s  459 passed, 5 skipped in 461.47s
+run 3  ruff check           rc=0    0.237s  All checks passed!
+run 3  ruff format --check  rc=0    0.115s  32 files already formatted
+run 3  mypy                 rc=0    1.645s  Success: no issues found in 8 source files
+
+END digest   1b7988378593cf8661ef4d3ef2477113028cad66745689eb3e501a6e5381a59c (173 files)
+equal: True
+```
+
+The digest is recomputed between runs as well, so a mutation would restart the
+sequence at run 1 rather than being discovered only at the end. It covers every
+shipped file including the markdown records, and excludes — stated rather than
+assumed — `.git`, `.rift`, `build`, the byte-compiled and tool caches, pytest's
+stray `pytest-cache-files-*` directories, and `.codex-test-tmp`, which holds the
+mutation and gate harnesses themselves. A change inside `.codex-test-tmp` would
+therefore not restart the sequence; nothing there is imported by the runtime or
+the suite.
+
+`commit_sha: NOT_APPLICABLE_NON_GIT` for the gate itself; the working tree is a
+git repository at `43f584d` plus this pass's uncommitted changes.
+
+**The caveat this gate carries, stated in advance as the last one was.** It
+proves the tests present are deterministic across three runs, that the tree did
+not move, and that lint and types are clean. It says nothing about the ten
+acceptance rows walked in item 5 that have no dedicated evidence. Three stable
+runs of a suite that does not reach a code path say nothing about that path, and
+that is exactly the claim this project has already made wrongly twice.
+
+The 5 skips are `tests/test_django_scale_context.py` (4, the disclosed
+`NOT_RUN_NETWORK_UNAVAILABLE` path with `RIFT_LARGE_REPO` unset — the same four
+tests are recorded passing against the pinned checkout in item 5) and one
+pre-existing skip. 459 passed, against 430 before this pass.
+
+**Runtime: 8,462 / 8,600.** 138 lines remain.
+
+---
+
+## Item 7 — the sanitized handoff archive
+
+No ZIP had ever been produced in this workspace. Two digests quoted in earlier
+external reviews — `0709ab3c…` and `23c0de8a…` — remain unverifiable here, and
+this archive is not offered as a match for either.
+
+Built as one pipeline, in this order, with each step's output feeding the next:
+
+```
+1. manifest   records.archive_manifest(repo_root)
+2. create     exactly those members, fixed timestamps and modes
+3. test       extract the created file, install it, run its own suite
+4. hash       sha256 of that same path on disk
+```
+
+The order is the whole point. Hashing an archive and then testing a different
+extraction of it, or testing a tree and then rebuilding the archive from it,
+yields a digest that certifies something other than what was tested. Here the
+bytes written are the bytes extracted, and the digest is taken last from the
+same file.
+
+The build script deliberately lives outside the repository and is passed into
+the container, because writing it into the tree would have added a file to the
+archive that was not in the gated tree.
+
+Timestamps and modes are fixed, so the archive is **reproducible**: a reviewer
+can rebuild it from this tree and get the same digest rather than taking the
+number on trust.
+
+### The archive tree versus the gated tree
+
+The archive is built after this entry was appended, so it is not byte-identical
+to the tree the gate ran on. Exactly one file differs — this one — and it
+differs by gaining the gate record above. The claim is checkable:
+
+```
+gated tree, all 173 files                     1b7988378593cf8661ef4d3ef2477113028cad66745689eb3e501a6e5381a59c
+gated tree, excluding IMPLEMENTATION_STATUS.md 9d836c4e2023af1e16850efb438da2ad7a64f30dbb78e7804517c43fd56a2a3e  (172 files)
+```
+
+The second digest is recomputed after this append and must be unchanged. If it
+is, nothing but this record moved between the gate and the archive.
+
+The archive's own SHA-256 is reported in the session output and not here, for
+the obvious reason: a digest cannot be contained in the file it describes.
+
+---
+
+## M1 completion pass — closing status
+
+### 1. Implementation status
+
+| Item | State |
+|---|---|
+| 1 · bounded `propose_hypotheses` in the shared `fix`/`why` flow | **done** |
+| 2 · bounded post-gate repair loop | **not implemented; disclosed fallback taken** (DAR-010) |
+| 3 · `repair_basis` byte-identical replay, both values | **done**; DAR-001 now IMPLEMENTED |
+| 4 · v1.2.4, authority index, ceiling amendment, DAR-007 | **done**; DAR-008/009/010 opened |
+| 5 · M1-R04 and the per-row M1 walk | **done**; the walk found ten undisclosed evidence gaps |
+| 6 · frozen-tree gate | **done**, three green runs, digests equal |
+| 7 · sanitized ZIP | **done**, produced for the first time in this workspace |
+
+Runtime **8,462 / 8,600** across 8 modules. No module boundary compressed, no
+test weakened, no new runtime module, no orchestration layer, no live provider
+request.
+
+### 2. Deterministic acceptance status
+
+Green and stable: 459 passed, 5 skipped, three consecutive runs; ruff, ruff
+format and mypy clean in all three. **35 of 47 M1 acceptance rows carry
+dedicated evidence.** Ten do not, and two are environment disclosures. The green
+suite is not evidence for those ten.
+
+### 3. Live-provider status
+
+No request in this pass. Cumulative and unchanged: 27 requests, **$0.068157**,
+historical.
+
+### 4. Calibration status
+
+Unchanged: 3 valid scored cases (C1–C3), 3 verified fixes, 0 false acceptances.
+C4 `GROUND_TRUTH_DISPUTED`, C5 `GROUND_TRUTH_INVALID`, both excluded.
+
+### 5. BM-06 status
+
+Not started, not authorized. `BM-06` is required for the M1 expansion claim and
+has no evidence.
+
+### 6. Product-thesis status
+
+Unproven. Nothing in this pass speaks to it.
+
+### What would clear the milestone
+
+1. The seven substantive evidence gaps: M1-F02, F05, F06, F07, F09, F15, F16,
+   X02, R07, R09 — with M1-F15 first, because a conditional assertion is
+   indistinguishable from no assertion.
+2. A decision on item 2: either the +400-line amendment to 9,000 and the bounded
+   repair loop as DAR-010 governs it, or acceptance that single-attempt `fix` is
+   the shipped behaviour.
+3. `CLAUDE.md` and `ACCEPTANCE_MATRIX.md` P-05 updated to v1.2.4 and the 8,600
+   ceiling — a reviewer decision, not mine to take.
+4. BM-06, separately authorized.
+
+### Status
+
+`BLOCKED`
+
+Not on the environment, and not on anything this pass could not finish. Six of
+the seven directive items are complete with evidence, the seventh took the
+fallback the directive itself authorised, and the tree is gated green and
+frozen.
+
+It is blocked because `ACCEPTANCE_MATRIX.md` states the rule plainly — *a
+skipped required test keeps the milestone incomplete* — and ten required M1 rows
+have no dedicated executable evidence. `CONDITIONALLY_READY` is defined for
+`NOT_RUN_<reason>` environment gaps, and only two of the twelve are that. The
+other ten are missing tests, which is a different thing and must not be reported
+under a status that reads as substantially complete.
+
+M1 is closer than it has been, and it is not done.
