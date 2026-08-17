@@ -371,3 +371,101 @@ M1-F16 stay open on that basis, and neither is claimed closed by a test that
 feeds the branch synthetically. Both are tested to the limit of what is
 reachable: the rule is proven correct when fed, the stop in `cmd_fix` is proven
 at the only seam that can reach it, and the unreachability itself is proven.
+
+## DAR-012 — the runtime ceiling, amended to 8,700 lines
+
+**Amends** the ceiling clauses of v1.2.4 — §3 P5 and §16 — and supersedes the
+8,600 figure set by DAR-008. Every other clause of v1.2.4 is untouched; this
+entry amends the number and nothing else.
+
+DAR-008 amended the ceiling once to 8,600 and explicitly refused a second
+amendment, because the request then was to fit the **bounded repair loop**, a
+capability the milestone could do without. This request is different in kind:
+M1-F15 and M1-F16 are required acceptance rows, and the design has specified
+their behaviour since v1.2.3 §9 and §13. The capability was not new scope; it
+was scope already owed and never built.
+
+The measurement that justified it, taken on a working, tested implementation
+rather than an estimate:
+
+| Module | Added | Removed |
+|---|---|---|
+| `kernel.py` | 49 | 2 |
+| `app.py` | 48 | 0 |
+| `checks.py` | 34 | 0 |
+| `records.py` | 2 | 0 |
+| **net** | **+131** | |
+
+```
+before the assertion-observation path   8,510
+after, with the three corrections       8,676
+ceiling                                 8,700
+```
+
+**+100 from 8,600**, of which 76 is spent and 24 is headroom. What the 131 lines
+bought, component by component: 15 discovery, 34 evaluation, 25 the verdict
+rule, 2 the event kind, 55 wiring at two call sites — the second of which is the
+collection-error path, without which the canonical missing-dependency shape is
+not diagnosed at all.
+
+Two things were refused rather than done to avoid this amendment. Dropping the
+collection-error path would have saved 13 lines and left the most common form of
+the finding undiagnosed. Stripping the explanatory comments would have saved
+about 20 and removed the reasoning from beside the rule, in a codebase whose
+standard is that the two live together. Neither is a saving; both are a
+different product.
+
+The ceiling remains a **disclosure ceiling, not a target**, and the rule DAR-008
+set still holds: an addition must displace something, and an amendment is
+requested with measurements or not at all.
+
+**Status: IMPLEMENTED** (measured at 8,676; `CLAUDE.md`, `ACCEPTANCE_MATRIX.md`
+P-05 and `IMPLEMENTATION_PLAN.md` updated to 8,700).
+
+## DAR-013 — the observational verdict is reachable; DAR-011 is closed
+
+**Closes** DAR-011, which recorded that the observational branch was correct and
+unreachable, and **amends** the DAR-002 status that qualified.
+
+DAR-011 named three mechanical facts. Two of them were the defect and are now
+fixed; the third remains true and is the boundary this feature respects.
+
+1. `kernel.discover_handles` **now yields** `dep_assert` and `file_assert`
+   handles, from explicit evidence only — the interpreter naming what it could
+   not import or open. An ordinary assertion failure yields none, so this is not
+   a general-purpose guess. Quota 2, alongside the four existing sources.
+2. `checks.evaluate_assertion` **measures** the assertion by running a fixed
+   program in the same sandbox the target ran in, with kind and argument passed
+   as `sys.argv` elements so nothing is interpolated into source or a shell.
+3. `checks.compile_handles` still compiles an assertion to nothing, and that is
+   correct and deliberate: an assertion is *not an intervention*. It is never
+   applied and never withdrawn, which is exactly why a cause found this way is
+   observational and can never be counterfactually gated.
+
+Three rules are governed with it, each of which was a correction to the first
+implementation rather than part of it:
+
+- **Discovered handles pass the same contract as model-proposed ones.** A
+  failure message is untrusted text: it can name `/etc/passwd` or
+  `../../secrets`. Discovery builds handles through `Handle.from_dict`, so the
+  absolute-path, traversal and shell-metacharacter rules apply to text the
+  repository produced exactly as they apply to text a model produced.
+- **An unobservable measurement is not an absence.** The evaluation reports one
+  of `present`, `absent` or `unobservable`, and only an executed, valid `absent`
+  may support a finding. An import-machinery error, a timeout, a sandbox fault,
+  or an exit code that disagrees with the reported word is `unobservable`. The
+  earlier implementation caught every exception and called it absent, which
+  would have let a broken measurement become a confident environmental claim.
+- **The assertion command obeys the command contract.** `COMMAND_STARTED`
+  before it runs, `COMMAND_FINISHED` after, then the observation — so it is
+  streamed, replayed and charged like every other command, and the live view
+  stays identical to the settled transcript.
+
+**Status: IMPLEMENTED.** M1-F15 and M1-F16 are closed by
+`tests/test_observational_finding.py` (22 tests), which drives the real CLI on a
+repository with a genuinely missing dependency, and carries positive controls in
+both directions: a dependency that is present is never reported missing, and a
+repository-relative path is still discovered when an escaping one is refused.
+
+DAR-002's stop branch is now reachable, and is exercised from a real repository
+rather than a substituted diagnosis.

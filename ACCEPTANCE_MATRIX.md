@@ -159,7 +159,7 @@ status named in that row plus the capability probe and reason in
 | P-02 | clean wheel install exposes `rift` and all six commands | isolated environment smoke | required |
 | P-03 | tests run against installed package | clean-environment pytest | required |
 | P-04 | Ruff and mypy pass with pinned versions | command output | required |
-| P-05 | runtime remains near six substantive modules and at or below the 8,600-line M2 disclosure ceiling (amended once from ~8,000; DAR-008); tests/fixtures/benchmarks reported separately | measured report; justify any deviation | required |
+| P-05 | runtime remains near six substantive modules and at or below the 8,700-line M2 disclosure ceiling (amended from ~8,000 to 8,600 by DAR-008, to 8,700 by DAR-012); tests/fixtures/benchmarks reported separately | measured report; justify any deviation | required |
 | P-06 | fake-provider suite requires no credentials | clean-env suite | required |
 | P-07 | live OpenAI-compatible provider smoke is reported accurately | pass or `NOT_RUN_LIVE_PROVIDER` | disclosure |
 | P-08 | §15 verify/fix/build benchmark status is separate from implementation status | final report | required |

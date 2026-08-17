@@ -1,11 +1,14 @@
 """The M1 acceptance rows the per-row walk found without dedicated evidence.
 
-One file, one test per row, each named for its row. Two of them do not close
-their row and say so in their own docstring: M1-F15 and M1-F16 turned out not to
-be missing tests at all, but a governed branch the runtime cannot reach. Writing
-a test that fed that branch synthetically and calling the row closed would be
-manufacturing evidence for a path no run can take, which is the defect this
-project keeps correcting.
+One file, one test per row, each named for its row.
+
+M1-F15 and M1-F16 were originally in this file as *unreachable* — the
+observational branch was correct and no run could enter it. That was missing
+runtime capability, not a missing test. The assertion-observation path now
+exists, and those two rows are exercised end to end in
+`test_observational_finding.py`. What remains here is the part that is still
+true: an assertion is never an *intervention*, so it can never support a gated
+cause.
 """
 
 from __future__ import annotations
@@ -272,30 +275,12 @@ def test_f15_the_observational_rule_is_correct_when_it_is_fed():
     assert control.support is Support.INTERVENTIONAL
 
 
-@pytest.mark.parametrize(
-    "failure_text",
-    [
-        "E   ModuleNotFoundError: No module named 'yaml'\ntests/test_target.py:1: in <module>\n    import yaml\n",
-        "E   FileNotFoundError: [Errno 2] No such file or directory: 'config/settings.ini'\n",
-        "E   FileNotFoundError: [Errno 2] No such file or directory: 'ffmpeg'\n",
-    ],
-    ids=["missing module", "missing file", "missing binary"],
-)
-def test_f15_no_runtime_path_can_ever_reach_that_rule(failure_text: str):
-    """The other half, and the reason M1-F15 stays open.
-
-    `discover_handles` never yields an assertion primitive for any
-    assertion-shaped failure, so an assertion cause cannot arise deterministically.
-    """
-    handles = kernel.discover_handles(
-        failure_text,
-        ["src/", "tests/", ".cache/"],
-        ["tests/test_target.py::test_x", "tests/test_other.py::test_y"],
-        "tests/test_target.py::test_x",
-        ambient_env={"HOME": "/root", "MY_TOKEN": "x"},
-    )
-    assert handles, "the fixture must discover something, or the assertion below is vacuous"
-    assert [h.label for h in handles if not h.is_intervention] == [], [h.label for h in handles]
+# `test_f15_no_runtime_path_can_ever_reach_that_rule` lived here and asserted
+# that `discover_handles` never yields an assertion primitive. That was true, and
+# it was the defect: it is why the observational verdict could not be produced.
+# The assertion-observation path now exists, so the test is removed rather than
+# inverted, and the bounded-discovery rule it should have been is asserted in
+# `test_observational_finding.py::test_f15_assertions_are_discovered_only_from_explicit_evidence`.
 
 
 def test_f15_no_theory_over_an_assertion_role_can_be_supported():

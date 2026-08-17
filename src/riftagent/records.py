@@ -694,6 +694,9 @@ def canonical_diff(text: str) -> str:
 # clean the directory before zipping it.
 ARCHIVE_EXCLUDE_DIRS = frozenset(
     {".git", ".rift", "build", "dist", "__pycache__", ".mypy_cache", ".ruff_cache", ".pytest_cache", "work"}
+    # Audit harnesses — mutation checks, gate drivers. Evidence for a review,
+    # never part of a handoff.
+    | {".codex-test-tmp"}
 )
 ARCHIVE_EXCLUDE_NAMES = frozenset({".env", ".env.local"})
 ARCHIVE_EXCLUDE_SUFFIXES = frozenset({".pyc", ".pyo", ".key", ".pem", ".log"})
@@ -1417,6 +1420,8 @@ class EventKind(StrEnum):
     HYPOTHESES_ELIMINATED = "hypotheses_eliminated"
     CAUSE_REFINED = "cause_refined"
     CAUSE_SUPPORTED = "cause_supported"
+    # An assertion measured in the sandbox: what was observed, not what was done.
+    ASSERTION_OBSERVED = "assertion_observed"
     DIAGNOSIS_EMITTED = "diagnosis_emitted"
     MODEL_REQUEST_STARTED = "model_request_started"
     MODEL_RESPONSE_RECEIVED = "model_response_received"

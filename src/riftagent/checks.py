@@ -399,6 +399,56 @@ def compile_handles(
     return env_extra, env_drop, prefix
 
 
+# One fixed program, run inside the sandbox. Kind and argument arrive as argv
+# elements read from `sys.argv`: nothing is interpolated into source or a shell.
+_ASSERT_SRC = (
+    "import importlib.util, os, shutil, sys\n"
+    "k, a = sys.argv[1], sys.argv[2]\n"
+    "try:\n"
+    "    p = importlib.util.find_spec(a) is not None if k == 'dep_assert' else bool(\n"
+    "        os.path.exists(a) or shutil.which(a))\n"
+    "except Exception as exc:\n"
+    # An import machinery failure is a broken measurement, not an absence. A
+    # namespace package with a missing parent, an unreadable path or an
+    # importer that raises must be distinguishable from "it is not there".
+    "    print('error', type(exc).__name__)\n"
+    "    sys.exit(2)\n"
+    "print('present' if p else 'absent')\n"
+    "sys.exit(0 if p else 1)\n"
+)
+
+# The three outcomes of measuring an assertion. Only ABSENT is evidence.
+PRESENT, ABSENT, UNOBSERVABLE = "present", "absent", "unobservable"
+
+
+def evaluate_assertion(
+    handle: Handle, worktree: Worktree, probe: IsolationProbe, timeout_s: float
+) -> tuple[str, CommandResult | None]:
+    """Observe whether what the failure named is actually present.
+
+    An assertion is not applied and not withdrawn; it is *measured*, by running
+    a real command in the same sandbox the target ran in.
+
+    Returns one of `PRESENT`, `ABSENT`, `UNOBSERVABLE`. The third is not a
+    quieter form of the second: a measurement that could not be taken says
+    nothing about whether the thing exists, and only an executed, valid `ABSENT`
+    may support an observational diagnosis.
+    """
+    argv = [sys.executable, "-c", _ASSERT_SRC, handle.kind.value, handle.arg]
+    env = build_env(worktree.path, worktree.tmpdir, {})
+    try:
+        res = run_argv(argv, worktree.path, env, timeout_s, probe, False)
+    except SandboxError:
+        return UNOBSERVABLE, None
+    first = res.stdout.split(maxsplit=1)[0] if res.stdout.split() else ""
+    if res.timed_out or res.exit_code not in (0, 1) or first not in (PRESENT, ABSENT):
+        return UNOBSERVABLE, res
+    # Exit code and reported word must agree, or the measurement is not trusted.
+    if (res.exit_code == 1) != (first == ABSENT):
+        return UNOBSERVABLE, res
+    return first, res
+
+
 def _clear_state(root: Path, name: str) -> None:
     """Delete matching state directories inside the disposable sandbox only.
 

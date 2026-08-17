@@ -36,6 +36,7 @@ from riftagent.records import (
     Signature,
     Support,
     TaskProjection,
+    ValidationError,
     Verdict,
 )
 
@@ -868,6 +869,11 @@ _STANDARD_ENV = frozenset(
 )
 _STATE_HINT = ("cache", "tmp", "state", "lock", "build", "artifact", ".mark")
 
+# Explicit missing-thing evidence. Deliberately narrow: the interpreter names
+# what it could not find, and only that name becomes an assertion handle.
+_MISSING_MODULE = re.compile(r"No module named ['\"]([\w.]+)['\"]")
+_MISSING_PATH = re.compile(r"No such file or directory:? ['\"]([^'\"]+)['\"]")
+
 
 def _first_handles(collected: list[str], target: str, per_level: int = 3) -> list[Handle]:
     """Coarse-to-fine `run this before the target` handles.
@@ -891,7 +897,7 @@ def discover_handles(
     target: str,
     cap: int = 8,
     ambient_env: dict[str, str] | None = None,
-    quotas: tuple[int, int, int, int] = (2, 2, 2, 4),
+    quotas: tuple[int, int, int, int, int] = (2, 2, 2, 4, 2),
 ) -> list[Handle]:
     """Enumerate pullable handles from observable signals only.
 
@@ -924,10 +930,28 @@ def discover_handles(
         seen_dirs.add(name)
         clear_c.append(Handle(Primitive.CLEAR, name))
     first_c = _first_handles(collected, target)
+    # Assertions, from explicit evidence only: the one source that observes
+    # rather than intervenes, so a cause found here can never be gated. Proposed
+    # only when the failure text names the missing thing outright.
+    assert_c: list[Handle] = []
+    for kind, pattern in ((Primitive.DEP_ASSERT, _MISSING_MODULE), (Primitive.FILE_ASSERT, _MISSING_PATH)):
+        for match in pattern.finditer(failure_text):
+            arg = match.group(1)
+            if not arg or any(h.arg == arg for h in assert_c):
+                continue
+            try:
+                # Through the same contract a model proposal must pass. A
+                # failure message is untrusted text like any other input: it can
+                # name `/etc/passwd` or `../../secrets`, and a handle built
+                # directly would skip the traversal and absolute-path rules that
+                # exist for exactly that.
+                assert_c.append(Handle.from_dict({"kind": kind.value, "arg": arg}))
+            except ValidationError:
+                continue
 
     out: list[Handle] = []
     seen: set[str] = set()
-    for pool, quota in zip((env_c, unset_c, clear_c, first_c), quotas, strict=True):
+    for pool, quota in zip((env_c, unset_c, clear_c, first_c, assert_c), quotas, strict=True):
         for h in pool[:quota]:
             if h.label not in seen and len(out) < cap:
                 seen.add(h.label)
@@ -1082,6 +1106,38 @@ def cause_of(h: dict[str, Any], mapping: dict[str, Handle]) -> list[Handle]:
             if role in mapping and mapping[role] not in out:
                 out.append(mapping[role])
     return out
+
+
+def observational_diagnosis(
+    absent: list[Handle], notes: list[str], contradicted: tuple[str, ...] = ()
+) -> Diagnosis | None:
+    """A finding supported by an executed assertion, and gateable by nothing.
+
+    Called only where the action space could not explain the failure. An
+    assertion observes: nothing is applied, so nothing can be withdrawn, so the
+    gate is `not_applicable` and this is a diagnosis rather than a verified fix.
+    None when nothing came back absent, so a dependency that is present is never
+    reported as a missing one.
+    """
+    if not absent:
+        return None
+    named = ", ".join(h.label for h in absent)
+    return Diagnosis(
+        Verdict.DIAGNOSIS_SUPPORTED,
+        Support.OBSERVATIONAL,
+        GateStatus.NOT_APPLICABLE,
+        tuple(absent),
+        1,
+        contradicted,
+        (
+            *notes,
+            f"an assertion executed in the sandbox found {named} missing, which explains the "
+            "failure the intervention grammar could not express",
+            "an assertion observes rather than intervenes: nothing can be withdrawn, so no "
+            "counterfactual gate is possible. This locates a cause; it verifies no fix",
+        ),
+        remediation_unverified=f"UNVERIFIED: remediation for {named} was not applied, withdrawn, or tested here.",
+    )
 
 
 def derive_diagnosis(

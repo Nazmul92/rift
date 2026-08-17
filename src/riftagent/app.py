@@ -35,9 +35,12 @@ from typing import Any
 
 from riftagent import kernel, llm
 from riftagent.checks import (
+    ABSENT,
     DEFAULT_PROTECTED_PATHS,
+    UNOBSERVABLE,
     ProbeObservation,
     collect_nodes,
+    evaluate_assertion,
     observable_paths,
     run_check,
     run_probe,
@@ -1844,6 +1847,16 @@ def run_diagnosis(
         )
 
         if not baseline.is_evidence:
+            # A target that will not even collect is normally an unobservable
+            # measurement. But when the interpreter names what it could not
+            # import, that is an explanation rather than a broken machine, and
+            # the assertion is measured before the run gives up.
+            unobservable = kernel.discover_handles(baseline.failure_text, [], [], req.node_id)
+            found = kernel.observational_diagnosis(
+                _absent_assertions(flow, unobservable, worktree, req.budgets.command_timeout_s), notes
+            )
+            if found is not None:
+                return found
             return Diagnosis(
                 Verdict.INFRASTRUCTURE_BLOCKED,
                 None,
@@ -2107,6 +2120,14 @@ def run_diagnosis(
 
         diagnosis = kernel.derive_diagnosis(scored, probes, ev, mapping, notes)
 
+        # The action space could not explain the failure. Before reporting that,
+        # measure the assertions it discovered: a missing module or file is a
+        # real finding the intervention grammar cannot express. Only here — a
+        # located interventional cause is stronger and is never displaced.
+        if diagnosis.status is Verdict.REPRESENTATION_INADEQUATE:
+            absent = _absent_assertions(flow, handles, worktree, req.budgets.command_timeout_s)
+            diagnosis = kernel.observational_diagnosis(absent, notes, diagnosis.contradicted) or diagnosis
+
         # 5. Narrow a coarse ordering cause to the smallest subset the probes
         #    actually distinguish. `first:tests/` is true and nearly useless
         #    when `first:tests/test_a_first.py` is deterministically reachable,
@@ -2127,6 +2148,53 @@ def run_diagnosis(
         return diagnosis
     finally:
         worktree.dispose()
+
+
+def _absent_assertions(flow: Flow, handles: list[Handle], worktree: Worktree, timeout_s: float) -> list[Handle]:
+    """Measure every assertion handle in the sandbox and record what was seen.
+
+    Each observation is executed and charged like any other command. The result
+    is recorded whether the thing was present or absent, so the ledger shows the
+    measurement rather than only the findings it supported.
+    """
+    absent: list[Handle] = []
+    for handle in [h for h in handles if not h.is_intervention]:
+        # Announced before it runs, like every other command: the live view and
+        # the settled transcript are the same projection, and a command that
+        # appeared only once it had finished would break that.
+        flow.append(
+            EventKind.COMMAND_STARTED,
+            {"display": f"assert {handle.label}", "phase": "diagnosis", "node_id": handle.arg, "run": "1/1"},
+        )
+        outcome, res = evaluate_assertion(handle, worktree, flow.probe, timeout_s)
+        # Closed either way. A command announced and never finished leaves the
+        # ledger unbalanced and the attempt uncharged, and a sandbox that could
+        # not run it is an unsuccessful completion — not a silent one, and never
+        # a successful one.
+        flow.append(
+            EventKind.COMMAND_FINISHED,
+            {
+                "duration_s": round(res.duration_s, 3) if res else 0.0,
+                "exit_code": res.exit_code if res else -1,
+                "phase": "diagnosis",
+                "outcome": outcome,
+                "successful": res is not None and outcome != UNOBSERVABLE,
+            },
+        )
+        flow.append(
+            EventKind.ASSERTION_OBSERVED,
+            {
+                "handle": handle.to_dict(),
+                "outcome": outcome,
+                # Kept as a boolean too, because every reader of this event asks
+                # exactly one question of it, and `unobservable` must answer no.
+                "absent": outcome == ABSENT,
+                "evidence": "executed in the diagnosis sandbox; nothing was applied or withdrawn",
+            },
+        )
+        if outcome == ABSENT:
+            absent.append(handle)
+    return absent
 
 
 def _probe_as_result(node_id: str, obs) -> dict:

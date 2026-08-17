@@ -3783,3 +3783,712 @@ archive.
 
 The archive's own SHA-256 is reported in the session output and not here: a
 digest cannot be contained in the file it describes.
+
+---
+
+## The assertion-observation path — implemented, working, and 41 lines over the ceiling
+
+Appended; nothing above is modified. **No gate was run and nothing was
+committed**: the ruling was to stop with the measured delta if it did not fit,
+and it does not fit.
+
+### What was built
+
+The path M1-F15 and M1-F16 require, using existing modules only. No new module,
+no new primitive, no framework, no architecture change.
+
+| Piece | Where | What it does |
+|---|---|---|
+| discovery | `kernel.discover_handles` | a fifth bounded source, quota 2. `dep_assert` / `file_assert` handles from **explicit** evidence only: the interpreter naming what it could not import or open. An ordinary assertion failure yields none |
+| evaluation | `checks.evaluate_assertion` | runs one fixed program in the same sandbox the target ran in. Kind and argument arrive as `sys.argv` elements, so nothing is interpolated into source or a shell. Returns (absent, result); an unobservable measurement reports *not* absent, because a broken measurement is not evidence that something is missing |
+| the verdict rule | `kernel.observational_diagnosis` | `diagnosis_supported` + `support: observational` + `gate: not_applicable`, with the remediation labelled unverified. Returns `None` when nothing came back absent, so a dependency that is present is never reported missing |
+| durable record | `records.EventKind.ASSERTION_OBSERVED` | one event per measurement, recording what was seen whether present or absent, plus its `COMMAND_FINISHED` so the observation is charged like any other command |
+| wiring | `app._absent_assertions`, `run_diagnosis` | measured at two points, and only two |
+
+The two points matter:
+
+1. Where the enumerated space ended `representation_inadequate` — the action
+   space could not explain the failure, so an observation may. A located
+   interventional cause is stronger and is **never** displaced by one.
+2. Where the target could not be observed at all. A missing dependency usually
+   fails at *collection*, which this runtime correctly classifies as an
+   unobservable measurement rather than a target failure. That early return came
+   before handles were ever discovered, so the canonical missing-dependency
+   shape would have been reported `infrastructure_blocked` and nothing else.
+   When the interpreter names what it could not import, that is an explanation
+   rather than a broken machine.
+
+The second point was found by the fixture failing, not by reading the code, and
+it is the difference between closing the row for a deferred `import` inside a
+function and closing it for the shape that actually occurs.
+
+`fix` needed no change: `cmd_fix` already stops before `propose_change` on an
+observational diagnosis (DAR-002). That branch is now reachable, and the test
+drives it from a real repository rather than a substituted diagnosis.
+
+### Evidence
+
+`tests/test_observational_finding.py`, 8 tests, all through the real CLI:
+
+- a missing module is `diagnosis_supported` / `observational` /
+  `not_applicable`, with the cause named and remediation unverified;
+- **positive control** — a repository whose import is present is never
+  diagnosed as missing, and every recorded observation says `absent: false`;
+- a missing file likewise, by path;
+- `fix` issues no `propose_change`, registers no ChangeSet, writes no
+  `change-set.diff`, records the stop, and returns a non-zero exit with no
+  verified-fix credit;
+- discovery is bounded: `assert 10 == 11` and a bare `ValueError` yield no
+  assertion handle, so this cannot become a general-purpose guess.
+
+One obsolete test was **removed, not inverted**:
+`test_f15_no_runtime_path_can_ever_reach_that_rule` asserted that
+`discover_handles` never yields an assertion primitive. That was true, and it
+was precisely the defect. What remains in `test_acceptance_gaps.py` is the part
+still true — an assertion is never an *intervention*, so it can never support a
+gated cause.
+
+One assertion of mine was wrong and is corrected: I asserted `why` exits
+non-zero on this finding. It exits 0, correctly — `why` located a cause and
+succeeded. That the finding is not a fix is carried by `gate: not_applicable`,
+the unverified remediation, and `fix` refusing to gate anything.
+
+```
+python -m pytest tests/test_observational_finding.py tests/test_acceptance_gaps.py tests/test_why_diagnosis.py -q
+    56 passed in 70.69s
+python -m ruff check src tests benchmark   All checks passed
+python -m mypy src                         Success: no issues found in 8 source files
+```
+
+### The measured delta
+
+```
+before this feature   8,510
+after                 8,641
+ceiling               8,600
+over by                  41
+```
+
+Per module, working tree against the 8,510 tree:
+
+| Module | Added | Removed |
+|---|---|---|
+| `kernel.py` | 49 | 2 |
+| `app.py` | 48 | 0 |
+| `checks.py` | 34 | 0 |
+| `records.py` | 2 | 0 |
+| **net** | **+131** | |
+
+The allowance was 90. The overrun is 41 lines, and it is not padding: the
+components are 15 (discovery), 34 (evaluation), 25 (the verdict rule), 2 (the
+event kind) and 55 (wiring at two points, including the collection-error path
+that the canonical fixture requires).
+
+I trimmed my own prose twice — docstrings and comments in code I had just
+written — which recovered 16 lines. Going further would mean removing the
+explanation of *why* each part exists, in a codebase whose standard is that the
+reasoning lives beside the rule. That is compressing quality to fit a number,
+and it is not done.
+
+**Nothing was compressed, no boundary moved, and the ceiling is not amended.**
+The tree currently violates P-05 at 8,641, which is itself a failing required
+row, so no gate was run: three green runs on a tree that cannot ship as-is
+would be evidence for something that is not the candidate.
+
+### What this needs
+
+A decision, not more work from me:
+
+1. **Amend the ceiling to 8,700** (+100 from 8,600, of which 41 is spent and 59
+   is headroom) and let this stand, recorded as a DAR entry with this
+   measurement; or
+2. **Direct a reduction.** The honest candidates, with what each costs: drop the
+   collection-error path (−13 lines, and the canonical missing-dependency shape
+   stops being diagnosed); drop `file_assert` and keep only `dep_assert`
+   (−8 lines, and missing files stop being findings); or strip the explanatory
+   comments (−20 lines, and the reasoning leaves the code); or
+3. **Revert the feature** and leave M1-F15 and M1-F16 open under DAR-011 as
+   before, with the milestone narrower and honest.
+
+M1 remains `BLOCKED` under every one of them. Charged spend unchanged at
+**$0.068157**; no live provider request.
+
+---
+
+## The three required corrections, and the amendment to 8,700
+
+Appended; nothing above is modified. The ceiling amendment is granted and
+recorded as **DAR-012**; the closure of the capability gap is **DAR-013**, which
+closes DAR-011.
+
+### Correction 1 — the deterministic-validation bypass
+
+`discover_handles` built `Handle(kind, arg)` directly, guarded only by a local
+`_SAFE_ARG` pattern that permitted `/etc/passwd` and `../../secrets`. Every
+other handle in the system passes `Handle.from_dict`, which refuses absolute
+paths, parent-directory traversal and shell metacharacters.
+
+The bypass mattered because **a failure message is untrusted text**. Nothing
+stops a repository printing `No such file or directory: '/etc/passwd'` — from a
+fixture, a dependency, or deliberately — and discovery turns that text into a
+handle the runtime will later execute a measurement against. Text the repository
+produced now passes exactly the contract text a model produced must pass.
+
+`_SAFE_ARG` is deleted rather than tightened: a second, weaker validator beside
+the real one is how the two eventually disagree.
+
+Six adversarial cases plus four positive controls: `/etc/passwd`, `/etc/shadow`,
+`../../secrets.env`, `../outside/config.ini`, `a/../../b`,
+`/absolute/with/../traversal` and `a;rm -rf /` are all refused, while
+`config/settings.ini`, `data.json`, `ffmpeg` and `pkg/sub/file.txt` are still
+discovered. Without the controls the refusals would also hold if discovery had
+simply stopped working.
+
+### Correction 2 — an error is not an absence
+
+The fixed program caught every exception and set `p = False`, which printed
+`absent`. That directly contradicted the rule the docstring claimed: an
+unobservable measurement is not evidence that something is missing. An import
+machinery failure — a namespace package with a missing parent, an unreadable
+path, an importer that raises — would have become a confident environmental
+finding.
+
+There are now three outcomes, and only one of them is evidence:
+
+```
+present       the thing is there
+absent        the thing is not there   <- the only outcome that supports a finding
+unobservable  the measurement could not be taken
+```
+
+`unobservable` covers a raised exception (exit 2, with the exception type
+reported), a timeout, a sandbox fault, any exit code outside {0, 1}, an
+unrecognised word on stdout, **and a disagreement between the exit code and the
+word** — a program that printed `absent` while exiting 0 is not trusted in
+either direction. Seven cases are asserted, including both disagreement forms.
+
+`kernel.observational_diagnosis` receives only the `absent` list, so an
+unobservable measurement cannot reach a verdict even by accident.
+
+### Correction 3 — command-event discipline
+
+Assertion execution recorded `COMMAND_FINISHED` with no preceding
+`COMMAND_STARTED`. The live view and the settled transcript are the same
+projection of the same events, so a command that appeared only once it had
+finished would break that identity — and M1-R02's "every settled claim
+corresponds to a durable event" would hold while its converse quietly did not.
+
+The assertion command is now announced before it runs, finished after, and the
+observation recorded third. The test asserts the order, asserts that no
+`command_finished` in the entire run lacks a preceding `command_started`, and
+asserts the receipt's command count equals the number of finish events — so the
+assertion command is charged like every other command.
+
+### Evidence
+
+```
+python -m pytest tests/test_observational_finding.py -q   22 passed in 16.74s
+python -m ruff check src tests benchmark                  All checks passed
+python -m ruff format --check                             clean
+python -m mypy src                                        Success: 8 source files
+```
+
+Five removal mutations, each in a fresh disposable copy with the imported
+package asserted to resolve under it:
+
+```
+authoritative digest BEFORE: 3d1b8ab59af930534d8f82eb9c47440cba0f301bfd005abbd2eaef295a5c5881
+
+the observational verdict is never produced                     RED, exit=1
+the collection-error path is dropped                            RED, exit=1
+correction 1: discovery bypasses Handle.from_dict validation    RED, exit=1
+correction 2: an unobservable measurement is treated as absent  RED, exit=1
+correction 3: the assertion command is not announced first      RED, exit=1
+
+authoritative tree unchanged: True
+removals not detected: 0
+```
+
+Two of those five did **not** detect on their first attempt, and the reasons are
+recorded because both were faults in my mutations rather than in the tests:
+
+- The first mutation targeted the `representation_inadequate` call site but was
+  checked against the missing-*dependency* fixture, which reaches the
+  observational verdict through the **collection-error** path instead. Retargeted
+  at the missing-*file* fixture, which is the one that fails at runtime and
+  therefore does reach that call site. The pair now covers both paths
+  independently, which is stronger than either alone.
+- The third changed the announcement's display *text* rather than removing the
+  event. A mutation that leaves the behaviour intact proves nothing about the
+  test. It now replaces the event kind itself.
+
+### Documents
+
+- **DAR-012** records the amendment 8,600 → 8,700 with the per-module
+  measurement, and states what was refused rather than done to avoid it.
+- **DAR-013** closes DAR-011: two of its three mechanical facts were the defect
+  and are fixed; the third — `compile_handles` still compiles an assertion to
+  nothing — remains true and is the boundary the feature respects, because an
+  assertion is not an intervention and must never support a gated cause.
+- `CLAUDE.md`, `ACCEPTANCE_MATRIX.md` P-05 and `IMPLEMENTATION_PLAN.md` now read
+  8,700 with both amendments cited.
+- **`riftagent_design_v1.2.4.md` is untouched**, `sha256 85a948ba…`, as is
+  v1.2.3 at `sha256 0718ebab…`. DAR-012 amends its ceiling clauses and nothing
+  else.
+
+**Runtime: 8,676 / 8,700**, 24 under. Charged spend unchanged at **$0.068157**;
+no live provider request.
+
+---
+
+## The frozen-tree gate, on the tree with the observational path
+
+Appended; nothing above is modified.
+
+```
+START digest 62b9efc2970b804b907c33cdc7725bf5861f47099aa58b3f4d61421f11e3fd37 (176 files)
+
+run 1  pytest               rc=0  485.719s  515 passed, 5 skipped in 484.58s
+run 1  ruff check           rc=0    0.298s  All checks passed!
+run 1  ruff format --check  rc=0    0.151s  35 files already formatted
+run 1  mypy                 rc=0    2.110s  Success: no issues found in 8 source files
+run 2  pytest               rc=0  464.406s  515 passed, 5 skipped in 463.37s
+run 2  ruff check           rc=0    0.261s  All checks passed!
+run 2  ruff format --check  rc=0    0.135s  35 files already formatted
+run 2  mypy                 rc=0    2.185s  Success: no issues found in 8 source files
+run 3  pytest               rc=0  466.066s  515 passed, 5 skipped in 464.99s
+run 3  ruff check           rc=0    0.266s  All checks passed!
+run 3  ruff format --check  rc=0    0.158s  35 files already formatted
+run 3  mypy                 rc=0    1.977s  Success: no issues found in 8 source files
+
+END digest   62b9efc2970b804b907c33cdc7725bf5861f47099aa58b3f4d61421f11e3fd37 (176 files)
+equal: True
+```
+
+515 passed, against 496 at the previous gate and 430 when this work began. The 5
+skips are the four `NOT_RUN_NETWORK_UNAVAILABLE` Django tests — recorded passing
+separately against the pinned checkout — and one pre-existing skip.
+
+Green on the first attempt this time. The two preceding attempts on earlier
+trees are recorded above and not reused: one failed on a flaky test of mine, one
+was killed by a daemon stop. Neither is counted toward this sequence.
+
+**Runtime: 8,676 / 8,700** (DAR-012), 24 under.
+
+---
+
+## The sanitized handoff archive, rebuilt
+
+`9f80553b…` is historical; the tree has changed. Built through the identical
+one-pipeline path — `records.archive_manifest()` → create → extract, install and
+run its own suite → SHA-256 of that same file — with fixed timestamps, so the
+digest is reproducible rather than asserted.
+
+Exactly one file differs between the archive tree and the gated tree, this one,
+which gained the gate record above:
+
+```
+gated tree, all 176 files                      62b9efc2970b804b907c33cdc7725bf5861f47099aa58b3f4d61421f11e3fd37
+gated tree, excluding IMPLEMENTATION_STATUS.md 10713ea96659154fcf60bd376347a51ed3f771e6e458520ddccba3ecb6107409  (175 files)
+```
+
+The second digest is recomputed after the archive is built and must be
+unchanged. The archive's own SHA-256 is reported in the session output, not
+here: a digest cannot be contained in the file it describes.
+
+---
+
+## M1 status after the assertion-observation path
+
+### 1. Implementation status
+
+| Area | State |
+|---|---|
+| bounded `propose_hypotheses` at the governed ambiguity point | done |
+| bounded post-gate repair loop | **not implemented**, governed by DAR-010; single-attempt `fix` accepted for M1 |
+| `repair_basis` byte-identical replay, both values | done; DAR-001 implemented |
+| v1.2.4, authority index, DAR-007 | done |
+| M1-R04 against pinned Django 5.0.6 `2719a7f8` | done |
+| the eleven evidence gaps | **all closed** |
+| the assertion-observation path (M1-F15, M1-F16) | done; DAR-011 closed by DAR-013 |
+| frozen-tree gate | done, three green runs, digests equal |
+| sanitized ZIP | done |
+
+### 2. Acceptance-row accounting, 47 M1 rows
+
+| | After the walk | Now |
+|---|---|---|
+| pass with dedicated evidence | 35 | **46** |
+| genuine evidence gaps | 11 | **0** |
+| environment disclosures | 1 | **1 — M1-X06** |
+
+**M1-X06** is `NOT_RUN_FULL_SANDBOX_UNAVAILABLE`: `bwrap` is absent from the
+reference container and `probe_isolation()` reports `partial`. The row is
+"required where supported" and this environment does not support it. That is a
+disclosure the matrix explicitly permits, not a missing test — and it is the
+only outstanding row.
+
+### 3. Live-provider status
+
+No request in any pass. Cumulative and unchanged: 27 requests, **$0.068157**,
+historical.
+
+### 4. Calibration status
+
+Unchanged: 3 valid scored cases (C1–C3), 3 verified fixes, 0 false acceptances.
+C4 `GROUND_TRUTH_DISPUTED`, C5 `GROUND_TRUTH_INVALID`, both excluded.
+
+### 5. BM-06 status
+
+Not started, not authorized. Required for the M1 expansion claim and has no
+evidence. Per the standing ruling it must measure the **shipped** behaviour —
+single-attempt `fix` — so that the repair loop is justified by data rather than
+by anticipation.
+
+### 6. Product-thesis status
+
+Unproven. Nothing in this work speaks to it.
+
+### Status
+
+`CONDITIONALLY_READY`
+
+Every required M1 row now has dedicated executable evidence except **M1-X06**,
+which is disclosed as `NOT_RUN_FULL_SANDBOX_UNAVAILABLE` with its capability
+probe recorded. Under the matrix's own rule that is precisely what
+`CONDITIONALLY_READY` is for, and only the human reviewer may authorize
+continuing with that gap.
+
+`READY_FOR_MILESTONE_REVIEW` is **not** claimed, and three things stand between
+this and it:
+
+1. **M1-X06** needs an environment with bubblewrap, or a reviewer's acceptance
+   of the disclosure.
+2. **The bounded repair loop is absent by decision**, not by oversight
+   (DAR-010). A `fix` whose first patch is behaviourally wrong abstains where a
+   retry might have succeeded. BM-06 measures whether that costs anything real.
+3. **BM-06 itself has not run**, so the M1 expansion claim is unsupported.
+
+What changed in this work, stated plainly: the milestone went from a green suite
+that did not reach ten of its own acceptance rows, to one that reaches every row
+the environment permits. Three of those closures required runtime that did not
+exist — the `propose_handles` trigger, interrupt-time process-tree termination,
+and the whole assertion-observation path — and two required corrections to code
+I had written in the same pass.
+
+---
+
+## Final correction pass — event balance, archive exclusion, and a disclosure warning
+
+Appended; nothing above is modified.
+
+### A credential may have been disclosed
+
+`riftagent/.env` holds a 108-character `RIFT_LLM_KEY` with the shape of a live
+provider credential. It is gitignored, it has never entered any archive this
+runtime produced, and its value is not printed here or anywhere in this record.
+
+A ZIP uploaded for review — `sha256 667588bb…` — was reported to contain `.env`
+along with `.git`, caches, build output and temporary audit files. **This
+runtime did not produce that file.** If it left this machine, the key must be
+treated as disclosed and revoked at the provider. That is the one consequence in
+this project that a later pass cannot repair, and it is recorded first for that
+reason.
+
+Provenance, for the avoidance of doubt:
+
+| | Uploaded | Produced here |
+|---|---|---|
+| sha256 | `667588bb…` | see below |
+| contents | `.env`, `.git`, caches, build output, audit temp files | manifest members only, 0 matching any excluded path |
+| origin | not from this runtime | `records.archive_manifest()` pipeline |
+
+`.env` was already excluded by name (`ARCHIVE_EXCLUDE_NAMES`), `.git`, `build`
+and the caches by directory, and `test_no_archived_file_contains_a_credential_shape`
+scans member *contents* for credential shapes. The uploaded file is a raw folder
+zip, not the sanitized deliverable.
+
+### Correction 1 — the unbalanced assertion command
+
+`evaluate_assertion` returns `(UNOBSERVABLE, None)` when the sandbox refuses to
+execute at all. The previous path emitted `COMMAND_STARTED`, skipped
+`COMMAND_FINISHED` because there was no result to describe, and continued.
+
+Two things were wrong with that. The ledger was left unbalanced — an announced
+command that never finishes — and the attempt went uncharged, because
+`proj.commands` counts finish events. A run could therefore execute work it
+never billed itself for.
+
+The command is now closed either way, and closed *honestly*:
+
+```
+exit_code   -1                  (no process produced one)
+outcome     unobservable
+successful  false
+duration_s  0.0
+```
+
+`successful` is a new field on this event rather than a new event kind: the
+vocabulary already had `COMMAND_FINISHED`, and finishing unsuccessfully is a
+completion, not a different kind of thing.
+
+The test forces exactly this path by refusing **only** the assertion program —
+an earlier attempt refused every command, which broke the run long before an
+assertion was discovered and tested the probe path instead. It asserts the
+announcement, exactly one matching close, `successful: false`, `exit_code: -1`,
+`outcome: unobservable`, that `ASSERTION_OBSERVED` follows with
+`absent: false`, that no observational diagnosis is supported by it, that
+`command_started` and `command_finished` counts are equal across the whole run,
+that the receipt's command count equals the finish count, and that the settled
+transcript replays byte-identically.
+
+A positive control sits beside it: the ordinary present/absent path still closes
+`successful: true`, so a runtime that marked every assertion command unsuccessful
+would satisfy the first test and fail the second. Normal behaviour is unchanged.
+
+### Correction 2 — the archive excludes the audit harnesses
+
+`.codex-test-tmp` joins `ARCHIVE_EXCLUDE_DIRS`. It holds mutation checkers and
+gate drivers — evidence for a review, never part of a handoff — and the previous
+archives carried them.
+
+The assertion is structural rather than a matter of remembering:
+`test_the_archive_excludes_the_audit_harness_directory` asserts the directory is
+in the exclusion set, that no manifest member has that path component, and — as
+its control — that the directory is actually present and non-empty in this tree,
+so the check is about the rule rather than about an absent directory.
+
+### Removal evidence
+
+Eight mutations, each in a fresh disposable copy with the imported package
+asserted to resolve under it:
+
+```
+the observational verdict is never produced                     RED, exit=1
+the collection-error path is dropped                            RED, exit=1
+correction 1: discovery bypasses Handle.from_dict validation    RED, exit=1
+correction 2: an unobservable measurement is treated as absent  RED, exit=1
+correction 3: the assertion command is not announced first      RED, exit=1
+correction A: a sandbox failure leaves its command unclosed     RED, exit=1
+correction A2: a refused measurement is closed as a success     RED, exit=1
+correction B: the audit harness directory is archived           RED, exit=1
+
+authoritative tree unchanged: True
+removals not detected: 0
+```
+
+### On the line count
+
+The two corrections first measured **8,699 of 8,700** — one line of margin,
+which is not a margin. The `ARCHIVE_EXCLUDE_DIRS` edit had been expanded to one
+entry per line by the formatter; written as the existing set plus the new
+element it reads at least as clearly and costs ten fewer lines.
+
+**Runtime: 8,689 / 8,700**, 11 under. No explanation was removed to achieve it.
+
+---
+
+## Final frozen-tree gate
+
+Appended; nothing above is modified.
+
+```
+START digest cac649e22a1f3928c73417e132e8415601a432b2597a6f2d6ec679c9eaacd0ee (176 files)
+
+run 1  pytest               rc=0  451.300s  518 passed, 5 skipped in 450.06s
+run 1  ruff check           rc=0    0.321s  All checks passed!
+run 1  ruff format --check  rc=0    0.133s  35 files already formatted
+run 1  mypy                 rc=0    2.347s  Success: no issues found in 8 source files
+run 2  pytest               rc=0  451.773s  518 passed, 5 skipped in 451.11s
+run 2  ruff check           rc=0    0.221s  All checks passed!
+run 2  ruff format --check  rc=0    0.119s  35 files already formatted
+run 2  mypy                 rc=0    1.592s  Success: no issues found in 8 source files
+run 3  pytest               rc=0  469.461s  518 passed, 5 skipped in 468.40s
+run 3  ruff check           rc=0    0.299s  All checks passed!
+run 3  ruff format --check  rc=0    0.138s  35 files already formatted
+run 3  mypy                 rc=0    1.812s  Success: no issues found in 8 source files
+
+END digest   cac649e22a1f3928c73417e132e8415601a432b2597a6f2d6ec679c9eaacd0ee (176 files)
+equal: True
+```
+
+518 passed, from 430 when this work began. The 5 skips are the four
+`NOT_RUN_NETWORK_UNAVAILABLE` Django tests — recorded passing separately against
+pinned Django 5.0.6 `2719a7f8` — and one pre-existing skip.
+
+Four gate attempts were run across this work and two are discarded, recorded
+above rather than omitted: one failed on a flaky test of mine, one was killed by
+a Docker daemon stop. Neither counts toward a sequence.
+
+**Runtime: 8,689 / 8,700** (DAR-012), 11 under.
+
+---
+
+## The sanitized handoff archive, rebuilt after the corrections
+
+`21aef5fd…` is historical; the tree changed. Built through the same single
+pipeline: `records.archive_manifest()` → create → inspect the exact members →
+extract → install from the extracted tree → run its suite from the extracted
+tree → SHA-256 of that exact file. Timestamps and modes are fixed, so a reviewer
+can rebuild it and get the same digest rather than taking the number on trust.
+
+This is the first archive to exclude `.codex-test-tmp`, so it is also the first
+that carries no audit harnesses.
+
+Exactly one file differs between the archive tree and the gated tree — this one,
+which gained the gate record above:
+
+```
+gated tree, all 176 files                      cac649e22a1f3928c73417e132e8415601a432b2597a6f2d6ec679c9eaacd0ee
+gated tree, excluding IMPLEMENTATION_STATUS.md c162fc99da00bfa71db4759e6f8096336c66a3a2e82022e8fe7350dde02b667f  (175 files)
+```
+
+The second digest is recomputed after the archive is built and must be
+unchanged. The archive's own SHA-256 is reported in the session output and not
+here: a digest cannot be contained in the file it describes.
+
+---
+
+## M1 closing status
+
+### 1. Implementation status
+
+| Area | State |
+|---|---|
+| bounded `propose_hypotheses` at the governed ambiguity point | done |
+| bounded post-gate repair loop | **not implemented**, accepted for M1 (DAR-010) |
+| `repair_basis` byte-identical replay, both values | done (DAR-001) |
+| v1.2.4, authority index, DAR-007 | done |
+| M1-R04, pinned Django 5.0.6 `2719a7f8` | done |
+| the eleven evidence gaps | all closed |
+| assertion-observation path, M1-F15 and M1-F16 | done (DAR-013, closing DAR-011) |
+| ceiling amended 8,600 → 8,700 with measurement | done (DAR-012) |
+| assertion event balance, archive exclusion | done |
+| frozen-tree gate | done, three green runs, digests equal |
+| sanitized ZIP | done |
+
+### 2. Acceptance-row accounting, 47 M1 rows
+
+**46 pass with dedicated executable evidence. 0 evidence gaps. 1 environment
+disclosure: M1-X06**, `NOT_RUN_FULL_SANDBOX_UNAVAILABLE` — `bwrap` is absent
+from the reference container and `probe_isolation()` reports `partial`. The row
+is "required where supported"; this environment does not support it. That
+disclosure is **accepted by the reviewer for this environment**.
+
+### 3. Live-provider status
+
+No request in any pass of this work. Cumulative and unchanged: 27 requests,
+**$0.068157**, historical.
+
+### 4. Calibration status
+
+Unchanged: 3 valid scored cases (C1–C3), 3 verified fixes, 0 false acceptances.
+C4 `GROUND_TRUTH_DISPUTED`, C5 `GROUND_TRUTH_INVALID`, both excluded.
+
+### 5. BM-06 status
+
+**Not started, not authorized, and separate.** It is required for the M1
+expansion claim, which is therefore unsupported. Per the standing ruling it must
+measure the *shipped* single-attempt behaviour, so that the repair loop is
+justified by data rather than by anticipation.
+
+### 6. Product-thesis status
+
+Unproven. Nothing in this work speaks to it. Implementation status,
+deterministic acceptance status, live-provider status, real-repository benchmark
+status and product-thesis status remain five separate things, and only the first
+two are green.
+
+### 7. Credential disclosure
+
+Recorded in the preceding entry and repeated here because it outlives this
+milestone: `riftagent/.env` holds a live-shaped `RIFT_LLM_KEY`. A ZIP uploaded
+for review, `sha256 667588bb…`, was reported to contain it. That file was not
+produced by this runtime. If it left the machine the key must be revoked at the
+provider.
+
+### Status
+
+`READY_FOR_MILESTONE_REVIEW`
+
+Every required M1 acceptance row has dedicated executable evidence except
+M1-X06, whose `NOT_RUN_FULL_SANDBOX_UNAVAILABLE` disclosure has been accepted by
+the reviewer for this environment. The tree is gated by three consecutive green
+runs with equal START and END digests, the runtime is 11 lines under an amended
+and measured ceiling, and the handoff archive has been built, extracted,
+installed and run against its own suite.
+
+What this does **not** claim, stated plainly so the verdict is not read wider
+than it is:
+
+- **The product thesis is unproven.** BM-06 has not run.
+- **`fix` is single-attempt by decision.** A first patch that is behaviourally
+  wrong abstains where a bounded retry might have succeeded (DAR-010).
+- **Full-sandbox behaviour is untested here**, not verified-and-passing.
+- **The observational finding is a diagnosis, never a fix.** It carries
+  `gate: not_applicable` and an unverified remediation, and `fix` refuses to
+  gate anything on it.
+
+M1 is ready for review on its own terms. It is not a claim that the agent works.
+
+---
+
+## M1 — APPROVED
+
+Appended; nothing above is modified. Recorded from the reviewer's verification,
+not from my own assertion of it.
+
+The exact artifact verified:
+
+```
+sha256   d56edbe219de79d454e6f1ad57f016f55fea1513a1c765f2ce83398f0987cf4f
+bytes    563,153
+entries  157
+forbidden entries: 0 — no .env, .git, .rift, caches, build output, .codex-test-tmp
+runtime  8,689 / 8,700
+gate     3 consecutive runs, 518 passed / 5 skipped, identical tree digests
+```
+
+Independently confirmed by the reviewer: the extracted package installs on its
+own and the `rift` CLI starts; the unobservable assertion path records a
+balanced, explicitly unsuccessful command completion; dedicated tests cover that
+failure path, replay, the positive controls and the archive exclusion.
+
+Accepted with it: **M1-X06** as `NOT_RUN_FULL_SANDBOX_UNAVAILABLE` for this
+environment, and the absent repair loop as governed by **DAR-010** — therefore
+not an undisclosed M1 gap.
+
+### The truthful status, by layer
+
+| Layer | Status |
+|---|---|
+| M1 implementation | **Approved** |
+| Deterministic acceptance | **Approved** |
+| Full Linux sandbox | Disclosed, not tested here |
+| Repair retries | Not implemented; governed by DAR-010 |
+| BM-06 | Not started |
+| Product thesis | **Unproven** |
+
+Only the first two are approved. The approval is of the milestone on its own
+terms; it is not a claim that the agent works, and the last row is the one that
+would be.
+
+### One documentation defect, carried forward
+
+`kernel.discover_handles` still says *"Four generic sources, none
+fault-specific"*. It has five since the assertion source was added. The
+reviewer raised it as non-blocking and explicitly did not reopen M1.
+
+**It is deliberately not fixed in this entry.** Editing it would change the tree
+whose digest was just verified, and a tree that no longer matches its approved
+archive is worth more as a lesson than a one-word docstring is as a fix. It is
+carried to the next documentation pass and recorded here so it cannot be quietly
+forgotten.
+
+### What happens next, and what does not
+
+Authorized: commit this exact tree, then freeze the BM-06 manifest, protocols,
+reviewed labels, model configuration and worst-case budget calculation.
+
+**Stop for spending authorization before any benchmark request.** No live
+provider call is authorized by this approval. M1.5 does not begin.
