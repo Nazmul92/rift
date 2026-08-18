@@ -349,6 +349,24 @@ def _uncertainty(proj: TaskProjection) -> tuple[str, ...]:
 def derive_verdict(proj: TaskProjection) -> VerdictDecision:
     """The single place a verdict is produced. Deterministic and model-free."""
     uncertainty = _uncertainty(proj)
+    if proj.ablation == "model_alone":
+        # The ablation's ceiling, derived here rather than asserted downstream.
+        # Arm A runs no withdrawal, reapplication or preservation phase, so the
+        # ordinary derivation below could never reach the verified verdict for
+        # it anyway — but "could never" is a property worth stating in code
+        # rather than leaving to arithmetic about which phases happen to run.
+        if proj.blocked_reason:
+            return VerdictDecision(Verdict.INFRASTRUCTURE_BLOCKED, proj.blocked_reason, None, uncertainty)
+        passed = GatePhase.CANDIDATE in proj.completed_phases and proj.failed_phase is None
+        return VerdictDecision(
+            Verdict.ACCEPTED_BY_TARGET_PASS if passed else Verdict.UNVERIFIABLE,
+            "the target passed after the patch was applied; no withdrawal, reapplication or preservation "
+            "gate was run, and this is not product-verification evidence"
+            if passed
+            else (proj.failed_phase_reason or "arm A produced no accepted patch"),
+            proj.failed_phase,
+            uncertainty,
+        )
     if proj.blocked_reason:
         return VerdictDecision(Verdict.INFRASTRUCTURE_BLOCKED, proj.blocked_reason, None, uncertainty)
     if proj.failed_phase is not None:

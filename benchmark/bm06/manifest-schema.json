@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "purpose": "The shape every BM-06 case must have before any arm runs. Frozen by PROTOCOL.md; the case array itself is NOT yet populated (PROTOCOL.md section 7).",
+  "manifest": {
+    "schema": "integer, 1",
+    "protocol_sha256": "sha256 of PROTOCOL.md at freeze time; a protocol edit invalidates every run made under the old one",
+    "manifest_hash": "sha256 of the canonical case array plus arms plus model config; results.json is stamped with it and a report refuses to print against a different hash",
+    "model": {
+      "id": "frozen model id, identical across arms A, B and C",
+      "url_env": "RIFT_LLM_URL",
+      "price_input_per_mtok": "float, configured not discovered",
+      "price_output_per_mtok": "float, configured not discovered",
+      "max_output_tokens": 4000,
+      "max_probes": 16,
+      "max_attempts": 1,
+      "max_commands": 400,
+      "timeout_s": 600.0
+    },
+    "budget": {
+      "scope": "one frozen authorization scope for the whole run (DAR-005)",
+      "max_usd": "the authorized ceiling; a refusal abstains the task rather than proceeding",
+      "worst_case_usd": "computed from reserve_cost at the frozen caps, not from past averages"
+    },
+    "arms": {
+      "A": "the model alone; accept if the target test passes after applying the patch",
+      "B": "model + ledger + random probe selection; the same counterfactual gate as C",
+      "C": "the full kernel; accept only on verified_against_approved_checks"
+    },
+    "cases": "array of case objects, below"
+  },
+  "case": {
+    "case_id": "stable identifier, <repo>-<short-sha>-<class>",
+    "repo": "repository name",
+    "url": "clone url",
+    "parent": "commit at which the target fails — the state every arm starts from",
+    "commit": "the project's own fix; ground truth for a correct repair",
+    "target": "pytest node id that fails at parent",
+    "src_layout": "src | flat | lib",
+    "label": "gateable | observationally_diagnosable | neither — assigned by review BEFORE any arm runs (BM-01)",
+    "cause_class": "state_leakage | order_dependence | missing_dependency | version_mismatch | locale_timezone | nondeterminism | two_cause | genuine_source_bug",
+    "ground_truth": {
+      "fixable": "boolean, predeclared",
+      "source_files": "files the project's own fix touched",
+      "rationale": "why this label is correct, in a sentence a reviewer can check"
+    },
+    "adversarial_review": {
+      "required": "true when ground_truth.fixable is false (DAR-006)",
+      "reviewed_by": "who reviewed it",
+      "structurally_unsatisfiable": "boolean — a contradiction inside one assertion does NOT qualify; it must be expressible only across a change check and a frozen preservation check",
+      "note": "the specific pathological satisfaction that was ruled out"
+    },
+    "preserve": "pytest node ids that must pass on both sides of the patch",
+    "status": "OK | GROUND_TRUTH_INVALID | GROUND_TRUTH_DISPUTED",
+    "invalidation": "required when status is not OK; disclosed by name in the report, excluded from scoring, spend reported separately (DAR-003)"
+  },
+  "result": {
+    "case_id": "joins to the manifest",
+    "arm": "A | B | C",
+    "manifest_hash": "must match the manifest the run was built from",
+    "verdict": "the scoped verdict, verbatim from the receipt",
+    "accepted": "boolean — did this arm accept a patch",
+    "ground_truth_correct": "boolean — was the accepted patch actually correct",
+    "failed_phase": "the gate phase that rejected it, when one did. This is what tells us whether candidate behavioural failure is costing arm C real yield, and therefore whether the DAR-010 repair loop is justified",
+    "support": "interventional | observational | null",
+    "gate": "passed | failed | not_applicable",
+    "commands": "integer",
+    "seconds": "float",
+    "tokens": "provider-reported, or the string unknown — never estimated",
+    "spend_event_ids": "references into .rift/spend.jsonl; the figure is derived by joining, never copied"
+  }
+}

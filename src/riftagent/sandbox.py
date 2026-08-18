@@ -108,7 +108,6 @@ class IsolationProbe:
 
 
 def _bwrap_works() -> str | None:
-
     exe = shutil.which("bwrap")
     if not exe:
         return None
@@ -169,7 +168,6 @@ def probe_isolation() -> IsolationProbe:
 
 
 def _windows_job_supported() -> bool:
-
     if not IS_WINDOWS:
         return False
     try:
@@ -261,7 +259,6 @@ class _WindowsJob:
 
 
 def _posix_limits(memory_bytes: int, processes: int):
-
     def _apply() -> None:  # pragma: no cover - runs in the forked child
         import resource
 
@@ -430,7 +427,6 @@ def run_argv(
 
 
 def _kill_tree(proc: subprocess.Popen, job: _WindowsJob | None) -> None:
-
     if job is not None:
         job.terminate()
         return
@@ -444,7 +440,6 @@ def _kill_tree(proc: subprocess.Popen, job: _WindowsJob | None) -> None:
 
 
 def _wrap_bwrap(argv: list[str], cwd: Path, tmpdir: Path, bwrap: str, allow_network: bool) -> list[str]:
-
     wrapped = [
         bwrap,
         "--ro-bind",
@@ -478,12 +473,10 @@ def _wrap_bwrap(argv: list[str], cwd: Path, tmpdir: Path, bwrap: str, allow_netw
 
 
 def is_git_repo(root: Path) -> bool:
-
     return (Path(root) / ".git").exists()
 
 
 def _git(root: Path, *args: str, check: bool = True, timeout: float = 120.0) -> CommandResult:
-
     argv = ["git", "-C", str(root), *args]
     env = {k: v for k, v in os.environ.items() if k in ENV_ALLOWLIST}
     env.setdefault("GIT_TERMINAL_PROMPT", "0")
@@ -502,7 +495,6 @@ def _git(root: Path, *args: str, check: bool = True, timeout: float = 120.0) -> 
 
 
 def tracked_files(root: Path) -> list[str]:
-
     root = Path(root)
     if is_git_repo(root):
         out = _git(root, "ls-files", "-z").stdout

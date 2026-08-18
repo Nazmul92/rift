@@ -127,8 +127,9 @@ pyproject.toml
 
 Small `__init__`, `__main__`, test fixtures, and packaging files do not count
 against the six-module target. Do not split modules merely for aesthetics. If
-the implementation approaches 8,700 runtime lines by M2 — amended from 8,000 to
-8,600 (DAR-008) and to 8,700 (DAR-012), each with measurements — remove
+the implementation approaches 9,108 runtime lines by M2 — amended from 8,000 to
+8,600 (DAR-008), to 8,700 (DAR-012), to 8,920 (DAR-016), to 9,090 (DAR-017) and
+to 9,108 (DAR-018), each with measurements — remove
 accidental abstractions before adding more. Tests, fixtures, and benchmarks are
 measured separately; the runtime figure must include all shipped support code.
 

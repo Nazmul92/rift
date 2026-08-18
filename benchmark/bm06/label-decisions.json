@@ -1,0 +1,51 @@
+{
+ "_purpose": "Applied label review. One entry per confirmed case, keyed <repo>-<sha8>-<stage-1 class>. 'keep' means the stage-1 class survives review. A reassignment is recorded but never applied as a promotion: a case reaches a class by being discovered and confirmed for it, never by being moved there to fill a quota.",
+ "_reviewer": "implementation pass, for human ratification",
+
+ "pyparsing-13065174-genuine_source_bug": {"label": "gateable", "cause_class": "genuine_source_bug", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "Off-by-one in LRUMemo; the fix touches pyparsing/util.py only and the target asserts corrected list contents."},
+ "jinja-9b96b481-genuine_source_bug": {"label": "gateable", "cause_class": "genuine_source_bug", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "Node.__hash__ delegated to a list, raising TypeError: unhashable type. Single-cause source defect with a direct reproducer."},
+ "croniter-b4014c9b-genuine_source_bug": {"label": "gateable", "cause_class": "genuine_source_bug", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "croniter_range infinite loop; the target asserts the produced range."},
+ "cachetools-c0fdf6ab-genuine_source_bug": {"label": "gateable", "cause_class": "genuine_source_bug", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "TLRUCache retained a stale value on expired overwrite; the assertion names the retained entry."},
+ "filelock-721b37bc-genuine_source_bug": {"label": "gateable", "cause_class": "genuine_source_bug", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "ValueError when blocking=False is combined with a timeout; argument-validation defect in _read_write.py."},
+ "pygments-2f0d713b-genuine_source_bug": {"label": "gateable", "cause_class": "genuine_source_bug", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "RawTokenFormatter crash when error_color is set; single-cause source defect."},
+
+ "dateutil-f2293200-version_mismatch": {"label": "gateable", "cause_class": "version_mismatch", "fixable": true, "expected_diagnostic_scope": "environment", "repair_basis": "source_patch", "rationale": "datetime.utcfromtimestamp deprecation in the running interpreter; the failure is caused by the Python version rather than by project logic."},
+ "freezegun-3d5d60b4-version_mismatch": {"label": "gateable", "cause_class": "version_mismatch", "fixable": true, "expected_diagnostic_scope": "environment", "repair_basis": "source_patch", "rationale": "Callable staticmethods changed behaviour in Python 3.10; the commit adapts to the interpreter change."},
+ "icalendar-62cbf833-version_mismatch": {"label": "gateable", "cause_class": "version_mismatch", "fixable": true, "expected_diagnostic_scope": "environment", "repair_basis": "source_patch", "rationale": "Doctest property ordering changed in Python 3.14; an interpreter-version behavioural change, not a project defect."},
+
+ "icalendar-60a10375-locale_timezone": {"label": "gateable", "cause_class": "locale_timezone", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "The Mountain Standard Time (Mexico) mapping was wrong; a timezone-data defect with a direct assertion."},
+ "icalendar-781eeda8-locale_timezone": {"label": "gateable", "cause_class": "locale_timezone", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "Globally unique TZIDs resolved with a vendor prefix; timezone identifier resolution."},
+ "icalendar-30ec6eef-locale_timezone": {"label": "gateable", "cause_class": "locale_timezone", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "A PERIOD written with dates read as midnight date-times; date and time semantics."},
+
+ "filelock-fc277001-order_dependence": {"label": "gateable", "cause_class": "order_dependence", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "A reentrant-deadlock registry shared across asyncio tasks; the failure depends on which task holds the entry, which is an interleaving property rather than a value defect."},
+ "filelock-43277ac7-order_dependence": {"label": "gateable", "cause_class": "order_dependence", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "Forked sqlite connections shared across processes; isolation of per-process state."},
+
+ "filelock-059cca26-state_leakage": {"label": "gateable", "cause_class": "state_leakage", "primary_class": "state_leakage", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "Acquisition path identity retained across acquisitions — state persisting beyond its intended lifetime. Chosen as primary over order_dependence because the defect is the retained value itself, not the order in which it is observed."},
+ "filelock-f093ee0c-state_leakage": {"label": "gateable", "cause_class": "state_leakage", "fixable": true, "expected_diagnostic_scope": "source", "repair_basis": "source_patch", "rationale": "Lifetime values were not validated, so a stale lifetime persisted into later acquisitions."},
+
+ "tenacity-21137e79-order_dependence": {"withdraw": true, "status": "GROUND_TRUTH_INVALID", "rationale": "'Add async strategies (#451)' is a feature addition. Its new test fails at the parent because the feature does not exist there, not because of a defect. Not a repair, and not order dependence."},
+ "pluggy-6f6ea680-version_mismatch": {"withdraw": true, "status": "GROUND_TRUTH_INVALID", "rationale": "'Add support deprecating hook parameters' is a feature addition; the parent fails for absence of the feature."},
+ "filelock-03b0ab7e-nondeterminism": {"withdraw": true, "status": "GROUND_TRUTH_INVALID", "rationale": "'feat(unix): delete lock file on release' is a feature addition, and nothing in the evidence shows intermittency."},
+ "pygments-9fca2a10-two_cause": {"withdraw": true, "status": "GROUND_TRUTH_INVALID", "rationale": "'Add analyze_text to make make check happy' is a feature and lint addition. No joint two-cause evidence exists; one lexer-guessing assertion is one cause."},
+
+ "click-93c6966e-order_dependence": {"withdraw": true, "rationale": "An EOF regression in CliRunner. A source defect, not an ordering property. Reads as genuine_source_bug; recorded, not moved."},
+ "faker-7659c7f5-order_dependence": {"withdraw": true, "rationale": "A wrong BBAN length constant for da_DK. A value defect, not an ordering property."},
+ "pygments-a886f74a-order_dependence": {"withdraw": true, "rationale": "'Fix LatexEmbeddedLexer' is a lexer defect; no ordering evidence."},
+ "filelock-0dfa1b20-order_dependence": {"withdraw": true, "rationale": "'Document every lock type, and stop evicting a marker we cannot read' mixes documentation with an eviction change; not a clean single-cause ordering exemplar."},
+ "filelock-059cca26-order_dependence": {"withdraw": true, "rationale": "The same commit is confirmed as state_leakage, which is its primary class. One commit, one class."},
+
+ "click-fab5356b-locale_timezone": {"withdraw": true, "rationale": "'Fix UnboundLocalError in click.Path' has nothing to do with locale or timezone; the marker matched incidental wording."},
+ "babel-56911bab-locale_timezone": {"withdraw": true, "status": "GROUND_TRUTH_DISPUTED", "rationale": "Memoizing locale data and sharing LocaleDataDicts is a performance change whose defect is shared mutable state. Arguably state_leakage, arguably neither; disputed rather than assigned."},
+ "icalendar-43a22e49-locale_timezone": {"withdraw": true, "rationale": "Explicitly a refactor — 'refactor(timezone): resolve TZIDs through a cached candidate-id generator'. No defect is asserted."},
+
+ "icalendar-e35f1a00-state_leakage": {"withdraw": true, "status": "GROUND_TRUTH_DISPUTED", "rationale": "A merge commit of a machine-generated branch. Ground truth for a correct repair cannot be read from it."},
+ "icalendar-fd156faf-state_leakage": {"withdraw": true, "rationale": "'ATTACH is not an Alarm singleton' is a data-model rule defect, not state leaking between executions."},
+ "icalendar-5be25699-state_leakage": {"withdraw": true, "rationale": "'Fix CI failures and improve documentation' is multi-purpose; no single supported cause."},
+
+ "humanize-2482af79-version_mismatch": {"withdraw": true, "rationale": "'Make functions private and deprecate public aliases' is an API refactor, not a version conflict."},
+ "humanize-c546848a-version_mismatch": {"withdraw": true, "status": "GROUND_TRUTH_DISPUTED", "rationale": "Reinstating VERSION and deprecating it is an API restoration; the target asserts that a warning is emitted. Neither clearly a version mismatch nor clearly a source defect."},
+ "icalendar-9cb18ec9-version_mismatch": {"withdraw": true, "rationale": "A deprecation wrapper for private string methods; the project's own deprecation policy, not an external version conflict."},
+ "icalendar-d04ce541-version_mismatch": {"withdraw": true, "rationale": "'deprecate foldline for icalendar 8' is a planned deprecation, not a version-mismatch defect."},
+
+ "freezegun-b5a42dbf-nondeterminism": {"withdraw": true, "rationale": "'Ignore duplicate modules in ignore list' is a list-handling defect; the evidence shows a deterministic assertion failure, not intermittency."}
+}

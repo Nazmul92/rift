@@ -4492,3 +4492,1087 @@ reviewed labels, model configuration and worst-case budget calculation.
 
 **Stop for spending authorization before any benchmark request.** No live
 provider call is authorized by this approval. M1.5 does not begin.
+
+---
+
+## BM-06 freeze — protocol, labels, configuration and budget
+
+Appended; nothing above is modified. **No benchmark request has been made and no
+spending is authorized.** M1 remains approved and untouched; runtime is unchanged
+at 8,689 / 8,700.
+
+### Committed first
+
+The approved M1 tree is committed as `deb6b9d` on `m1-completion-pass`, parent
+`2134db4`. Working tree clean. `origin` is still at `a9d9010` — the last two
+commits are local, and nothing was pushed.
+
+The `discover_handles` docstring still says "Four generic sources" with five in
+place. Raised as non-blocking and **deliberately not fixed**: editing it would
+change the tree whose digest was verified against the approved archive. Carried
+to the next documentation pass.
+
+### What is frozen
+
+`benchmark/bm06/PROTOCOL.md`, `sha256 494942c2c58d42d3f3e6627a336055cc886acc009aaf8f48c116f09e4e54751c`,
+plus `benchmark/bm06/manifest-schema.json`.
+
+**Arms.** A = the model alone, accepted if the target passes after applying the
+patch. B = model + ledger + **random** probe selection, same gate as C. C = the
+full kernel. A-versus-C isolates acceptance authority plus diagnosis; B-versus-C
+isolates probe selection alone, and both run the identical probe *list* so the
+only difference is which probe is chosen next. Arm A gets the same model, the
+same bounded context and the same attempt count — it is the incumbent practice,
+not a straw man.
+
+**Labels, frozen before any arm runs (BM-01).** `gateable`,
+`observationally_diagnosable`, `neither`, plus the eight cause classes including
+the negative `genuine_source_bug` class. That negative class measures **false
+attribution in both directions** — a genuine source bug reported as
+environmental, and an environmental cause reported as a source defect. A case
+set without it can only measure one.
+
+**`gate: not_applicable` earns no fix credit in any arm** (BM-04).
+
+**Metrics.** Co-primary and always reported together: false-fix acceptance, and
+verified-fix yield over **all attempted frozen-`gateable` tasks** with
+abstentions and failures kept in the denominator (BM-03). Cost per correct
+outcome includes abstained and failed attempts; zero correct outcomes is
+infinite or undefined, never zero (BM-05). Every rate is recomputed from the raw
+per-case records at report time — a number that cannot be recomputed from
+`results.json` is not reported.
+
+**Exclusion and adversarial review.** `GROUND_TRUTH_INVALID` excludes a case from
+scoring, disclosed by name with its reason and its spend reported separately
+(DAR-003). Any intended-unfixable case must be **structurally** unsatisfiable
+and adversarially reviewed *before* it runs (DAR-006) — the C5 lesson, where
+`v > 0 and v < 0` was labelled unsatisfiable and is satisfiable by a class whose
+`__gt__` and `__lt__` both return `True`.
+
+**Runtime configuration.** `--max-output-tokens 4000`, `--max-probes 16`,
+`--max-attempts 1` (the shipped single-attempt behaviour, DAR-010),
+`--max-commands 400`, `--timeout 600`, one frozen `--scope` for the whole run so
+all 90 tasks draw on a single cumulative authorization (DAR-005). Pricing is
+**configured, never fetched**: a price discovered at run time can change between
+the reservation and the charge, and the reservation is what bounds the run.
+
+### The measurement this benchmark is designed to produce
+
+`failed_phase` is recorded per case deliberately. The shipped `fix` is
+single-attempt, so if candidate behavioural failure turns out to be a material
+share of arm C's lost yield, **that is the evidence that would justify the
+DAR-010 repair loop** — produced by measurement rather than assumed in advance,
+which is exactly what the ruling to measure the shipped behaviour requires.
+
+### Worst-case budget
+
+Computed from the runtime's own `token_ceiling` (`chars/3 + 1500`) and
+`reserve_cost`, not from an average of past runs. This is the ceiling the
+`SpendLedger` would reserve.
+
+| Operation | input ceiling | max output |
+|---|---|---|
+| `propose_handles` | 3,633 | 800 |
+| `propose_hypotheses` | 4,166 | 1,600 |
+| `propose_change` | 23,666 | 4,000 |
+
+30 cases × three arms, assuming every task makes every optional request:
+
+| Model | per C task | 30 × C | 30 × B | 30 × A | **total** |
+|---|---|---|---|---|---|
+| `claude-haiku-4-5` ($1 / $5) | $0.0635 | $1.90 | $1.90 | $1.31 | **$5.12** |
+| `claude-sonnet-5` intro ($2 / $10) | $0.1269 | $3.81 | $3.81 | $2.62 | **$10.24** |
+| `claude-sonnet-5` list ($3 / $15) | $0.1904 | $5.71 | $5.71 | $3.93 | **$15.35** |
+| `claude-opus-5` ($5 / $25) | $0.3173 | $9.52 | $9.52 | $6.55 | **$25.59** |
+
+Rates were **verified against the published pricing table, not recalled**. The
+`claude-haiku-4-5` row matches the runtime's configured defaults exactly, which
+is what makes the historical $0.068157 arithmetically sound rather than
+coincidentally plausible.
+
+Actual spend will land far below these figures — the historical 27 requests
+averaged ≈ $0.0025 against a $0.0437–$0.0635 per-task worst case, because the
+reservation assumes every prompt fills its context cap and every response fills
+its output cap. **Add one full re-run as contingency**: a run invalidated by a
+harness defect has already happened once here, when `derive_judge_weakening`
+built its diff against the index and all four judge-weakening cases were
+malformed. Doubling the figure is the honest ask.
+
+### What is NOT frozen, and blocks the run
+
+**1. The model — a decision for the reviewer, not an implementation choice.**
+§15 calls arm A "strong model alone". `claude-haiku-4-5` costs $5.12 worst case
+but weakens arm A, and beating a weak baseline is a weak result. A stronger model
+strengthens the comparison and raises the ceiling. The model must be **identical
+across all three arms** — the independent variable is the kernel, not the model —
+so this single choice sets both the claim strength and the budget.
+
+**2. The case set.** 20–30 naturally occurring failures across ≥ 5 unrelated
+Python repositories, spanning eight cause classes, each with predeclared ground
+truth and adversarial review where required.
+
+This cannot be frozen by assertion, and it is not a parameter change. The M1a
+harness already discovers "test fails at parent, passes at fix commit" across six
+repositories — the same primitive — but it does not classify by cause class, and
+the classes this protocol needs (order dependence, state leakage, locale,
+nondeterminism) are not what a generic bug-fix scan surfaces. Building the set
+requires cloning pinned repositories, locating the failures, classifying each,
+and adversarially reviewing every intended-unfixable case. None of that spends a
+model request; all of it must happen before an arm runs.
+
+### Status
+
+**Stopped for spending authorization, as instructed.** BM-06 has not started.
+M1.5 has not started. Charged spend remains **$0.068157**, historical.
+
+Two decisions are needed before anything runs: the model, and authorization of a
+figure that covers the worst case plus one re-run.
+
+---
+
+## BM-06 preparation — protocol corrected, model frozen, case set not yet frozen
+
+Appended; nothing above is modified. **No provider request was made. No spending
+is authorized. BM-06 has not started. M1.5 has not started.** M1 remains approved
+and its runtime is untouched at 8,689 / 8,700.
+
+### Two protocol corrections, both accepted
+
+**1. A-versus-C was described as isolating acceptance authority. It does not.**
+Arm C differs from arm A in diagnosis, probe selection, context, proposal basis
+*and* acceptance; its result is a compound of all of them. Attributing that
+difference to the gate would be a causal claim the three-arm design cannot
+support, and the earlier wording made exactly that claim.
+
+The protocol now states that A-versus-C measures the **complete end-to-end
+product effect**, and points acceptance-authority evidence at the two places it
+legitimately comes from: **M1a**, which held the proposer constant by running
+pre-existing patches through both protocols, and **shadow evaluation** inside
+BM-06 — the exact candidate patch arm A accepted, re-scored under C's gate
+without re-proposing. Shadow evaluation is a scoring step over recorded
+artifacts, costs no model request, and is explicitly **not** a fourth arm.
+
+**2. B and C were described as executing an identical probe list.** If they did,
+probe selection would not be under test. Corrected: B and C draw from the
+identical candidate **pool** (`kernel.generate_probes`) under identical command,
+token, wall-clock and attempt budgets, and differ only in the policy that picks
+the next probe — B randomly from a **frozen seed recorded in the manifest**, C by
+disagreement per estimated cost. The seed is what makes a B rerun the same
+experiment rather than a different one.
+
+### Also frozen into the protocol
+
+- **Cause class is independent of gateability.** A `genuine_source_bug` is
+  routinely `gateable` while its deterministic diagnosis is expected to be
+  `representation_inadequate` — that pairing is the correct result for the class,
+  not a failure, and the two labels are scored separately.
+- **Per-case freeze fields**: repository, resolved ref *and commit*, runner
+  hash, exact reproduction contract and target-specific signature, cause class,
+  preservation checks, a reviewed known-correct patch for fixable labels, a
+  reviewed structural argument for unfixable ones, `GROUND_TRUTH_DISPUTED` when
+  neither proof exists, expected diagnostic scope, and the per-branch
+  `cause_supported` / `diagnosis_unresolved` tag.
+- **Composition**: 30 natural cases, ≥ 5 repositories, all eight classes, **≥ 4
+  natural order-dependent cases across ≥ 2 repositories**, no synthetic
+  substitution.
+- **Scoring**: abstentions remain attempted tasks; `gate: not_applicable` takes
+  diagnosis credit where warranted and never verified-fix credit; zero correct
+  fixes makes cost per correct fix undefined or infinite, never zero.
+
+`benchmark/bm06/PROTOCOL.md` — `sha256 ddf35a8379501f8343aa54f72aaefc8932bca26d3c85ab856c52a2549e53789b`
+
+### A blocking precondition found while freezing the model
+
+`llm.post_chat` defaults to **`temperature=0.0` and sends it on every request.**
+`claude-sonnet-5` **rejects non-default sampling parameters with a 400**, and 0.0
+is not the default. Whether the OpenAI-compatible endpoint forwards, remaps or
+drops the field is unverified — verifying it requires a provider request, which
+is not authorized.
+
+Unresolved, this fails **every task in all three arms** and consumes the
+authorization on 90 rejections. The fix is one line — omit the field by passing
+`temperature=None` from the harness — but it is a change to the **approved M1
+tree**, so it is recorded rather than taken.
+
+### Model and pricing, frozen
+
+`benchmark/bm06/model-and-pricing.json` — `sha256 af8fad11733a2acbda585ece52d7a48250e88d187e1911a5f0e8a42a08111dc5`
+
+`claude-sonnet-5` is the **complete** identifier; unlike `claude-haiku-4-5`
+(`claude-haiku-4-5-20251001`) it has no dated snapshot form, and appending a date
+suffix would 404. The snapshot evidence for a run is therefore that id plus the
+`/v1/models/claude-sonnet-5` response captured immediately before execution —
+recorded as `NOT_CAPTURED`, because capturing it is a provider request.
+
+Pricing verified 2026-08-17 against the published table, by documentation lookup
+rather than a live request: **$3.00 / $15.00 per MTok list, $2.00 / $10.00
+introductory through 2026-08-31.**
+
+**The introductory window closes in 14 days.** The ≈$10.50 figure assumes it. A
+run on or after 2026-09-01 costs list, and the same work becomes $15.35.
+
+| | one complete run | one rerun (separate) |
+|---|---|---|
+| introductory, through 2026-08-31 | **$10.24** | $10.24 |
+| list, from 2026-09-01 | **$15.35** | $15.35 |
+
+Contingency is **disclosed, not authorized**, and is never silently consumed.
+
+### Case set — surveyed, not frozen
+
+`benchmark/bm06/discover_cases.py` searches commit history per cause class. It
+installs nothing and runs no repository code, so it answers the question that
+actually gates the manifest — *is a 30-case set across all eight classes
+reachable at all?* — before anyone spends hours confirming candidates in a class
+that has none.
+
+**The first run reported `order_dependence = 0` across 10 repositories and
+30,000 commits.** That was my filter, not the repositories: it required every
+candidate commit to touch **both** tests and source, which excludes precisely the
+best-shaped case — an existing test that starts passing after a source-only fix.
+The marker list was also too narrow. Recorded because the first number was
+alarming and wrong, and reporting it without checking would have argued for
+abandoning the class the product exists for.
+
+Corrected — source required, tests optional and the shape recorded — over 6,000
+commits per repository:
+
+| Cause class | candidates | repos | floor | |
+|---|---|---|---|---|
+| `version_mismatch` | 358 | 10 | 1 | ok |
+| `order_dependence` | 107 | 10 | 4 | ok |
+| `missing_dependency` | 19 | 8 | 1 | ok |
+| `locale_timezone` | 16 | 5 | 1 | ok |
+| `state_leakage` | 12 | 6 | 1 | ok |
+| `two_cause` | 12 | 3 | 1 | ok |
+| `nondeterminism` | 11 | 5 | 1 | ok |
+| `genuine_source_bug` | — | — | — | from the M1a-style scan, not marker search |
+
+Order-dependence candidates span all ten repositories (chardet 49, markdown 19,
+werkzeug 9, click 7, attrs 6, pyparsing 5, boltons 4, pluggy 4, sqlparse 3,
+jinja 1), so the ≥ 4-across-≥ 2-repositories floor is reachable. Shapes: 241
+`both`, 294 `source_only`.
+
+**These are candidates, not cases, and the count is an upper bound.** The widened
+order-dependence markers include generic terms — `isolation`, `side effect`,
+`registry`, `monkeypatch` — that will match commits having nothing to do with
+test ordering. Nothing is classified, confirmed or reviewed.
+
+`benchmark/bm06/candidates.json` — `sha256 3d0ead51c6f01664fffdb4b0469c4307a0dcbc9e0fba94ab67a69108b9c537a7`
+
+### Deliverables, honestly
+
+| Asked for | State |
+|---|---|
+| corrected `PROTOCOL.md` + SHA-256 | **done** — `ddf35a83…` |
+| exact Sonnet pricing record | **done** — `af8fad11…`, verified 2026-08-17 |
+| worst-case reservation for one complete run | **done** — $10.24 introductory, $15.35 list |
+| separately disclosed one-rerun contingency | **done** — disclosed, not authorized |
+| case-distribution table | **candidate** distribution done; case distribution requires stage 2 |
+| complete case manifest + SHA-256 | **not done** |
+| label-review record | **not done** — it is a review *of cases*, and there are none yet |
+
+The manifest needs stage 2: check out each candidate's parent, run the tests its
+fix touched, keep only those that genuinely fail before and pass after, classify
+each by cause, record the reproduction contract and signature, and adversarially
+review every intended-unfixable case. That means installing ten projects and
+running their suites — model-free, but hours of work, and the point at which
+false positives in the candidate pool get eliminated.
+
+Freezing a manifest before that would be freezing a list of grep hits.
+
+### Status
+
+**Stopped for review and spending authorization.** Three things need a decision:
+
+1. **The `temperature` precondition** — a one-line change to the approved M1
+   tree, or a confirmed statement that the compatibility endpoint drops the
+   field.
+2. **Authorization to run stage 2** — model-free and unbudgeted, but hours of
+   compute, and it is what produces the manifest.
+3. **The introductory-price deadline** — 2026-08-31, after which the same run
+   costs $15.35 rather than $10.24.
+
+Charged spend remains **$0.068157**, historical. Requests made in this pass: **0**.
+
+## DAR-014, the benchmark driver, and stage-2 case confirmation
+
+Three items from the ruling, in order: apply the temperature amendment, prepare
+a minimal BM-06 driver, and run stage 2 model-free. No provider request was
+made. Charged spend remains **$0.068157**, historical. Requests in this pass: 0.
+
+### DAR-014 — the adapter asserts no sampling preference by default
+
+`llm.post_chat` defaulted `temperature` to `0.0` and serialised it on every
+request. `0.0` is not the default anywhere, and several current models reject a
+non-default sampling parameter outright, so the adapter was asserting a
+preference nobody expressed and failing against providers it is otherwise
+compatible with. The default is now `None`; the existing branch already omits a
+`None` field. An explicit caller value, including `0.0`, is still serialised.
+
+Rejected alternative: branching on the configured URL or model. That would put
+provider-specific knowledge into an adapter whose neutrality is an M1 acceptance
+property (M1-S03). Omitting what nobody asked for is neutral in both directions.
+
+Evidence: three tests in `tests/test_adapter_neutrality.py`, all asserting on the
+body a loopback provider **received** rather than on call arguments, because a
+default that is correct in the signature but serialised anyway would pass an
+argument-level check. Runtime **8,694 / 8,700** (DAR-012).
+
+### The BM-06 driver
+
+`benchmark/bm06/driver.py`. Benchmark infrastructure, not a runtime module: arms
+B and C are `rift fix` invocations and the gate is `riftagent.app.run_gate`, the
+same function `verify` calls. It decides no verdict.
+
+Every reported figure is recomputed from the raw per-case records at report
+time; nothing is stored pre-aggregated. Arm A's accepted patch is re-scored under
+C's gate as a shadow evaluation — the same patch and repository state under two
+acceptance rules — which costs no additional model request and is not a fourth
+arm. Eight tests in `tests/test_bm06_driver.py` pin the claims a report could
+quietly break: abstentions stay in the denominator, `gate: not_applicable` never
+earns verified-fix credit, zero correct fixes is undefined rather than zero, and
+excluded labels are disclosed rather than dropped.
+
+### Stage 2 — 116 candidates attempted, 10 confirmed
+
+Model-free, in disposable containers with no credentials, no mounted home, and
+`--network none` while repository tests execute. Full findings in
+`benchmark/bm06/STAGE2-FINDINGS.md`; every candidate has a durable record.
+
+Confirmed by stage-1 label: version_mismatch 6, order_dependence 2,
+missing_dependency 1, state_leakage 1. Four classes have none. Of the manifest
+requirement — 30 cases, five repositories, eight classes, four order-dependent
+across two repositories — only the repository count is met.
+
+Rejections concentrate in one reason: for 75 candidates the parent's own suite is
+green, meaning the fix and its regression test are separate commits. A merge
+recovery pass evaluated the 51 valid shipping merges and produced **zero**
+additional cases; 55 candidates have no shipping merge, because attrs and
+pyparsing rebase rather than merge.
+
+Three harness defects were found and corrected mid-stage, each of which had
+already produced a full set of confident wrong results: promisor partial clones
+made every offline checkout fail; `PYTEST_DISABLE_PLUGIN_AUTOLOAD` stopped four
+projects' suites collecting at all; and the first merge selector scored an
+unrelated pull request's diff for 32 of 83 candidates. A fourth defect was in the
+criterion itself — requiring the target to fail *in isolation* at the parent
+discards exactly the order-dependent cases, which are now accepted with an
+explicit ordering precondition.
+
+Stage 2 establishes reproduction only. Cause labels come from stage-1 keyword
+matching and are unverified; `benchmark/bm06/label-review.md` proposes a review
+in which roughly half the confirmed cases appear mislabelled and one is unstable
+as a reproducer. It is proposed, not applied.
+
+### Status
+
+**BLOCKED on a decision, not on work.** The case set cannot be honestly frozen at
+30 cases across eight classes. Ten repositories yielded ten confirmed cases, and
+the constraint is a property of the repositories rather than of the harness.
+
+The options are: accept a smaller manifest with stated class gaps and a
+correspondingly narrower claim; or widen stage 1 to substantially more
+repositories and repeat stage 2. Manufacturing fixtures or relabelling confirmed
+cases to populate empty strata is not among them.
+
+Not authorized and not begun: BM-06 execution, any smoke request, spending,
+contingency consumption, and M1.5.
+
+## Status language correction, and the decision to widen discovery
+
+Correcting four claims in the preceding entry. That entry is preserved above
+unchanged; this section supersedes it only on these points.
+
+- **Label-review record: PENDING.** `benchmark/bm06/label-review.md` is a
+  proposal covering the ten cases confirmed so far. It is not a label-review
+  record and will not be one until the procedure is *applied* to the complete
+  selected case set. The earlier entry described it as delivered; it is not.
+- **$10.50 is a PROJECTED primary cap**, not an authorized or fixed figure. It
+  applies only if execution starts before 2026-08-31 *and* the published price
+  is reconfirmed at that time. On or after 2026-09-01 the projection is $16.00.
+  Neither is authorized.
+- **The validated manifest is NOT FROZEN.** No manifest file exists. Ten
+  confirmed cases are candidate evidence, not a case set.
+- **BM-06 is NOT STARTED.** No arm, no case, no request.
+
+### Decision recorded
+
+BM-06 is not reduced to ten cases. Cause classes are not removed, fixtures are
+not manufactured, and the frozen protocol is not relaxed. Discovery is widened
+to additional repositories and stage 2 is repeated, model-free.
+
+The allocation is frozen *before* searching, in `benchmark/bm06/allocation.json`,
+together with the repository selection rule in
+`benchmark/bm06/repo-selection.md`. Both are written before any stage-2 outcome
+from the widened set is inspected, so a class cannot be quietly retired because
+it proved hard to fill, and a repository cannot be admitted because results from
+it looked favourable.
+
+Not authorized and not begun: provider requests, smoke requests, BM-06
+execution, spending, contingency, and M1.5.
+
+## Correction: the benchmark-driver claim was an overclaim
+
+Append-only. Nothing above is rewritten; the claim being corrected is quoted so
+the contradiction is visible in one place rather than inferred across sections.
+
+### What was claimed
+
+From "DAR-014, the benchmark driver, and stage-2 case confirmation" above,
+verbatim:
+
+> Arm A's accepted patch is re-scored under C's gate as a shadow evaluation —
+> the same patch and repository state under two acceptance rules — which costs
+> no additional model request and is not a fourth arm. Eight tests in
+> `tests/test_bm06_driver.py` pin the claims a report could quietly break:
+> abstentions stay in the denominator, `gate: not_applicable` never earns
+> verified-fix credit, zero correct fixes is undefined rather than zero, and
+> excluded labels are disclosed rather than dropped.
+
+### What the consuming path actually did
+
+Every statement below is about `benchmark/bm06/driver.py` as it stood when that
+claim was written.
+
+1. **Arms A, B and C all invoked the same `rift fix` path.** `main()` called
+   `arm_c_args(...)` for every arm, so the run was arm C executed three times.
+2. **Arm B's random value never controlled selection.** `rng.random()` was stored
+   in the record and read by nothing.
+3. **The seed used `hash(case_id)`**, which Python randomises per process, so a
+   rerun of B would have been a different experiment.
+4. **Arm A's patch was never captured.** No code read `change-set.diff`.
+5. **Shadow evaluation received `None`** on every call, so it evaluated no patch
+   and always returned `not_applicable`.
+6. **`ground_truth_correct` was never computed on a live run** — it was set only
+   in the dry-run branch, and always to `False`.
+7. **Acceptance was inferred from the CLI return code** (`proc.returncode == 0`)
+   rather than from the receipt verdict.
+8. **The driver required `case["worktree"]`**, which no manifest case contains.
+9. **The proposed manifest's `arms` and `budget` objects are empty**, which would
+   have failed earlier still.
+10. **Spend was copied into result rows** instead of referenced through ledger
+    event ids, creating a second source of truth beside `.rift/spend.jsonl`.
+11. **The tests never executed the live arm paths.** The dry-run test
+    monkeypatched `rift` to raise if called, so no amount of running that suite
+    could have detected any of the above.
+
+The claim was not false about the eight tests; it was false in what it implied
+those tests covered. They exercised `report()` arithmetic over hand-built rows.
+Describing that as benchmark-driver evidence presented tested helpers as a tested
+experiment.
+
+**Driver status: BLOCKED_INVALID_DRIVER** at the time of that claim.
+**Original BM-06 protocol: NOT_RUN_PROTOCOL_INFEASIBLE.** Its denominator, class
+requirements and history are unchanged and are preserved in
+`benchmark/bm06/frozen-evidence-hashes.json`.
+
+## Bounded benchmark-infrastructure correction pass
+
+Benchmark infrastructure only. No product-runtime change, no new runtime module,
+no redesign. Runtime remains 8,694 / 8,700.
+
+**A. Fail-closed manifest validation.** `validate_manifest` runs before anything
+else and `main()` returns 2 without issuing a single call when it reports a
+failure. It requires non-empty `arms` and `budget` with a scope and non-zero
+ceiling, a model id, and per case: a target, an expected signature, a non-empty
+preservation set, a materialized worktree that exists on disk, an exact
+reproducer whenever `ordering_precondition` is set, and no `GROUND_TRUTH_DISPUTED`
+case in the scored set.
+
+**B. Arms made distinct — and honestly refused where the CLI cannot express
+them.** `arm_argv` builds a different command per arm and `orchestration_key`
+fingerprints it, so two arms that collapse are detectable rather than
+indistinguishable. Arm B's seed is now SHA-256 over the manifest seed and case
+id, stable across processes.
+
+**A recorded conflict, per the implementation contract.** Two of the three arms
+cannot be expressed by the shipped CLI, and closing that gap would require a
+product-runtime change, which this pass forbids:
+
+- **Arm B** needs the probe policy to be selectable. `kernel.select_probe`
+  already implements `policy == "random"` and its docstring calls this "the only
+  intended independent variable between benchmark arms B and C", but `app.py`
+  hardcodes `"disagreement"` at its single call site and no CLI flag reaches it.
+- **Arm A** needs a model-alone proposal path — same model and context budget,
+  no kernel diagnosis, accepted when the target passes. No such mode exists.
+
+Smallest proposed resolution, for a ruling rather than for action here: expose
+`--probe-policy {disagreement,random}` and `--probe-seed N` on `fix`, defaulting
+to today's behaviour, and a `--model-alone` flag that skips diagnosis and applies
+target-pass acceptance. Until then the driver probes `rift fix --help` for those
+flags and records any arm it cannot express as `NOT_RUN_ARM_UNSUPPORTED`,
+**never substituting another arm's command**. Running arm C three times and
+labelling the rows A, B and C is the specific failure this refusal prevents.
+
+**C. Arm A's exact patch bytes.** `capture_patch` copies `change-set.diff` from
+the task directory verbatim and shadow evaluation is given that file. `None` now
+occurs only when no patch was produced, and an empty diff is not a patch.
+
+**D. Evidence-derived metrics.** Acceptance reads the receipt verdict. Ground
+truth is an independent `rift verify` of the arm's own patch under C's gate — not
+the arm's opinion of itself and not a return code. Spend is stored as
+`{ledger, event_ids}` into `.rift/spend.jsonl` and summed from the ledger at
+report time; an unreadable ledger reports `null` with a stated note rather than
+`0.0`, because an unmeasured run is not a free one.
+
+**E. Tests: 29, executing the live orchestration.** They fail if any two arms
+collapse, if B's seed is unused or process-dependent, if shadow evaluation
+receives `None` after a patch existed, if ground-truth correctness is unset on a
+live run, if worktree/arms/budget/preservation are empty, or if a validation
+failure lets a request through. Five removal mutations were run in disposable
+copies and **all five turned their test red**: collapsing the arms, reverting the
+seed to `hash()`, forcing shadow to `None`, making validation always pass, and
+substituting an unsupported arm instead of refusing it.
+
+### Validation of the proposed 15-case manifest
+
+`manifest-proposed.json` fails validation, as expected, and is **not frozen and
+not run**. Failures: empty `arms` and `budget`; and for every one of the 15
+cases, an empty preservation set and no materialized worktree. Additionally
+`filelock-fc277001-order_dependence` has no expected signature and no exact
+reproducer despite being order-dependent.
+
+No case is currently runnable. Preservation sets, worktree materialization and
+order-dependent reproducers are prerequisites that the curation passes never
+produced.
+
+### Statuses
+
+- **M1 implementation:** approved, subject to the recorded full-sandbox
+  disclosure. Runtime 8,694 / 8,700.
+- **Corpus feasibility:** `NOT_RUN_PROTOCOL_INFEASIBLE` — 15 of 30 cases, three
+  classes unreachable by historical mining.
+- **Benchmark driver:** consuming path corrected and under test; still
+  `BLOCKED_ARMS_NOT_EXPRESSIBLE` pending a ruling on the two CLI flags.
+- **BM-06:** not started. No provider request, no spending.
+- **Repair-loop thesis:** unmeasured.
+
+## Finding: the isolated-baseline defect is in the product, not only the driver
+
+Append-only. Nothing above is rewritten.
+
+Review of the corrected driver found that `evaluate_under_gate` invokes
+`rift verify` with the **bare target**. That is not a driver oversight that a
+driver change can fix:
+
+- `rift verify` has no way to receive a reproducer. Its CLI accepts a diff, a
+  target node and preservation nodes, and `build_checkset` builds a judge from
+  those alone. No argument reaches `ReproductionContract`.
+- An order-dependent failure **passes when run alone**, by definition. Its
+  baseline therefore does not reproduce, the gate stops at a failed baseline,
+  and no patch for it can ever be verified.
+- So every order-dependent case in the manifest would score as
+  already-fixed for all three arms, and the class the product exists to handle
+  would be silently unmeasurable.
+
+**This is the fourth occurrence of the same defect.** It has now appeared as:
+
+1. the calibration case C4 abstention in the reference prototype, where the
+   limitation was mistaken for task truth;
+2. the stage-2 confirmation criterion, which required a target to fail *in
+   isolation* at the parent and so discarded exactly the order-dependent
+   candidates;
+3. the BM-06 driver's `evaluate_under_gate`, passing a bare target;
+4. `rift verify` itself, which has no reproducer parameter to pass.
+
+Occurrences 1 to 3 were each fixed locally. The product gap underneath them was
+not, which is why it kept returning in a new place. `ReproductionContract`
+already models preconditions and `run_episode` already applies them in every
+phase — `rift fix` freezes one from executed evidence. Only `verify` cannot be
+given one.
+
+**BM-06 remains unstarted. Spending is unchanged at $0.068157, historical.
+Requests made: 0.**
+
+## DAR-015 implementation, DAR-016 ceiling, and the evidence
+
+Append-only. No provider request was made; charged spend remains **$0.068157**,
+historical. Requests in this pass: **0**.
+
+### DAR-015 implementation mapping
+
+| addition | where | routed through |
+|---|---|---|
+| `verify --precondition NODE` (repeatable) | `app.verify_reproducer`, `cmd_verify` | existing `ReproductionContract`, `Primitive.FIRST` handles, `REPRODUCER_FROZEN` |
+| `verify --expect-signature PATTERN` | `app.signature_compatible`, `_run_gate` baseline | existing `Signature`, `ReproducerInvalid` integrity stop |
+| `fix --probe-policy {disagreement,random}` | `WhyRequest.probe_policy` → `kernel.select_probe` | the policy parameter the kernel already implemented |
+| `fix --probe-seed N` | `WhyRequest.probe_seed` → `random.Random` | existing rng threading |
+| `fix --model-alone` | `app.run_model_alone` | existing proposal validation, ChangeSet store, sandbox, spend ledger |
+
+No new module, no second gate, no second sandbox, no new ledger, no
+benchmark-specific verification path. `run_episode` already applied
+preconditions in every phase; `verify` simply had no way to be given one.
+
+Judge artifacts: declared precondition files and the target's file are added to
+`checkset.protected_paths` before `validate_patch`, so a candidate touching one
+is rejected before execution. Signature rules: an expected signature naming only
+an exception type matches any message of that type; naming a message requires
+both; an empty expectation freezes what the baseline observes and never means
+"anything will do". An incompatible baseline appends `reproduction_failed` and
+stops the gate.
+
+### DAR-016 measured ceiling
+
+Recorded before implementation: **8,694 / 8,700**, headroom 6, estimate **~180**.
+Measured after: **8,917**, actual **+223**. New ceiling **8,920** — the
+measurement plus three lines. Full itemization in `DESIGN_AMENDMENT_RECORD.md`.
+
+### Exact targeted results, pinned toolchain (ruff 0.16.3, mypy)
+
+```
+ruff check src tests benchmark            All checks passed!
+ruff format --check src tests benchmark   51 files already formatted
+mypy src                                  Success: no issues found in 8 source files
+pytest tests/test_reproducer_verify.py tests/test_ablation_controls.py
+       tests/test_bm06_driver.py          49 passed
+pytest tests/test_gate_end_to_end.py tests/test_reproduction_contract.py
+       tests/test_v08_patch_validation.py 73 passed
+```
+
+The three-pass frozen-tree gate was **not** run, per the ruling: no runnable case
+manifest exists, so the expensive pass would prove nothing this pass needs.
+
+### Removal-test results — 8 mutations, 8 detected
+
+| mutation | test that went red |
+|---|---|
+| precondition contract never built | `test_verify_drives_the_reproducer_through_every_phase` |
+| signature compatibility always agrees | `test_removing_signature_plumbing_makes_the_expectation_test_red` |
+| judge artifacts not protected | `test_a_patch_touching_a_judge_artifact_is_rejected` |
+| probe policy hardcoded again | `test_the_policy_argument_reaches_select_probe` |
+| seed ignored | `test_the_seed_reaches_the_rng_and_is_reproducible` |
+| model-alone branch removed | `test_model_alone_takes_a_different_path_and_records_the_ablation` |
+| driver falls back to the bare target | `test_a_missing_reproducer_capability_refuses_rather_than_falling_back` |
+| driver drops the reproducer | `test_ground_truth_and_shadow_receive_the_exact_reproducer` |
+
+Two defects were found in this evidence before it could be trusted, both of the
+kind that produces confident wrong results:
+
+1. **The mutation harness mutated a tree nobody loaded.** It copied the repo and
+   edited the copy's `src/`, while the tests imported the installed package from
+   the original. Six runtime mutations read as undetected and would have been
+   reported as insensitive tests. Fixed by putting the copy's `src` on
+   `PYTHONPATH`; a sanity line now prints which `riftagent` is loaded.
+2. **The judge-artifact test passed for the wrong reason, twice.** First it
+   substituted a token the polluter file does not contain, producing an empty
+   diff. Corrected, it then neutered the polluter so the baseline stopped
+   reproducing — the run failed for that reason rather than for the protection.
+   It now applies a behaviour-preserving one-comment edit and asserts on the
+   `changeset_rejected` event with a protected-path reason, which is the
+   property, rather than on the final verdict, which is non-verified either way.
+
+### Remaining manifest validation failures
+
+`manifest-proposed.json` still fails closed and is not frozen or run: empty
+`arms` and `budget`; `arms.A`, `arms.B`, `arms.C` undefined; every case lacking
+a preservation set and a materialized worktree; one order-dependent case with no
+signature and no exact reproducer. **Zero cases are runnable.** These are
+curation gaps, not driver defects.
+
+### Statuses
+
+- **M1 product:** approved and unchanged in behaviour. Existing gate, contract
+  and patch-validation suites pass (73 tests). Runtime 8,917 / 8,920 (DAR-016).
+- **`verify` capability:** reproducer-aware. The isolated-baseline defect is
+  closed in the product, not only in its consumers.
+- **Benchmark driver:** corrected; arms A, B and C now reach distinct consuming
+  paths and the CLI expresses all three. `NOT_RUN_REPRODUCER_UNSUPPORTED` is
+  recorded rather than falling back to a bare target.
+- **Corpus feasibility:** `NOT_RUN_PROTOCOL_INFEASIBLE`, unchanged.
+- **BM-06:** not started.
+- **Spending:** not authorized; $0.068157 historical, 0 requests this pass.
+- **Repair-loop thesis:** unmeasured. `failed_phase` is recorded per case so the
+  question stays answerable from data rather than intuition.
+
+**READY_FOR_DRIVER_REVIEW.**
+
+## Four DAR-015 consuming-path defects, quoted against the code
+
+Append-only. Nothing above is rewritten. Each claim below is quoted from my own
+completion report, beside the runtime path that contradicts it. All four were
+verified in the source before this entry was written.
+
+### 1. Arm A still runs the bare target
+
+I wrote, in the DAR-015 statuses:
+
+> **`verify` capability:** reproducer-aware. The isolated-baseline defect is
+> closed in the product, not only in its consumers.
+
+`run_model_alone` establishes its baseline with `flow.execute(change_check, wt,
+GatePhase.BASELINE)` — the bare target, no reproducer. For an order-dependent
+case the target passes there, so arm A reports "the target passes before any
+patch; there is nothing for arm A to repair" and never proposes. The defect is
+closed in `verify` and open in `fix --model-alone`, which is the **fifth**
+occurrence. It also makes A incomparable with B and C, which do receive the
+frozen experiment.
+
+### 2. `accepted_by_target_pass` is not a receipt verdict
+
+I wrote, in DAR-015:
+
+> it accepts only under arm A's target-pass rule and emits
+> `accepted_by_target_pass`
+
+It does not emit it. The value is written into a gate event's `artifacts` dict
+as `ablation_verdict`, and `emit_receipt` calls `kernel.derive_verdict(proj)`,
+which knows nothing about ablations and returns an ordinary kernel verdict. The
+`benchmark_ablation` event is appended but never reduced into `TaskProjection`,
+so no receipt — live, replayed or ledger-derived — carries it.
+
+My test asserted only that `verified_against_approved_checks` was **absent** from
+a run that abstained for lack of a model. Absence in an abstaining run is not
+evidence that the ceiling holds in a succeeding one.
+
+### 3. The seed is neither validated nor recorded
+
+I wrote, in DAR-015:
+
+> requires and durably records the supplied seed
+
+Neither. `--probe-policy random` with no `--probe-seed` runs with
+`random.Random(None)` — seeded from the OS, so the run is unreproducible while
+appearing to honour a frozen seed. `--probe-seed` with the default policy is
+accepted and silently ignored. Nothing appends the policy or seed to the ledger,
+so resume cannot reuse them.
+
+My test asserted the seed reached an rng when supplied. It never asked what
+happens when it is not.
+
+### 4. A signature-only reproducer is frozen but not enforced
+
+`run_episode` returns early — `if reproducer is None or not
+reproducer.preconditions: return flow.execute(check, wt, phase)` — before the
+after-execution integrity check. So `verify --expect-signature` with no
+`--precondition` freezes a contract whose judge artifacts are never re-validated
+after repository code runs. A test that rewrites the target mid-episode would be
+measured, pass, and be recorded as evidence about a judge that no longer exists.
+
+Related, in the same feature: `verify_reproducer` resolves judge artifacts with
+`node.split("::")[0]`, while `fix` uses `judge_artifact_paths` and
+`_resolve_selector` precisely because a selector may name a directory. That
+function's own docstring says freezing the directory string would record
+`<absent>` as its hash and call that protected evidence. `verify` does exactly
+that — protection in name only — for any directory precondition.
+
+### Standing
+
+No provider request was made. Charged spend remains **$0.068157**, historical.
+BM-06 unstarted, corpus feasibility unchanged, no curation performed.
+
+## The four corrections, evidence, and DAR-017
+
+Append-only. No provider request was made; charged spend remains **$0.068157**,
+historical. Requests this pass: **0**.
+
+### What was implemented
+
+1. **Arm A receives the frozen reproducer.** `fix` gains `--precondition`
+   (repeatable) and `--expect-signature`, frozen through
+   `freeze_declared_reproducer` — the same helper `verify` uses, so both verbs
+   freeze the identical contract from identical arguments. `run_model_alone`
+   establishes baseline *and* candidate through `run_episode` with that
+   reproducer. Arm A stays weaker after proposal: one proposal, apply, run
+   preconditions then target, accept on target pass, no withdrawal, no
+   reapplication, no preservation.
+2. **`accepted_by_target_pass` is a real receipt verdict.** The
+   `benchmark_ablation` event is reduced into `TaskProjection.ablation`;
+   `kernel.derive_verdict` branches on that reduced state; the receipt carries
+   `benchmark_ablation` and `product_verification_eligible`. No reason-string
+   parsing and no post-emission rewriting. The verified verdict is unreachable
+   from the branch even with every gate phase recorded complete.
+3. **Seed validity enforced before execution.** `random` without a seed and a
+   seed without `random` are both usage errors, rejected before the sandbox, the
+   task directory, any probe and any request. A valid pair is appended as
+   `probe_policy_frozen` and the diagnosis loop reads policy and seed back from
+   the projection, so resume repeats the experiment it started.
+4. **Every frozen reproducer is enforced.** `run_episode` no longer returns
+   early for a contract without preconditions: it executes, then validates
+   again, then records. `verify` resolves selectors through
+   `judge_artifact_paths`, so a directory precondition freezes the test files it
+   actually runs instead of a label that hashes to `<absent>`; an unresolvable
+   selector refuses the contract rather than issuing one that protects nothing.
+
+### One defect found while implementing, worth recording
+
+The first working version of arm A's candidate phase measured the **unpatched**
+tree. `run_episode`'s clean-episode reset removes anything the patch is not
+declared to own, and I called it without `patch_owned`, so the reset deleted the
+patch before the target ran. The run reported `unverifiable` for a patch that was
+correct.
+
+It was caught only because the test asserts a *successful* arm A run end to end.
+A test that checked the ablation verdict was merely reachable, or that the run
+did not emit the product verdict, would have passed while arm A could never
+accept anything.
+
+### Evidence, pinned toolchain
+
+```
+ruff check src tests benchmark            All checks passed!
+ruff format --check src tests benchmark   52 files already formatted
+mypy src                                  Success: no issues found in 8 source files
+DAR-015 suites (4 files)                  62 passed
+regression: gate, contract, fix+spend,
+  ledger replay, patch validation         128 passed
+```
+
+**Removal mutations: 9 applied, 9 detected** — arm A's reproducer, ablation
+reduction, receipt field, kernel branch, seed validation, durable policy record,
+the after-execution check, selector resolution, and the driver's arm-A
+reproducer. The mutation harness puts the mutated copy on `PYTHONPATH`; without
+that it edits a tree nobody loads, which produced six false "undetected" results
+in the previous pass.
+
+The three-pass frozen-tree gate was **not** run, per the ruling: the case
+manifest remains unrunnable, so it would prove nothing this pass needs.
+
+### DAR-017
+
+Recorded before: **8,917 / 8,920**. Measured after: **9,084**, actual **+167**,
+itemized in `DESIGN_AMENDMENT_RECORD.md`. New ceiling **9,090** — measurement
+plus six lines, the same reflow margin DAR-016 used and no speculative headroom.
+
+### Statuses
+
+- **`verify` capability:** reproducer-aware and fully enforced. Preconditions,
+  signature expectation, directory selector resolution, and before/after
+  integrity validation for every frozen contract.
+- **Model-alone receipt authority:** `accepted_by_target_pass` with
+  `benchmark_ablation: model_alone` and `product_verification_eligible: false`,
+  derived from durable reduced state and identical live, replayed and
+  ledger-derived.
+- **Random-policy reproducibility:** seed required, validated, recorded durably
+  and reused on resume; a meaningless pair executes zero probes and makes zero
+  requests.
+- **Driver readiness:** arms A, B and C reach distinct consuming paths and all
+  three receive the frozen reproducer. Fail-closed validation still refuses the
+  proposed manifest.
+- **Corpus feasibility:** `NOT_RUN_PROTOCOL_INFEASIBLE`, unchanged. No curation
+  performed.
+- **BM-06:** not started.
+- **Spend:** not authorized. $0.068157 historical, 0 requests.
+- **Repair-loop thesis:** unmeasured.
+
+**READY_FOR_DRIVER_REVIEW.**
+
+## The signature-only after-check, and a calibrated resume claim
+
+Append-only. No provider request was made; charged spend remains **$0.068157**,
+historical. Requests this pass: **0**.
+
+### The defect
+
+The signature-only branch of `run_episode` called `_validate_reproducer` after
+execution with the source digest captured *before* execution and
+`expected_tree=None`. The call existed and both authorities it applies were
+disabled: the source-drift comparison checked a value against itself, and the
+phase-state comparison was skipped. My previous entry described this branch as
+following "the same before/after authority rules as the precondition path". It
+did not.
+
+### The correction
+
+The branch now runs the check with a freshly observed `tree_hash(repo_root)`,
+the same `expected_tree` supplied to the episode, and the same `state_paths`
+universe — identical arguments to the precondition path, through the same
+validator. No second validator and no new branch.
+
+The outcome is also held back until after that check: `Flow.execute` gained
+`record=False`, and the `CHECK_RESULT` is appended once the experiment has been
+re-validated. An outcome recorded first is evidence about a judge that may
+already have changed.
+
+### The behavioural test
+
+`tests/test_signature_only_integrity.py`. The fixture's target rewrites an
+ordinary implementation file while it runs — a file that is **not** a judge
+artifact, so artifact hashing cannot see it. Only a freshly observed digest and
+the phase-state hash can.
+
+It asserts detection in the **baseline** phase specifically. Later phases have
+their own integrity checks, so an assertion that "some detection occurred" would
+pass with this authority removed — which is how the earlier spy-only test looked
+sufficient.
+
+**Provenance, two mutations, both detected:**
+
+| mutation | test that went red |
+|---|---|
+| the cached pre-execution digest replaces the fresh one | `test_the_digest_compared_after_execution_is_freshly_observed` |
+| `expected_tree` is dropped | `test_a_signature_only_run_detects_a_phase_state_mutation` |
+
+The two are guarded by different tests deliberately. The phase-state authority
+alone catches the fixture, so a single behavioural test cannot distinguish the
+digest mutation; the second test asserts a tree observation happens *after* the
+command finished, which is the property the cached digest removes. The existing
+spy test remains as wiring evidence.
+
+### Correction: the resume claim was overstated
+
+My previous entry said resume "repeats the experiment it started". Calibrated:
+
+- the probe policy and seed **are** frozen durably as `probe_policy_frozen`;
+- the **active** diagnosis reads them from the reduced projection, not the
+  command line;
+- **replay reconstructs them** — a ledger replay yields the same policy and seed;
+- but **`fix` resume does not resume diagnosis or probe selection.** It stops
+  before a durable patch exists, or continues directly to the gate. There is no
+  runtime path today that resumes a partially completed selection experiment.
+
+So the durable record is correct and reconstructible, and no resumed selection
+experiment is claimed. That claim is not made until such a path exists.
+
+### Evidence, pinned toolchain
+
+```
+ruff check src tests benchmark            All checks passed!
+ruff format --check src tests benchmark   53 files already formatted
+mypy src                                  Success: no issues found in 8 source files
+signature-only integrity                  4 passed
+DAR-015/DAR-017 suites (4 files)          62 passed
+regression: gate, contract, ledger replay 72 passed
+```
+
+The three-pass frozen-tree gate was **not** run: zero manifest cases are
+runnable, per the ruling.
+
+### DAR-018
+
+Recorded before: **9,084 / 9,090**, six lines free. The correction needs
+eighteen. Measured after: **9,102**; new ceiling **9,108** — measurement plus the
+same six-line reflow margin. Neither the validation nor the tests were
+compressed to fit the remaining six lines; itemization in
+`DESIGN_AMENDMENT_RECORD.md`.
+
+### Statuses
+
+- **`verify` capability:** reproducer-aware, with identical before/after
+  authority on both the precondition and signature-only paths.
+- **Model-alone receipt authority:** unchanged and approved —
+  `accepted_by_target_pass`, ablation-marked, ineligible as product evidence.
+- **Random-policy reproducibility:** seed required, validated, recorded durably
+  and reconstructible by replay; no resumed selection experiment is claimed.
+- **Driver readiness:** unchanged and approved — three distinct arms, all
+  receiving the frozen reproducer, fail-closed on the manifest.
+- **Corpus feasibility:** `NOT_RUN_PROTOCOL_INFEASIBLE`, unchanged.
+- **BM-06:** not started. **Spend:** not authorized.
+- **Repair-loop thesis:** unmeasured.
+
+**READY_FOR_DRIVER_REVIEW.**
+
+## Curation pass — a validated preliminary manifest, 9 of 15
+
+Append-only. Model-free: no provider request was made, nothing was spent, and
+the runtime was not modified (9,102 / 9,108, unchanged).
+
+### What curation supplied by executing it
+
+For each of the 15 label-reviewed cases: a worktree materialized at the pinned
+parent commit and at the fix commit; the commit's test half applied to the
+parent where the target did not yet exist there; the original failure reproduced
+and its signature frozen from what was actually printed; the project's own fix
+confirmed to make the target pass; and preservation checks drawn from the
+target's own file that pass on **both** sides.
+
+Preservation checks come from the target's file deliberately. A check three
+modules away constrains almost nothing; a sibling test in the file being patched
+is what a careless repair actually breaks. 25 across 9 cases, 2–3 each.
+
+### Result
+
+**9 validated, 6 rejected.** `manifest-preliminary.json`, sha256
+`f2deb1730ad40a28b037265995b374a2df82ef1b290a5fd1192c555669b3e796`.
+
+| class | cases |
+|---|---|
+| genuine_source_bug | 3 (cachetools, pygments, pyparsing) |
+| locale_timezone | 3 (icalendar) |
+| version_mismatch | 3 (dateutil, freezegun, icalendar) |
+
+Six repositories. **The driver's fail-closed validator now reports `manifest
+valid`** — the first time any manifest in this project has.
+
+### The six rejections, each with its observed reason
+
+| case | reason |
+|---|---|
+| croniter genuine_source_bug | target NOTCOLLECTED at the pinned parent |
+| filelock genuine_source_bug | `ERROR: found no collectors` — the package imports `filelock.version`, a build-generated module a source worktree does not contain |
+| filelock order_dependence (43277ac7) | same build-generated module |
+| filelock state_leakage | same build-generated module |
+| filelock order_dependence (fc277001) | no single test file under `tests/` reproduces the ordering failure within 25 candidates |
+| jinja genuine_source_bug | no test in `tests/test_nodes.py` passes at both the parent and the fix, so nothing would constrain a destructive patch |
+
+The three filelock build-module rejections are a harness limit, not a statement
+about those cases: the project generates `version.py` at build time, and a
+worktree checkout has never been built. They are recoverable by building each
+worktree with the project's own backend; that was not attempted here because it
+is a new capability rather than a curation step, and the ruling bounded this
+pass.
+
+`fc277001` is the more interesting rejection. Stage 2 recorded its precondition
+as "full suite in declared collection order", which is not a reproducer a gate
+can run. A bounded search for a single test file that reproduces the ordering
+failure found none, so the case is rejected rather than shipped with an
+approximate reproducer. An approximate reproducer is the thing this project
+exists not to produce.
+
+### Two harness defects found and corrected during the pass
+
+Both would have produced confident wrong rejections, and both are the same
+species as earlier ones.
+
+1. **The commit's test half was not applied to the parent.** Twelve cases were
+   rejected with "the target does not fail at the pinned parent (NOTCOLLECTED)"
+   when the truth was that the target did not exist there yet — most projects add
+   the regression test in the same commit as the fix, and stage 2 applied the
+   test half for exactly this reason.
+2. **`src-layouts.json` covered only the original ten repositories.** cachetools,
+   croniter, filelock, dateutil and icalendar all use `src/` layouts and were
+   treated as flat, so `PYTHONPATH` pointed at the worktree root and imports
+   resolved to the *installed* package rather than the pinned commit. That
+   invalidated three icalendar validations, which looked like successes. The
+   layout is now detected from the materialized tree: a list can be incomplete,
+   a directory cannot.
+
+### Naming and claim limit
+
+This is **not BM-06** and the manifest says so in its own `claim_limit` field:
+
+> A preliminary benchmark. It does NOT satisfy the frozen BM-06 denominator of
+> 30 cases across eight cause classes and must not be reported as BM-06 or as
+> evidence for the eight-class thesis.
+
+Nine cases across three classes and six repositories. Five classes have no
+cases: `order_dependence`, `state_leakage`, `missing_dependency`,
+`nondeterminism`, `two_cause`. Any result from it can speak to single-attempt
+behaviour on these three classes and to nothing else.
+
+The original 30-case BM-06 remains `NOT_RUN_PROTOCOL_INFEASIBLE` with its
+denominator, class requirements and history unchanged.
+
+### Budget
+
+`max_usd` **$3.43**, computed as the per-task worst case of $0.1269 at the frozen
+caps × 3 arms × 9 cases — proportional to the validated case count rather than
+the 30-case figure, because a ceiling sized for a run that cannot happen is not
+a ceiling. **NOT AUTHORIZED.** Prices are the introductory rates verified by
+documentation lookup on 2026-08-17, expiring 2026-08-31, and must be reconfirmed
+before any execution.
+
+### Statuses
+
+- **M1 product / verify / arm A / arm B / driver:** approved and unchanged. The
+  runtime was not modified in this pass.
+- **Preliminary manifest:** 9 cases, 3 classes, 6 repositories, validated by the
+  driver's fail-closed gate.
+- **Original BM-06 corpus:** `NOT_RUN_PROTOCOL_INFEASIBLE`.
+- **Spend:** not authorized. $0.068157 historical, 0 requests.
+- **Repair-loop thesis:** unmeasured, and deliberately so — the loop exists to
+  recover cases lost at the candidate or wrong-signature phases, and building it
+  before the single-attempt measurement would destroy the evidence needed to
+  know whether it is worth building.
+
+**READY_FOR_DRIVER_REVIEW.**

@@ -1,0 +1,20 @@
+{
+ "frozen_at": "before widened discovery; no stage-2 outcome from the widened repository set had been inspected",
+ "total": 30,
+ "allocation": {
+  "order_dependence": 4,
+  "state_leakage": 4,
+  "missing_dependency": 4,
+  "version_mismatch": 4,
+  "locale_timezone": 3,
+  "nondeterminism": 3,
+  "two_cause": 3,
+  "genuine_source_bug": 5
+ },
+ "additional_constraints": {
+  "min_repositories": 5,
+  "order_dependence_min_repositories": 2,
+  "note": "A class that cannot be filled honestly is filled by widening discovery again, never by relabelling a confirmed case, substituting an easier class, or manufacturing a fixture."
+ },
+ "substitution_policy": "No post-result substitution. Surplus confirmations are retained as pre-run candidates in the rejected/candidate log and may only be promoted if a selected case is withdrawn during label review, and only into the same cause class."
+}

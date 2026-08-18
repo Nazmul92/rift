@@ -1,0 +1,226 @@
+{
+ "arrow": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   ".[test]"
+  ],
+  "test_prereqs": []
+ },
+ "attrs": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group tests"
+  ],
+  "test_prereqs": []
+ },
+ "babel": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   ".[dev]"
+  ],
+  "test_prereqs": [
+   "make import-cldr: python scripts/download_import_cldr.py"
+  ]
+ },
+ "bleach": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "boltons": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group dev"
+  ],
+  "test_prereqs": []
+ },
+ "cachetools": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "cerberus": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "chardet": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group dev"
+  ],
+  "test_prereqs": []
+ },
+ "click": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group tests"
+  ],
+  "test_prereqs": []
+ },
+ "croniter": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group dev"
+  ],
+  "test_prereqs": []
+ },
+ "dateutil": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "faker": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "filelock": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group dev"
+  ],
+  "test_prereqs": []
+ },
+ "freezegun": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "humanize": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   ".[tests]"
+  ],
+  "test_prereqs": []
+ },
+ "icalendar": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group dev"
+  ],
+  "test_prereqs": []
+ },
+ "jinja": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group tests"
+  ],
+  "test_prereqs": []
+ },
+ "jsonschema": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "markdown": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   ".[testing]"
+  ],
+  "test_prereqs": []
+ },
+ "marshmallow": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group tests"
+  ],
+  "test_prereqs": []
+ },
+ "more-itertools": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "packaging": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group dev"
+  ],
+  "test_prereqs": []
+ },
+ "pluggy": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group testing"
+  ],
+  "test_prereqs": []
+ },
+ "pygments": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "pyparsing": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "tests/requirements.txt"
+  ],
+  "test_prereqs": []
+ },
+ "soupsieve": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [],
+  "test_prereqs": []
+ },
+ "sqlparse": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group dev",
+   ".[dev]"
+  ],
+  "test_prereqs": []
+ },
+ "structlog": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group tests"
+  ],
+  "test_prereqs": []
+ },
+ "tenacity": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group dev",
+   ".[test]"
+  ],
+  "test_prereqs": []
+ },
+ "werkzeug": {
+  "installed": true,
+  "reason": "",
+  "test_deps": [
+   "--group tests"
+  ],
+  "test_prereqs": []
+ }
+}

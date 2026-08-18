@@ -124,6 +124,11 @@ class Verdict(StrEnum):
     """The frozen verdict vocabulary (design §9). No bare `verified` exists."""
 
     VERIFIED_AGAINST_APPROVED_CHECKS = "verified_against_approved_checks"
+    # Arm A's acceptance rule, reachable only under `fix --model-alone`. It is a
+    # separate member rather than a flag on the verified verdict so that no
+    # ablation result can ever be read, quoted or filtered as the product's own
+    # verification (DAR-015).
+    ACCEPTED_BY_TARGET_PASS = "accepted_by_target_pass"
     DIAGNOSIS_SUPPORTED = "diagnosis_supported"
     UNDERDETERMINED = "underdetermined"
     REPRESENTATION_INADEQUATE = "representation_inadequate"
@@ -1363,6 +1368,10 @@ class VerificationReceipt:
     tokens: str
     censored: bool
     remaining_uncertainty: tuple[str, ...]
+    # Empty for an ordinary run. When set, this receipt came from a benchmark
+    # ablation and is not product-verification evidence — stated in the receipt
+    # itself because that is the artifact people quote.
+    benchmark_ablation: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -1370,6 +1379,10 @@ class VerificationReceipt:
             "task_id": self.task_id,
             "verdict": self.verdict.value,
             "reason": self.reason,
+            "benchmark_ablation": self.benchmark_ablation,
+            # A reader should not have to know which ablations exist to know
+            # whether this receipt counts as product verification.
+            "product_verification_eligible": not self.benchmark_ablation,
             "contract_hash": self.contract_hash,
             "checkset_hash": self.checkset_hash,
             "patch_hash": self.patch_hash,
@@ -1401,6 +1414,15 @@ class EventKind(StrEnum):
     CHANGESET_RELOADED = "changeset_reloaded"
     CHECKSET_FROZEN = "checkset_frozen"
     REPRODUCER_FROZEN = "reproducer_frozen"
+    # The declared experiment did not reproduce: a passing baseline, a collection
+    # error, or a failure whose signature is not the declared one (DAR-015).
+    REPRODUCTION_FAILED = "reproduction_failed"
+    # A benchmark ablation is running. Recorded durably so a receipt produced
+    # under one can never be read as ordinary product evidence (DAR-015).
+    BENCHMARK_ABLATION = "benchmark_ablation"
+    # The probe policy and seed this run started with, so resume repeats the
+    # same experiment rather than re-reading the command line (DAR-015).
+    PROBE_POLICY_FROZEN = "probe_policy_frozen"
     CONTRACT_FROZEN = "contract_frozen"
     DRIFT_DETECTED = "drift_detected"
     COMMAND_STARTED = "command_started"
@@ -1560,6 +1582,12 @@ class TaskProjection:
     contract: TaskContract | None = None
     checkset: CheckSet | None = None
     reproducer: ReproductionContract | None = None
+    # Which benchmark ablation produced this ledger, if any. Reduced from the
+    # durable event rather than carried in a flag, so a replayed or
+    # ledger-derived receipt reaches the same verdict as the live one.
+    ablation: str = ""
+    probe_policy: str = "disagreement"
+    probe_seed: int | None = None
     changeset: ChangeSet | None = None
     baseline_signature: Signature | None = None
     fallbacks: list[dict[str, str]] = field(default_factory=list)
@@ -1642,6 +1670,11 @@ def reduce(events: Iterable[Event], truncated_tail: bool = False) -> TaskProject
             proj.checkset = CheckSet.from_dict(p["checkset"])
         elif ev.kind is EventKind.REPRODUCER_FROZEN:
             proj.reproducer = ReproductionContract.from_dict(p["reproducer"])
+        elif ev.kind is EventKind.BENCHMARK_ABLATION:
+            proj.ablation = str(p.get("ablation", ""))
+        elif ev.kind is EventKind.PROBE_POLICY_FROZEN:
+            proj.probe_policy = str(p.get("policy", "disagreement"))
+            proj.probe_seed = p.get("seed")
         elif ev.kind is EventKind.CONTRACT_FROZEN:
             proj.contract = TaskContract.from_dict(p["contract"])
         elif ev.kind is EventKind.DRIFT_DETECTED:

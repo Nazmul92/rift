@@ -409,7 +409,12 @@ class Flow:
         phase: GatePhase,
         index: int = 1,
         total: int = 1,
+        record: bool = True,
     ) -> CheckResult:
+        """Run one check. With `record=False` the outcome is returned but not
+        appended, so the caller can validate the experiment's integrity first —
+        an outcome recorded before that check is evidence about a judge that may
+        no longer exist."""
         started = time.time()
 
         def on_start(argv: list[str], selector: str | None) -> None:
@@ -446,7 +451,8 @@ class Flow:
                     "phase": phase.value,
                 },
             )
-        self.append(EventKind.CHECK_RESULT, {"result": result.to_dict(), "index": index, "total": total})
+        if record:
+            self.append(EventKind.CHECK_RESULT, {"result": result.to_dict(), "index": index, "total": total})
         return result
 
     def finish_phase(self, phase: GatePhase, decision: kernel.PhaseDecision, artifacts: dict | None = None) -> bool:
@@ -589,6 +595,7 @@ def emit_receipt(flow: Flow, proj: TaskProjection, td: Path) -> tuple[dict, int]
         tokens="not_applicable (no model is invoked by verify)",
         censored=proj.censored,
         remaining_uncertainty=decision.uncertainty,
+        benchmark_ablation=proj.ablation,
     ).to_dict()
     receipt["rejected_phase"] = decision.rejected_phase.value if decision.rejected_phase else None
     receipt["spend"] = _spend_summary(flow, proj)
@@ -871,8 +878,28 @@ def run_episode(
             "scope": "runtime-created state; baseline and patch-owned files preserved",
         },
     )
-    if reproducer is None or not reproducer.preconditions:
+    if reproducer is None:
         return flow.execute(check, wt, phase)
+    if not reproducer.preconditions:
+        # A signature-only contract is still a frozen judge, and gets the same
+        # before/after authority as the precondition path: the outcome is held
+        # back until the experiment has been re-validated against values
+        # observed *after* repository code ran. Passing the pre-execution digest
+        # and `expected_tree=None` here would call the validator while disabling
+        # both of the authorities it exists to apply.
+        result = flow.execute(check, wt, phase, record=False)
+        _validate_reproducer(
+            flow,
+            wt,
+            phase,
+            reproducer,
+            tree_hash(repo_root) if repo_root is not None else source_digest,
+            expected_tree,
+            "after",
+            state_paths,
+        )
+        flow.append(EventKind.CHECK_RESULT, {"result": result.to_dict(), "index": 1, "total": 1})
+        return result
 
     started = time.time()
 
@@ -985,6 +1012,20 @@ def _run_gate(flow: Flow, req: VerifyRequest, td: Path) -> int:
             )
             decision = kernel.decide_baseline(change_check, result)
             if decision.passed and result.signature is not None:
+                expected = reproducer.signature if reproducer is not None else None
+                if expected is not None and not signature_compatible(expected, result.signature):
+                    # The baseline failed, but not the way the caller declared.
+                    # A different failure is not this failure: accepting it would
+                    # let a patch be credited for repairing something else.
+                    flow.append(
+                        EventKind.REPRODUCTION_FAILED,
+                        {
+                            "reason": "baseline signature does not match --expect-signature",
+                            "expected": expected.render(),
+                            "observed": result.signature.render(),
+                        },
+                    )
+                    raise ReproducerInvalid("baseline reproduced an incompatible signature")
                 flow.append(EventKind.SIGNATURE_FROZEN, {"signature": result.signature.to_dict()})
             baseline_tree = wt.hash()
         if not flow.finish_phase(
@@ -1259,6 +1300,126 @@ def _finish(flow: Flow, td: Path) -> int:
 # --------------------------------------------------------------------------
 
 
+def parse_signature(pattern: str) -> Signature:
+    """`ExceptionType: message` or a bare `ExceptionType`.
+
+    Parsed rather than pattern-matched: a signature is an identity, and matching
+    it loosely is how a failure's existence gets mistaken for evidence about its
+    cause (records.Signature).
+    """
+    head, sep, tail = pattern.partition(":")
+    return Signature(head.strip(), tail.strip() if sep else "")
+
+
+def signature_compatible(expected: Signature, observed: Signature | None) -> bool:
+    """Is the observed baseline failure the one that was declared?
+
+    An expected signature naming only an exception type matches any message of
+    that type; naming a message requires both. Exact equality in both fields
+    would make `--expect-signature AssertionError` unusable, and dropping the
+    type check would let any failure count as this failure — which is the
+    error `Signature` exists to prevent.
+    """
+    if not expected.exception_type:
+        return True  # nothing was declared; the baseline freezes what it sees
+    if observed is None:
+        return False
+    if expected.exception_type != observed.exception_type:
+        return False
+    return not expected.message or expected.message in observed.message
+
+
+def verify_reproducer(
+    node_id: str, preconditions: tuple[str, ...], expected: str, repo_root: Path, collected: list[str]
+) -> tuple[ReproductionContract, tuple[str, ...]] | None:
+    """The frozen experiment for `verify`, built from the command line.
+
+    `fix` derives its reproducer from executed evidence; here the caller states
+    it. Both produce the same contract type and both run through the same gate —
+    there is no benchmark-specific or verify-specific verification path.
+
+    Returns the contract and the files it makes protected, or None when a
+    selector cannot be resolved — a reproducer whose executable artifact set
+    cannot be pinned down is not a frozen judge, and issuing one anyway would
+    look rigorous while protecting nothing. Every file the
+    experiment executes becomes a judge artifact: a candidate that edits the
+    polluter would weaken the experiment while leaving the contract record
+    byte-identical, which is the tamper the protected set exists to catch.
+    """
+    handles = tuple(Handle(kind=Primitive.FIRST, arg=node) for node in preconditions)
+    # Resolved the way `fix` resolves them. Splitting on "::" would freeze a
+    # directory selector as a literal string, whose hash is `<absent>` — recorded
+    # as protected evidence while every test file inside it stayed editable.
+    resolved = judge_artifact_paths(node_id, handles, collected, repo_root)
+    if resolved is None:
+        return None
+    artifacts = tuple(resolved)
+    return (
+        ReproductionContract(
+            preconditions=handles,
+            node_id=node_id,
+            # An empty signature here means "not yet observed"; the baseline
+            # freezes what it sees. It never means "anything will do".
+            signature=parse_signature(expected) if expected else Signature("", ""),
+            runner_config_hash=runner_config_hash(repo_root),
+            tree_digest=tree_hash(repo_root),
+            supporting_event_ids=(),
+            judge_artifacts=tuple(sorted(hash_artifacts(repo_root, list(artifacts)).items())),
+        ),
+        artifacts,
+    )
+
+
+def freeze_declared_reproducer(
+    flow: Flow, args, repo_root: Path, checkset: CheckSet, probe: IsolationProbe, budgets: Budgets
+) -> CheckSet | None:
+    """Freeze the experiment the caller declared, for `verify` and for arm A.
+
+    One function rather than two call sites: `verify` and `fix --model-alone`
+    must freeze the *same* contract from the same arguments, and two copies of
+    this would eventually disagree about what a precondition means.
+
+    Declared preconditions make the experiment ordered in every phase. There is
+    deliberately no bare-target fallback from here — falling back would measure
+    a different experiment than the one the caller froze. Returns the checkset
+    with the reproducer's judge artifacts protected, or None when a selector
+    cannot be resolved, in which case the caller stops.
+    """
+    preconditions = tuple(getattr(args, "precondition", None) or ())
+    expected = getattr(args, "expect_signature", "")
+    if not preconditions and not expected:
+        return checkset
+    # Collection is needed only when a selector is not already a file on disk:
+    # a directory selector expands to the test files beneath it, and those are
+    # only knowable from what pytest can see.
+    collected: list[str] = []
+    if any(not (repo_root / sel.split("::")[0].rstrip("/")).is_file() for sel in preconditions):
+        with Worktree(repo_root, "collect") as wt:
+            collected, _ = collect_nodes(wt, probe, budgets.command_timeout_s, args.allow_network)
+    built = verify_reproducer(args.test, preconditions, expected, repo_root, collected)
+    if built is None:
+        flow.append(
+            EventKind.REPRODUCTION_FAILED,
+            {
+                "reason": "a declared precondition selector names no executable test file",
+                "selectors": list(preconditions),
+            },
+        )
+        return None
+    reproducer, artifacts = built
+    flow.append(
+        EventKind.REPRODUCER_FROZEN,
+        {
+            "reproducer": reproducer.to_dict(),
+            "reproducer_hash": reproducer.content_hash,
+            "render": reproducer.render(),
+            "protected_added": list(artifacts),
+            "expected_signature": expected,
+        },
+    )
+    return replace(checkset, protected_paths=tuple(sorted({*checkset.protected_paths, *artifacts})))
+
+
 def cmd_verify(args: argparse.Namespace) -> int:
     repo_root = Path(args.repo).resolve()
     if not repo_root.is_dir():
@@ -1339,6 +1500,10 @@ def cmd_verify(args: argparse.Namespace) -> int:
     )
 
     checkset = build_checkset(args.test, req.preserve, repo_root, budgets.command_timeout_s)
+    frozen = freeze_declared_reproducer(flow, args, repo_root, checkset, probe, budgets)
+    if frozen is None:
+        return _emit_and_report(flow, td, args)
+    checkset = frozen
     flow.append(
         EventKind.CHECKSET_FROZEN,
         {"checkset": checkset.to_dict(), "checkset_hash": checkset.content_hash},
@@ -1417,6 +1582,11 @@ class WhyRequest:
     allow_network: bool
     max_probes: int
     use_model: bool
+    # BM-06 arm B (DAR-015). The default is the shipped policy, so an ordinary
+    # run is unchanged; `random` draws from the identical candidate pool and
+    # differs only in which probe is taken next.
+    probe_policy: str = "disagreement"
+    probe_seed: int | None = None
 
 
 def _eliminated_ids(before: list[kernel.Scored], after: list[kernel.Scored]) -> list[str]:
@@ -1794,7 +1964,10 @@ def run_diagnosis(
     concludes anything itself.
     """
     notes: list[str] = []
-    rng = random.Random(0)
+    # Seeded from the request under the random policy, so a rerun of arm B is
+    # the same experiment; 0 under the default policy, where the rng is only a
+    # tiebreak and the selection is deterministic anyway.
+    rng = random.Random(req.probe_seed if req.probe_policy == "random" else 0)
     worktree = Worktree(req.repo_root, "why")
     try:
         collected, collect_note = collect_nodes(worktree, flow.probe, req.budgets.command_timeout_s, req.allow_network)
@@ -2040,7 +2213,7 @@ def run_diagnosis(
                 notes.append("the probe budget was exhausted before the theories were separated")
                 break
 
-            chosen = kernel.select_probe("disagreement", probes, live, ev, rng)
+            chosen = kernel.select_probe(req.probe_policy, probes, live, ev, rng)
             applied = tuple(mapping[r] for r in chosen.applied if r in mapping)
             if chosen.fresh:
                 worktree.dispose()
@@ -2988,6 +3161,22 @@ def _request_change(
         return None
 
 
+def probe_policy_error(policy: str, seed: int | None) -> str:
+    """Reject a probe policy and seed that cannot describe a repeatable run.
+
+    `random` without a seed draws from the OS, so the run is unreproducible
+    while carrying every appearance of a frozen experiment — the failure mode
+    the frozen seed exists to prevent. A seed with the default policy is the
+    same mistake read the other way: it suggests the run was seeded when
+    selection was deterministic and the seed changed nothing.
+    """
+    if policy == "random" and seed is None:
+        return "--probe-policy random requires --probe-seed; without it a rerun is a different experiment"
+    if policy != "random" and seed is not None:
+        return f"--probe-seed has no effect under --probe-policy {policy}; it would record a seed nothing used"
+    return ""
+
+
 def cmd_fix(args: argparse.Namespace) -> int:
     repo_root = Path(args.repo).resolve()
     if not repo_root.is_dir():
@@ -3006,6 +3195,13 @@ def cmd_fix(args: argparse.Namespace) -> int:
         max_probes=args.max_probes,
         max_attempts=max(1, args.max_attempts),
     )
+    # Before any sandbox, diagnosis or request. An unreproducible arm B is worse
+    # than an absent one: it looks like a frozen experiment and is not.
+    usage = probe_policy_error(args.probe_policy, args.probe_seed)
+    if usage:
+        print(f"error: {usage}", file=sys.stderr)
+        return EXIT_USAGE
+
     probe = probe_isolation()
     task_id, td = allocate_task_dir(repo_root, Verb.FIX.value, task_fingerprint({"n": args.test, "v": "fix"}))
     ledger = Ledger(td / "ledger.jsonl", task_id)
@@ -3014,6 +3210,12 @@ def cmd_fix(args: argparse.Namespace) -> int:
     flow.append(
         EventKind.TASK_STARTED,
         {"task_id": task_id, "verb": Verb.FIX.value, "repo": str(repo_root), "target": args.test},
+    )
+    # Durable, so resume reuses the policy and seed the run started with rather
+    # than whatever the command line says the second time.
+    flow.append(
+        EventKind.PROBE_POLICY_FROZEN,
+        {"policy": args.probe_policy, "seed": args.probe_seed},
     )
     flow.append(EventKind.SANDBOX_PROBED, {"level": probe.level.value, "detail": probe.detail})
 
@@ -3068,6 +3270,19 @@ def cmd_fix(args: argparse.Namespace) -> int:
         },
     )
 
+    if args.model_alone:
+        # Arm A freezes the declared experiment through the same helper `verify`
+        # uses, so the task it reproduces is identical to the one B and C get.
+        frozen = freeze_declared_reproducer(flow, args, repo_root, checkset, probe, budgets)
+        if frozen is None:
+            return _emit_and_report(flow, td, args)
+        checkset = frozen
+        flow.append(EventKind.CHECKSET_FROZEN, {"checkset": checkset.to_dict(), "checkset_hash": checkset.content_hash})
+        # The ablation branch. It shares this verb's setup — sandbox authority,
+        # frozen judge, ledger, spend — and diverges only where BM-06 needs it
+        # to: no diagnosis, no probing, target-pass acceptance.
+        return run_model_alone(flow, req, checkset, td, args, spend)
+
     # 1. Diagnose first. A patch proposed without a located cause is a guess,
     #    and the diagnosis costs no model call.
     why_req = WhyRequest(
@@ -3082,6 +3297,11 @@ def cmd_fix(args: argparse.Namespace) -> int:
         # additional handles. Skipping it to save a call would mean proposing a
         # patch with no located cause — a guess with a receipt attached.
         use_model=not args.no_model,
+        # Read back from the ledger, not from the command line. A resumed run
+        # must repeat the experiment it started, and the durable record is the
+        # only thing that survives the process that made it.
+        probe_policy=flow.projection().probe_policy,
+        probe_seed=flow.projection().probe_seed,
     )
     diagnosis = run_diagnosis(flow, why_req, td, spend=spend)
     flow.append(EventKind.DIAGNOSIS_EMITTED, {"diagnosis": diagnosis.to_dict(), "target": args.test})
@@ -3206,6 +3426,105 @@ def cmd_fix(args: argparse.Namespace) -> int:
     if args.json:
         print(canonical(flow.projection().receipt or {}))
     return code
+
+
+def proj_reproducer(flow: Flow) -> ReproductionContract | None:
+    """The frozen reproducer, read back from the ledger rather than a variable."""
+    return flow.projection().reproducer
+
+
+def run_model_alone(flow: Flow, req: FixRequest, checkset: CheckSet, td: Path, args, spend) -> int:
+    """BM-06 arm A: the incumbent practice, run under this runtime's plumbing.
+
+    Same provider, model and bounded context selection; no deterministic
+    diagnosis and no probing; accepted when the target passes after the patch is
+    applied. It reuses the existing proposal validation, ChangeSet store,
+    sandbox and spend ledger, and adds no second verification path.
+
+    It is fenced rather than trusted. `verified_against_approved_checks` is
+    unreachable from here — the only acceptance this function can express is
+    `accepted_by_target_pass` — because an ablation able to emit the product's
+    own verdict would eventually be quoted as the product's result.
+    """
+    flow.append(EventKind.BENCHMARK_ABLATION, {"ablation": "model_alone", "verdict_ceiling": "accepted_by_target_pass"})
+    change_check = checkset.by_type(ClaimType.CHANGE)[0]
+
+    # Arm A gets the *same frozen task* as B and C. Without this it establishes
+    # its baseline on the bare target, which for an order-dependent case passes
+    # — so arm A reports nothing to repair and never proposes, and the arms stop
+    # being comparable. The experiment is all it gets: what follows is still
+    # weaker by design.
+    reproducer = proj_reproducer(flow)
+    with Worktree(req.repo_root, "arm-a") as wt:
+        observed = run_episode(flow, wt, change_check, GatePhase.BASELINE, reproducer, req.repo_root)
+    if observed.outcome is Outcome.PASSED:
+        flow.append(
+            EventKind.REPRODUCTION_FAILED,
+            {"reason": "the target passes before any patch; there is nothing for arm A to repair"},
+        )
+        return _emit_and_report(flow, td, args)
+
+    failure_text = _first_failure_text(flow)
+    sources, manifest = select_context(req.repo_root, failure_text, req.node_id, checkset.protected_paths)
+    flow.append(EventKind.CONTEXT_SELECTED, {**manifest, "target": req.node_id})
+
+    messages = llm.change_prompt(req.node_id, failure_text, [], sources)
+
+    def stop(reason: str) -> int:
+        flow.append(
+            EventKind.GATE_PHASE_FINISHED,
+            {"phase": GatePhase.CANDIDATE.value, "passed": False, "reason": reason, "artifacts": {}},
+        )
+        return _emit_and_report(flow, td, args)
+
+    proposal = _request_change(flow, spend, flow.ledger.task_id, messages, args.max_output_tokens, 1)
+    if proposal is None:
+        proj = flow.projection()
+        return stop(proj.spend_refused or proj.model_unavailable or "no proposal was produced")
+
+    diff, summary = proposal
+    validation = kernel.validate_patch(diff, checkset.protected_paths)
+    if validation.rejected:
+        flow.append(EventKind.CHANGESET_REJECTED, {"reason": validation.reason, "attempt": 1})
+        return stop(f"patch rejected: {validation.reason}")
+
+    changeset = ChangeSet(diff=diff, touched_paths=validation.touched, origin="model")
+    changeset_record(td).write_text(changeset.diff, encoding="utf-8", newline=chr(10))
+    flow.append(
+        EventKind.CHANGESET_REGISTERED,
+        {"changeset": changeset.to_dict(), "attempt": 1, "summary_not_evidence": summary[:200]},
+    )
+
+    # Arm A's whole acceptance rule: apply, run the target, accept if it passes.
+    # No withdrawal, no reapplication, no preservation — that difference is the
+    # thing BM-06 measures, so it is not quietly repaired here.
+    with Worktree(req.repo_root, "arm-a-candidate") as wt:
+        wt.apply_patch(changeset.diff)
+        # The reset that makes each episode clean removes anything the patch is
+        # not known to own. Without naming the patch's paths it deletes the
+        # patch itself, and the candidate measures the unpatched tree.
+        after = run_episode(
+            flow,
+            wt,
+            change_check,
+            GatePhase.CANDIDATE,
+            reproducer,
+            req.repo_root,
+            patch_owned=frozenset(changeset.touched_paths),
+        )
+    passed = after.outcome is Outcome.PASSED
+    flow.append(
+        EventKind.GATE_PHASE_FINISHED,
+        {
+            "phase": GatePhase.CANDIDATE.value,
+            "passed": passed,
+            "reason": "arm A accepts on the target passing after the patch is applied"
+            if passed
+            else "the target did not pass after the patch was applied",
+            "artifacts": {"ablation_verdict": Verdict.ACCEPTED_BY_TARGET_PASS.value if passed else ""},
+        },
+    )
+    return _emit_and_report(flow, td, args)
 
 
 def _pricing_from_args(args: argparse.Namespace) -> Pricing:
@@ -3491,6 +3810,20 @@ def build_parser() -> argparse.ArgumentParser:
         help="pytest node id that must pass both before and after (repeatable). "
         "If none are given the receipt says so; nothing is inferred.",
     )
+    v.add_argument(
+        "--precondition",
+        action="append",
+        metavar="NODE",
+        help="run this pytest node before the target in every gate phase; repeatable, order preserved. "
+        "An order-dependent failure passes alone, so without this its baseline can never reproduce.",
+    )
+    v.add_argument(
+        "--expect-signature",
+        default="",
+        metavar="PATTERN",
+        help="require the baseline to reproduce this signature, as 'ExceptionType: message' or 'ExceptionType'. "
+        "Omitted, the observed target-specific signature is frozen instead.",
+    )
     v.add_argument("--max-commands", type=int, default=200)
     v.add_argument("--max-seconds", type=float, default=1800.0)
     v.add_argument("--timeout", type=float, default=600.0, help="per-command timeout in seconds")
@@ -3541,6 +3874,38 @@ def build_parser() -> argparse.ArgumentParser:
     f.add_argument("--max-seconds", type=float, default=1800.0)
     f.add_argument("--timeout", type=float, default=600.0)
     f.add_argument("--max-probes", type=int, default=8)
+    f.add_argument(
+        "--probe-policy",
+        choices=("disagreement", "random"),
+        default="disagreement",
+        help="how the next experiment is chosen from the identical candidate pool (DAR-015). "
+        "The default is the shipped behaviour; 'random' is BM-06 arm B.",
+    )
+    f.add_argument(
+        "--probe-seed",
+        type=int,
+        default=None,
+        help="required with --probe-policy random; recorded durably so a rerun is the same experiment",
+    )
+    f.add_argument(
+        "--precondition",
+        action="append",
+        metavar="NODE",
+        help="run this pytest node before the target in every phase; repeatable. Required for an order-dependent "
+        "task, whose target passes when run alone.",
+    )
+    f.add_argument(
+        "--expect-signature",
+        default="",
+        metavar="PATTERN",
+        help="require the reproduction to show this signature, as 'ExceptionType: message' or 'ExceptionType'",
+    )
+    f.add_argument(
+        "--model-alone",
+        action="store_true",
+        help="BM-06 arm A: propose with the same model and context but no diagnosis or probing, accepted when "
+        "the target passes. Never emits a RIFT verification verdict.",
+    )
     f.add_argument(
         "--no-model",
         action="store_true",

@@ -1,0 +1,35 @@
+MANIFEST INVALID — no provider request was made:
+  manifest.arms is empty; the arms are not defined
+  manifest.budget is empty; there is no authorized ceiling
+  cachetools-c0fdf6ab-genuine_source_bug: preservation checks are empty; nothing would constrain a destructive patch
+  cachetools-c0fdf6ab-genuine_source_bug: no worktree; the manifest names a repository but no materialized checkout
+  croniter-b4014c9b-genuine_source_bug: preservation checks are empty; nothing would constrain a destructive patch
+  croniter-b4014c9b-genuine_source_bug: no worktree; the manifest names a repository but no materialized checkout
+  filelock-721b37bc-genuine_source_bug: preservation checks are empty; nothing would constrain a destructive patch
+  filelock-721b37bc-genuine_source_bug: no worktree; the manifest names a repository but no materialized checkout
+  jinja-9b96b481-genuine_source_bug: preservation checks are empty; nothing would constrain a destructive patch
+  jinja-9b96b481-genuine_source_bug: no worktree; the manifest names a repository but no materialized checkout
+  pygments-2f0d713b-genuine_source_bug: preservation checks are empty; nothing would constrain a destructive patch
+  pygments-2f0d713b-genuine_source_bug: no worktree; the manifest names a repository but no materialized checkout
+  pyparsing-13065174-genuine_source_bug: preservation checks are empty; nothing would constrain a destructive patch
+  pyparsing-13065174-genuine_source_bug: no worktree; the manifest names a repository but no materialized checkout
+  icalendar-30ec6eef-locale_timezone: preservation checks are empty; nothing would constrain a destructive patch
+  icalendar-30ec6eef-locale_timezone: no worktree; the manifest names a repository but no materialized checkout
+  icalendar-60a10375-locale_timezone: preservation checks are empty; nothing would constrain a destructive patch
+  icalendar-60a10375-locale_timezone: no worktree; the manifest names a repository but no materialized checkout
+  icalendar-781eeda8-locale_timezone: preservation checks are empty; nothing would constrain a destructive patch
+  icalendar-781eeda8-locale_timezone: no worktree; the manifest names a repository but no materialized checkout
+  filelock-43277ac7-order_dependence: preservation checks are empty; nothing would constrain a destructive patch
+  filelock-43277ac7-order_dependence: no worktree; the manifest names a repository but no materialized checkout
+  filelock-fc277001-order_dependence: no expected signature to match the reproduction against
+  filelock-fc277001-order_dependence: preservation checks are empty; nothing would constrain a destructive patch
+  filelock-fc277001-order_dependence: order-dependent case carries no exact reproducer; the bare node id will not fail
+  filelock-fc277001-order_dependence: no worktree; the manifest names a repository but no materialized checkout
+  filelock-059cca26-state_leakage: preservation checks are empty; nothing would constrain a destructive patch
+  filelock-059cca26-state_leakage: no worktree; the manifest names a repository but no materialized checkout
+  dateutil-f2293200-version_mismatch: preservation checks are empty; nothing would constrain a destructive patch
+  dateutil-f2293200-version_mismatch: no worktree; the manifest names a repository but no materialized checkout
+  freezegun-3d5d60b4-version_mismatch: preservation checks are empty; nothing would constrain a destructive patch
+  freezegun-3d5d60b4-version_mismatch: no worktree; the manifest names a repository but no materialized checkout
+  icalendar-62cbf833-version_mismatch: preservation checks are empty; nothing would constrain a destructive patch
+  icalendar-62cbf833-version_mismatch: no worktree; the manifest names a repository but no materialized checkout

@@ -1,0 +1,645 @@
+{
+ "arms": {
+  "A": {
+   "description": "the model alone; accept when the target passes after applying the patch"
+  },
+  "B": {
+   "description": "model + ledger + random probe selection, frozen seed",
+   "policy": "random",
+   "seed": 20260818
+  },
+  "C": {
+   "description": "the full kernel: disagreement-per-cost selection and the counterfactual gate"
+  }
+ },
+ "budget": {
+  "max_usd": 3.43,
+  "scope": "one frozen authorization scope for all 90 tasks (DAR-005)",
+  "worst_case_note": "per-task worst case $0.1269 at the frozen caps, three arms per case. NOT AUTHORIZED."
+ },
+ "cases": [
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "cachetools-c0fdf6ab-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "c0fdf6abab38040947d6fe2e38c507401d5e2350",
+   "confirmation": {
+    "commands": [
+     "git checkout c0fdf6abab38",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach cachetools-c0fdf6ab-genuine_source_bug-parent 978d34d40cdb (parent)",
+     "git worktree add --detach cachetools-c0fdf6ab-genuine_source_bug-fix c0fdf6abab38 (fix)",
+     "layout detected: src",
+     "applied the commit's test half to the parent (1 file(s)) -> rc=0",
+     "pytest tests/test_tlru.py::TLRUCacheTest::test_overwrite_existing_with_expired at the parent -> FAILED",
+     "pytest tests/test_tlru.py::TLRUCacheTest::test_overwrite_existing_with_expired at the fix -> PASSED",
+     "preservation candidates from tests/test_tlru.py -> 3 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "source",
+   "fix_worktree": "/repos/.cases/cachetools-c0fdf6ab-genuine_source_bug-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "TLRUCache retained a stale value on expired overwrite; the assertion names the retained entry.",
+    "source_files": [
+     "src/cachetools/__init__.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "978d34d40cdbf3b4cbfce104f3166032cc4ea028",
+   "preserve": [
+    "tests/test_tlru.py::TLRUCacheTest::test_clear",
+    "tests/test_tlru.py::TLRUCacheTest::test_clear_empty",
+    "tests/test_tlru.py::TLRUCacheTest::test_clear_getsizeof"
+   ],
+   "repo": "cachetools",
+   "signature": "AssertionError: 1 unexpectedly found in TLRUCache({1: 5}, maxsize=2, currsize=1)",
+   "src_layout": "src",
+   "status": "OK",
+   "target": "tests/test_tlru.py::TLRUCacheTest::test_overwrite_existing_with_expired",
+   "url": "https://github.com/tkem/cachetools",
+   "worktree": "/repos/.cases/cachetools-c0fdf6ab-genuine_source_bug-parent"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "pygments-2f0d713b-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "2f0d713b396de53e8780c114b00a7adad99cbffc",
+   "confirmation": {
+    "commands": [
+     "git checkout 2f0d713b396d",
+     "git checkout 6a7aa837d500 + apply test half",
+     "git checkout 6a7aa837d500 + apply test half",
+     "git checkout 6a7aa837d500 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach pygments-2f0d713b-genuine_source_bug-parent 6a7aa837d500 (parent)",
+     "git worktree add --detach pygments-2f0d713b-genuine_source_bug-fix 2f0d713b396d (fix)",
+     "layout detected: flat",
+     "applied the commit's test half to the parent (1 file(s)) -> rc=0",
+     "pytest tests/test_raw_token.py::test_raw_token_error_color at the parent -> FAILED",
+     "pytest tests/test_raw_token.py::test_raw_token_error_color at the fix -> PASSED",
+     "preservation candidates from tests/test_raw_token.py -> 2 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "source",
+   "fix_worktree": "/repos/.cases/pygments-2f0d713b-genuine_source_bug-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "RawTokenFormatter crash when error_color is set; single-cause source defect.",
+    "source_files": [
+     "pygments/formatters/other.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "6a7aa837d5001dd199f0094165d85568faa1142a",
+   "preserve": [
+    "tests/test_raw_token.py::test_raw_token",
+    "tests/test_raw_token.py::test_invalid_raw_token"
+   ],
+   "repo": "pygments",
+   "signature": "TypeError: can only concatenate str (not \"bytes\") to str",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_raw_token.py::test_raw_token_error_color",
+   "url": "https://github.com/pygments/pygments",
+   "worktree": "/repos/.cases/pygments-2f0d713b-genuine_source_bug-parent"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "pyparsing-13065174-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "13065174b69ff9b412795b1bc043d0acedfdf6d6",
+   "confirmation": {
+    "commands": [
+     "git checkout 13065174b69f",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach pyparsing-13065174-genuine_source_bug-parent a6fbc725dc50 (parent)",
+     "git worktree add --detach pyparsing-13065174-genuine_source_bug-fix 13065174b69f (fix)",
+     "layout detected: flat",
+     "applied the commit's test half to the parent (1 file(s)) -> rc=0",
+     "pytest tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9] at the parent -> FAILED",
+     "pytest tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9] at the fix -> PASSED",
+     "preservation candidates from tests/test_util.py -> 3 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "source",
+   "fix_worktree": "/repos/.cases/pyparsing-13065174-genuine_source_bug-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Off-by-one in LRUMemo; the fix touches pyparsing/util.py only and the target asserts corrected list contents.",
+    "source_files": [
+     "pyparsing/util.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "a6fbc725dc50c33d549563bbe8cd9aa6f08b8a9c",
+   "preserve": [
+    "tests/test_util.py::test_flatten[Empty list-input_list0-expected_output0]",
+    "tests/test_util.py::test_flatten[Flat list-input_list1-expected_output1]",
+    "tests/test_util.py::test_flatten[Nested list-input_list2-expected_output2]"
+   ],
+   "repo": "pyparsing",
+   "signature": "assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9]",
+   "url": "https://github.com/pyparsing/pyparsing",
+   "worktree": "/repos/.cases/pyparsing-13065174-genuine_source_bug-parent"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "icalendar-30ec6eef-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commit": "30ec6eef144e730e4cb688e30a0e986f62c0ab17",
+   "confirmation": {
+    "commands": [
+     "git checkout 0675760687d6",
+     "git checkout b0860ac7375b + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach icalendar-30ec6eef-locale_timezone-parent b0860ac7375b (parent)",
+     "git worktree add --detach icalendar-30ec6eef-locale_timezone-fix 30ec6eef144e (fix)",
+     "layout detected: src",
+     "applied the commit's test half to the parent (19 file(s)) -> rc=0",
+     "pytest src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent at the parent -> FAILED",
+     "pytest src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent at the fix -> PASSED",
+     "preservation candidates from src/icalendar/tests/attr/test_alarm.py -> 3 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "source",
+   "fix_worktree": "/repos/.cases/icalendar-30ec6eef-locale_timezone-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "A PERIOD written with dates read as midnight date-times; date and time semantics.",
+    "source_files": [
+     "generate_windows_to_olson_mapping.py",
+     "src/icalendar/__init__.py",
+     "src/icalendar/alarms.py",
+     "src/icalendar/attr.py",
+     "src/icalendar/cal/alarm.py",
+     "src/icalendar/cal/component.py",
+     "src/icalendar/cal/component_factory.py",
+     "src/icalendar/cal/event.py",
+     "src/icalendar/cal/free_busy.py",
+     "src/icalendar/cal/journal.py",
+     "src/icalendar/cal/lazy.py",
+     "src/icalendar/cal/todo.py",
+     "src/icalendar/enums.py",
+     "src/icalendar/error.py",
+     "src/icalendar/parser/ical/component.py",
+     "src/icalendar/parser/ical/lazy.py",
+     "src/icalendar/parser/parameter.py",
+     "src/icalendar/prop/adr.py",
+     "src/icalendar/prop/boolean.py",
+     "src/icalendar/prop/categories.py",
+     "src/icalendar/prop/dt/date.py",
+     "src/icalendar/prop/dt/datetime.py",
+     "src/icalendar/prop/dt/duration.py",
+     "src/icalendar/prop/dt/list.py",
+     "src/icalendar/prop/dt/period.py",
+     "src/icalendar/prop/dt/time.py",
+     "src/icalendar/prop/dt/types.py",
+     "src/icalendar/prop/dt/utc_offset.py",
+     "src/icalendar/prop/factory.py",
+     "src/icalendar/prop/geo.py",
+     "src/icalendar/prop/image.py",
+     "src/icalendar/prop/n.py",
+     "src/icalendar/prop/org.py",
+     "src/icalendar/prop/recur/recur.py",
+     "src/icalendar/prop/recur/weekday.py",
+     "src/icalendar/timezone/tzp.py",
+     "src/icalendar/timezone/windows_to_olson.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "b0860ac7375bc7cf0057ad396217fb6b54435924",
+   "preserve": [
+    "src/icalendar/tests/attr/test_alarm.py::test_repeat_absent",
+    "src/icalendar/tests/attr/test_alarm.py::test_repeat_number",
+    "src/icalendar/tests/attr/test_alarm.py::test_set_REPEAT"
+   ],
+   "repo": "icalendar",
+   "signature": "AttributeError: 'Alarm' object has no attribute 'ACTION'",
+   "src_layout": "src",
+   "status": "OK",
+   "target": "src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent",
+   "url": "https://github.com/collective/icalendar",
+   "worktree": "/repos/.cases/icalendar-30ec6eef-locale_timezone-parent"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "icalendar-60a10375-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commit": "60a1037502a5025ac5b505313a46c1cde7cf187e",
+   "confirmation": {
+    "commands": [
+     "git checkout 60a1037502a5",
+     "git checkout 740c6e1e5b25 + apply test half",
+     "git checkout 740c6e1e5b25 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach icalendar-60a10375-locale_timezone-parent 740c6e1e5b25 (parent)",
+     "git worktree add --detach icalendar-60a10375-locale_timezone-fix 60a1037502a5 (fix)",
+     "layout detected: src",
+     "applied the commit's test half to the parent (1 file(s)) -> rc=0",
+     "pytest src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_mountain_standard_time_mexico[pytz] at the parent -> FAILED",
+     "pytest src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_mountain_standard_time_mexico[pytz] at the fix -> PASSED",
+     "preservation candidates from src/icalendar/tests/prop/test_windows_to_olson_mapping.py -> 3 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "source",
+   "fix_worktree": "/repos/.cases/icalendar-60a10375-locale_timezone-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "The Mountain Standard Time (Mexico) mapping was wrong; a timezone-data defect with a direct assertion.",
+    "source_files": [
+     "src/icalendar/timezone/windows_to_olson.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "740c6e1e5b251b35e66e1c5bc771a93adb908e28",
+   "preserve": [
+    "src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_windows_timezone[pytz]",
+    "src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_olson_names[pytz-Australia/Darwin]",
+    "src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_windows_timezone[zoneinfo]"
+   ],
+   "repo": "icalendar",
+   "signature": "AssertionError: assert <DstTzInfo 'America/Chihuahua' CST-1 day, 18:00:00 STD> == <DstTzInfo 'America/Mazatlan' MST-1 day, 17:00:00 STD>",
+   "src_layout": "src",
+   "status": "OK",
+   "target": "src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_mountain_standard_time_mexico[pytz]",
+   "url": "https://github.com/collective/icalendar",
+   "worktree": "/repos/.cases/icalendar-60a10375-locale_timezone-parent"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "icalendar-781eeda8-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commit": "781eeda80bbea6ad57b2b4bac2f0db9e860da7aa",
+   "confirmation": {
+    "commands": [
+     "git checkout 781eeda80bbe",
+     "git checkout 7633145b8b23 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach icalendar-781eeda8-locale_timezone-parent 7633145b8b23 (parent)",
+     "git worktree add --detach icalendar-781eeda8-locale_timezone-fix 781eeda80bbe (fix)",
+     "layout detected: src",
+     "applied the commit's test half to the parent (1 file(s)) -> rc=0",
+     "pytest src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz] at the parent -> FAILED",
+     "pytest src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz] at the fix -> PASSED",
+     "preservation candidates from src/icalendar/tests/test_issue_313_globally_unique_tzid.py -> 2 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "source",
+   "fix_worktree": "/repos/.cases/icalendar-781eeda8-locale_timezone-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Globally unique TZIDs resolved with a vendor prefix; timezone identifier resolution.",
+    "source_files": [
+     "src/icalendar/timezone/tzp.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "7633145b8b23b8b4237a6aaba9751fcb59ac38f7",
+   "preserve": [
+    "src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[pytz]",
+    "src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[zoneinfo]"
+   ],
+   "repo": "icalendar",
+   "signature": "assert None is not None",
+   "src_layout": "src",
+   "status": "OK",
+   "target": "src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz]",
+   "url": "https://github.com/collective/icalendar",
+   "worktree": "/repos/.cases/icalendar-781eeda8-locale_timezone-parent"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "dateutil-f2293200-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commit": "f2293200747fb03d56c6c5997bfebeabe703576f",
+   "confirmation": {
+    "commands": [
+     "git checkout b04edc08aa35; pytest (whole suite)",
+     "git checkout f2293200747f; pytest (whole suite)"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": "FAILED",
+    "parent_outcome": "FAILED",
+    "target_origin": "existing suite at the parent"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach dateutil-f2293200-version_mismatch-parent b04edc08aa35 (parent)",
+     "git worktree add --detach dateutil-f2293200-version_mismatch-fix f2293200747f (fix)",
+     "layout detected: src",
+     "pytest tests/test_imports.py::test_lazy_import[parser] at the parent -> FAILED",
+     "pytest tests/test_imports.py::test_lazy_import[parser] at the fix -> PASSED",
+     "preservation candidates from tests/test_imports.py -> 3 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "environment",
+   "fix_worktree": "/repos/.cases/dateutil-f2293200-version_mismatch-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "datetime.utcfromtimestamp deprecation in the running interpreter; the failure is caused by the Python version rather than by project logic.",
+    "source_files": [
+     "src/dateutil/tz/tz.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "b04edc08aa3559063b3b097f437941d8c4b84aba",
+   "preserve": [
+    "tests/test_imports.py::test_lazy_import[easter]",
+    "tests/test_imports.py::test_lazy_import[relativedelta]",
+    "tests/test_imports.py::test_lazy_import[rrule]"
+   ],
+   "repo": "dateutil",
+   "signature": "DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent da",
+   "src_layout": "src",
+   "status": "OK",
+   "target": "tests/test_imports.py::test_lazy_import[parser]",
+   "url": "https://github.com/dateutil/dateutil",
+   "worktree": "/repos/.cases/dateutil-f2293200-version_mismatch-parent"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "freezegun-3d5d60b4-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commit": "3d5d60b461381271d0cffcd343b6459174f65141",
+   "confirmation": {
+    "commands": [
+     "git checkout bfcbfb8d1a51; pytest (whole suite)",
+     "git checkout 3d5d60b46138; pytest (whole suite)"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": "FAILED",
+    "parent_outcome": "FAILED",
+    "target_origin": "existing suite at the parent"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach freezegun-3d5d60b4-version_mismatch-parent bfcbfb8d1a51 (parent)",
+     "git worktree add --detach freezegun-3d5d60b4-version_mismatch-fix 3d5d60b46138 (fix)",
+     "layout detected: flat",
+     "pytest tests/test_datetimes.py::Tester::test_class_decorator_respects_staticmethod at the parent -> FAILED",
+     "pytest tests/test_datetimes.py::Tester::test_class_decorator_respects_staticmethod at the fix -> PASSED",
+     "preservation candidates from tests/test_datetimes.py -> 3 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "environment",
+   "fix_worktree": "/repos/.cases/freezegun-3d5d60b4-version_mismatch-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Callable staticmethods changed behaviour in Python 3.10; the commit adapts to the interpreter change.",
+    "source_files": [
+     "freezegun/api.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "bfcbfb8d1a51c04c53d2dc5e786fc42de9e9512f",
+   "preserve": [
+    "tests/test_datetimes.py::test_simple_api",
+    "tests/test_datetimes.py::test_tz_offset",
+    "tests/test_datetimes.py::test_timedelta_tz_offset"
+   ],
+   "repo": "freezegun",
+   "signature": "TypeError: Tester.helper() takes 0 positional arguments but 1 was given",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_datetimes.py::Tester::test_class_decorator_respects_staticmethod",
+   "url": "https://github.com/spulec/freezegun",
+   "worktree": "/repos/.cases/freezegun-3d5d60b4-version_mismatch-parent"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "icalendar-62cbf833-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commit": "62cbf8338777a8097d4350675a770dc48f42c65b",
+   "confirmation": {
+    "commands": [
+     "git checkout 62cbf8338777",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "no node from the commit's tests failed at the parent and passed at the fix",
+     "git checkout 2f54d531bda1; pytest (whole suite)",
+     "git checkout 62cbf8338777; pytest (whole suite)"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": "FAILED",
+    "parent_outcome": "FAILED",
+    "target_origin": "existing suite at the parent"
+   },
+   "curation": {
+    "commands": [
+     "git worktree add --detach icalendar-62cbf833-version_mismatch-parent 2f54d531bda1 (parent)",
+     "git worktree add --detach icalendar-62cbf833-version_mismatch-fix 62cbf8338777 (fix)",
+     "layout detected: src",
+     "applied the commit's test half to the parent (1 file(s)) -> rc=0",
+     "pytest src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm] at the parent -> FAILED",
+     "pytest src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm] at the fix -> PASSED",
+     "preservation candidates from src/icalendar/tests/test_with_doctest.py -> 3 kept"
+    ],
+    "rejected": "",
+    "validated": true
+   },
+   "expected_diagnostic_scope": "environment",
+   "fix_worktree": "/repos/.cases/icalendar-62cbf833-version_mismatch-fix",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Doctest property ordering changed in Python 3.14; an interpreter-version behavioural change, not a project defect.",
+    "source_files": [
+     "src/icalendar/cal/alarm.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "2f54d531bda146d84deb1a0fdeca1d759a4dbe57",
+   "preserve": [
+    "src/icalendar/tests/test_with_doctest.py::test_this_module_is_among_them",
+    "src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.tools]",
+    "src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.__init__]"
+   ],
+   "repo": "icalendar",
+   "signature": "AssertionError: 2 errors in icalendar.cal.alarm",
+   "src_layout": "src",
+   "status": "OK",
+   "target": "src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm]",
+   "url": "https://github.com/collective/icalendar",
+   "worktree": "/repos/.cases/icalendar-62cbf833-version_mismatch-parent"
+  }
+ ],
+ "claim_limit": "A preliminary benchmark. It does NOT satisfy the frozen BM-06 denominator of 30 cases across eight cause classes and must not be reported as BM-06 or as evidence for the eight-class thesis.",
+ "model": {
+  "id": "claude-sonnet-5",
+  "max_attempts": 1,
+  "max_commands": 400,
+  "max_output_tokens": 4000,
+  "max_probes": 16,
+  "price_input_per_mtok": 2.0,
+  "price_note": "introductory rates verified 2026-08-17 by documentation lookup; they expire 2026-08-31 and must be reconfirmed before execution",
+  "price_output_per_mtok": 10.0,
+  "timeout_s": 600.0
+ },
+ "name": "preliminary",
+ "protocol_sha256": "ddf35a8379501f8343aa54f72aaefc8932bca26d3c85ab856c52a2549e53789b",
+ "rejected": [
+  {
+   "case_id": "croniter-b4014c9b-genuine_source_bug",
+   "reason": "the target does not fail at the pinned parent (observed NOTCOLLECTED)"
+  },
+  {
+   "case_id": "filelock-721b37bc-genuine_source_bug",
+   "reason": "the target does not fail at the pinned parent (observed UNOBSERVED): ERROR: found no collectors for /repos/.cases/filelock-721b37bc-genuine_source_bug-parent/tests/test_read_write_unit.py::test_non_blocking_with_timeout_no_value_"
+  },
+  {
+   "case_id": "jinja-9b96b481-genuine_source_bug",
+   "reason": "no test in tests/test_nodes.py passes at both the parent and the fix; nothing would constrain a destructive patch"
+  },
+  {
+   "case_id": "filelock-43277ac7-order_dependence",
+   "reason": "the target does not fail at the pinned parent (observed UNOBSERVED): ERROR: found no collectors for /repos/.cases/filelock-43277ac7-order_dependence-parent/tests/test_async_read_write.py::test_close_rejects_later_acquisition"
+  },
+  {
+   "case_id": "filelock-fc277001-order_dependence",
+   "reason": "no single test file under tests reproduces the ordering failure within 25"
+  },
+  {
+   "case_id": "filelock-059cca26-state_leakage",
+   "reason": "the target does not fail at the pinned parent (observed UNOBSERVED): ERROR: found no collectors for /repos/.cases/filelock-059cca26-state_leakage-parent/tests/test_async_filelock.py::test_failed_acquire_keeps_holder_registered"
+  }
+ ],
+ "schema": 1
+}

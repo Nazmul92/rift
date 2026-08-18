@@ -155,7 +155,12 @@ def post_chat(
     messages: list[dict[str, str]],
     max_output_tokens: int,
     timeout_s: float = 120.0,
-    temperature: float | None = 0.0,
+    # Omitted by default. Several current models reject a non-default sampling
+    # parameter outright, and 0.0 is not the default anywhere — sending it made
+    # the adapter fail against providers that are otherwise compatible. A caller
+    # that wants a specific value still passes one and it is still serialised;
+    # the default simply stops asserting a preference nobody expressed (DAR-014).
+    temperature: float | None = None,
 ) -> ModelReply:
     """One bounded chat-completions request. No streaming, no tool calling.
 

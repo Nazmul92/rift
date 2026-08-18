@@ -1,0 +1,1524 @@
+[
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at ea213fc5051d) -> rc=0",
+    "pip install -e .[dev]"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/click-ea213fc5051d"
+  },
+  "fix_commit": "e129f181db99853ff78d2b05185a2b0691c97758",
+  "parent": "ea213fc5051d88254c67557c182590012004f655",
+  "pass": "targeted/historical-environment",
+  "reason": "no node showed a missing-dependency signature at the parent that the fix removed",
+  "rejected_signatures": [
+   "AttributeError: module 'collections' has no attribute 'Iterable'",
+   "AttributeError: module 'collections' has no attribute 'Iterable'",
+   "AttributeError: module 'collections' has no attribute 'Iterable'"
+  ],
+  "repo": "click",
+  "subject": "Fix Google App Engine ImportError.",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at cf31c154b76c) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/click-cf31c154b76c"
+  },
+  "fix_commit": "40705b9d69e78e599c26b8e55c828ae19bd5ed0c",
+  "parent": "cf31c154b76ce61c301fc6e8f6efc79610291dc3",
+  "pass": "targeted/historical-environment",
+  "reason": "no node showed a missing-dependency signature at the parent that the fix removed",
+  "rejected_signatures": [
+   "AssertionError: assert 'Invoked legacy parameter callback' in 'WAT\\n'"
+  ],
+  "repo": "click",
+  "subject": "Added missing module",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 69aea3980e2e) -> rc=0",
+    "pip install -r requirements-dev.txt -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "requirements-dev.txt",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/pyparsing-69aea3980e2e"
+  },
+  "fix_commit": "87d14e7ef563263417d3fddccd25636741c5b6c2",
+  "harness_limited": true,
+  "parent": "69aea3980e2e3c848ae1c7b0ce7539bbdc8daf27",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "pyparsing",
+  "subject": "Py3 cleanup: Remove workaround for Python2 urllib (#143)",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at c07892101de6) -> rc=0",
+    "pip install -e .[dev]",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml",
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/pluggy-c07892101de6"
+  },
+  "fix_commit": "97b36c94b4fd8f2b377b6ae31fa46933ac0be946",
+  "harness_limited": true,
+  "parent": "c07892101de6a73e53e54c8ba355d16f1c7cf74d",
+  "pass": "targeted/historical-environment",
+  "reason": "the parent suite could not be run in the reconstructed environment",
+  "repo": "pluggy",
+  "subject": "setup.py/tox: add/use \"testing\" extras_require",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 0a7fec29cf7b) -> rc=0",
+    "pip install -e .[dev]",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml",
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/pluggy-0a7fec29cf7b"
+  },
+  "fix_commit": "2008a3d5d164f745fb0d9550d3576dce6bf6c59f",
+  "harness_limited": true,
+  "parent": "0a7fec29cf7ba0e70868196ab9306e5a698da6be",
+  "pass": "targeted/historical-environment",
+  "reason": "the parent suite could not be run in the reconstructed environment",
+  "repo": "pluggy",
+  "subject": "Check for funcsigs using sys.version_info",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": false,
+   "commands": [
+    "pip install -e . (at e38758798651) -> rc=0",
+    "pip install -e .[dev]",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "unavailable",
+   "reason": "pytest could not be made available in the reconstructed environment",
+   "sources": [
+    "pyproject.toml",
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/pluggy-e38758798651"
+  },
+  "fix_commit": "f282a42a22aee250b09c3e6be91a2faae2253858",
+  "harness_limited": true,
+  "parent": "e3875879865100e86cad88050e63f4f0df9671a7",
+  "pass": "targeted/historical-environment",
+  "reason": "parent environment not reconstructible: pytest could not be made available in the reconstructed environment",
+  "repo": "pluggy",
+  "subject": "Expose the ImportError / AttributeError to the caller"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": false,
+   "commands": [
+    "pip install -e . (at 42b95d7ef8b1) -> rc=1",
+    "pip install . (at 42b95d7ef8b1) -> rc=1"
+   ],
+   "reason": "the parent commit's own package will not install: ror originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/markdown' when getting requirements to build wheel",
+   "sources": [
+    "setup.cfg",
+    "setup.py"
+   ],
+   "venv": "/repos/.venvs-historical/markdown-42b95d7ef8b1"
+  },
+  "fix_commit": "67ad9f66a00bdea21602428f748dfbb65220e67c",
+  "harness_limited": true,
+  "parent": "42b95d7ef8b1dd032c3f5cee0013f7bbe78df447",
+  "pass": "targeted/historical-environment",
+  "reason": "parent environment not reconstructible: the parent commit's own package will not install: ror originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/markdown' when getting requirements to build wheel",
+  "repo": "markdown",
+  "subject": "Added run-tests.py script and added a helpful error message if nose is not installed. Note the run-tests scrip"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": false,
+   "commands": [
+    "pip install -e . (at bd926140e0b4) -> rc=1",
+    "pip install . (at bd926140e0b4) -> rc=1"
+   ],
+   "reason": "the parent commit's own package will not install: ror originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/markdown' when getting requirements to build wheel",
+   "sources": [
+    "setup.cfg",
+    "setup.py"
+   ],
+   "venv": "/repos/.venvs-historical/markdown-bd926140e0b4"
+  },
+  "fix_commit": "834f04b887c15017a2e08bb76f8a269d9ae074a2",
+  "harness_limited": true,
+  "parent": "bd926140e0b4005fc082f12f7c119498ced420a2",
+  "pass": "targeted/historical-environment",
+  "reason": "parent environment not reconstructible: the parent commit's own package will not install: ror originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/markdown' when getting requirements to build wheel",
+  "repo": "markdown",
+  "subject": "The html-tidy extension now fails gracefully when tidy is not installed on the system -- markdown continues wi"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 283127656519) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml"
+   ],
+   "venv": "/repos/.venvs-historical/chardet-283127656519"
+  },
+  "fix_commit": "2fe89933d479fc9153520b12390858ceceaa43c6",
+  "parent": "283127656519aadcf1ef5424bc7f4eab496b435e",
+  "pass": "targeted/historical-environment",
+  "reason": "no node showed a missing-dependency signature at the parent that the fix removed",
+  "rejected_signatures": [
+   "AssertionError: expected=cp037, got=Windows-1251 (confidence=0.01, language=en, file=ebcdic_gsf1_rec5000.txt)",
+   "AssertionError: expected=cp1026, got=None (confidence=0.95, language=tr, file=historic_1354ba36d4df.txt)",
+   "AssertionError: expected=cp1026, got=None (confidence=0.95, language=tr, file=historic_69f8693079cf.txt)",
+   "AssertionError: expected=cp273, got=cp500 (confidence=0.86, language=de, file=historic_717f045b1bc8.txt)",
+   "AssertionError: expected=cp424, got=cp1026 (confidence=0.33, language=he, file=historic_5389949d4b7e.txt)",
+   "AssertionError: expected=cp424, got=cp1140 (confidence=0.29, language=he, file=historic_5acd4e8a61d5.txt)",
+   "AssertionError: expected=cp424, got=cp500 (confidence=0.37, language=he, file=historic_7bf19d2fa5fa.txt)",
+   "AssertionError: expected=cp424, got=cp500 (confidence=0.24, language=he, file=historic_c0b6b83a8cca.txt)",
+   "AssertionError: expected=cp424, got=cp1140 (confidence=0.28, language=he, file=historic_ccda7016e961.txt)",
+   "AssertionError: expected=cp437, got=cp1006 (confidence=0.19, language=en, file=artpack_0196ciph_6aaccd2c9778.txt)",
+   "AssertionError: expected=cp437, got=cp864 (confidence=0.14, language=en, file=artpack_01adment_f7a22d9aadb5.txt)",
+   "AssertionError: expected=cp437, got=cp1006 (confidence=0.34, language=en, file=artpack_02adment_ecdb700b997b.txt)"
+  ],
+  "repo": "chardet",
+  "subject": "fix: handle missing ISO_TO_LANGUAGE in older chardet versions",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at dbfaa3efb7f0) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml"
+   ],
+   "venv": "/repos/.venvs-historical/chardet-dbfaa3efb7f0"
+  },
+  "fix_commit": "72b057b6a72e875c1335a9284b809bab2980e89a",
+  "parent": "dbfaa3efb7f0b52a624c0ca7cb78822185f6f0b4",
+  "pass": "targeted/historical-environment",
+  "reason": "no node showed a missing-dependency signature at the parent that the fix removed",
+  "rejected_signatures": [
+   "AssertionError: expected=cp037, got=Windows-1251 (confidence=0.01, language=en, file=ebcdic_gsf1_rec5000.txt)",
+   "AssertionError: expected=cp1026, got=None (confidence=0.95, language=tr, file=historic_1354ba36d4df.txt)",
+   "AssertionError: expected=cp1026, got=None (confidence=0.95, language=tr, file=historic_69f8693079cf.txt)",
+   "AssertionError: expected=cp273, got=CP500 (confidence=0.86, language=de, file=historic_717f045b1bc8.txt)",
+   "AssertionError: expected=cp424, got=CP1026 (confidence=0.33, language=he, file=historic_5389949d4b7e.txt)",
+   "AssertionError: expected=cp424, got=CP1140 (confidence=0.29, language=he, file=historic_5acd4e8a61d5.txt)",
+   "AssertionError: expected=cp424, got=CP500 (confidence=0.37, language=he, file=historic_7bf19d2fa5fa.txt)",
+   "AssertionError: expected=cp424, got=CP500 (confidence=0.24, language=he, file=historic_c0b6b83a8cca.txt)",
+   "AssertionError: expected=cp424, got=CP1140 (confidence=0.28, language=he, file=historic_ccda7016e961.txt)",
+   "AssertionError: expected=cp437, got=CP1006 (confidence=0.19, language=en, file=artpack_0196ciph_6aaccd2c9778.txt)",
+   "AssertionError: expected=cp437, got=CP864 (confidence=0.14, language=en, file=artpack_01adment_f7a22d9aadb5.txt)",
+   "AssertionError: expected=cp437, got=CP1006 (confidence=0.34, language=en, file=artpack_02adment_ecdb700b997b.txt)"
+  ],
+  "repo": "chardet",
+  "subject": "Update benchmark numbers and fix subprocess import error",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 3cffdfa3dd6b) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml",
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/attrs-3cffdfa3dd6b"
+  },
+  "fix_commit": "c601faf9943610dbe5f9863ac02be503b487ae7f",
+  "harness_limited": true,
+  "parent": "3cffdfa3dd6bbd51804fd7ab2888711cd2eea880",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "attrs",
+  "subject": "Use extras_require instead of dev-requirements.txt (#318)",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": false,
+   "commands": [
+    "pip install -e . (at 63cf9b895df2) -> rc=1",
+    "pip install . (at 63cf9b895df2) -> rc=1"
+   ],
+   "reason": "the parent commit's own package will not install:  error originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/jinja' when getting requirements to build wheel",
+   "sources": [
+    "setup.cfg",
+    "setup.py"
+   ],
+   "venv": "/repos/.venvs-historical/jinja-63cf9b895df2"
+  },
+  "fix_commit": "eaa1d64ad29e6f46b5095b14aac79ae79532ccd9",
+  "harness_limited": true,
+  "parent": "63cf9b895df233a13af5d166d8639cb20583af65",
+  "pass": "targeted/historical-environment",
+  "reason": "parent environment not reconstructible: the parent commit's own package will not install:  error originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/jinja' when getting requirements to build wheel",
+  "repo": "jinja",
+  "subject": "Added missing module."
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 9d783cdefe87) -> rc=0",
+    "pip install -e .[dev]"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/werkzeug-9d783cdefe87"
+  },
+  "fix_commit": "3ed73015106f61ca979ae30eb9d76edee7f2055d",
+  "parent": "9d783cdefe875db26ae94a5f262435f601cd2b9c",
+  "pass": "targeted/historical-environment",
+  "reason": "no node showed a missing-dependency signature at the parent that the fix removed",
+  "rejected_signatures": [
+   "DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone"
+  ],
+  "repo": "werkzeug",
+  "subject": "remove more compat code",
+  "target_origin": "test file in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": false,
+   "commands": [
+    "pip install -e . (at b2b3bfd4a367) -> rc=1",
+    "pip install . (at b2b3bfd4a367) -> rc=1"
+   ],
+   "reason": "the parent commit's own package will not install: ror originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/werkzeug' when getting requirements to build wheel",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/werkzeug-b2b3bfd4a367"
+  },
+  "fix_commit": "38611b4b69e1c755ec0fef35b8597a0c5ded1980",
+  "harness_limited": true,
+  "parent": "b2b3bfd4a367b49dbe7ee54d80b00b333e51db83",
+  "pass": "targeted/historical-environment",
+  "reason": "parent environment not reconstructible: the parent commit's own package will not install: ror originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/werkzeug' when getting requirements to build wheel",
+  "repo": "werkzeug",
+  "subject": "Fix extras_require"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at c4375405fe62) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/werkzeug-c4375405fe62"
+  },
+  "fix_commit": "ecc60c8ff8f1c90b0dff104e67a23d32bad12a17",
+  "harness_limited": true,
+  "parent": "c4375405fe62acd5e9ac1a732815c69b5524a1f1",
+  "pass": "targeted/historical-environment",
+  "reason": "the parent suite could not be run in the reconstructed environment",
+  "repo": "werkzeug",
+  "subject": "Add termcolor to extras_require",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 8a84b62b3dd8) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/werkzeug-8a84b62b3dd8"
+  },
+  "fix_commit": "e50ad44745f891686fc77d9b6ccf03e3db27f8f4",
+  "harness_limited": true,
+  "parent": "8a84b62b3dd89fe7d720d7948954e20ada690c40",
+  "pass": "targeted/historical-environment",
+  "reason": "the parent suite could not be run in the reconstructed environment",
+  "repo": "werkzeug",
+  "subject": "Add an extras_require entry for the optional watchdog dependency (#930)",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": false,
+   "commands": [
+    "pip install -e . (at fc864c513805) -> rc=0",
+    "pip install -r requirements.txt -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "unavailable",
+   "reason": "pytest could not be made available in the reconstructed environment",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "requirements.txt",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/freezegun-fc864c513805"
+  },
+  "fix_commit": "da0dcd9945e2a26c502579a13810559f2940d199",
+  "harness_limited": true,
+  "parent": "fc864c51380552e8de1ef54242971abf86bafc11",
+  "pass": "targeted/historical-environment",
+  "reason": "parent environment not reconstructible: pytest could not be made available in the reconstructed environment",
+  "repo": "freezegun",
+  "subject": "Ignore modules with erroneous __dir__ method"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 1262dd76390f) -> rc=0",
+    "pip install -e .[test]"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/icalendar-1262dd76390f"
+  },
+  "fix_commit": "5cb69978de768b533ec40c31c9a77122b8cfd9d9",
+  "harness_limited": true,
+  "parent": "1262dd76390fcf07b416d3bd19465d27f39bc606",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "icalendar",
+  "subject": "Make typing-extensions optional and fix is_pytz_dt type hint",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": false,
+   "commands": [
+    "pip install -e . (at d4a1a20de730) -> rc=1",
+    "pip install . (at d4a1a20de730) -> rc=1"
+   ],
+   "reason": "the parent commit's own package will not install:  error originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/babel' when getting requirements to build wheel",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/babel-d4a1a20de730"
+  },
+  "fix_commit": "2d1882edeef621f3bacbfa6af2d7b5a5d34a81f1",
+  "harness_limited": true,
+  "parent": "d4a1a20de73069ba305820a4cbf934d684d505ca",
+  "pass": "targeted/historical-environment",
+  "reason": "parent environment not reconstructible: the parent commit's own package will not install:  error originates from a subprocess, and is likely not a problem with pip.\nERROR: Failed to build 'file:///repos/babel' when getting requirements to build wheel",
+  "repo": "babel",
+  "subject": "localedata: Rename to locale-data"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 558f26c8a945) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/babel-558f26c8a945"
+  },
+  "fix_commit": "680a2f273e2794b6a5a42f814bb962b1f8fc6d32",
+  "harness_limited": true,
+  "parent": "558f26c8a9451c012e1b64be34f0b14815816127",
+  "pass": "targeted/historical-environment",
+  "reason": "the parent suite could not be run in the reconstructed environment",
+  "repo": "babel",
+  "subject": "Remove some deprecated ImportError guards",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 906243d59e51) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py"
+   ],
+   "venv": "/repos/.venvs-historical/babel-906243d59e51"
+  },
+  "fix_commit": "72f60ce75a31f8108155190ec1ca999346f4d06b",
+  "harness_limited": true,
+  "parent": "906243d59e51031b6ddaa1024879a93e4d7b91c6",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "babel",
+  "subject": "More graceful `__version__` initialization when Babel is not installed in a way Setuptools knows about it.",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 43f93a7accba) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/faker-43f93a7accba"
+  },
+  "fix_commit": "6314d8188b0c160ea044370505088fa344de2378",
+  "harness_limited": true,
+  "parent": "43f93a7accba04123013ce779f6e6219af8e2416",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "faker",
+  "subject": "build: Make tzdata conditionally required based on platform (#2294)",
+  "target_origin": "test file in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 6071716e2465) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/faker-6071716e2465"
+  },
+  "fix_commit": "67b59d15a92d6923eb3eb86edb34177722931a5d",
+  "harness_limited": true,
+  "parent": "6071716e2465f247c7d693281122055e31f21422",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "faker",
+  "subject": "Add  ``image`` provider (#1254)",
+  "target_origin": "test file in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 1c044e054079) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/faker-1c044e054079"
+  },
+  "fix_commit": "97297a9ee0d1ba81e5bbfd08ceb8fd959f699499",
+  "harness_limited": true,
+  "parent": "1c044e05407972bf705878e8791a8b2b20b03edd",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "faker",
+  "subject": "Fix ImportError on python <3.7.2 (#1733)",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 4e33b4836efa) -> rc=0",
+    "pip install -r tests/requirements.txt -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tests/requirements.txt",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/faker-4e33b4836efa"
+  },
+  "fix_commit": "c086dff5eb3cf74f660af352ac40181bc2cb0cc8",
+  "harness_limited": true,
+  "parent": "4e33b4836efaf10ae31fb637fa80edbfd4e78ffc",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "faker",
+  "subject": "Remove extras_require for unsupported Python versions",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 9b2d0865b002) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml"
+   ],
+   "venv": "/repos/.venvs-historical/filelock-9b2d0865b002"
+  },
+  "fix_commit": "4194182236ac862e78709be966095d0f90b2f85d",
+  "harness_limited": true,
+  "parent": "9b2d0865b00292ac866efcb23fe961ee2732e58f",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "filelock",
+  "subject": "\ud83d\udc1b fix: catch ImportError for missing sqlite3 C library (#475)",
+  "target_origin": "test file in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 13262cbb2632) -> rc=0",
+    "pip install -e .[tests]"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/structlog-13262cbb2632"
+  },
+  "fix_commit": "fcdcd66bd5b1c8d143e3917e74cefd7c50745a60",
+  "parent": "13262cbb26322a10f4130f81b241f0e959c06e99",
+  "pass": "targeted/historical-environment",
+  "reason": "no node showed a missing-dependency signature at the parent that the fix removed",
+  "rejected_signatures": [
+   "assert 'does_not_exist' == \"'_thread._lo...es_not_exist'\""
+  ],
+  "repo": "structlog",
+  "subject": "Pin sphinx-toolbox",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 3a68db7c025d) -> rc=0",
+    "pip install -e .[tests]"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/structlog-3a68db7c025d"
+  },
+  "fix_commit": "e1c797bc66e9ee0771260f9fccff36af6d6c51ed",
+  "parent": "3a68db7c025d9e793800b0a72ff149304e978d0d",
+  "pass": "targeted/historical-environment",
+  "reason": "no node showed a missing-dependency signature at the parent that the fix removed",
+  "rejected_signatures": [
+   "TypeError: _FixedFindCallerLogger.findCaller() takes from 1 to 2 positional arguments but 3 were given",
+   "TypeError: _FixedFindCallerLogger.findCaller() takes from 1 to 2 positional arguments but 3 were given",
+   "assert 'does_not_exist' == \"'_thread._lo...es_not_exist'\""
+  ],
+  "repo": "structlog",
+  "subject": "Deprecate structlog[dev]",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 128837347a6c) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/structlog-128837347a6c"
+  },
+  "fix_commit": "c3cc21f6e058b14b22e3d620b57d0d4585c303e6",
+  "harness_limited": true,
+  "parent": "128837347a6c9b21c851321307352e4d6ae6574e",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "structlog",
+  "subject": "Make ordereddict a soft dependency on 2.6",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 5a2f8ee5a4b4) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "pyproject.toml",
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/jsonschema-5a2f8ee5a4b4"
+  },
+  "fix_commit": "a8c131baafebcf27b0245ba8916b351ce42807f2",
+  "harness_limited": true,
+  "parent": "5a2f8ee5a4b428582d7224b79da17277648820a2",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "jsonschema",
+  "subject": "Fix typing_extensions import handling for mypy",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 5f91ee687601) -> rc=0",
+    "pip install pytest (undeclared at the parent) -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/jsonschema-5f91ee687601"
+  },
+  "fix_commit": "e2a604f7ebc230e811ec6af15ac20551553b8a81",
+  "harness_limited": true,
+  "parent": "5f91ee687601d97db46bc60ad359e7b30f950556",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "jsonschema",
+  "subject": "Switch to vcversioner, use repoze.lru only on 2.6, and add extras_require for format.",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "missing_dependency",
+  "environment": {
+   "built": true,
+   "commands": [
+    "pip install -e . (at 284c296f33d9) -> rc=0",
+    "pip install -r requirements.txt -> rc=0"
+   ],
+   "pytest": "9.1.1",
+   "sources": [
+    "setup.cfg",
+    "setup.py",
+    "requirements.txt",
+    "tox.ini"
+   ],
+   "venv": "/repos/.venvs-historical/pygments-284c296f33d9"
+  },
+  "fix_commit": "9684522a92d7067569f44b6200839f08aac16a9b",
+  "harness_limited": true,
+  "parent": "284c296f33d9b18a20d62828d0580a618b0dd3a2",
+  "pass": "targeted/historical-environment",
+  "reason": "no collectable node ids in the reconstructed environment",
+  "repo": "pygments",
+  "subject": "scdoc: add missing module docstring",
+  "target_origin": "existing suite at the parent, reconstructed environment"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "failing_at_parent": [],
+  "fix_commit": "aead1f8ac9866c88aa8b0f68a7b440a5ffcb736a",
+  "parent": "60dcfc5e28787d69a2c51551df6d019f906c7773",
+  "pass": "targeted/joint-evidence",
+  "reason": "only 0 target(s) failed at the parent; two_cause needs two",
+  "repo": "chardet",
+  "subject": "perf: precompute IDF weights at training time, load from idf.bin",
+  "target_origin": "test files in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "5b5e4b3dc44c088bd8b37bd91606516021c5fd8d",
+  "parent": "e4cd58c22bdf2bddbd024bb3b9bd40b3108f7d66",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "chardet",
+  "subject": "docs: update benchmark numbers for 7.4.4",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "db929c10c8a8e88b531eb9f873e2ca167828e079",
+  "parent": "fbb5d91a4d71d5c589341902046a15a66b7b5f66",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "chardet",
+  "subject": "refactor: unify all detectors to subprocesses and extract benchmark script",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "85bf4406090f4afac0222211ef46a7328bf34677",
+  "harness_limited": true,
+  "parent": "98223f3e42680cb3ec9658ed700ef165aac92749",
+  "pass": "targeted/joint-evidence",
+  "reason": "the parent suite could not be run",
+  "repo": "chardet",
+  "subject": "Fix SJISDistributionAnalysis discarding valid second-byte range >= 0x80 (#315)",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "7aa29ed1a2ab17fc6ed6509399247663792ccdbc",
+  "parent": "daa4c5e693c718aa33e973cda1b925f86c068402",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "chardet",
+  "subject": "Add test to verify all single-byte encodings have probers",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "964c61ce79f6748ff8c583e2eb12ec54082bf188",
+  "parent": "5662125f794f41ac73849a95a9e572e0e5a98b4e",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "jinja",
+  "subject": "Fix CVE-2014-0012",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "f40c8844ebf05d1447a11976b571d9e37db1f04d",
+  "harness_limited": true,
+  "parent": "4d5bdff2b8b1b77917860cfc9ec4590d29d03156",
+  "pass": "targeted/joint-evidence",
+  "reason": "the parent suite could not be run",
+  "repo": "jinja",
+  "subject": "Fixed a bug with the handling of empty statements in macros (it also fixes a bug introduced in one of the prev",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "failing_at_parent": [],
+  "fix_commit": "37797aba260022c871718e0908b472727d366d09",
+  "parent": "3db44c79caa74c00848ceefb0bd3d608e3d09cea",
+  "pass": "targeted/joint-evidence",
+  "reason": "only 0 target(s) failed at the parent; two_cause needs two",
+  "repo": "werkzeug",
+  "subject": "`safe_join` prevents windows special device names with compound extensions",
+  "target_origin": "test files in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "0b472374af1ab91000ea244a0da44d49c04c7cce",
+  "parent": "f516c4005c7c4510b61ae07969450771b929809d",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "werkzeug",
+  "subject": "Fix issue with repeated-slash requests redirecting",
+  "target_origin": "test files in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "2fa4d8885f01cc604d8e52d345427fb2cb83f540",
+  "parent": "d637320cd174eec5cc1baa3aa3412bd5390e9442",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "werkzeug",
+  "subject": "Fix parse_options_header to handle RFC2616/RFC7231",
+  "target_origin": "test files in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "6650f6c7ac4776ff1bac50a900bc74a24135e061",
+  "harness_limited": true,
+  "parent": "f91eb86e230f42743799fe2a2940e6dd500cabbb",
+  "pass": "targeted/joint-evidence",
+  "reason": "the parent suite could not be run",
+  "repo": "werkzeug",
+  "subject": "A few code deduplications in `bind_to_environ`.",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "462444f35756551f83809dab7f7424a907033a9e",
+  "harness_limited": true,
+  "parent": "3e6d9a70e11041ad6737630281098866462ed1e3",
+  "pass": "targeted/joint-evidence",
+  "reason": "the parent suite could not be run",
+  "repo": "babel",
+  "subject": "Adapt things to new compound pattern format",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "f21eb25370ddc0821a6b6e9af404c5c2b02e1968",
+  "harness_limited": true,
+  "parent": "ca9dedefc5bbde1298cde1518be7dff075abfd6a",
+  "pass": "targeted/joint-evidence",
+  "reason": "the parent suite could not be run",
+  "repo": "babel",
+  "subject": "Make compound unit formatting adhere more closely to the TR-35 spec",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "ca9dedefc5bbde1298cde1518be7dff075abfd6a",
+  "harness_limited": true,
+  "parent": "3bb3dbb797f22225813252b82da12b89b61d7d3e",
+  "pass": "targeted/joint-evidence",
+  "reason": "the parent suite could not be run",
+  "repo": "babel",
+  "subject": "Add new unit formatting APIs:",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "7f6fb3cf395f978a5f8fb7c3d5b3ffa23f30fda9",
+  "parent": "fdcf878238be7259cd5e6c69069a14da3fe9c2b7",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "structlog",
+  "subject": "Fix one more spot of frame traversal, and write tests.",
+  "target_origin": "test files in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "21af2e4723715aea92f2e6a89e7c83e81bfd2c44",
+  "parent": "6466d070ad579e8cfea98bc2756b48bb08d2b20c",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "jsonschema",
+  "subject": "Fix the error properties for propertyNames.",
+  "target_origin": "test files in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "e169504250e709ae9e45a6afa1eb09af8f593011",
+  "parent": "c205e546f550bb7d1d0c92f880e19796661ab955",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "jsonschema",
+  "subject": "Make the error message for additionals prettier",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "ded9085d5f8be98b46c9b3bf04908b28a6c8b6ed",
+  "parent": "c251f766904d5801081ea93cd8d1570153551723",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "cerberus",
+  "subject": "Adds Validator-initialization to example with `allow_unknown`",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "1d92d124032d6e512eb77449a87499b0c1194d1c",
+  "parent": "0fba7b8a1dfc905e71c70ae7c29b78ce5baed3e8",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "pygments",
+  "subject": "Nix lexer improvements (#2551)",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "93d4cce817553c4bc2694747cfa6b3a04c6e5ddf",
+  "parent": "88f36b5a27ab6b086018a2bb339e17a018345850",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "pygments",
+  "subject": "Scheme: autogenerate lists of builtins",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "2dcb00bc6f45113a841ab6086781ed3f459d5aa5",
+  "parent": "de5b0e698c4b8b7d63bdd5e21d0f7682c51dec72",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "pygments",
+  "subject": "Update CHANGES.",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "e06be2d33cbd67bf0131a532d02cc8a5e174edf3",
+  "harness_limited": true,
+  "parent": "5d4c583b5599948995e31eb88a4fc9533c4f331c",
+  "pass": "targeted/joint-evidence",
+  "reason": "the parent suite could not be run",
+  "repo": "pygments",
+  "subject": "Changed find_lexer_class_for_filename() to use the lexer name as secondary criteria when sorting for rating. T",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "2d07a646847655802a277316f396403192fc70f8",
+  "parent": "78d311c8f39ca8a8137f3070e4b0d0ff2a096815",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "bleach",
+  "subject": "Fix character entity handling (#450)",
+  "target_origin": "test files in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "67afdf8ae7d323305ea104c0efb6bcb37547edc2",
+  "parent": "3e274abf4bb5a77720abe6687af5cfbf42de9062",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "bleach",
+  "subject": "Prevent HTMLTokenizer from unescaping entities",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "two_cause",
+  "fix_commit": "f967428b30b415b114632831b062e7060fd2637f",
+  "parent": "c27512d20b48b7901687b62d15c91be1de856f89",
+  "pass": "targeted/joint-evidence",
+  "reason": "fewer than two passing targets at the fix; a second cause cannot be shown",
+  "repo": "bleach",
+  "subject": "Tweak BleachHTMLTokenizer to use a set",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "d15f3c23a177e80c324e1ee9681c9449c31ac965",
+  "observations": [
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_unset_sentinel",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_echo",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_echo_custom_file",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_echo_no_streams",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_styling[styles0-\\x1b[30mx y\\x1b[0m]",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_styling[styles1-\\x1b[31mx y\\x1b[0m]",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_styling[styles2-\\x1b[32mx y\\x1b[0m]",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_styling[styles3-\\x1b[33mx y\\x1b[0m]",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_styling[styles4-\\x1b[34mx y\\x1b[0m]",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_styling[styles5-\\x1b[35mx y\\x1b[0m]",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_styling[styles6-\\x1b[36mx y\\x1b[0m]",
+    "parent_failures": 0
+   },
+   {
+    "at_fix": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "at_parent": [
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED",
+     "UNOBSERVED"
+    ],
+    "node": "tests/test_utils.py::test_styling[styles7-\\x1b[37mx y\\x1b[0m]",
+    "parent_failures": 0
+   }
+  ],
+  "parent": "e0d1678ebc10cc663f2bc1973e0399b31415f8db",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no node reached 2/5 failures at the parent",
+  "repo": "click",
+  "runs": 5,
+  "subject": "fix: Skip flaky pager test on macOS with free-threaded Python 3.14t",
+  "target_origin": "test file in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "a023e833a04c18c7ae97de9964ce12faaab0cdc7",
+  "harness_limited": true,
+  "parent": "b22608e63dfc24ecb4715d02924939dc7a93fe1d",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "boltons",
+  "runs": 5,
+  "subject": "switching the Stats type to be more sorted-data oriented, since it's only for offline analysis of unordered da",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "a9cd895467b3caa08d585458fdcbcc5525356493",
+  "harness_limited": true,
+  "parent": "acd09498fbd2b13e65038c96a118fd859a6df235",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "markdown",
+  "runs": 5,
+  "subject": "Fixes #64. Added sane_list extension.",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "c385e5fc0a9fe7517b4afdb5b3f9c174ae0766de",
+  "harness_limited": true,
+  "parent": "f1a2d3763115c41a4f0159e2f98aa76330cc17e5",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "markdown",
+  "runs": 5,
+  "subject": "fixed startindex reset in multiple ul",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "caef3e90d46830db37888a7f7f897c450cf4f1e7",
+  "harness_limited": true,
+  "parent": "bf7cf776daa26d734c10a6039efe64113f066045",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "markdown",
+  "runs": 5,
+  "subject": "Fixing ticket 000007 (Ordered and unordered list merged).",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "746bb95780c17687b27b6d1bf4df1216f0da972c",
+  "harness_limited": true,
+  "parent": "466a200ea40642b674db77588d13889abbad55f5",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "jinja",
+  "runs": 5,
+  "subject": "Fix race conditions in FileSystemBytecodeCache",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "9faf5e9deb3e4f66115f1e80b5c95ba2adc2cb61",
+  "harness_limited": true,
+  "parent": "d05ee59d18b895bf204431a501bf6621f3077d5c",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "werkzeug",
+  "runs": 5,
+  "subject": "rewrite live server tests",
+  "target_origin": "test file in the fix commit"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "9b57262b3767401273de13a829c05effef733b72",
+  "harness_limited": true,
+  "parent": "590504c9b90806594fa37d6afed10bba512e35ac",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "freezegun",
+  "runs": 5,
+  "subject": "Merge pull request #223 from cloudsmith-io/bugfix-start-race",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "55b9d27bff465e9a95b1511c969f67969c456e64",
+  "harness_limited": true,
+  "parent": "7ad16a5579b28fc939a69cc04f0e99ba5e87b206",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "freezegun",
+  "runs": 5,
+  "subject": "Fix an issue with parsing certain modules, like py",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "f95a8b8342879ca94f2f2ad970eae4a05045bb76",
+  "harness_limited": true,
+  "parent": "5e24c6788727b6e664c1c030564ff2f6ed65bb7b",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "babel",
+  "runs": 5,
+  "subject": "remove sorted and don't assume dict ordering (Python 2.3 & Jython compat)",
+  "target_origin": "existing suite at the parent"
+ },
+ {
+  "accepted": false,
+  "cause_class": "nondeterminism",
+  "fix_commit": "7cd3ac5113c9bde159b8131fd3ac213f146fe45e",
+  "harness_limited": true,
+  "parent": "2c39895b8602ed179c975dba6f0a23936e8969e4",
+  "parent_min_failures": 2,
+  "pass": "targeted/repeated-runs",
+  "reason": "no collectable node ids",
+  "repo": "faker",
+  "runs": 5,
+  "subject": "Fix determinism in `state_abbr()` (#1829)",
+  "target_origin": "test file in the fix commit"
+ }
+]

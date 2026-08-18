@@ -1,0 +1,65 @@
+{
+ "artifacts": {
+  "benchmark/bm06/PROTOCOL.md": {
+   "bytes": 18095,
+   "sha256": "ddf35a8379501f8343aa54f72aaefc8932bca26d3c85ab856c52a2549e53789b"
+  },
+  "benchmark/bm06/STAGE2-WIDE-FINDINGS.md": {
+   "bytes": 8017,
+   "sha256": "e0a1868ffb5f99730e31f2d7d88c88d5f70cbef8de128b41ec810a678092ac6f"
+  },
+  "benchmark/bm06/allocation.json": {
+   "bytes": 885,
+   "sha256": "112d91a57f5612f154094229dbd0a935a1522d758a3eea34d6c06b8b8ed4162f"
+  },
+  "benchmark/bm06/build_manifest.py": {
+   "bytes": 10804,
+   "sha256": "259bae3f82ba11838bdeffa49a680a57bfccb22a64e4f3f9cc0f401d1abc3a4f"
+  },
+  "benchmark/bm06/candidates.json": {
+   "bytes": 486493,
+   "sha256": "35095ea0cac83392fa62d14db4bed576c4c4bb97c1ca882e05df4278a665ea22"
+  },
+  "benchmark/bm06/confirm_cases.py": {
+   "bytes": 35141,
+   "sha256": "009fa0cc9eeb6ef7f829ef387cab7cd97dc3e1f0e7f1733e36bce690bc347168"
+  },
+  "benchmark/bm06/discover_cases.py": {
+   "bytes": 11024,
+   "sha256": "944100c893bd65088b15472b8dfb29a773bdfc5c1de6fa797457300bf0aee7ba"
+  },
+  "benchmark/bm06/driver.py": {
+   "bytes": 10476,
+   "sha256": "81980323ff946d846fa34635cfeb410220c8738ed63bb574f7bcf86d5e0fedea"
+  },
+  "benchmark/bm06/install-report.json": {
+   "bytes": 3384,
+   "sha256": "e9e04702601ab07c0503b44f53d7f21ddffd37b27c0294421139ca6c67e9e0a8"
+  },
+  "benchmark/bm06/manifest-schema.json": {
+   "bytes": 4027,
+   "sha256": "10d9b38ec6d1ee2d49fe6fcc90db90b3a1382a9a7156c592303a345fd5b519ac"
+  },
+  "benchmark/bm06/model-and-pricing.json": {
+   "bytes": 5230,
+   "sha256": "af8fad11733a2acbda585ece52d7a48250e88d187e1911a5f0e8a42a08111dc5"
+  },
+  "benchmark/bm06/repo-selection.md": {
+   "bytes": 4326,
+   "sha256": "32327cb3c261995cb9a5e927e22daf800bb85b41fc92413022a5b0f632334293"
+  },
+  "benchmark/bm06/stage2-records-merged.json": {
+   "bytes": 131637,
+   "sha256": "503b109d5cfb0dbca262c39d7622d21768e288548dfeefd7d911ece5e338dc37"
+  },
+  "benchmark/bm06/stage2-records.json": {
+   "bytes": 107147,
+   "sha256": "3eb1208b241b7b135c5ff81d372b48176d56cc5bf34071c0c50a0c02b0f7ccc0"
+  },
+  "benchmark/bm06/stage2-wide-records.json": {
+   "bytes": 511137,
+   "sha256": "89d3e32448b8d2df0ae8fcf540d275feabb4bbe17f1383fad69ac1c40707f6c7"
+  }
+ },
+ "purpose": "Stage-2 widened discovery frozen as evidence. Any later finding is appended in a separate file; nothing listed here is rewritten."
+}

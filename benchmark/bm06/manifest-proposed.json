@@ -1,0 +1,848 @@
+{
+ "allocation": {
+  "genuine_source_bug": 5,
+  "locale_timezone": 3,
+  "missing_dependency": 4,
+  "nondeterminism": 3,
+  "order_dependence": 4,
+  "state_leakage": 4,
+  "two_cause": 3,
+  "version_mismatch": 4
+ },
+ "arms": {},
+ "budget": {},
+ "cases": [
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "cachetools-c0fdf6ab-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "c0fdf6abab38040947d6fe2e38c507401d5e2350",
+   "confirmation": {
+    "commands": [
+     "git checkout c0fdf6abab38",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half",
+     "git checkout 978d34d40cdb + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "TLRUCache retained a stale value on expired overwrite; the assertion names the retained entry.",
+    "source_files": [
+     "src/cachetools/__init__.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "978d34d40cdbf3b4cbfce104f3166032cc4ea028",
+   "preserve": [],
+   "repo": "cachetools",
+   "signature": "AssertionError: 1 unexpectedly found in TLRUCache({1: 5}, maxsize=2, currsize=1)",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_tlru.py::TLRUCacheTest::test_overwrite_existing_with_expired",
+   "url": "https://github.com/tkem/cachetools"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "croniter-b4014c9b-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "b4014c9bdfd57ef8d32d8d56433a8e3ab61751a1",
+   "confirmation": {
+    "commands": [
+     "git checkout 472a753841f1",
+     "git checkout 0e83ee3512b3 + apply test half",
+     "git checkout 0e83ee3512b3 + apply test half",
+     "git checkout 0e83ee3512b3 + apply test half",
+     "git checkout 0e83ee3512b3 + apply test half",
+     "git checkout 0e83ee3512b3 + apply test half",
+     "git checkout 0e83ee3512b3 + apply test half",
+     "git checkout 0e83ee3512b3 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "croniter_range infinite loop; the target asserts the produced range.",
+    "source_files": [
+     "src/croniter/croniter.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "0e83ee3512b3942ccb9ee55d2f6c6d5f48b59ca3",
+   "preserve": [],
+   "repo": "croniter",
+   "signature": "AssertionError: Lists differ: ['202[19 chars]:00', '2022-03-27T00:00:00+03:00', '2022-03-27T00:00:00+03:00'] != ['202[19 chars]:00', '2022-03-27T01:00:00+03:00'",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "src/croniter/tests/test_croniter_range.py::CroniterRangeTest::test_dst_iter",
+   "url": "https://github.com/kiorky/croniter"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "filelock-721b37bc-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "721b37bcbdb4c431441fa8e5d9377cf9f0e059f2",
+   "confirmation": {
+    "commands": [
+     "git checkout 721b37bcbdb4",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half",
+     "git checkout a960747d9e9e + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "ValueError when blocking=False is combined with a timeout; argument-validation defect in _read_write.py.",
+    "source_files": [
+     "src/filelock/_read_write.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "a960747d9e9efa069a91b020d4346a99fe9d2f62",
+   "preserve": [],
+   "repo": "filelock",
+   "signature": "ValueError: can't specify a timeout for a non-blocking call",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_read_write_unit.py::test_non_blocking_with_timeout_no_value_error[read]",
+   "url": "https://github.com/tox-dev/filelock"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "jinja-9b96b481-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "9b96b4817a61d7f114de088cfe729a4625c820bc",
+   "confirmation": {
+    "commands": [
+     "git checkout 9b96b4817a61",
+     "git checkout c0130ea7dd13 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Node.__hash__ delegated to a list, raising TypeError: unhashable type. Single-cause source defect with a direct reproducer.",
+    "source_files": [
+     "src/jinja2/nodes.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "c0130ea7dd138201cf448f6d9a54341deba843ee",
+   "preserve": [],
+   "repo": "jinja",
+   "signature": "TypeError: unhashable type: 'list'",
+   "src_layout": "src",
+   "status": "OK",
+   "target": "tests/test_nodes.py::test_template_hash",
+   "url": "https://github.com/pallets/jinja"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "pygments-2f0d713b-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "2f0d713b396de53e8780c114b00a7adad99cbffc",
+   "confirmation": {
+    "commands": [
+     "git checkout 2f0d713b396d",
+     "git checkout 6a7aa837d500 + apply test half",
+     "git checkout 6a7aa837d500 + apply test half",
+     "git checkout 6a7aa837d500 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "RawTokenFormatter crash when error_color is set; single-cause source defect.",
+    "source_files": [
+     "pygments/formatters/other.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "6a7aa837d5001dd199f0094165d85568faa1142a",
+   "preserve": [],
+   "repo": "pygments",
+   "signature": "TypeError: can only concatenate str (not \"bytes\") to str",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_raw_token.py::test_raw_token_error_color",
+   "url": "https://github.com/pygments/pygments"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "pyparsing-13065174-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commit": "13065174b69ff9b412795b1bc043d0acedfdf6d6",
+   "confirmation": {
+    "commands": [
+     "git checkout 13065174b69f",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half",
+     "git checkout a6fbc725dc50 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Off-by-one in LRUMemo; the fix touches pyparsing/util.py only and the target asserts corrected list contents.",
+    "source_files": [
+     "pyparsing/util.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "a6fbc725dc50c33d549563bbe8cd9aa6f08b8a9c",
+   "preserve": [],
+   "repo": "pyparsing",
+   "signature": "assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9]",
+   "url": "https://github.com/pyparsing/pyparsing"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "icalendar-30ec6eef-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commit": "30ec6eef144e730e4cb688e30a0e986f62c0ab17",
+   "confirmation": {
+    "commands": [
+     "git checkout 0675760687d6",
+     "git checkout b0860ac7375b + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "A PERIOD written with dates read as midnight date-times; date and time semantics.",
+    "source_files": [
+     "generate_windows_to_olson_mapping.py",
+     "src/icalendar/__init__.py",
+     "src/icalendar/alarms.py",
+     "src/icalendar/attr.py",
+     "src/icalendar/cal/alarm.py",
+     "src/icalendar/cal/component.py",
+     "src/icalendar/cal/component_factory.py",
+     "src/icalendar/cal/event.py",
+     "src/icalendar/cal/free_busy.py",
+     "src/icalendar/cal/journal.py",
+     "src/icalendar/cal/lazy.py",
+     "src/icalendar/cal/todo.py",
+     "src/icalendar/enums.py",
+     "src/icalendar/error.py",
+     "src/icalendar/parser/ical/component.py",
+     "src/icalendar/parser/ical/lazy.py",
+     "src/icalendar/parser/parameter.py",
+     "src/icalendar/prop/adr.py",
+     "src/icalendar/prop/boolean.py",
+     "src/icalendar/prop/categories.py",
+     "src/icalendar/prop/dt/date.py",
+     "src/icalendar/prop/dt/datetime.py",
+     "src/icalendar/prop/dt/duration.py",
+     "src/icalendar/prop/dt/list.py",
+     "src/icalendar/prop/dt/period.py",
+     "src/icalendar/prop/dt/time.py",
+     "src/icalendar/prop/dt/types.py",
+     "src/icalendar/prop/dt/utc_offset.py",
+     "src/icalendar/prop/factory.py",
+     "src/icalendar/prop/geo.py",
+     "src/icalendar/prop/image.py",
+     "src/icalendar/prop/n.py",
+     "src/icalendar/prop/org.py",
+     "src/icalendar/prop/recur/recur.py",
+     "src/icalendar/prop/recur/weekday.py",
+     "src/icalendar/timezone/tzp.py",
+     "src/icalendar/timezone/windows_to_olson.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "b0860ac7375bc7cf0057ad396217fb6b54435924",
+   "preserve": [],
+   "repo": "icalendar",
+   "signature": "AttributeError: 'Alarm' object has no attribute 'ACTION'",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent",
+   "url": "https://github.com/collective/icalendar"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "icalendar-60a10375-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commit": "60a1037502a5025ac5b505313a46c1cde7cf187e",
+   "confirmation": {
+    "commands": [
+     "git checkout 60a1037502a5",
+     "git checkout 740c6e1e5b25 + apply test half",
+     "git checkout 740c6e1e5b25 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "The Mountain Standard Time (Mexico) mapping was wrong; a timezone-data defect with a direct assertion.",
+    "source_files": [
+     "src/icalendar/timezone/windows_to_olson.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "740c6e1e5b251b35e66e1c5bc771a93adb908e28",
+   "preserve": [],
+   "repo": "icalendar",
+   "signature": "AssertionError: assert <DstTzInfo 'America/Chihuahua' CST-1 day, 18:00:00 STD> == <DstTzInfo 'America/Mazatlan' MST-1 day, 17:00:00 STD>",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_mountain_standard_time_mexico[pytz]",
+   "url": "https://github.com/collective/icalendar"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "icalendar-781eeda8-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commit": "781eeda80bbea6ad57b2b4bac2f0db9e860da7aa",
+   "confirmation": {
+    "commands": [
+     "git checkout 781eeda80bbe",
+     "git checkout 7633145b8b23 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Globally unique TZIDs resolved with a vendor prefix; timezone identifier resolution.",
+    "source_files": [
+     "src/icalendar/timezone/tzp.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "7633145b8b23b8b4237a6aaba9751fcb59ac38f7",
+   "preserve": [],
+   "repo": "icalendar",
+   "signature": "assert None is not None",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz]",
+   "url": "https://github.com/collective/icalendar"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "filelock-43277ac7-order_dependence",
+   "cause_class": "order_dependence",
+   "commit": "43277ac72c29adbd5df1944ab215d8405e7b7afe",
+   "confirmation": {
+    "commands": [
+     "git checkout 43277ac72c29",
+     "git checkout 3b1511281a77 + apply test half",
+     "git checkout 3b1511281a77 + apply test half",
+     "git checkout 3b1511281a77 + apply test half",
+     "git checkout 3b1511281a77 + apply test half",
+     "git checkout 3b1511281a77 + apply test half",
+     "git checkout 3b1511281a77 + apply test half",
+     "git checkout 3b1511281a77 + apply test half",
+     "git checkout 3b1511281a77 + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Forked sqlite connections shared across processes; isolation of per-process state.",
+    "source_files": [
+     "src/filelock/_api.py",
+     "src/filelock/_async_read_write.py",
+     "src/filelock/_read_write.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "3b1511281a775118f79ad29edbf82989c8c9e106",
+   "preserve": [],
+   "repo": "filelock",
+   "signature": "RuntimeError: cannot schedule new futures after shutdown",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_async_read_write.py::test_close_rejects_later_acquisition[idle-owned-executor]",
+   "url": "https://github.com/tox-dev/filelock"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "filelock-fc277001-order_dependence",
+   "cause_class": "order_dependence",
+   "commit": "fc277001fb6abaea57986dc52d9844d48a9ef2f6",
+   "confirmation": {
+    "commands": [
+     "git checkout fc277001fb6a",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "git checkout 8699861c8644 + apply test half",
+     "no node from the commit's tests failed at the parent and passed at the fix",
+     "git checkout 8699861c8644; pytest (whole suite)",
+     "git checkout fc277001fb6a; pytest (whole suite)"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": "PASSED",
+    "parent_outcome": "FAILED_IN_SUITE",
+    "target_origin": "existing suite at the parent (order-dependent)"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "A reentrant-deadlock registry shared across asyncio tasks; the failure depends on which task holds the entry, which is an interleaving property rather than a value defect.",
+    "source_files": [
+     "src/filelock/_api.py",
+     "src/filelock/asyncio.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": "full suite in declared collection order",
+   "parent": "8699861c86445e3a46ac185dc206a44183cd681a",
+   "preserve": [],
+   "repo": "filelock",
+   "signature": "",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_filelock.py::test_thrashing_with_thread_pool_passing_lock_to_threads[UnixFileLock]",
+   "url": "https://github.com/tox-dev/filelock"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "filelock-059cca26-state_leakage",
+   "cause_class": "state_leakage",
+   "commit": "059cca26ce3bde444411d5d3c0305eb9cc93748e",
+   "confirmation": {
+    "commands": [
+     "git checkout 059cca26ce3b",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half",
+     "git checkout b954ebe5be1f + apply test half"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": null,
+    "parent_outcome": "FAILED",
+    "target_origin": "test file in the fix commit"
+   },
+   "expected_diagnostic_scope": "source",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Acquisition path identity retained across acquisitions \u2014 state persisting beyond its intended lifetime. Chosen as primary over order_dependence because the defect is the retained value itself, not the order in which it is observed.",
+    "source_files": [
+     "src/filelock/_api.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "b954ebe5be1f70e83f1e5ff5218dc499e66478c7",
+   "preserve": [],
+   "repo": "filelock",
+   "signature": "filelock._error.Timeout: The file lock '/tmp/pytest-of-root/pytest-214/test_failed_acquire_keeps_hold0/test.lock' could not be acquired.",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_async_filelock.py::test_failed_acquire_keeps_holder_registered[finite]",
+   "url": "https://github.com/tox-dev/filelock"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "dateutil-f2293200-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commit": "f2293200747fb03d56c6c5997bfebeabe703576f",
+   "confirmation": {
+    "commands": [
+     "git checkout b04edc08aa35; pytest (whole suite)",
+     "git checkout f2293200747f; pytest (whole suite)"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": "FAILED",
+    "parent_outcome": "FAILED",
+    "target_origin": "existing suite at the parent"
+   },
+   "expected_diagnostic_scope": "environment",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "datetime.utcfromtimestamp deprecation in the running interpreter; the failure is caused by the Python version rather than by project logic.",
+    "source_files": [
+     "src/dateutil/tz/tz.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "b04edc08aa3559063b3b097f437941d8c4b84aba",
+   "preserve": [],
+   "repo": "dateutil",
+   "signature": "DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent da",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_imports.py::test_lazy_import[parser]",
+   "url": "https://github.com/dateutil/dateutil"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "freezegun-3d5d60b4-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commit": "3d5d60b461381271d0cffcd343b6459174f65141",
+   "confirmation": {
+    "commands": [
+     "git checkout bfcbfb8d1a51; pytest (whole suite)",
+     "git checkout 3d5d60b46138; pytest (whole suite)"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": "FAILED",
+    "parent_outcome": "FAILED",
+    "target_origin": "existing suite at the parent"
+   },
+   "expected_diagnostic_scope": "environment",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Callable staticmethods changed behaviour in Python 3.10; the commit adapts to the interpreter change.",
+    "source_files": [
+     "freezegun/api.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "bfcbfb8d1a51c04c53d2dc5e786fc42de9e9512f",
+   "preserve": [],
+   "repo": "freezegun",
+   "signature": "TypeError: Tester.helper() takes 0 positional arguments but 1 was given",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "tests/test_datetimes.py::Tester::test_class_decorator_respects_staticmethod",
+   "url": "https://github.com/spulec/freezegun"
+  },
+  {
+   "adversarial_review": {
+    "required": false
+   },
+   "case_id": "icalendar-62cbf833-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commit": "62cbf8338777a8097d4350675a770dc48f42c65b",
+   "confirmation": {
+    "commands": [
+     "git checkout 62cbf8338777",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "git checkout 2f54d531bda1 + apply test half",
+     "no node from the commit's tests failed at the parent and passed at the fix",
+     "git checkout 2f54d531bda1; pytest (whole suite)",
+     "git checkout 62cbf8338777; pytest (whole suite)"
+    ],
+    "container_image": "bm06-confirm:1",
+    "fixed_outcome": "PASSED",
+    "isolated_at_parent": "FAILED",
+    "parent_outcome": "FAILED",
+    "target_origin": "existing suite at the parent"
+   },
+   "expected_diagnostic_scope": "environment",
+   "ground_truth": {
+    "fixable": true,
+    "rationale": "Doctest property ordering changed in Python 3.14; an interpreter-version behavioural change, not a project defect.",
+    "source_files": [
+     "src/icalendar/cal/alarm.py"
+    ]
+   },
+   "invalidation": null,
+   "label": "gateable",
+   "ordering_precondition": null,
+   "parent": "2f54d531bda146d84deb1a0fdeca1d759a4dbe57",
+   "preserve": [],
+   "repo": "icalendar",
+   "signature": "AssertionError: 2 errors in icalendar.cal.alarm",
+   "src_layout": "flat",
+   "status": "OK",
+   "target": "src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm]",
+   "url": "https://github.com/collective/icalendar"
+  }
+ ],
+ "distribution": {
+  "per_class": {
+   "genuine_source_bug": 6,
+   "locale_timezone": 3,
+   "order_dependence": 2,
+   "state_leakage": 1,
+   "version_mismatch": 3
+  },
+  "per_repo": {
+   "cachetools": 1,
+   "croniter": 1,
+   "dateutil": 1,
+   "filelock": 4,
+   "freezegun": 1,
+   "icalendar": 4,
+   "jinja": 1,
+   "pygments": 1,
+   "pyparsing": 1
+  },
+  "repos_per_class": {
+   "genuine_source_bug": 6,
+   "locale_timezone": 1,
+   "order_dependence": 1,
+   "state_leakage": 1,
+   "version_mismatch": 3
+  }
+ },
+ "excluded": [
+  {
+   "case_id": "click-93c6966e-order_dependence",
+   "reason": "An EOF regression in CliRunner. A source defect, not an ordering property. Reads as genuine_source_bug; recorded, not moved."
+  },
+  {
+   "case_id": "faker-7659c7f5-order_dependence",
+   "reason": "A wrong BBAN length constant for da_DK. A value defect, not an ordering property."
+  },
+  {
+   "case_id": "tenacity-21137e79-order_dependence",
+   "reason": "'Add async strategies (#451)' is a feature addition. Its new test fails at the parent because the feature does not exist there, not because of a defect. Not a repair, and not order dependence."
+  },
+  {
+   "case_id": "filelock-0dfa1b20-order_dependence",
+   "reason": "'Document every lock type, and stop evicting a marker we cannot read' mixes documentation with an eviction change; not a clean single-cause ordering exemplar."
+  },
+  {
+   "case_id": "filelock-059cca26-order_dependence",
+   "reason": "The same commit is confirmed as state_leakage, which is its primary class. One commit, one class."
+  },
+  {
+   "case_id": "pygments-a886f74a-order_dependence",
+   "reason": "'Fix LatexEmbeddedLexer' is a lexer defect; no ordering evidence."
+  },
+  {
+   "case_id": "icalendar-e35f1a00-state_leakage",
+   "reason": "A merge commit of a machine-generated branch. Ground truth for a correct repair cannot be read from it."
+  },
+  {
+   "case_id": "icalendar-fd156faf-state_leakage",
+   "reason": "'ATTACH is not an Alarm singleton' is a data-model rule defect, not state leaking between executions."
+  },
+  {
+   "case_id": "icalendar-5be25699-state_leakage",
+   "reason": "'Fix CI failures and improve documentation' is multi-purpose; no single supported cause."
+  },
+  {
+   "case_id": "pluggy-6f6ea680-version_mismatch",
+   "reason": "'Add support deprecating hook parameters' is a feature addition; the parent fails for absence of the feature."
+  },
+  {
+   "case_id": "humanize-2482af79-version_mismatch",
+   "reason": "'Make functions private and deprecate public aliases' is an API refactor, not a version conflict."
+  },
+  {
+   "case_id": "humanize-c546848a-version_mismatch",
+   "reason": "Reinstating VERSION and deprecating it is an API restoration; the target asserts that a warning is emitted. Neither clearly a version mismatch nor clearly a source defect."
+  },
+  {
+   "case_id": "icalendar-9cb18ec9-version_mismatch",
+   "reason": "A deprecation wrapper for private string methods; the project's own deprecation policy, not an external version conflict."
+  },
+  {
+   "case_id": "icalendar-d04ce541-version_mismatch",
+   "reason": "'deprecate foldline for icalendar 8' is a planned deprecation, not a version-mismatch defect."
+  },
+  {
+   "case_id": "click-fab5356b-locale_timezone",
+   "reason": "'Fix UnboundLocalError in click.Path' has nothing to do with locale or timezone; the marker matched incidental wording."
+  },
+  {
+   "case_id": "icalendar-43a22e49-locale_timezone",
+   "reason": "Explicitly a refactor \u2014 'refactor(timezone): resolve TZIDs through a cached candidate-id generator'. No defect is asserted."
+  },
+  {
+   "case_id": "babel-56911bab-locale_timezone",
+   "reason": "Memoizing locale data and sharing LocaleDataDicts is a performance change whose defect is shared mutable state. Arguably state_leakage, arguably neither; disputed rather than assigned."
+  },
+  {
+   "case_id": "freezegun-b5a42dbf-nondeterminism",
+   "reason": "'Ignore duplicate modules in ignore list' is a list-handling defect; the evidence shows a deterministic assertion failure, not intermittency."
+  },
+  {
+   "case_id": "filelock-03b0ab7e-nondeterminism",
+   "reason": "'feat(unix): delete lock file on release' is a feature addition, and nothing in the evidence shows intermittency."
+  },
+  {
+   "case_id": "pygments-9fca2a10-two_cause",
+   "reason": "'Add analyze_text to make make check happy' is a feature and lint addition. No joint two-cause evidence exists; one lexer-guessing assertion is one cause."
+  },
+  {
+   "case_id": "_purpose",
+   "reason": "label decision names a case that was never confirmed"
+  },
+  {
+   "case_id": "_reviewer",
+   "reason": "label decision names a case that was never confirmed"
+  },
+  {
+   "case_id": "filelock-f093ee0c-state_leakage",
+   "reason": "displaced by the 4-cases-per-repository cap"
+  }
+ ],
+ "manifest_hash": "4c06e87777e3c84e8e217370db777e16ea334ad6570c57c81d9548723b7a3813",
+ "model": {
+  "dated_snapshot_variant": null,
+  "id": "claude-sonnet-5",
+  "id_is_complete": true,
+  "note": "claude-sonnet-5 is the complete identifier for this model; unlike claude-haiku-4-5 (claude-haiku-4-5-20251001) it has no dated snapshot form. Appending a date suffix returns 404. The 'snapshot' recorded for a run is therefore this id plus the /v1/models response captured immediately before execution.",
+  "snapshot_evidence_required_before_run": {
+   "endpoint": "GET /v1/models/claude-sonnet-5",
+   "fields_to_record": [
+    "id",
+    "display_name",
+    "max_input_tokens",
+    "max_tokens"
+   ],
+   "status": "NOT_CAPTURED \u2014 capturing it is a provider request, which is not authorized"
+  }
+ },
+ "protocol_sha256": "ddf35a8379501f8343aa54f72aaefc8932bca26d3c85ab856c52a2549e53789b",
+ "schema": 1
+}

@@ -257,3 +257,60 @@ def test_a_key_never_appears_in_a_config_repr():
     assert SECRET not in repr(cfg)
     assert SECRET not in f"{cfg!r}"
     assert "<redacted>" in repr(cfg)
+
+
+# --------------------------------------------------------------------------
+# DAR-014 — the outbound payload asserts no sampling preference by default
+# --------------------------------------------------------------------------
+
+
+def _sent_body(url: str, **kwargs) -> dict:
+    """Drive one real request and return the JSON the provider actually received.
+
+    Asserted against the captured body rather than the call arguments: the
+    question is what left the machine, and a default that is correct in the
+    signature but serialised anyway would pass an argument-level check.
+    """
+    cfg = ProviderConfig.from_env({"RIFT_LLM_URL": url, "RIFT_LLM_KEY": SECRET, "RIFT_LLM_MODEL": "m"})
+    with pytest.raises(ModelUnavailable):
+        post_chat(cfg, [{"role": "user", "content": "hello"}], max_output_tokens=16, **kwargs)
+    return json.loads(_Handler.captured["body"])
+
+
+def test_no_temperature_is_sent_by_default(echoing_provider):
+    """The field is omitted entirely, not sent as null.
+
+    Several current models reject a non-default sampling parameter with a 400,
+    and 0.0 is not the default anywhere — the adapter was asserting a preference
+    no caller had expressed, and failing against otherwise-compatible providers
+    for it. `null` would be no better than 0.0: it is still the key being present.
+    """
+    body = _sent_body(echoing_provider)
+    assert "temperature" not in body, body
+    assert "top_p" not in body and "top_k" not in body, body
+    # The control: the request is otherwise complete, so the absence above is
+    # about temperature rather than about a request that failed to build.
+    assert body["model"] == "m"
+    assert body["max_tokens"] == 16
+    assert body["messages"] == [{"role": "user", "content": "hello"}]
+
+
+@pytest.mark.parametrize("value", [0.0, 0.2, 1.0])
+def test_an_explicit_temperature_is_still_serialised(echoing_provider, value: float):
+    """The positive control, and the half that keeps the adapter neutral.
+
+    Providers that accept a sampling parameter must still be able to receive
+    one. Removing the capability rather than the default would trade one
+    provider-specific failure for another.
+    """
+    body = _sent_body(echoing_provider, temperature=value)
+    assert body["temperature"] == value, body
+
+
+def test_the_default_is_none_in_the_signature(echoing_provider):
+    """Pins the default at the signature too, so a later edit that reintroduces
+    a numeric default fails here as well as in the payload test above."""
+    import inspect
+
+    default = inspect.signature(post_chat).parameters["temperature"].default
+    assert default is None, f"post_chat defaults temperature to {default!r}"

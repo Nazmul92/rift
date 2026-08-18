@@ -1,0 +1,12 @@
+{
+ "attrs": "src",
+ "boltons": "",
+ "chardet": "",
+ "click": "src",
+ "jinja": "src",
+ "markdown": "",
+ "pluggy": "src",
+ "pyparsing": "",
+ "sqlparse": "",
+ "werkzeug": "src"
+}

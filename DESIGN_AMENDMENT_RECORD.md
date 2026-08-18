@@ -469,3 +469,245 @@ repository-relative path is still discovered when an escaping one is refused.
 
 DAR-002's stop branch is now reachable, and is exercised from a real repository
 rather than a substituted diagnosis.
+
+## DAR-014 — the adapter asserts no sampling preference by default
+
+**Amends** v1.2.4 §8 (LLM interface) in one narrow respect: what the adapter puts
+on the wire when no caller expressed a preference.
+
+`llm.post_chat` defaulted `temperature` to `0.0` and serialised it on every
+request. Several current models reject a **non-default** sampling parameter with
+a 400, and `0.0` is not the default anywhere — so the adapter was asserting a
+preference nobody had expressed and failing against providers that are otherwise
+compatible with it. Found while freezing the BM-06 model configuration, where it
+would have failed all 90 tasks and consumed the authorization on rejections.
+
+The default is now `None`, and the existing branch already omits the field
+entirely when it is `None`. An explicit caller-provided value is still
+serialised, so providers that accept a sampling parameter can still receive one.
+
+**Why this is the provider-neutral fix and not a workaround.** The alternative —
+branching on the configured URL or model to decide whether to send the field —
+would put provider-specific knowledge into an adapter whose neutrality is an M1
+acceptance property (M1-S03, `test_adapter_neutrality.py`). Removing the
+capability rather than the default would trade one provider-specific failure for
+another. Omitting what nobody asked for is neutral in both directions.
+
+**No provider-specific branch. No new configuration system. No new module.** One
+default value changed.
+
+**Evidence.** Three tests in `tests/test_adapter_neutrality.py`, all asserting on
+the body a real loopback provider **received**, not on the call arguments — a
+default that is correct in the signature but serialised anyway would pass an
+argument-level check:
+
+- `test_no_temperature_is_sent_by_default` — the key is absent, not `null`;
+  `top_p` and `top_k` absent too; with a positive control that `model`,
+  `max_tokens` and `messages` are all present, so the absence is about
+  temperature rather than about a request that failed to build.
+- `test_an_explicit_temperature_is_still_serialised` — parametrised over
+  `0.0`, `0.2`, `1.0`. `0.0` is included deliberately: the value that used to be
+  the default must still work when a caller means it.
+- `test_the_default_is_none_in_the_signature` — pins the default itself, so a
+  later edit reintroducing a numeric default fails here as well.
+
+**Status: IMPLEMENTED.** Runtime 8,694 / 8,700 (DAR-012). The approved M1
+runtime changed, so the three-consecutive frozen-tree gate was re-run and the
+handoff archive rebuilt; the previously approved archive `d56edbe2…` is
+superseded and is recorded as historical rather than deleted.
+
+## DAR-015 — four runtime additions: a reproducer-aware `verify`, and the benchmark ablation controls
+
+**Amends** v1.2.4 §7 (`verify`) and §11 (CLI surface) by adding four arguments.
+No new module, no second gate, no second sandbox, no new ledger, no new
+verification path. Every addition routes through machinery that already exists.
+
+### 1–2. `fix --probe-policy {disagreement,random}` and `--probe-seed N`
+
+`kernel.select_probe` already implements `policy == "random"`, and its docstring
+states that this is "the only intended independent variable between benchmark
+arms B and C". `app.py` hardcoded `"disagreement"` at its single call site, so
+the arm the design named could not be run. The default is unchanged; the seed is
+required when the policy is random and is recorded durably, because an
+unrecorded seed makes a rerun a different experiment.
+
+### 3. `fix --model-alone`
+
+Arm A of BM-06 is the incumbent practice being compared against: the same
+provider, model and bounded source context, without deterministic diagnosis or
+probing, accepted when the target passes. It reuses the existing proposal
+validation, ChangeSet store, sandbox and spend ledger.
+
+It is fenced so it cannot be mistaken for the product:
+
+- it accepts only under arm A's target-pass rule and emits
+  `accepted_by_target_pass`;
+- it can **never** emit `verified_against_approved_checks`;
+- it records `benchmark_ablation: model_alone` durably;
+- its receipt is structurally marked ineligible as RIFT product-verification
+  evidence.
+
+An ablation that could produce the product's own verdict would eventually be
+quoted as the product's result. The marking is in the receipt rather than in
+documentation for that reason.
+
+### 4. `verify --precondition NODE` (repeatable) and `--expect-signature PATTERN`
+
+This is the one that closes a product gap rather than a benchmark gap.
+
+`ReproductionContract` already carries preconditions, `run_episode` already
+applies them identically in every phase, and `rift fix` already freezes one from
+executed evidence. Only `verify` had no way to receive one — so a user with an
+order-dependent failure and a patch for it could not verify the patch, because
+the bare target passes in isolation and the baseline never reproduces.
+
+The same defect had already been fixed three times in the places it surfaced
+(the prototype's C4 abstention, the stage-2 criterion, the BM-06 driver) without
+the product gap underneath being closed. This closes it.
+
+Semantics, all through existing mechanisms:
+
+- preconditions execute in declared order before the target in **every** phase,
+  each phase beginning from the existing clean-episode reset;
+- baseline, candidate, withdrawal and reapplication run the identical frozen
+  experiment;
+- preservation keeps its existing clean-episode policy;
+- precondition files, the target's file and runner configuration become frozen
+  judge artifacts and protected paths, so a candidate that edits the polluter —
+  weakening the experiment while leaving the contract record byte-identical — is
+  rejected before execution;
+- **no bare-target fallback** once preconditions are declared;
+- with `--expect-signature`, the baseline must reproduce a compatible
+  target-specific signature; without it, the observed signature is frozen before
+  the candidate runs;
+- a passing baseline, a collection error or an incompatible signature stops with
+  a scoped reproduction failure;
+- the model never proposes, edits or relaxes the reproducer or the signature —
+  `verify` makes no model request at all.
+
+### What this deliberately does not do
+
+No repair loop. No second gate. No benchmark-specific verification path: the
+driver calls the same `verify` a user calls. `fix`'s existing reproducer
+selection is untouched.
+
+## DAR-016 — runtime ceiling 8,700 → 8,920, measured
+
+**Amends** the 8,700 ceiling set by DAR-012. Measured after implementing
+DAR-015, not estimated before it.
+
+### The measurement
+
+| module | before | after | delta |
+|---|---|---|---|
+| app.py | 3,593 | 3,813 | +220 |
+| records.py | 1,872 | 1,883 | +11 |
+| sandbox.py | 715 | 707 | −8 |
+| kernel.py, checks.py, llm.py, `__init__`, `__main__` | 2,514 | 2,514 | 0 |
+| **total** | **8,694** | **8,917** | **+223** |
+
+The `sandbox.py` reduction is the pinned formatter reflowing existing code, not
+a deletion.
+
+### Itemized, against the estimate recorded before implementation
+
+| item | estimated | actual |
+|---|---|---|
+| `verify --precondition` / `--expect-signature` | ~65 | ~95 |
+| `fix --probe-policy` / `--probe-seed` | ~18 | ~28 |
+| `fix --model-alone` | ~85 | ~89 |
+| `accepted_by_target_pass`, two event kinds | ~12 | ~11 |
+| **total** | **~180** | **+223** |
+
+The estimate was 24% low, in one place: `verify_reproducer` and
+`signature_compatible` are separate named functions with their reasoning
+attached, and the CLI help text for four arguments is longer than a line each
+because each explains why the argument exists. Compressing either to hit the
+estimate would trade an explanation a reader needs for a number nobody checks.
+
+### Ceiling
+
+**8,920.** Measured 8,917, plus three lines.
+
+Not a round number and not headroom: the ruling forbids speculative slack and a
+second amendment during this pass, so the ceiling is set at the measurement
+with the smallest margin that survives a formatter reflow of the kind that just
+moved `sandbox.py` by eight lines. A ceiling *below* the measured figure would
+be a fiction; one at 9,000 would be 83 lines of unearned room.
+
+Nothing was compressed to fit: no module boundary moved, no test was weakened,
+no error handling was dropped, and no explanatory comment was removed. The two
+places where the code grew beyond estimate are both places where a future reader
+needs the reasoning more than the project needs the line.
+
+## DAR-017 — runtime ceiling 8,920 → 9,090, measured
+
+**Amends** DAR-016. Measured after implementing the four DAR-015 consuming-path
+corrections, not estimated before them.
+
+### The measurement
+
+| module | before | after | delta |
+|---|---|---|---|
+| app.py | 3,813 | 3,940 | +127 |
+| records.py | 1,883 | 1,905 | +22 |
+| kernel.py | 1,274 | 1,292 | +18 |
+| checks.py, llm.py, sandbox.py, `__init__`, `__main__` | 1,947 | 1,947 | 0 |
+| **total** | **8,917** | **9,084** | **+167** |
+
+### Itemized
+
+| correction | lines | what they are |
+|---|---|---|
+| 1. arm A receives the frozen reproducer | ~46 | `proj_reproducer`, two `run_episode` call sites with `patch_owned`, `--precondition`/`--expect-signature` on `fix` |
+| 2. `accepted_by_target_pass` as a real verdict | ~48 | reduced `ablation` state, two receipt fields, the kernel derivation branch |
+| 3. seed validity and durable policy | ~35 | `probe_policy_error`, the usage gate, `PROBE_POLICY_FROZEN`, reduction, resume reuse |
+| 4. every frozen reproducer enforced | ~38 | after-execution check for signature-only contracts, `freeze_declared_reproducer` shared by both verbs, selector resolution through `judge_artifact_paths` |
+| **total** | **+167** | |
+
+Correction 4 is net-cheaper than it looks: extracting `freeze_declared_reproducer`
+removed a duplicated block from `cmd_verify` that `cmd_fix` would otherwise have
+needed a second copy of. Two copies of "what a precondition means" would have
+drifted.
+
+### Ceiling
+
+**9,090.** Measured 9,084, plus six lines — the same margin DAR-016 used, sized
+to survive a formatter reflow rather than to leave room for future work.
+
+Nothing was compressed to fit: no module boundary moved, no validation was
+dropped, no test was weakened, and no explanation was removed. The ruling
+forbade compressing boundaries, validation or explanations into three lines, and
+none of the four corrections was made smaller than it needed to be.
+
+## DAR-018 — runtime ceiling 9,090 → 9,108, measured
+
+**Amends** DAR-017. Measured after correcting the signature-only after-check.
+
+### The measurement
+
+| module | before | after | delta |
+|---|---|---|---|
+| app.py | 3,940 | 3,958 | +18 |
+| everything else | 5,144 | 5,144 | 0 |
+| **total** | **9,084** | **9,102** | **+18** |
+
+### Itemized
+
+| item | lines | what it is |
+|---|---|---|
+| `Flow.execute(record=False)` and its docstring | ~9 | lets a caller hold back the durable outcome until the experiment has been re-validated |
+| the corrected after-check block | ~9 | fresh `tree_hash`, the episode's `expected_tree` and `state_paths`, then the outcome appended |
+
+DAR-017 left six lines and the correction needs eighteen, so the ceiling moves
+by the measured amount rather than the correction being squeezed into the
+remaining space. Compressing here would have meant either dropping the
+`record=False` docstring — which explains why an outcome is deliberately not
+recorded yet, the least obvious line in the file — or inlining the validator
+call arguments back onto one line, which is how the defect looked correct in
+review the first time.
+
+### Ceiling
+
+**9,108.** Measured 9,102, plus six lines — the same reflow margin DAR-016 and
+DAR-017 used. No speculative headroom.
