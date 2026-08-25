@@ -1,0 +1,8 @@
+--- a/voluptuous/validators.py
++++ b/voluptuous/validators.py
+@@ -1188,5 +1188,5 @@ class Number(object):
+         else:
+             # TODO: handle infinity and NaN
+             # raise Invalid(self.msg or 'Value has no precision')
+-            raise TypeError("infinity and NaN have no precision")
++            raise Invalid(self.msg or 'Value must be a finite number')

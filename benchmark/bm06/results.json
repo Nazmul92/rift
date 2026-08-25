@@ -1,0 +1,1061 @@
+{
+ "configured_model": "claude-sonnet-4-6",
+ "driver_hash": "d54e7658be4c5d0f0fe4c5eb253314ef67f58f7061192abd3726ae18e1f1b85b",
+ "manifest_hash": "7275dbfe3fe97c820ed3c74db0b0572c1b57887b80f493549c1a57159dd92dac",
+ "manifest_model": "claude-sonnet-4-6",
+ "records": [
+  {
+   "accepted": true,
+   "arm": "A",
+   "baseline_tree_hash": "b032739e397b7651884accd788efcd3f44cc94941a9bd9f1fa5f9729bf4aa135",
+   "case_id": "cachetools-c0fdf6ab-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 2,
+   "exit_code": 1,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/cachetools-c0fdf6ab-genuine_source_bug-parent --json fix tests/test_tlru.py::TLRUCacheTest::test_overwrite_existing_with_expired --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_tlru.py::TLRUCacheTest::test_clear --preserve tests/test_tlru.py::TLRUCacheTest::test_clear_empty --preserve tests/test_tlru.py::TLRUCacheTest::test_clear_getsizeof --expect-signature AssertionError: 1 unexpectedly found in TLRUCache({1: 5}, maxsize=2, currsize=1) --model-alone",
+   "patch": "/w/benchmark/bm06/patches/cachetools-c0fdf6ab-genuine_source_bug-A.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 3.962,
+   "shadow": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "spend_reference": {
+    "event_ids": [
+     14
+    ],
+    "ledger": "/repos/.cases/cachetools-c0fdf6ab-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "accepted_by_target_pass"
+  },
+  {
+   "accepted": false,
+   "arm": "B",
+   "baseline_tree_hash": "b032739e397b7651884accd788efcd3f44cc94941a9bd9f1fa5f9729bf4aa135",
+   "case_id": "cachetools-c0fdf6ab-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 25,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/cachetools-c0fdf6ab-genuine_source_bug-parent --json fix tests/test_tlru.py::TLRUCacheTest::test_overwrite_existing_with_expired --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_tlru.py::TLRUCacheTest::test_clear --preserve tests/test_tlru.py::TLRUCacheTest::test_clear_empty --preserve tests/test_tlru.py::TLRUCacheTest::test_clear_getsizeof --expect-signature AssertionError: 1 unexpectedly found in TLRUCache({1: 5}, maxsize=2, currsize=1) --probe-policy random --probe-seed 14739558940481040063",
+   "patch": "/w/benchmark/bm06/patches/cachetools-c0fdf6ab-genuine_source_bug-B.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 57.205,
+   "spend_reference": {
+    "event_ids": [
+     15,
+     16
+    ],
+    "ledger": "/repos/.cases/cachetools-c0fdf6ab-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "C",
+   "baseline_tree_hash": "b032739e397b7651884accd788efcd3f44cc94941a9bd9f1fa5f9729bf4aa135",
+   "case_id": "cachetools-c0fdf6ab-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 19,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/cachetools-c0fdf6ab-genuine_source_bug-parent --json fix tests/test_tlru.py::TLRUCacheTest::test_overwrite_existing_with_expired --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_tlru.py::TLRUCacheTest::test_clear --preserve tests/test_tlru.py::TLRUCacheTest::test_clear_empty --preserve tests/test_tlru.py::TLRUCacheTest::test_clear_getsizeof --expect-signature AssertionError: 1 unexpectedly found in TLRUCache({1: 5}, maxsize=2, currsize=1)",
+   "patch": "/w/benchmark/bm06/patches/cachetools-c0fdf6ab-genuine_source_bug-C.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 35.232,
+   "spend_reference": {
+    "event_ids": [
+     17,
+     18
+    ],
+    "ledger": "/repos/.cases/cachetools-c0fdf6ab-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": true,
+   "arm": "A",
+   "baseline_tree_hash": "5606e3783033073a127aa5ba5f62f74aee8e1db2f3c63663e76ab8931fa9f6b0",
+   "case_id": "pygments-2f0d713b-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 2,
+   "exit_code": 1,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/pygments-2f0d713b-genuine_source_bug-parent --json fix tests/test_raw_token.py::test_raw_token_error_color --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_raw_token.py::test_raw_token --preserve tests/test_raw_token.py::test_invalid_raw_token --expect-signature TypeError: can only concatenate str (not \"bytes\") to str --model-alone",
+   "patch": "/w/benchmark/bm06/patches/pygments-2f0d713b-genuine_source_bug-A.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 4.59,
+   "shadow": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "spend_reference": {
+    "event_ids": [
+     8,
+     9
+    ],
+    "ledger": "/repos/.cases/pygments-2f0d713b-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "accepted_by_target_pass"
+  },
+  {
+   "accepted": true,
+   "arm": "B",
+   "baseline_tree_hash": "5606e3783033073a127aa5ba5f62f74aee8e1db2f3c63663e76ab8931fa9f6b0",
+   "case_id": "pygments-2f0d713b-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 32,
+   "exit_code": 0,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/pygments-2f0d713b-genuine_source_bug-parent --json fix tests/test_raw_token.py::test_raw_token_error_color --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_raw_token.py::test_raw_token --preserve tests/test_raw_token.py::test_invalid_raw_token --expect-signature TypeError: can only concatenate str (not \"bytes\") to str --probe-policy random --probe-seed 9601791681906711596",
+   "patch": "/w/benchmark/bm06/patches/pygments-2f0d713b-genuine_source_bug-B.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 73.328,
+   "spend_reference": {
+    "event_ids": [
+     10,
+     11
+    ],
+    "ledger": "/repos/.cases/pygments-2f0d713b-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "verified_against_approved_checks"
+  },
+  {
+   "accepted": true,
+   "arm": "C",
+   "baseline_tree_hash": "5606e3783033073a127aa5ba5f62f74aee8e1db2f3c63663e76ab8931fa9f6b0",
+   "case_id": "pygments-2f0d713b-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 24,
+   "exit_code": 0,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/pygments-2f0d713b-genuine_source_bug-parent --json fix tests/test_raw_token.py::test_raw_token_error_color --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_raw_token.py::test_raw_token --preserve tests/test_raw_token.py::test_invalid_raw_token --expect-signature TypeError: can only concatenate str (not \"bytes\") to str",
+   "patch": "/w/benchmark/bm06/patches/pygments-2f0d713b-genuine_source_bug-C.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 160.08,
+   "spend_reference": {
+    "event_ids": [
+     12,
+     13
+    ],
+    "ledger": "/repos/.cases/pygments-2f0d713b-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "verified_against_approved_checks"
+  },
+  {
+   "accepted": true,
+   "arm": "A",
+   "baseline_tree_hash": "b67872120801b6f2e8c70ac096e0e5cf637771b4fb9682aa7b882aa6734ff0c0",
+   "case_id": "pyparsing-13065174-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 2,
+   "exit_code": 1,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/pyparsing-13065174-genuine_source_bug-parent --json fix tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_util.py::test_flatten[Empty list-input_list0-expected_output0] --preserve tests/test_util.py::test_flatten[Flat list-input_list1-expected_output1] --preserve tests/test_util.py::test_flatten[Nested list-input_list2-expected_output2] --expect-signature Failure: assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4] --model-alone",
+   "patch": "/w/benchmark/bm06/patches/pyparsing-13065174-genuine_source_bug-A.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 4.67,
+   "shadow": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "spend_reference": {
+    "event_ids": [
+     0,
+     1
+    ],
+    "ledger": "/repos/.cases/pyparsing-13065174-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "accepted_by_target_pass"
+  },
+  {
+   "accepted": true,
+   "arm": "B",
+   "baseline_tree_hash": "b67872120801b6f2e8c70ac096e0e5cf637771b4fb9682aa7b882aa6734ff0c0",
+   "case_id": "pyparsing-13065174-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 25,
+   "exit_code": 0,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/pyparsing-13065174-genuine_source_bug-parent --json fix tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_util.py::test_flatten[Empty list-input_list0-expected_output0] --preserve tests/test_util.py::test_flatten[Flat list-input_list1-expected_output1] --preserve tests/test_util.py::test_flatten[Nested list-input_list2-expected_output2] --expect-signature Failure: assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4] --probe-policy random --probe-seed 7666255069638709187",
+   "patch": "/w/benchmark/bm06/patches/pyparsing-13065174-genuine_source_bug-B.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 49.163,
+   "spend_reference": {
+    "event_ids": [
+     2,
+     3
+    ],
+    "ledger": "/repos/.cases/pyparsing-13065174-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "verified_against_approved_checks"
+  },
+  {
+   "accepted": true,
+   "arm": "C",
+   "baseline_tree_hash": "b67872120801b6f2e8c70ac096e0e5cf637771b4fb9682aa7b882aa6734ff0c0",
+   "case_id": "pyparsing-13065174-genuine_source_bug",
+   "cause_class": "genuine_source_bug",
+   "commands": 25,
+   "exit_code": 0,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/pyparsing-13065174-genuine_source_bug-parent --json fix tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_util.py::test_flatten[Empty list-input_list0-expected_output0] --preserve tests/test_util.py::test_flatten[Flat list-input_list1-expected_output1] --preserve tests/test_util.py::test_flatten[Nested list-input_list2-expected_output2] --expect-signature Failure: assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]",
+   "patch": "/w/benchmark/bm06/patches/pyparsing-13065174-genuine_source_bug-C.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 45.536,
+   "spend_reference": {
+    "event_ids": [
+     4,
+     5
+    ],
+    "ledger": "/repos/.cases/pyparsing-13065174-genuine_source_bug-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "verified_against_approved_checks"
+  },
+  {
+   "accepted": false,
+   "arm": "A",
+   "baseline_tree_hash": "16d57207a211a56fca8effdac563c8003dc299ae0404b60d7b26b88500912fc9",
+   "case_id": "icalendar-60a10375-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commands": 1,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-60a10375-locale_timezone-parent --json fix src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_mountain_standard_time_mexico[pytz] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_windows_timezone[pytz] --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_olson_names[pytz-Australia/Darwin] --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_windows_timezone[zoneinfo] --expect-signature AssertionError: assert <DstTzInfo 'America/Chihuahua' CST-1 day, 18:00:00 STD> == <DstTzInfo 'America/Mazatlan' MST-1 day, 17:00:00 STD> --model-alone",
+   "patch": "/w/benchmark/bm06/patches/icalendar-60a10375-locale_timezone-A.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 1.396,
+   "shadow": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "spend_reference": {
+    "event_ids": [
+     0,
+     1
+    ],
+    "ledger": "/repos/.cases/icalendar-60a10375-locale_timezone-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "B",
+   "baseline_tree_hash": "16d57207a211a56fca8effdac563c8003dc299ae0404b60d7b26b88500912fc9",
+   "case_id": "icalendar-60a10375-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commands": 23,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-60a10375-locale_timezone-parent --json fix src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_mountain_standard_time_mexico[pytz] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_windows_timezone[pytz] --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_olson_names[pytz-Australia/Darwin] --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_windows_timezone[zoneinfo] --expect-signature AssertionError: assert <DstTzInfo 'America/Chihuahua' CST-1 day, 18:00:00 STD> == <DstTzInfo 'America/Mazatlan' MST-1 day, 17:00:00 STD> --probe-policy random --probe-seed 12083741275062248960",
+   "patch": "/w/benchmark/bm06/patches/icalendar-60a10375-locale_timezone-B.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 38.469,
+   "spend_reference": {
+    "event_ids": [
+     2,
+     3
+    ],
+    "ledger": "/repos/.cases/icalendar-60a10375-locale_timezone-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "C",
+   "baseline_tree_hash": "16d57207a211a56fca8effdac563c8003dc299ae0404b60d7b26b88500912fc9",
+   "case_id": "icalendar-60a10375-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commands": 17,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-60a10375-locale_timezone-parent --json fix src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_mountain_standard_time_mexico[pytz] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_windows_timezone[pytz] --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_olson_names[pytz-Australia/Darwin] --preserve src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_windows_timezone[zoneinfo] --expect-signature AssertionError: assert <DstTzInfo 'America/Chihuahua' CST-1 day, 18:00:00 STD> == <DstTzInfo 'America/Mazatlan' MST-1 day, 17:00:00 STD>",
+   "patch": "/w/benchmark/bm06/patches/icalendar-60a10375-locale_timezone-C.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6",
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 638.158,
+   "spend_reference": {
+    "event_ids": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "ledger": "/repos/.cases/icalendar-60a10375-locale_timezone-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "A",
+   "baseline_tree_hash": "5c13eac54adab00222386d55eab13f6866c18f9ee51135ee5fb87bca3166e055",
+   "case_id": "icalendar-781eeda8-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commands": 1,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-781eeda8-locale_timezone-parent --json fix src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[pytz] --preserve src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[zoneinfo] --expect-signature Failure: assert None is not None --model-alone",
+   "patch": "/w/benchmark/bm06/patches/icalendar-781eeda8-locale_timezone-A.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 1.392,
+   "shadow": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "spend_reference": {
+    "event_ids": [
+     0,
+     1
+    ],
+    "ledger": "/repos/.cases/icalendar-781eeda8-locale_timezone-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "B",
+   "baseline_tree_hash": "5c13eac54adab00222386d55eab13f6866c18f9ee51135ee5fb87bca3166e055",
+   "case_id": "icalendar-781eeda8-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commands": 21,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-781eeda8-locale_timezone-parent --json fix src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[pytz] --preserve src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[zoneinfo] --expect-signature Failure: assert None is not None --probe-policy random --probe-seed 14185737916010520038",
+   "patch": "/w/benchmark/bm06/patches/icalendar-781eeda8-locale_timezone-B.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 29.367,
+   "spend_reference": {
+    "event_ids": [
+     2,
+     3
+    ],
+    "ledger": "/repos/.cases/icalendar-781eeda8-locale_timezone-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "C",
+   "baseline_tree_hash": "5c13eac54adab00222386d55eab13f6866c18f9ee51135ee5fb87bca3166e055",
+   "case_id": "icalendar-781eeda8-locale_timezone",
+   "cause_class": "locale_timezone",
+   "commands": 18,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "source",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-781eeda8-locale_timezone-parent --json fix src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[pytz] --preserve src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[zoneinfo] --expect-signature Failure: assert None is not None",
+   "patch": "/w/benchmark/bm06/patches/icalendar-781eeda8-locale_timezone-C.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6",
+    "claude-sonnet-4-6",
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 329.534,
+   "spend_reference": {
+    "event_ids": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "ledger": "/repos/.cases/icalendar-781eeda8-locale_timezone-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "A",
+   "baseline_tree_hash": "5350407907d77a0d8529e1edc1de001b253ce47aa57c3744bd40017e71f41d59",
+   "case_id": "dateutil-f2293200-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 1,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/dateutil-f2293200-version_mismatch-parent --json fix tests/test_imports.py::test_lazy_import[parser] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_imports.py::test_lazy_import[easter] --preserve tests/test_imports.py::test_lazy_import[relativedelta] --preserve tests/test_imports.py::test_lazy_import[rrule] --expect-signature DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent da --model-alone",
+   "patch": "/w/benchmark/bm06/patches/dateutil-f2293200-version_mismatch-A.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 1.236,
+   "shadow": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "spend_reference": {
+    "event_ids": [
+     0,
+     1
+    ],
+    "ledger": "/repos/.cases/dateutil-f2293200-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "B",
+   "baseline_tree_hash": "5350407907d77a0d8529e1edc1de001b253ce47aa57c3744bd40017e71f41d59",
+   "case_id": "dateutil-f2293200-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 19,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/dateutil-f2293200-version_mismatch-parent --json fix tests/test_imports.py::test_lazy_import[parser] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_imports.py::test_lazy_import[easter] --preserve tests/test_imports.py::test_lazy_import[relativedelta] --preserve tests/test_imports.py::test_lazy_import[rrule] --expect-signature DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent da --probe-policy random --probe-seed 13708098528021606760",
+   "patch": "/w/benchmark/bm06/patches/dateutil-f2293200-version_mismatch-B.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 25.939,
+   "spend_reference": {
+    "event_ids": [
+     2,
+     3
+    ],
+    "ledger": "/repos/.cases/dateutil-f2293200-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "C",
+   "baseline_tree_hash": "5350407907d77a0d8529e1edc1de001b253ce47aa57c3744bd40017e71f41d59",
+   "case_id": "dateutil-f2293200-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 19,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/dateutil-f2293200-version_mismatch-parent --json fix tests/test_imports.py::test_lazy_import[parser] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_imports.py::test_lazy_import[easter] --preserve tests/test_imports.py::test_lazy_import[relativedelta] --preserve tests/test_imports.py::test_lazy_import[rrule] --expect-signature DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent da",
+   "patch": "/w/benchmark/bm06/patches/dateutil-f2293200-version_mismatch-C.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 39.761,
+   "spend_reference": {
+    "event_ids": [
+     4,
+     5
+    ],
+    "ledger": "/repos/.cases/dateutil-f2293200-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "A",
+   "baseline_tree_hash": "70b3e14cfe32c02d285a9f2a19e89f808649603de3abdc08a383a464b2007bf9",
+   "case_id": "freezegun-3d5d60b4-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 1,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/freezegun-3d5d60b4-version_mismatch-parent --json fix tests/test_datetimes.py::Tester::test_class_decorator_respects_staticmethod --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_datetimes.py::test_simple_api --preserve tests/test_datetimes.py::test_tz_offset --preserve tests/test_datetimes.py::test_timedelta_tz_offset --expect-signature TypeError: Tester.helper() takes 0 positional arguments but 1 was given --model-alone",
+   "patch": "/w/benchmark/bm06/patches/freezegun-3d5d60b4-version_mismatch-A.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 1.907,
+   "shadow": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "spend_reference": {
+    "event_ids": [
+     0,
+     1
+    ],
+    "ledger": "/repos/.cases/freezegun-3d5d60b4-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": true,
+   "arm": "B",
+   "baseline_tree_hash": "70b3e14cfe32c02d285a9f2a19e89f808649603de3abdc08a383a464b2007bf9",
+   "case_id": "freezegun-3d5d60b4-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 25,
+   "exit_code": 0,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/freezegun-3d5d60b4-version_mismatch-parent --json fix tests/test_datetimes.py::Tester::test_class_decorator_respects_staticmethod --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_datetimes.py::test_simple_api --preserve tests/test_datetimes.py::test_tz_offset --preserve tests/test_datetimes.py::test_timedelta_tz_offset --expect-signature TypeError: Tester.helper() takes 0 positional arguments but 1 was given --probe-policy random --probe-seed 6942762971825033250",
+   "patch": "/w/benchmark/bm06/patches/freezegun-3d5d60b4-version_mismatch-B.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 35.707,
+   "spend_reference": {
+    "event_ids": [
+     2,
+     3
+    ],
+    "ledger": "/repos/.cases/freezegun-3d5d60b4-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "verified_against_approved_checks"
+  },
+  {
+   "accepted": true,
+   "arm": "C",
+   "baseline_tree_hash": "70b3e14cfe32c02d285a9f2a19e89f808649603de3abdc08a383a464b2007bf9",
+   "case_id": "freezegun-3d5d60b4-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 22,
+   "exit_code": 0,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": null,
+   "gate": null,
+   "ground_truth_correct": true,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 0,
+    "verdict": "verified_against_approved_checks"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/freezegun-3d5d60b4-version_mismatch-parent --json fix tests/test_datetimes.py::Tester::test_class_decorator_respects_staticmethod --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve tests/test_datetimes.py::test_simple_api --preserve tests/test_datetimes.py::test_tz_offset --preserve tests/test_datetimes.py::test_timedelta_tz_offset --expect-signature TypeError: Tester.helper() takes 0 positional arguments but 1 was given",
+   "patch": "/w/benchmark/bm06/patches/freezegun-3d5d60b4-version_mismatch-C.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6",
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 32.077,
+   "spend_reference": {
+    "event_ids": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "ledger": "/repos/.cases/freezegun-3d5d60b4-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "verified_against_approved_checks"
+  },
+  {
+   "accepted": false,
+   "arm": "A",
+   "baseline_tree_hash": "8c956bcaafb14dd49355137a2e0215696ac6f6d92dfeb9be7c95bd78603ebd62",
+   "case_id": "icalendar-62cbf833-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 1,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-62cbf833-version_mismatch-parent --json fix src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/test_with_doctest.py::test_this_module_is_among_them --preserve src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.tools] --preserve src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.__init__] --expect-signature Failure: assert 2 == 0 --model-alone",
+   "patch": "/w/benchmark/bm06/patches/icalendar-62cbf833-version_mismatch-A.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 1.714,
+   "shadow": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "spend_reference": {
+    "event_ids": [
+     0,
+     1
+    ],
+    "ledger": "/repos/.cases/icalendar-62cbf833-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "B",
+   "baseline_tree_hash": "8c956bcaafb14dd49355137a2e0215696ac6f6d92dfeb9be7c95bd78603ebd62",
+   "case_id": "icalendar-62cbf833-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 19,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-62cbf833-version_mismatch-parent --json fix src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/test_with_doctest.py::test_this_module_is_among_them --preserve src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.tools] --preserve src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.__init__] --expect-signature Failure: assert 2 == 0 --probe-policy random --probe-seed 4940764501121002612",
+   "patch": "/w/benchmark/bm06/patches/icalendar-62cbf833-version_mismatch-B.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 568.317,
+   "spend_reference": {
+    "event_ids": [
+     2,
+     3
+    ],
+    "ledger": "/repos/.cases/icalendar-62cbf833-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  },
+  {
+   "accepted": false,
+   "arm": "C",
+   "baseline_tree_hash": "8c956bcaafb14dd49355137a2e0215696ac6f6d92dfeb9be7c95bd78603ebd62",
+   "case_id": "icalendar-62cbf833-version_mismatch",
+   "cause_class": "version_mismatch",
+   "commands": 18,
+   "exit_code": 2,
+   "expected_diagnostic_scope": "environment",
+   "failed_phase": "candidate",
+   "gate": null,
+   "ground_truth_correct": false,
+   "ground_truth_evaluation": {
+    "evaluated": true,
+    "exit_code": 2,
+    "verdict": "unverifiable"
+   },
+   "label": "gateable",
+   "orchestration": "--repo /repos/.cases/icalendar-62cbf833-version_mismatch-parent --json fix src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm] --allow-partial-sandbox --max-usd 6.77 --scope one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005) --price-input 3.0 --price-output 15.0 --max-output-tokens 4000 --max-probes 16 --max-attempts 1 --max-commands 400 --timeout 600.0 --preserve src/icalendar/tests/test_with_doctest.py::test_this_module_is_among_them --preserve src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.tools] --preserve src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.__init__] --expect-signature Failure: assert 2 == 0",
+   "patch": "/w/benchmark/bm06/patches/icalendar-62cbf833-version_mismatch-C.diff",
+   "priced_models": [
+    "claude-sonnet-4-6"
+   ],
+   "provider_reported_models": [
+    "claude-sonnet-4-6",
+    "claude-sonnet-4-6",
+    "claude-sonnet-4-6"
+   ],
+   "repair_basis": "diagnosis_unresolved",
+   "seconds": 287.935,
+   "spend_reference": {
+    "event_ids": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "ledger": "/repos/.cases/icalendar-62cbf833-version_mismatch-parent/.rift/spend.jsonl",
+    "present": true
+   },
+   "status": "OK",
+   "support": null,
+   "tokens": "not_applicable (no model is invoked by verify)",
+   "verdict": "unverifiable"
+  }
+ ],
+ "runtime_files": [
+  "src/riftagent/__init__.py",
+  "src/riftagent/__main__.py",
+  "src/riftagent/app.py",
+  "src/riftagent/checks.py",
+  "src/riftagent/kernel.py",
+  "src/riftagent/llm.py",
+  "src/riftagent/records.py",
+  "src/riftagent/sandbox.py"
+ ],
+ "runtime_hash": "064f0e84a74364e0f80f8b7ef9c5e764a4bce57d60fbc7cb3332e2d1d5012f18",
+ "runtime_pattern": "src/riftagent/**/*.py"
+}

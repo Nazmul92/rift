@@ -1,0 +1,25 @@
+{
+ "container_image": "rift-reference-iso:3.12-slim",
+ "container_image_digest": "sha256:279f2c1816d32e452951eae861bb3bbb65aad5b3da0ff5035e27a17069a2f8f3",
+ "docker_security_flags": "--cap-add SYS_ADMIN --cap-add NET_ADMIN --security-opt seccomp=unconfined",
+ "execution_environment_hash": "9de6886df3d526affb979312048437580a6860ce5491abfd84371c36fed83de3",
+ "harness_confinement": {
+  "executable": "/usr/bin/unshare",
+  "mechanism": "unshare --user --net --map-root-user",
+  "network_policy": "repository subprocess: no interfaces except empty loopback",
+  "version": "unshare from util-linux 2.41"
+ },
+ "network_policy": {
+  "provider_and_controller": "allowed",
+  "repository_controlled_execution": "denied"
+ },
+ "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+ "python_implementation": "CPython",
+ "python_version": "3.12.14",
+ "rift_repository_isolation": {
+  "bwrap": "/usr/bin/bwrap",
+  "bwrap_version": "bubblewrap 0.11.0",
+  "detail": "linux + bubblewrap: host read-only, worktree and tmp writable, network unshared",
+  "level": "full"
+ }
+}

@@ -1,0 +1,42 @@
+--- a/lark/tools/standalone.py
++++ b/lark/tools/standalone.py
+@@ -1,6 +1,6 @@
+ "Generates stand-alone parsers for Lark grammars"
+ 
+-import sys
++import sys, os
+ from copy import deepcopy
+ 
+ from ..grammar import Rule
+@@ -54,6 +54,16 @@ def _serialize(value, memo):
+ ###{standalone
+ 
+ class Lark_StandAlone(object):
++    def _get_terminal_callbacks(self, transformer):
++        """Extract terminal callbacks from a transformer (methods named after terminals in ALL_CAPS)"""
++        if transformer is None:
++            return {}
++        callbacks = {}
++        for name in dir(transformer):
++            if name.isupper() and callable(getattr(transformer, name)):
++                callbacks[name] = getattr(transformer, name)
++        return callbacks
++
+     def __init__(self, transformer=None, postlex=None):
+         d = {k: v if v is not None else [] for k, v in Shift.frz.items()}
+         num_terms, terms_data, num_rules, rules_data = DATA
+@@ -75,6 +83,14 @@ class Lark_StandAlone(object):
+         lexer = ContextualLexer(terminals, states, ignore=ignore, always_accept=always_accept)
+         self.lexer = lexer
+         self.postlex = postlex
++        if transformer is not None:
++            terminal_callbacks = self._get_terminal_callbacks(transformer)
++            for term_name, callback in terminal_callbacks.items():
++                if term_name in lexer.root_lexer.callback:
++                    orig = lexer.root_lexer.callback[term_name]
++                    lexer.root_lexer.callback[term_name] = lambda t, orig=orig, cb=callback: cb(orig(t))
++                else:
++                    lexer.root_lexer.callback[term_name] = callback
+         if transformer:
+             callbacks = {rule: getattr(transformer, rule.origin.name, None) for rule in rules}
+             callbacks = {rule: f.__func__ if hasattr(f, '__func__') else f for rule, f in callbacks.items() if f is not None}

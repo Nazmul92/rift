@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-from riftagent.app import MAX_EXCERPT_CHARS, WINDOW_RADIUS, excerpt, redact, select_context
+from riftagent.app import MAX_CONTEXT_CHARS, MAX_FILE_CHARS, WINDOW_RADIUS, excerpt, redact, select_context
 from riftagent.records import BudgetRefused, ModelUsage, Pricing, SpendLedger
 
 PRICING = Pricing(input_per_mtok=1.0, output_per_mtok=5.0, provider="test", model="m")
@@ -104,34 +104,55 @@ def test_two_concurrent_processes_under_one_scope_cannot_jointly_exceed_it(tmp_p
 # --------------------------------------------------------------------------
 
 
-def test_excerpt_sends_a_window_not_the_file():
-    source = "\n".join(f"line {i}" for i in range(1, 501))
-    text, ranges = excerpt(source, cited=[250], wanted=set())
+def test_a_file_past_the_budget_sends_a_window_not_the_file():
+    """The bound still holds for a file too large to send whole.
+
+    Before DAR-022 this held for *every* file, which is why 770 characters of a
+    23,272 character file were sent and the resulting patch would not apply.
+    The rule is now: whole file if it fits, complete definitions if it does not,
+    windows only when neither is possible — and this is that last case, since
+    the source below has no definitions at all."""
+    source = "\n".join(f"line {i} " + "x" * 60 for i in range(1, 501))
+    assert len(source) > MAX_FILE_CHARS
+    text, ranges, why = excerpt(source, cited=[250], wanted=set())
     assert ranges == [(250 - WINDOW_RADIUS, 250 + WINDOW_RADIUS)]
-    assert "line 250" in text
-    assert "line 1\n" not in text and "line 500" not in text
+    assert "line 250 " in text
+    assert "line 1 " not in text and "line 500 " not in text
     assert len(text) < len(source) / 5
+    assert "bounded windows" in why
 
 
 def test_windows_merge_and_elision_is_marked():
-    source = "\n".join(f"line {i}" for i in range(1, 201))
-    text, ranges = excerpt(source, cited=[50, 55, 150], wanted=set())
-    assert len(ranges) == 2, ranges  # 50 and 55 overlap
+    """Only reachable for a file past the per-file budget: since DAR-022 a file
+    that fits is sent whole, and windows are the floor rather than the rule."""
+    source = "\n".join(f"line {i} " + "x" * 60 for i in range(1, 4001))
+    assert len(source) > MAX_FILE_CHARS
+    text, ranges, why = excerpt(source, cited=[50, 55, 150], wanted=set())
+    assert len(ranges) == 2, ranges  # 50 and 55 overlap into one window
     assert "only the ranges above were sent" in text
+    assert "bounded windows" in why
 
 
-def test_a_definition_anchors_a_window_with_no_traceback():
-    """The wrong-value case: nothing raised, so no frame cites the function."""
-    source = "\n".join(["# header"] * 100 + ["def target(a):", "    return a - 1"] + ["# tail"] * 100)
-    text, ranges = excerpt(source, cited=[], wanted={"target"})
+def test_a_definition_anchors_selection_with_no_traceback():
+    """The wrong-value case: nothing raised, so no frame cites the function.
+
+    Since DAR-022 the unit is the *complete* definition rather than a window
+    centred on its first line — a half-sent function is what produced hunks
+    whose context lines were invented."""
+    pad = "\n".join("# header " + "x" * 60 for _ in range(400))
+    source = pad + "\n\ndef target(a):\n    b = a - 1\n    return b\n\n" + pad
+    assert len(source) > MAX_FILE_CHARS
+    text, ranges, why = excerpt(source, cited=[], wanted={"target"})
     assert "def target(a):" in text
+    assert "return b" in text, "the definition was cut short"
     assert ranges and ranges[0][0] > 1
+    assert "complete definitions" in why
 
 
 def test_the_excerpt_is_bounded():
     source = "\n".join(f"x = {i}" for i in range(1, 20_000))
-    text, _ = excerpt(source, cited=[100, 2000, 4000, 6000, 8000, 10_000, 12_000], wanted=set())
-    assert len(text) <= MAX_EXCERPT_CHARS + 200
+    text, _, _ = excerpt(source, cited=[100, 2000, 4000, 6000, 8000, 10_000, 12_000], wanted=set())
+    assert len(text) <= MAX_FILE_CHARS + 200
 
 
 @pytest.mark.parametrize(
@@ -192,7 +213,11 @@ def test_selected_context_is_windowed_and_redacted(tmp_path: Path):
 
     assert "def add(a, b):" in body, "the definition under test was not sent"
     assert "sk-abcdefghijklmnopqrstuvwxyz012345" not in body, "a credential was sent to the provider"
-    assert "# padding" not in body or body.count("# padding") < 40, "the whole file was sent"
+    # DAR-022 deliberately sends a small file whole — sending 770 characters of
+    # a 23,272 character file is what produced unappliable patches. What must
+    # still hold is the budget, not a prohibition on completeness.
+    assert manifest["chars"] <= MAX_CONTEXT_CHARS
+    assert all(len(text) <= MAX_FILE_CHARS + 200 for _, text in chosen)
 
 
 def test_the_manifest_records_ranges_and_counts_but_never_values(tmp_path: Path):
@@ -204,7 +229,10 @@ def test_the_manifest_records_ranges_and_counts_but_never_values(tmp_path: Path)
         assert all(len(r) == 2 and r[0] <= r[1] for r in ranges), ranges
     serialised = json.dumps(manifest)
     assert "sk-abcdefghijklmnopqrstuvwxyz012345" not in serialised, "a redacted value reached the manifest"
-    assert "whole files" not in manifest["selection"] or "no whole files" in manifest["selection"]
+    # The policy the string describes changed with DAR-022; what it must never
+    # describe is an unbounded one.
+    assert "no embedding, retrieval or ranking" in manifest["selection"]
+    assert manifest["cap_file_chars"] == MAX_FILE_CHARS
 
 
 # --------------------------------------------------------------------------

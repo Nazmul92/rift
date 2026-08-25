@@ -2,14 +2,24 @@
   "schema": 1,
   "purpose": "Frozen model configuration and pricing record for BM-06. Values here are configured, never fetched at run time; the two pre-execution checks below are re-confirmed immediately before execution and the run does not start if either fails.",
   "model": {
-    "id": "claude-sonnet-5",
+    "id": "claude-sonnet-4-6",
     "id_is_complete": true,
-    "dated_snapshot_variant": null,
-    "note": "claude-sonnet-5 is the complete identifier for this model; unlike claude-haiku-4-5 (claude-haiku-4-5-20251001) it has no dated snapshot form. Appending a date suffix returns 404. The 'snapshot' recorded for a run is therefore this id plus the /v1/models response captured immediately before execution.",
+    "dated_snapshot_variant": "UNVERIFIED \u2014 establishing it is a provider request, which is not authorized",
+    "note": "Selected 2026-08-19, replacing claude-sonnet-5. Under the OpenAI-compatible endpoint, extended thinking is on by default for Claude 5 models, its tokens are charged and counted against max_tokens, and the layer does not return them. Four of the five propose_change requests in the aborted preliminary run consumed the entire output allowance and emitted zero visible characters, at a 4,000-token cap and again at 8,000. reasoning_effort and response_format are both documented as ignored by that layer, so no OpenAI-shaped parameter reaches the behaviour; the only field that does is Anthropic-specific, and provider neutrality is an M1 acceptance property (M1-S03). Changing the model was the option that required no adapter change.",
+    "superseded": {
+      "id": "claude-sonnet-5",
+      "reason": "default extended thinking exhausted the output allowance before any visible reply",
+      "evidence": "benchmark/bm06/RUN-ABORTED-FINDING.md; preflight-propose-record.json"
+    },
     "snapshot_evidence_required_before_run": {
-      "endpoint": "GET /v1/models/claude-sonnet-5",
-      "fields_to_record": ["id", "display_name", "max_input_tokens", "max_tokens"],
-      "status": "NOT_CAPTURED — capturing it is a provider request, which is not authorized"
+      "endpoint": "GET /v1/models/claude-sonnet-4-6",
+      "fields_to_record": [
+        "id",
+        "display_name",
+        "max_input_tokens",
+        "max_tokens"
+      ],
+      "status": "NOT_CAPTURED \u2014 capturing it is a provider request, which is not authorized"
     }
   },
   "provider": {
@@ -18,20 +28,20 @@
     "streaming": false,
     "tool_calling": false,
     "url_env": "RIFT_LLM_URL",
-    "url_value": "NOT_FROZEN — recorded at freeze time; HTTPS enforced by ProviderConfig.from_env",
-    "headers": ["content-type", "authorization"],
+    "url_value": "NOT_FROZEN \u2014 recorded at freeze time; HTTPS enforced by ProviderConfig.from_env",
+    "headers": [
+      "content-type",
+      "authorization"
+    ],
     "note": "No provider-specific header is sent to any host. Provider neutrality is an M1 acceptance property (M1-S03, test_adapter_neutrality.py) and is not relaxed for the benchmark."
   },
   "request_parameters": {
     "max_output_tokens": 4000,
     "temperature": {
-      "current_runtime_default": 0.0,
-      "sent_on_every_request": true,
-      "status": "BLOCKING — UNRESOLVED",
-      "problem": "claude-sonnet-5 rejects non-default sampling parameters with a 400. 0.0 is not the default. Whether the OpenAI-compatible endpoint forwards, remaps, or drops the field is unverified, and verifying it requires a provider request.",
-      "consequence_if_unresolved": "every task in all three arms fails, consuming the authorization on 90 rejections",
-      "proposed_resolution": "pass temperature=None from the benchmark harness so the field is omitted entirely",
-      "why_not_applied": "it is a change to the approved M1 tree; that is a reviewer decision, not one taken during benchmark preparation"
+      "sent_on_every_request": false,
+      "status": "RESOLVED (DAR-014)",
+      "resolution": "post_chat takes temperature: float | None = None and omits the field entirely unless a caller passes one. Several current models reject a non-default sampling parameter outright and 0.0 is not the default anywhere, so asserting a preference nobody expressed was the defect. The fix was to stop sending it, not to branch on the provider.",
+      "benchmark_effect": "no arm sends temperature"
     },
     "top_p": "not sent",
     "top_k": "not sent"
@@ -42,64 +52,142 @@
     "max_attempts_note": "the shipped single-attempt behaviour (DAR-010); BM-06 measures the product as it exists",
     "max_commands": 400,
     "timeout_s": 600.0,
-    "scope": "one frozen authorization scope for all 90 tasks (DAR-005)"
+    "scope": "SUPERSEDED \u2014 described the original 30-case BM-06 (90 tasks). The preliminary run's scope is in manifest-preliminary.json budget.scope: one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005)."
   },
   "pricing": {
     "currency": "USD per million tokens",
-    "verified_on": "2026-08-17",
-    "verification_source": "published Anthropic pricing table",
+    "verified_on": "2026-08-19",
+    "verification_source": "https://platform.claude.com/docs/en/about-claude/pricing",
     "verification_method": "documentation lookup, not a live provider request",
-    "introductory": {
-      "input_per_mtok": 2.0,
-      "output_per_mtok": 10.0,
-      "expires": "2026-08-31",
-      "days_remaining_at_verification": 14
-    },
-    "list": {
+    "selected": {
+      "model": "claude-sonnet-4-6",
       "input_per_mtok": 3.0,
       "output_per_mtok": 15.0,
-      "applies_from": "2026-09-01"
+      "row_verbatim": "| Claude Sonnet 4.6 | $3 / MTok | $3.75 / MTok | $6 / MTok | $0.30 / MTok | $15 / MTok |",
+      "introductory_or_promotional": "none applies to this model"
     },
+    "superseded_claude_sonnet_5": {
+      "input_per_mtok": 2.0,
+      "output_per_mtok": 10.0,
+      "note_verbatim": "The $2/$10 per million input/output token pricing for Claude Sonnet 5, announced at launch as introductory pricing through August 31, 2026, is now the standard price. The previously scheduled increase to $3/$15 per million input/output tokens on September 1, 2026 will not occur.",
+      "recorded_disagreement": "A reviewer reported on 2026-08-19 that the documentation still described $2/$10 as introductory with $3/$15 from 2026-09-01. The page fetched that day, and again on re-fetch, states the opposite. Retained because it explains why the ceiling changed; it is moot for this benchmark, which no longer uses that model."
+    },
+    "tokenizer_note": "The same page records that Claude 4.7 and later use a newer tokenizer producing about 30% more tokens for the same text, and that Sonnet 4.6 and earlier use the previous one. The input ceilings below are carried over unchanged from the claude-sonnet-5 configuration and are therefore, if anything, over-estimates for this model. Over-estimating a reservation is the safe direction.",
     "reconfirm_before_execution": true,
     "on_failure_to_confirm": "stop without spending"
   },
   "worst_case_reservation": {
     "method": "riftagent.records.reserve_cost at the frozen caps; token_ceiling = chars/3 + 1500",
-    "note": "This is the ceiling the SpendLedger reserves, not an expected spend. It assumes every prompt fills its context cap and every response fills its output cap.",
+    "note": "The ceiling the SpendLedger reserves, not an expected spend. It assumes every prompt fills its context cap and every response fills its output cap, and that every arm-run needs its schema repair.",
     "per_operation": {
-      "propose_handles": {"input_ceiling": 3633, "max_output": 800},
-      "propose_hypotheses": {"input_ceiling": 4166, "max_output": 1600},
-      "propose_change": {"input_ceiling": 23666, "max_output": 4000}
+      "propose_handles": {
+        "input_ceiling": 3633,
+        "max_output": 800
+      },
+      "propose_handles_repair": {
+        "input_ceiling": 3865,
+        "max_output": 800
+      },
+      "propose_hypotheses": {
+        "input_ceiling": 4166,
+        "max_output": 1600
+      },
+      "propose_hypotheses_repair": {
+        "input_ceiling": 4079,
+        "max_output": 1600
+      },
+      "propose_change": {
+        "input_ceiling": 23666,
+        "max_output": 4000
+      },
+      "propose_change_repair": {
+        "input_ceiling": 3864,
+        "max_output": 4000
+      }
     },
-    "introductory_pricing": {
-      "per_task_arm_c": 0.1269,
-      "per_task_arm_b": 0.1269,
-      "per_task_arm_a": 0.0873,
-      "arm_c_30_cases": 3.81,
-      "arm_b_30_cases": 3.81,
-      "arm_a_30_cases": 2.62,
-      "one_complete_run": 10.24
+    "repair_note": "Every model operation carries the one schema-repair entitlement CLAUDE.md grants it, not propose_change alone (DAR-021). Each repair is reserved and settled under its own <operation>_repair key. A repair is made only for a completed reply that failed extraction or validation; a reply with finish_reason 'length' or no visible text is recorded as a failure and not repaired, because there is no completed response to re-serialise. Each repair reuses its operation's output cap. This ceiling assumes every arm-run needs every repair; none may.",
+    "at_selected_pricing": {
+      "per_arm_run_a": 0.20259,
+      "per_arm_run_b": 0.321819,
+      "per_arm_run_c": 0.321819,
+      "arm_runs": 24,
+      "preliminary_total_usd": 6.769824,
+      "preliminary_ceiling": 6.77
     },
-    "list_pricing": {
-      "per_task_arm_c": 0.1904,
-      "per_task_arm_a": 0.131,
-      "one_complete_run": 15.35
-    }
+    "original_bm06_note": "The 30-case BM-06 figures previously recorded here described a run that is NOT_RUN_PROTOCOL_INFEASIBLE and were computed at superseded rates without the repair request. They are removed rather than repriced: repricing them would present a ceiling for a run nobody can authorize as though it were current."
   },
   "contingency": {
-    "one_rerun_introductory": 10.24,
-    "one_rerun_list": 15.35,
-    "combined_if_both_authorized_introductory": 20.47,
-    "combined_if_both_authorized_list": 30.71,
+    "one_rerun_preliminary": 6.77,
     "status": "DISCLOSED, NOT AUTHORIZED",
     "rule": "The contingency is authorized separately and only if the primary run is invalidated. It is never silently consumed.",
     "precedent": "The M1a verify benchmark had a run invalidated by a harness defect: derive_judge_weakening built its diff with `git diff`, which compares the working tree to the index, so all four judge-weakening cases were malformed and that known-bad class measured nothing."
   },
-  "authorization": {
-    "status": "NOT AUTHORIZED",
-    "requests_made": 0,
-    "smoke_request_made": false,
-    "historical_charged_usd": 0.068157,
-    "historical_note": "27 requests from earlier calibration work, averaging about $0.0025 each against a per-task worst case of $0.0873 to $0.1269. Unrelated to BM-06."
+  "CURRENT": {
+    "note": "The only authoritative block for the next run. Everything under `historical` is superseded.",
+    "valid_preliminary_cases": 8,
+    "quarantined_cases": 1,
+    "arm_runs": 24,
+    "conservative_benchmark_ceiling_usd": 6.77,
+    "model_id": "claude-sonnet-4-6",
+    "price_input_per_mtok": 3.0,
+    "price_output_per_mtok": 15.0,
+    "cumulative_provider_requests": 15,
+    "cumulative_charged_usd": 0.357593,
+    "charged_breakdown": {
+      "aborted_27_arm_run_sonnet_5": {
+        "requests": 5,
+        "usd": 0.180358
+      },
+      "transport_smoke_sonnet_5": {
+        "requests": 1,
+        "usd": 7.2e-05
+      },
+      "propose_preflight_8k_sonnet_5": {
+        "requests": 1,
+        "usd": 0.085096
+      },
+      "propose_preflight_sonnet_4_6": {
+        "requests": 1,
+        "usd": 0.016002
+      },
+      "live_repair_diagnostic_sonnet_4_6": {
+        "requests": 2,
+        "usd": 0.022119
+      },
+      "stopped_24_arm_run_sonnet_4_6": {
+        "requests": 5,
+        "usd": 0.053946
+      }
+    },
+    "charged_classification": "adapter, preflight and stopped-run expenditure. No arm-run is retained as a benchmark observation.",
+    "authorization_status": "NOT AUTHORIZED"
+  },
+  "historical": {
+    "status": "SUPERSEDED \u2014 retained so the changes are auditable, never to be read as current",
+    "nine_case_corpus": {
+      "valid_cases": 9,
+      "arm_runs": 27,
+      "ceiling_usd": 7.62,
+      "superseded_because": "icalendar-30ec6eef quarantined for a fix-parent mismatch (DAR-023)"
+    },
+    "sonnet_5_configuration": {
+      "model_id": "claude-sonnet-5",
+      "price_input_per_mtok": 2.0,
+      "price_output_per_mtok": 10.0,
+      "ceiling_usd": 3.43,
+      "superseded_because": "default extended thinking exhausted the output allowance before any visible reply"
+    },
+    "earlier_cumulative_totals_usd": [
+      0.18043,
+      0.265526,
+      0.281528,
+      0.303647
+    ],
+    "earlier_ceilings_usd": [
+      3.43,
+      6.54,
+      7.62
+    ],
+    "model_and_pricing_note": "Fields outside CURRENT and worst_case_reservation describe the original 30-case BM-06, which is NOT_RUN_PROTOCOL_INFEASIBLE."
   }
 }

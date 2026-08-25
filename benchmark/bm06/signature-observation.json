@@ -1,0 +1,74 @@
+[
+ {
+  "case": "cachetools-c0fdf6ab-genuine_source_bug",
+  "compatible": true,
+  "frozen": "AssertionError: 1 unexpectedly found in TLRUCache({1: 5}, maxsize=2, currsize=1)",
+  "frozen_type_guess": "AssertionError",
+  "observed_message": "1 unexpectedly found in TLRUCache({1: 5}, maxsize=2, currsize=1)",
+  "observed_type": "AssertionError"
+ },
+ {
+  "case": "pygments-2f0d713b-genuine_source_bug",
+  "compatible": true,
+  "frozen": "TypeError: can only concatenate str (not \"bytes\") to str",
+  "frozen_type_guess": "TypeError",
+  "observed_message": "can only concatenate str (not \"bytes\") to str",
+  "observed_type": "TypeError"
+ },
+ {
+  "case": "pyparsing-13065174-genuine_source_bug",
+  "compatible": false,
+  "frozen": "assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]",
+  "frozen_type_guess": "assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]",
+  "observed_message": "assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]",
+  "observed_type": "Failure"
+ },
+ {
+  "case": "icalendar-30ec6eef-locale_timezone",
+  "compatible": true,
+  "frozen": "AttributeError: 'Alarm' object has no attribute 'ACTION'",
+  "frozen_type_guess": "AttributeError",
+  "observed_message": "'Alarm' object has no attribute 'ACTION'",
+  "observed_type": "AttributeError"
+ },
+ {
+  "case": "icalendar-60a10375-locale_timezone",
+  "compatible": true,
+  "frozen": "AssertionError: assert <DstTzInfo 'America/Chihuahua' CST-1 day, 18:00:00 STD> == <DstTzInfo 'America/Mazatlan' MST-1 day, 17:00:00 STD>",
+  "frozen_type_guess": "AssertionError",
+  "observed_message": "assert <DstTzInfo 'America/Chihuahua' CST-1 day, 18:00:00 STD> == <DstTzInfo 'America/Mazatlan' MST-1 day, 17:00:00 STD>",
+  "observed_type": "AssertionError"
+ },
+ {
+  "case": "icalendar-781eeda8-locale_timezone",
+  "compatible": false,
+  "frozen": "assert None is not None",
+  "frozen_type_guess": "assert None is not None",
+  "observed_message": "assert None is not None",
+  "observed_type": "Failure"
+ },
+ {
+  "case": "dateutil-f2293200-version_mismatch",
+  "compatible": true,
+  "frozen": "DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent da",
+  "frozen_type_guess": "DeprecationWarning",
+  "observed_message": "datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, d",
+  "observed_type": "DeprecationWarning"
+ },
+ {
+  "case": "freezegun-3d5d60b4-version_mismatch",
+  "compatible": true,
+  "frozen": "TypeError: Tester.helper() takes 0 positional arguments but 1 was given",
+  "frozen_type_guess": "TypeError",
+  "observed_message": "Tester.helper() takes 0 positional arguments but 1 was given",
+  "observed_type": "TypeError"
+ },
+ {
+  "case": "icalendar-62cbf833-version_mismatch",
+  "compatible": false,
+  "frozen": "AssertionError: 2 errors in icalendar.cal.alarm",
+  "frozen_type_guess": "AssertionError",
+  "observed_message": "assert 2 == 0",
+  "observed_type": "Failure"
+ }
+]

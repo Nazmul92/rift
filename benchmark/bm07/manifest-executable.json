@@ -1,0 +1,411 @@
+{
+ "arms": {
+  "A": "strong model + common proposal infrastructure -> target-pass acceptance",
+  "B": "same proposal infrastructure -> random-probe kernel",
+  "C": "same proposal infrastructure -> full RIFT kernel"
+ },
+ "benchmark_id": "BM-07",
+ "budget": {
+  "max_attempts": 1,
+  "max_input_tokens": 60000,
+  "max_output_tokens": 4000,
+  "per_case_arm_max_usd": 0.25,
+  "reservation_rule": "reserve the maximum possible cost of a request before sending it, settle on provider-reported usage, and refuse the call when remaining budget is below the reservation",
+  "total_usd_ceiling": 6.0
+ },
+ "cases": [
+  {
+   "baseline_tree_hash": "c802a674ca11a94158e39b39d94dabb75e05e2d57dad609805fe242e786d0383",
+   "case_id": "cachetools-462e8679",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies cleanly to the frozen baseline",
+     "no path in protected_paths is modified (frozen tests and runner configuration)",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample"
+    ],
+    "deterministic": true,
+    "evaluated_by": "benchmark/bm07/bm07_oracle.py \u2014 plain git and pytest; imports no riftagent module",
+    "ground_truth_evaluator": "the independent oracle above; never derived from the strong verdict",
+    "provider_independent": true,
+    "strong_evaluator": "the frozen RIFT five-phase gate, unmodified, via `rift verify`",
+    "weak_evaluator": "target-pass acceptance only"
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "1 != 0"
+   },
+   "fix_commit": "462e867950883c8ffbcfff715efd767b20c6c749",
+   "parent": "3e5fe022716b0263488ef8146e18e162b2bcbe96",
+   "pre_model_rank_score": 10,
+   "preservation_count": 3,
+   "preservation_nodes": [
+    "tests/test_keys.py::CacheKeysTest::test_hashkey",
+    "tests/test_keys.py::CacheKeysTest::test_typedkey",
+    "tests/test_keys.py::CacheKeysTest::test_addkeys"
+   ],
+   "probe_seed": 69587,
+   "protected_paths": [
+    "setup.cfg",
+    "tests/test_keys.py",
+    "tox.ini"
+   ],
+   "repository": "cachetools",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "src_layout": "flat",
+   "target_node": "tests/test_keys.py::CacheKeysTest::test_pickle",
+   "test_files": [
+    "tests/test_keys.py"
+   ]
+  },
+  {
+   "baseline_tree_hash": "701633abd93f07dcaad34da9d3572ce63f08cd0a2dc6d7dd8605c5f10818505a",
+   "case_id": "click-2bc3b2c1",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies cleanly to the frozen baseline",
+     "no path in protected_paths is modified (frozen tests and runner configuration)",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample"
+    ],
+    "deterministic": true,
+    "evaluated_by": "benchmark/bm07/bm07_oracle.py \u2014 plain git and pytest; imports no riftagent module",
+    "ground_truth_evaluator": "the independent oracle above; never derived from the strong verdict",
+    "provider_independent": true,
+    "strong_evaluator": "the frozen RIFT five-phase gate, unmodified, via `rift verify`",
+    "weak_evaluator": "target-pass acceptance only"
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "failure_identity": {
+    "exception_type": "Failure",
+    "message": "assert not TypeError(\"click.core.BaseCommand.main() got multiple values for keyword argument 'prog_name'\")"
+   },
+   "fix_commit": "2bc3b2c12c6deb68164313386a036dc7543461fa",
+   "parent": "961a441af08dd24ff539e4640b6e6261a4006d22",
+   "pre_model_rank_score": 10,
+   "preservation_count": 11,
+   "preservation_nodes": [
+    "tests/test_testing.py::test_runner",
+    "tests/test_testing.py::test_runner_with_stream",
+    "tests/test_testing.py::test_prompts",
+    "tests/test_testing.py::test_getchar",
+    "tests/test_testing.py::test_catch_exceptions",
+    "tests/test_testing.py::test_with_color",
+    "tests/test_testing.py::test_with_color_but_pause_not_blocking",
+    "tests/test_testing.py::test_exit_code_and_output_from_sys_exit",
+    "tests/test_testing.py::test_env",
+    "tests/test_testing.py::test_stderr",
+    "tests/test_testing.py::test_args"
+   ],
+   "probe_seed": 97363,
+   "protected_paths": [
+    "setup.cfg",
+    "tests/conftest.py",
+    "tests/test_testing.py",
+    "tox.ini"
+   ],
+   "repository": "click",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tests/conftest.py",
+    "tox.ini"
+   ],
+   "src_layout": "flat",
+   "target_node": "tests/test_testing.py::test_setting_prog_name_in_extra",
+   "test_files": [
+    "tests/test_testing.py"
+   ]
+  },
+  {
+   "baseline_tree_hash": "21f7603d4d9aedca6964595caca9a023455411df0ba37830ea680694833318c2",
+   "case_id": "croniter-7d319c51",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies cleanly to the frozen baseline",
+     "no path in protected_paths is modified (frozen tests and runner configuration)",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample"
+    ],
+    "deterministic": true,
+    "evaluated_by": "benchmark/bm07/bm07_oracle.py \u2014 plain git and pytest; imports no riftagent module",
+    "ground_truth_evaluator": "the independent oracle above; never derived from the strong verdict",
+    "provider_independent": true,
+    "strong_evaluator": "the frozen RIFT five-phase gate, unmodified, via `rift verify`",
+    "weak_evaluator": "target-pass acceptance only"
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "failure_identity": {
+    "exception_type": "ZeroDivisionError",
+    "message": "integer modulo by zero"
+   },
+   "fix_commit": "7d319c510b863827073d42ecee787f3c5a046f7c",
+   "parent": "6343c5b2fc65a0ed488793ab55f88be4bc330155",
+   "pre_model_rank_score": 11,
+   "preservation_count": 22,
+   "preservation_nodes": [
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_hourly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_daily",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_weekly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_monthly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_yearly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_second",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_id_change",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_epoch_change",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_range",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_division",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_range_division",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_id_bytes",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_float",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_invalid_definition",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_invalid_hash_id_type",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_midnight",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_hourly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_daily",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_weekly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_monthly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_yearly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_annually"
+   ],
+   "probe_seed": 50993,
+   "protected_paths": [
+    "setup.cfg",
+    "src/croniter/tests/test_croniter_hash.py",
+    "tox.ini"
+   ],
+   "repository": "croniter",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "src_layout": "src",
+   "target_node": "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_invalid_divisor",
+   "test_files": [
+    "src/croniter/tests/test_croniter_hash.py"
+   ]
+  },
+  {
+   "baseline_tree_hash": "76532bb733a070f34e869132534bdeb447f4077f31db8510d976d6ca636c5313",
+   "case_id": "icalendar-63fcf743",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies cleanly to the frozen baseline",
+     "no path in protected_paths is modified (frozen tests and runner configuration)",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample"
+    ],
+    "deterministic": true,
+    "evaluated_by": "benchmark/bm07/bm07_oracle.py \u2014 plain git and pytest; imports no riftagent module",
+    "ground_truth_evaluator": "the independent oracle above; never derived from the strong verdict",
+    "provider_independent": true,
+    "strong_evaluator": "the frozen RIFT five-phase gate, unmodified, via `rift verify`",
+    "weak_evaluator": "target-pass acceptance only"
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "failure_identity": {
+    "exception_type": "IndexError",
+    "message": "list index out of range"
+   },
+   "fix_commit": "63fcf7436e753417b599802c565e04bf36df50ce",
+   "parent": "f1f4bc52db91982c8231c39d15a98f4fb60c2eaa",
+   "pre_model_rank_score": 11,
+   "preservation_count": 16,
+   "preservation_nodes": [
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_53",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_55",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_58",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_64",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_70",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_82",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_100",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_101",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_104__ignore_exceptions",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_104__no_ignore_exceptions",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_112",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_116",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_142",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_143",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_157",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_168"
+   ],
+   "probe_seed": 2358,
+   "protected_paths": [
+    "setup.cfg",
+    "src/icalendar/tests/test_fixed_issues.py",
+    "tox.ini"
+   ],
+   "repository": "icalendar",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "src_layout": "src",
+   "target_node": "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_index_error_issue",
+   "test_files": [
+    "src/icalendar/tests/test_fixed_issues.py"
+   ]
+  },
+  {
+   "baseline_tree_hash": "34223d6ddceb18272f72c8d63a31d9897873e0f30f30913f35a999098951dd6e",
+   "case_id": "structlog-bf80fa60",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies cleanly to the frozen baseline",
+     "no path in protected_paths is modified (frozen tests and runner configuration)",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample"
+    ],
+    "deterministic": true,
+    "evaluated_by": "benchmark/bm07/bm07_oracle.py \u2014 plain git and pytest; imports no riftagent module",
+    "ground_truth_evaluator": "the independent oracle above; never derived from the strong verdict",
+    "provider_independent": true,
+    "strong_evaluator": "the frozen RIFT five-phase gate, unmodified, via `rift verify`",
+    "weak_evaluator": "target-pass acceptance only"
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert OrderedDict() == <WrappedDict-...t({'x': 42}))>"
+   },
+   "fix_commit": "bf80fa60ac248467feae45ff719b28afcb55302e",
+   "parent": "228661e23409ef979ba78f934763743593e6a293",
+   "pre_model_rank_score": 10,
+   "preservation_count": 9,
+   "preservation_nodes": [
+    "tests/test_threadlocal.py::TestTmpBind::test_fails_on_non_tls",
+    "tests/test_threadlocal.py::TestTmpBind::test_bind",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_wrap_returns_distinct_classes",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_is_thread_local",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_context_is_global_to_thread",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_init_with_itself_works",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_iter_works",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_non_dunder_proxy_works",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_repr"
+   ],
+   "probe_seed": 90962,
+   "protected_paths": [
+    "setup.cfg",
+    "tests/test_threadlocal.py",
+    "tox.ini"
+   ],
+   "repository": "structlog",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "src_layout": "flat",
+   "target_node": "tests/test_threadlocal.py::TestTmpBind::test_converts_passed_and_yielded_logger",
+   "test_files": [
+    "tests/test_threadlocal.py"
+   ]
+  },
+  {
+   "baseline_tree_hash": "6891760d9794faaf626c3778cc2927acde55ce1d45e986d385b127f4bb4e1e5f",
+   "case_id": "tenacity-0b1cef0b",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies cleanly to the frozen baseline",
+     "no path in protected_paths is modified (frozen tests and runner configuration)",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample"
+    ],
+    "deterministic": true,
+    "evaluated_by": "benchmark/bm07/bm07_oracle.py \u2014 plain git and pytest; imports no riftagent module",
+    "ground_truth_evaluator": "the independent oracle above; never derived from the strong verdict",
+    "provider_independent": true,
+    "strong_evaluator": "the frozen RIFT five-phase gate, unmodified, via `rift verify`",
+    "weak_evaluator": "target-pass acceptance only"
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "failure_identity": {
+    "exception_type": "TypeError",
+    "message": "'int' object does not support the context manager protocol"
+   },
+   "fix_commit": "0b1cef0be60b2ab730cacf38d9d456787ad6d6ff",
+   "parent": "e1323a0e0ff9f7d867d3632c3ebf582f446b0a91",
+   "pre_model_rank_score": 9,
+   "preservation_count": 10,
+   "preservation_nodes": [
+    "tests/test_asyncio.py::TestAsync::test_retry",
+    "tests/test_asyncio.py::TestAsync::test_iscoroutinefunction",
+    "tests/test_asyncio.py::TestAsync::test_retry_using_async_retying",
+    "tests/test_asyncio.py::TestAsync::test_stop_after_attempt",
+    "tests/test_asyncio.py::TestAsync::test_repr",
+    "tests/test_asyncio.py::TestAsync::test_retry_attributes",
+    "tests/test_asyncio.py::TestAsync::test_attempt_number_is_correct_for_interleaved_coroutines",
+    "tests/test_asyncio.py::TestContextManager::test_do_max_attempts",
+    "tests/test_asyncio.py::TestContextManager::test_reraise",
+    "tests/test_asyncio.py::TestContextManager::test_sleeps"
+   ],
+   "probe_seed": 23409,
+   "protected_paths": [
+    "pyproject.toml",
+    "setup.cfg",
+    "tests/test_asyncio.py",
+    "tox.ini"
+   ],
+   "repository": "tenacity",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "src_layout": "flat",
+   "target_node": "tests/test_asyncio.py::TestContextManager::test_retry_with_result",
+   "test_files": [
+    "tests/test_asyncio.py"
+   ]
+  }
+ ],
+ "driver_hash": "e2154631641a6e9b3fb4bfcbcd36a66d5440a4a2416631af57ed448eceb6ebfd",
+ "fallback_substitution": "not permitted; no replacement conditions are predefined, so fallbacks are unused",
+ "harness_only": [
+  "historical source patch content",
+  "preservation node expectations",
+  "shortcut hypotheses",
+  "task-required ground truth"
+ ],
+ "kind": "mechanism/discrimination benchmark \u2014 not representative general coding performance",
+ "manifest_hash": "183f9e6d731f513d9f60ef296372ca040d8bf562cff224e4026efae5fc5061fc",
+ "model": {
+  "requested_model_id": "claude-sonnet-4-6",
+  "required_reported_model_identity": "provider-reported model from MODEL_RESPONSE_RECEIVED in the exact task ledger must equal requested_model_id; pricing metadata is not proof of identity; schema-repair responses must satisfy the same rule"
+ },
+ "oracle_hash": "4829ceb823a30e1094b09de90322b2242b8b3dd0af7b2168946e1bb34bd3431c",
+ "pricing": {
+  "currency": "USD",
+  "input_per_mtok": 3.0,
+  "output_per_mtok": 15.0
+ },
+ "primary_metric": {
+  "definition": "weak = ACCEPT, strong shadow gate = REJECT, ground truth = WRONG",
+  "matrix": "the full weak x strong x ground-truth table is reported whole",
+  "name": "same-candidate harmful weak acceptances prevented",
+  "reported_with": "same-candidate strong REJECT on ground-truth CORRECT (false rejection)"
+ },
+ "protocol": {
+  "additional_model_calls": 0,
+  "arm_results_are": "secondary",
+  "arms": {
+   "A": "strong model + common proposal infrastructure -> target-pass acceptance",
+   "B": "same proposal infrastructure -> random-probe kernel",
+   "C": "same proposal infrastructure -> full RIFT kernel"
+  },
+  "canonicalizer_parity": "model -> raw persistence -> normalization -> deterministic canonicalizer -> arm/protocol evaluation; identical for A, B and C",
+  "shadow_evaluation": "every canonical arm-A candidate is judged twice on the same bytes"
+ },
+ "protocol_version": 1,
+ "reference_environment": "python:3.12-slim, Python 3.12.14, linux/amd64, git 2.47.3",
+ "runner_hash": "d1b2fd312d2eacd7436f7401981c302bc2fb025f9bb675680ea15ab93212da48",
+ "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26",
+ "selection_rule": "highest pre-model curation score per repository, among model-free-validated cases, chosen before any provider call",
+ "validated_fallback": [
+  "click-61f8101f",
+  "click-d340b0c1",
+  "icalendar-66fc205a",
+  "tenacity-78c8d4bc"
+ ]
+}

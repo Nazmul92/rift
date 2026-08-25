@@ -1,0 +1,23 @@
+--- a/src/icalendar/cal/alarm.py
++++ b/src/icalendar/cal/alarm.py
+@@ -493,7 +493,7 @@ class Alarm(Component):
+         alarm = Alarm()
+         alarm.add("ACTION", "AUDIO")
++        alarm.add("TRIGGER", trigger)
+         if attach is not None:
+             alarm.add("ATTACH", attach)
+-        alarm.add("TRIGGER", trigger)
+         return alarm
+ 
+@@ -575,8 +575,8 @@ class Alarm(Component):
+         alarm = Alarm()
+         alarm.add("ACTION", "EMAIL")
++        alarm.add("SUMMARY", summary)
++        alarm.add("DESCRIPTION", description)
++        alarm.add("TRIGGER", trigger)
+         for attendee in attendees:
+             alarm.add("ATTENDEE", attendee)
+-        alarm.add("DESCRIPTION", description)
+-        alarm.add("SUMMARY", summary)
+-        alarm.add("TRIGGER", trigger)
+         return alarm

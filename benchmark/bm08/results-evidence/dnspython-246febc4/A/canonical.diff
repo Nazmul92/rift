@@ -1,0 +1,11 @@
+--- a/dns/resolver.py
++++ b/dns/resolver.py
+@@ -877,7 +877,7 @@ class BaseResolver:
+ 
+     def _config_win32_domain(self, domain):  # pragma: no cover
+         # we call str() on domain to convert it from unicode to ascii
+-        self.domain = dns.name.from_text(str(domain))
++        self.domain = dns.name.from_text(str(domain).lstrip('.'))
+ 
+     def _config_win32_search(self, search):  # pragma: no cover
+         # we call str() on search to convert it from unicode to ascii

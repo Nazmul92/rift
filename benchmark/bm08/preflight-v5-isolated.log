@@ -1,0 +1,28 @@
+REPOSITORY-SIDE NETWORK PROBES
+  harness confinement (validation / preflight) DENIED
+  oracle / truth path                        DENIED
+  Arm A / weak path                          DENIED
+  mandatory preflight path                   DENIED
+  Arm C repository path (RIFT sandbox)       DENIED — linux + bubblewrap: host read-only, worktree and tmp writable, network unshared
+
+CONTROLLER SCOPING
+  controller-side connection                 REACHED
+  controller process itself confined?        NO (confinement wraps children only)
+
+mechanism: {"executable": "/usr/bin/unshare", "mechanism": "unshare --user --net --map-root-user", "network_policy": "repository subprocess: no interfaces except empty loopback", "version": "unshare from util-linux 2.41"}
+
+ISOLATION PROVEN: every repository path denied, controller scope intact
+=== ALL-24 PREFLIGHT (isolated): 24 cases, arms ('A', 'C') ===
+identity problems (full manifest, manifest_hash included): none
+repository resolution: 15/15 unique  unresolved=none
+
+preflight failures: 0
+  24/24 baseline materialisation PASS
+  24/24 baseline_tree_hash MATCH
+  24/24 target baseline FAIL
+  24/24 fresh failure_identity MATCH
+  24/24 complete preservation set PASS
+  24/24 oracle readiness PASS (run_node + run_all executed)
+  24/24 verification readiness PASS (governed Check constructed)
+
+ALL-24 PREFLIGHT (isolated): ALL 24 CASES PASS

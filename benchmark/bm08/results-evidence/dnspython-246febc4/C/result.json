@@ -1,0 +1,62 @@
+{
+ "actual_usd": 0.037206,
+ "arm": "C",
+ "arm_receipt": {
+  "exit_code": 2,
+  "seconds": 15.389,
+  "verdict": "unverifiable"
+ },
+ "arm_verdict": "unverifiable",
+ "baseline_tree_hash": "42bc6e1fb5a246741473b49c95d53ea31d86d140c21198dc0e6a2a24589a0dc7",
+ "benchmark_id": "BM-08",
+ "canonical_candidate_hash": "beb88578078405d7e8712ee109b9db0cccbd2aaab0973f8ccf1552795a86fffd",
+ "case_id": "dnspython-246febc4",
+ "classification": "",
+ "commands": 13,
+ "corpus_manifest_hash": "e6bdd3f116981bc58daf7f21eb4a5e0a524e9a067227cd2cc40fc994a19ad3f9",
+ "detail": "",
+ "driver_hash": "0676ebe54b9dafd032b4005354cdd7f7676dfc32d837d061bebeb8160971eee5",
+ "exclusion_set_hash": "d4090113b0670321b1d5a9c48ebe3949adeb60f865e8b07bb414aea21f137e87",
+ "execution_environment_hash": "9de6886df3d526affb979312048437580a6860ce5491abfd84371c36fed83de3",
+ "ground_truth": {
+  "applied": false,
+  "ground_truth_preservation_results": {
+   "all_passed": null,
+   "executed": 0,
+   "failures": [],
+   "requested": 0
+  },
+  "ground_truth_protected_path_result": "ok",
+  "ground_truth_target_result": null,
+  "ground_truth_verdict": "wrong",
+  "modified_paths": [],
+  "reason": "candidate does not apply: error: patch failed: dns/resolver.py:877\nerror: dns/resolver.py: patch does not apply"
+ },
+ "identity_problems": [],
+ "input_tokens": 11602,
+ "manifest_hash": "b0ea08dc9ae7fb6c9317260fdc606d3772168570477b3055b0525a759ff7e26b",
+ "normalized_candidate_hash": "4ee59cfd0ca46930b0e0dab2a47dce202a680c9843f84a86f20dd597e2609be4",
+ "oracle_hash": "25ac41827067f0de175b321ac800f6ddd3cadfefbef11da3e713dcc3d518cf91",
+ "output_tokens": 160,
+ "probe_seed": null,
+ "provider_reported_model": [
+  "claude-sonnet-4-6"
+ ],
+ "raw_candidate_hash": "4ee59cfd0ca46930b0e0dab2a47dce202a680c9843f84a86f20dd597e2609be4",
+ "repository_population_hash_v5": "4645de61c549bf8ad06697e1b8279ddfee51d19af24379e1dd45880f350fe0bc",
+ "request_count": 1,
+ "request_started": true,
+ "requested_model": "claude-sonnet-4-6",
+ "reserved_usd": 0.48,
+ "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17",
+ "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26",
+ "status": "completed",
+ "strong_candidate_hash": "",
+ "strong_gate_receipt": {},
+ "strong_verdict": "",
+ "truth_candidate_hash": "beb88578078405d7e8712ee109b9db0cccbd2aaab0973f8ccf1552795a86fffd",
+ "usage_available": true,
+ "wall_seconds": 31.44,
+ "weak_candidate_hash": "",
+ "weak_verdict": ""
+}

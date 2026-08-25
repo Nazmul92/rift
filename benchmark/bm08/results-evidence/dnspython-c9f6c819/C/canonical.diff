@@ -1,0 +1,29 @@
+--- a/dns/rdtypes/IN/SRV.py
++++ b/dns/rdtypes/IN/SRV.py
+@@ -1,3 +1,5 @@
++# Copyright (C) Dnspython Contributors, see LICENSE for text of ISC license
++
+ # Copyright (C) 2003-2007, 2009-2011 Nominum, Inc.
+ #
+ # Permission to use, copy, modify, and distribute this software and its
+@@ -14,6 +16,7 @@
+ # OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ 
+ import struct
++import io
+ 
+ import dns.exception
+ import dns.name
+@@ -84,5 +87,11 @@ class SRV(dns.rdtypes.mxbase.MXBase):
+     def to_wire(self, file, compress=None, origin=None):
+         three_ints = struct.pack('!HHH', self.priority, self.weight, self.port)
+         file.write(three_ints)
+-        self.target.to_wire(file, compress, origin)
++        self.target.to_wire(file, None, origin)
+ 
++    def to_digestable(self, origin=None):
++        f = io.BytesIO()
++        three_ints = struct.pack('!HHH', self.priority, self.weight, self.port)
++        f.write(three_ints)
++        self.target.canonicalize().to_wire(f, None, origin)
++        return f.getvalue()

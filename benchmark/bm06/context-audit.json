@@ -1,0 +1,921 @@
+[
+ {
+  "case": "cachetools-c0fdf6ab-genuine_source_bug",
+  "file_cap": 6,
+  "global_budget_chars": 60000,
+  "ground_truth_method": "upstream source hunks at the pinned parent, mechanically minimized against the frozen target and preservation checks; never shown to a model",
+  "pct_of_global_budget": 65.1,
+  "per_file_budget_chars": 20000,
+  "protected_paths": [
+   "conftest.py",
+   "pyproject.toml",
+   "pytest.ini",
+   "setup.cfg",
+   "tests/test_tlru.py",
+   "tox.ini"
+  ],
+  "reason": "every task-required region is inside the selected context",
+  "required_hunks": 1,
+  "required_regions": {
+   "src/cachetools/__init__.py": [
+    [
+     627,
+     636
+    ]
+   ]
+  },
+  "selected_chars": 39033,
+  "selected_files": [
+   "src/cachetools/__init__.py",
+   "tests/__init__.py",
+   "src/cachetools/_cached.py",
+   "src/cachetools/_cachedmethod.py"
+  ],
+  "selected_ranges": {
+   "src/cachetools/__init__.py": [
+    [
+     587,
+     713
+    ]
+   ],
+   "src/cachetools/_cached.py": [
+    [
+     1,
+     259
+    ]
+   ],
+   "src/cachetools/_cachedmethod.py": [
+    [
+     1,
+     421
+    ]
+   ],
+   "tests/__init__.py": [
+    [
+     1,
+     426
+    ]
+   ]
+  },
+  "selection_reason": {
+   "src/cachetools/__init__.py": "complete definitions: TLRUCache is imported by the test",
+   "src/cachetools/_cached.py": "whole file (within the per-file budget)",
+   "src/cachetools/_cachedmethod.py": "whole file (within the per-file budget)",
+   "tests/__init__.py": "whole file (within the per-file budget)"
+  },
+  "src_layout": "src",
+  "stages": {
+   "grep": [
+    "tests/__init__.py"
+   ],
+   "imports": [
+    "src/cachetools/__init__.py"
+   ],
+   "reexports": [],
+   "traceback": [
+    "tests/test_tlru.py"
+   ],
+   "unresolved": [
+    "datetime",
+    "timedelta"
+   ],
+   "used_dependencies": [
+    "tests/__init__.py",
+    "src/cachetools/_cached.py",
+    "src/cachetools/_cachedmethod.py"
+   ]
+  },
+  "target": "tests/test_tlru.py::TLRUCacheTest::test_overwrite_existing_with_expired",
+  "upstream_source_hunks": 1,
+  "verdict": "COVERED"
+ },
+ {
+  "case": "pygments-2f0d713b-genuine_source_bug",
+  "file_cap": 6,
+  "global_budget_chars": 60000,
+  "ground_truth_method": "upstream source hunks at the pinned parent, mechanically minimized against the frozen target and preservation checks; never shown to a model",
+  "pct_of_global_budget": 52.4,
+  "per_file_budget_chars": 20000,
+  "protected_paths": [
+   "conftest.py",
+   "pyproject.toml",
+   "pytest.ini",
+   "setup.cfg",
+   "tests/test_raw_token.py",
+   "tox.ini"
+  ],
+  "reason": "every task-required region is inside the selected context",
+  "required_hunks": 1,
+  "required_regions": {
+   "pygments/formatters/other.py": [
+    [
+     106,
+     112
+    ]
+   ]
+  },
+  "selected_chars": 31463,
+  "selected_files": [
+   "pygments/console.py",
+   "pygments/formatters/other.py",
+   "pygments/__init__.py",
+   "pygments/formatters/__init__.py",
+   "pygments/lexers/__init__.py",
+   "pygments/formatter.py"
+  ],
+  "selected_ranges": {
+   "pygments/__init__.py": [
+    [
+     1,
+     82
+    ]
+   ],
+   "pygments/console.py": [
+    [
+     1,
+     70
+    ]
+   ],
+   "pygments/formatter.py": [
+    [
+     1,
+     129
+    ]
+   ],
+   "pygments/formatters/__init__.py": [
+    [
+     1,
+     157
+    ]
+   ],
+   "pygments/formatters/other.py": [
+    [
+     1,
+     160
+    ]
+   ],
+   "pygments/lexers/__init__.py": [
+    [
+     1,
+     362
+    ]
+   ]
+  },
+  "selection_reason": {
+   "pygments/__init__.py": "whole file (within the per-file budget)",
+   "pygments/console.py": "whole file (within the per-file budget)",
+   "pygments/formatter.py": "whole file (within the per-file budget)",
+   "pygments/formatters/__init__.py": "whole file (within the per-file budget)",
+   "pygments/formatters/other.py": "whole file (within the per-file budget)",
+   "pygments/lexers/__init__.py": "whole file (within the per-file budget)"
+  },
+  "src_layout": "flat",
+  "stages": {
+   "grep": [
+    "pygments/formatters/html.py",
+    "pygments/lexers/python.py",
+    "pygments/lexers/special.py"
+   ],
+   "imports": [
+    "pygments/__init__.py",
+    "pygments/formatters/__init__.py",
+    "pygments/lexers/__init__.py",
+    "pygments/console.py"
+   ],
+   "reexports": [],
+   "traceback": [
+    "pygments/console.py",
+    "pygments/formatters/other.py",
+    "pygments/__init__.py",
+    "tests/test_raw_token.py"
+   ],
+   "unresolved": [
+    "codes"
+   ],
+   "used_dependencies": [
+    "pygments/formatter.py",
+    "pygments/util.py",
+    "pygments/token.py",
+    "pygments/lexer.py",
+    "pygments/formatters/_mapping.py",
+    "pygments/plugin.py",
+    "pygments/lexers/_mapping.py",
+    "pygments/modeline.py",
+    "pygments/styles/__init__.py",
+    "pygments/filter.py",
+    "pygments/filters/__init__.py",
+    "pygments/styles/_mapping.py"
+   ]
+  },
+  "target": "tests/test_raw_token.py::test_raw_token_error_color",
+  "upstream_source_hunks": 1,
+  "verdict": "COVERED"
+ },
+ {
+  "case": "pyparsing-13065174-genuine_source_bug",
+  "file_cap": 6,
+  "global_budget_chars": 60000,
+  "ground_truth_method": "upstream source hunks at the pinned parent, mechanically minimized against the frozen target and preservation checks; never shown to a model",
+  "pct_of_global_budget": 72.0,
+  "per_file_budget_chars": 20000,
+  "protected_paths": [
+   "conftest.py",
+   "pyproject.toml",
+   "pytest.ini",
+   "setup.cfg",
+   "tests/test_util.py",
+   "tox.ini"
+  ],
+  "reason": "every task-required region is inside the selected context",
+  "required_hunks": 1,
+  "required_regions": {
+   "pyparsing/util.py": [
+    [
+     220,
+     235
+    ]
+   ]
+  },
+  "selected_chars": 43217,
+  "selected_files": [
+   "pyparsing/__init__.py",
+   "pyparsing/util.py",
+   "pyparsing/core.py",
+   "pyparsing/helpers.py",
+   "pyparsing/unicode.py",
+   "pyparsing/testing.py"
+  ],
+  "selected_ranges": {
+   "pyparsing/__init__.py": [
+    [
+     1,
+     326
+    ]
+   ],
+   "pyparsing/core.py": [
+    [
+     1,
+     13
+    ]
+   ],
+   "pyparsing/helpers.py": [
+    [
+     1,
+     13
+    ]
+   ],
+   "pyparsing/testing.py": [
+    [
+     1,
+     362
+    ]
+   ],
+   "pyparsing/unicode.py": [
+    [
+     1,
+     356
+    ]
+   ],
+   "pyparsing/util.py": [
+    [
+     1,
+     275
+    ]
+   ]
+  },
+  "selection_reason": {
+   "pyparsing/__init__.py": "whole file (within the per-file budget)",
+   "pyparsing/core.py": "bounded windows (no complete definition fits the per-file budget)",
+   "pyparsing/helpers.py": "bounded windows (no complete definition fits the per-file budget)",
+   "pyparsing/testing.py": "whole file (within the per-file budget)",
+   "pyparsing/unicode.py": "whole file (within the per-file budget)",
+   "pyparsing/util.py": "whole file (within the per-file budget)"
+  },
+  "src_layout": "flat",
+  "stages": {
+   "grep": [],
+   "imports": [
+    "pyparsing/__init__.py",
+    "pyparsing/util.py"
+   ],
+   "reexports": [
+    "pyparsing/util.py",
+    "pyparsing/exceptions.py",
+    "pyparsing/actions.py",
+    "pyparsing/results.py"
+   ],
+   "traceback": [
+    "tests/test_util.py"
+   ],
+   "unresolved": [
+    "Iterable",
+    "Union",
+    "random"
+   ],
+   "used_dependencies": [
+    "pyparsing/core.py",
+    "pyparsing/helpers.py",
+    "pyparsing/unicode.py",
+    "pyparsing/testing.py",
+    "pyparsing/results.py"
+   ]
+  },
+  "target": "tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9]",
+  "upstream_source_hunks": 3,
+  "verdict": "COVERED"
+ },
+ {
+  "case": "icalendar-60a10375-locale_timezone",
+  "file_cap": 6,
+  "global_budget_chars": 60000,
+  "ground_truth_method": "upstream source hunks at the pinned parent, mechanically minimized against the frozen target and preservation checks; never shown to a model",
+  "pct_of_global_budget": 31.8,
+  "per_file_budget_chars": 20000,
+  "protected_paths": [
+   "conftest.py",
+   "pyproject.toml",
+   "pytest.ini",
+   "setup.cfg",
+   "src/icalendar/tests/prop/test_windows_to_olson_mapping.py",
+   "tox.ini"
+  ],
+  "reason": "every task-required region is inside the selected context",
+  "required_hunks": 1,
+  "required_regions": {
+   "src/icalendar/timezone/windows_to_olson.py": [
+    [
+     68,
+     74
+    ]
+   ]
+  },
+  "selected_chars": 19094,
+  "selected_files": [
+   "src/icalendar/__init__.py",
+   "src/icalendar/timezone/windows_to_olson.py",
+   "src/icalendar/prop/__init__.py",
+   "src/icalendar/prop/dt/datetime.py"
+  ],
+  "selected_ranges": {
+   "src/icalendar/__init__.py": [
+    [
+     1,
+     184
+    ]
+   ],
+   "src/icalendar/prop/__init__.py": [
+    [
+     1,
+     149
+    ]
+   ],
+   "src/icalendar/prop/dt/datetime.py": [
+    [
+     1,
+     207
+    ]
+   ],
+   "src/icalendar/timezone/windows_to_olson.py": [
+    [
+     1,
+     119
+    ]
+   ]
+  },
+  "selection_reason": {
+   "src/icalendar/__init__.py": "whole file (within the per-file budget)",
+   "src/icalendar/prop/__init__.py": "whole file (within the per-file budget)",
+   "src/icalendar/prop/dt/datetime.py": "whole file (within the per-file budget)",
+   "src/icalendar/timezone/windows_to_olson.py": "whole file (within the per-file budget)"
+  },
+  "src_layout": "src",
+  "stages": {
+   "grep": [
+    "src/icalendar/prop/dt/datetime.py"
+   ],
+   "imports": [
+    "src/icalendar/__init__.py",
+    "src/icalendar/timezone/windows_to_olson.py"
+   ],
+   "reexports": [
+    "src/icalendar/prop/__init__.py"
+   ],
+   "traceback": [
+    "src/icalendar/tests/prop/test_windows_to_olson_mapping.py"
+   ],
+   "unresolved": [
+    "WINDOWS_TO_OLSON",
+    "datetime"
+   ],
+   "used_dependencies": []
+  },
+  "target": "src/icalendar/tests/prop/test_windows_to_olson_mapping.py::test_mountain_standard_time_mexico[pytz]",
+  "upstream_source_hunks": 1,
+  "verdict": "COVERED"
+ },
+ {
+  "case": "icalendar-781eeda8-locale_timezone",
+  "file_cap": 6,
+  "global_budget_chars": 60000,
+  "ground_truth_method": "upstream source hunks at the pinned parent, mechanically minimized against the frozen target and preservation checks; never shown to a model",
+  "pct_of_global_budget": 33.5,
+  "per_file_budget_chars": 20000,
+  "protected_paths": [
+   "conftest.py",
+   "pyproject.toml",
+   "pytest.ini",
+   "setup.cfg",
+   "src/icalendar/tests/test_issue_313_globally_unique_tzid.py",
+   "tox.ini"
+  ],
+  "reason": "every task-required region is inside the selected context",
+  "required_hunks": 1,
+  "required_regions": {
+   "src/icalendar/timezone/tzp.py": [
+    [
+     145,
+     151
+    ]
+   ]
+  },
+  "selected_chars": 20091,
+  "selected_files": [
+   "src/icalendar/__init__.py",
+   "src/icalendar/timezone/__init__.py",
+   "src/icalendar/timezone/tzp.py",
+   "src/icalendar/tools.py",
+   "src/icalendar/timezone/windows_to_olson.py",
+   "src/icalendar/cal/__init__.py"
+  ],
+  "selected_ranges": {
+   "src/icalendar/__init__.py": [
+    [
+     1,
+     182
+    ]
+   ],
+   "src/icalendar/cal/__init__.py": [
+    [
+     1,
+     35
+    ]
+   ],
+   "src/icalendar/timezone/__init__.py": [
+    [
+     1,
+     28
+    ]
+   ],
+   "src/icalendar/timezone/tzp.py": [
+    [
+     1,
+     167
+    ]
+   ],
+   "src/icalendar/timezone/windows_to_olson.py": [
+    [
+     1,
+     119
+    ]
+   ],
+   "src/icalendar/tools.py": [
+    [
+     1,
+     146
+    ]
+   ]
+  },
+  "selection_reason": {
+   "src/icalendar/__init__.py": "whole file (within the per-file budget)",
+   "src/icalendar/cal/__init__.py": "whole file (within the per-file budget)",
+   "src/icalendar/timezone/__init__.py": "whole file (within the per-file budget)",
+   "src/icalendar/timezone/tzp.py": "whole file (within the per-file budget)",
+   "src/icalendar/timezone/windows_to_olson.py": "whole file (within the per-file budget)",
+   "src/icalendar/tools.py": "whole file (within the per-file budget)"
+  },
+  "src_layout": "src",
+  "stages": {
+   "grep": [
+    "src/icalendar/cal/calendar.py"
+   ],
+   "imports": [
+    "src/icalendar/__init__.py",
+    "src/icalendar/timezone/__init__.py"
+   ],
+   "reexports": [
+    "src/icalendar/cal/__init__.py",
+    "src/icalendar/timezone/tzid.py"
+   ],
+   "traceback": [
+    "src/icalendar/tests/test_issue_313_globally_unique_tzid.py"
+   ],
+   "unresolved": [
+    "timedelta"
+   ],
+   "used_dependencies": [
+    "src/icalendar/timezone/tzp.py",
+    "src/icalendar/tools.py",
+    "src/icalendar/timezone/windows_to_olson.py",
+    "src/icalendar/cal/__init__.py",
+    "src/icalendar/compatibility.py"
+   ]
+  },
+  "target": "src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz]",
+  "upstream_source_hunks": 1,
+  "verdict": "COVERED"
+ },
+ {
+  "case": "dateutil-f2293200-version_mismatch",
+  "file_cap": 6,
+  "global_budget_chars": 60000,
+  "ground_truth_method": "upstream source hunks at the pinned parent, mechanically minimized against the frozen target and preservation checks; never shown to a model",
+  "pct_of_global_budget": 71.2,
+  "per_file_budget_chars": 20000,
+  "protected_paths": [
+   "conftest.py",
+   "pyproject.toml",
+   "pytest.ini",
+   "setup.cfg",
+   "tests/test_imports.py",
+   "tox.ini"
+  ],
+  "reason": "every task-required region is inside the selected context",
+  "required_hunks": 1,
+  "required_regions": {
+   "src/dateutil/tz/tz.py": [
+    [
+     34,
+     40
+    ]
+   ]
+  },
+  "selected_chars": 42712,
+  "selected_files": [
+   "src/dateutil/tz/tz.py",
+   "src/dateutil/tz/__init__.py",
+   "src/dateutil/parser/_parser.py",
+   "src/dateutil/parser/__init__.py",
+   "src/dateutil/__init__.py",
+   "src/dateutil/easter.py"
+  ],
+  "selected_ranges": {
+   "src/dateutil/__init__.py": [
+    [
+     1,
+     24
+    ]
+   ],
+   "src/dateutil/easter.py": [
+    [
+     1,
+     89
+    ]
+   ],
+   "src/dateutil/parser/__init__.py": [
+    [
+     1,
+     61
+    ]
+   ],
+   "src/dateutil/parser/_parser.py": [
+    [
+     38,
+     62
+    ],
+    [
+     241,
+     391
+    ],
+    [
+     1270,
+     1368
+    ],
+    [
+     1390,
+     1579
+    ]
+   ],
+   "src/dateutil/tz/__init__.py": [
+    [
+     1,
+     12
+    ]
+   ],
+   "src/dateutil/tz/tz.py": [
+    [
+     25,
+     49
+    ],
+    [
+     41,
+     123
+    ],
+    [
+     132,
+     198
+    ],
+    [
+     201,
+     325
+    ],
+    [
+     874,
+     1033
+    ],
+    [
+     1036,
+     1153
+    ],
+    [
+     1683,
+     1714
+    ]
+   ]
+  },
+  "selection_reason": {
+   "src/dateutil/__init__.py": "whole file (within the per-file budget)",
+   "src/dateutil/easter.py": "whole file (within the per-file budget)",
+   "src/dateutil/parser/__init__.py": "whole file (within the per-file budget)",
+   "src/dateutil/parser/_parser.py": "complete definitions: parserinfo is imported by the test; weekday is imported by the test; tzoffset is imported by the test; parser is imported by the test; parse is imported by the test; bounded windows around cited lines at module level: 50",
+   "src/dateutil/tz/__init__.py": "whole file (within the per-file budget)",
+   "src/dateutil/tz/tz.py": "complete definitions: tzutc is imported by the test; tzoffset is imported by the test; tzlocal is imported by the test; tzfile is imported by the test; tzrange is imported by the test; tzstr is imported by the test; tzical is imported by the test; datetime_exists is imported by the test; datetime_ambiguous is imported by the test; resolve_imaginary is imported by the test; bounded windows around cited lines at module level: 37"
+  },
+  "src_layout": "src",
+  "stages": {
+   "grep": [],
+   "imports": [
+    "src/dateutil/__init__.py",
+    "src/dateutil/easter.py",
+    "src/dateutil/parser/__init__.py",
+    "src/dateutil/relativedelta.py",
+    "src/dateutil/rrule.py",
+    "src/dateutil/tz/__init__.py",
+    "src/dateutil/tzwin.py",
+    "src/dateutil/zoneinfo/__init__.py"
+   ],
+   "reexports": [
+    "src/dateutil/__init__.py",
+    "src/dateutil/tz/tz.py",
+    "src/dateutil/tz/win.py"
+   ],
+   "traceback": [
+    "src/dateutil/tz/tz.py",
+    "src/dateutil/tz/__init__.py",
+    "src/dateutil/parser/_parser.py",
+    "src/dateutil/parser/__init__.py",
+    "/usr/local/lib/python3.12/importlib/__init__.py",
+    "src/dateutil/__init__.py",
+    "tests/test_imports.py"
+   ],
+   "unresolved": [
+    "DAILY",
+    "FR",
+    "HOURLY",
+    "MINUTELY",
+    "MO",
+    "MONTHLY",
+    "SA",
+    "SECONDLY",
+    "SU",
+    "TH",
+    "TU",
+    "UTC",
+    "WE",
+    "WEEKLY",
+    "YEARLY",
+    "__version__",
+    "rrulestr",
+    "tz",
+    "zoneinfo"
+   ],
+   "used_dependencies": [
+    "src/dateutil/tz/_common.py",
+    "src/dateutil/tz/_factories.py",
+    "src/dateutil/tz/win.py",
+    "src/dateutil/_common.py"
+   ]
+  },
+  "target": "tests/test_imports.py::test_lazy_import[parser]",
+  "upstream_source_hunks": 1,
+  "verdict": "COVERED"
+ },
+ {
+  "case": "freezegun-3d5d60b4-version_mismatch",
+  "file_cap": 6,
+  "global_budget_chars": 60000,
+  "ground_truth_method": "upstream source hunks at the pinned parent, mechanically minimized against the frozen target and preservation checks; never shown to a model",
+  "pct_of_global_budget": 26.9,
+  "per_file_budget_chars": 20000,
+  "protected_paths": [
+   "conftest.py",
+   "pyproject.toml",
+   "pytest.ini",
+   "setup.cfg",
+   "tests/test_datetimes.py",
+   "tox.ini"
+  ],
+  "reason": "every task-required region is inside the selected context",
+  "required_hunks": 1,
+  "required_regions": {
+   "freezegun/api.py": [
+    [
+     619,
+     625
+    ]
+   ]
+  },
+  "selected_chars": 16153,
+  "selected_files": [
+   "freezegun/api.py",
+   "freezegun/__init__.py",
+   "freezegun/_async.py"
+  ],
+  "selected_ranges": {
+   "freezegun/__init__.py": [
+    [
+     1,
+     18
+    ]
+   ],
+   "freezegun/_async.py": [
+    [
+     1,
+     18
+    ]
+   ],
+   "freezegun/api.py": [
+    [
+     307,
+     334
+    ],
+    [
+     350,
+     420
+    ],
+    [
+     544,
+     813
+    ],
+    [
+     816,
+     855
+    ]
+   ]
+  },
+  "selection_reason": {
+   "freezegun/__init__.py": "whole file (within the per-file budget)",
+   "freezegun/_async.py": "whole file (within the per-file budget)",
+   "freezegun/api.py": "complete definitions: _freeze_time encloses cited line 809; FakeDate is imported by the test; FakeDatetime is imported by the test; freeze_time is imported by the test"
+  },
+  "src_layout": "flat",
+  "stages": {
+   "grep": [],
+   "imports": [
+    "tests/__init__.py",
+    "freezegun/__init__.py",
+    "freezegun/api.py"
+   ],
+   "reexports": [],
+   "traceback": [
+    "freezegun/api.py",
+    "tests/test_datetimes.py"
+   ],
+   "unresolved": [
+    "SkipTest",
+    "UTC",
+    "api",
+    "time",
+    "utils"
+   ],
+   "used_dependencies": [
+    "freezegun/_async.py"
+   ]
+  },
+  "target": "tests/test_datetimes.py::Tester::test_class_decorator_respects_staticmethod",
+  "upstream_source_hunks": 1,
+  "verdict": "COVERED"
+ },
+ {
+  "case": "icalendar-62cbf833-version_mismatch",
+  "file_cap": 6,
+  "global_budget_chars": 60000,
+  "ground_truth_method": "upstream source hunks at the pinned parent, mechanically minimized against the frozen target and preservation checks; never shown to a model",
+  "pct_of_global_budget": 46.4,
+  "per_file_budget_chars": 20000,
+  "protected_paths": [
+   "conftest.py",
+   "pyproject.toml",
+   "pytest.ini",
+   "setup.cfg",
+   "src/icalendar/tests/test_with_doctest.py",
+   "tox.ini"
+  ],
+  "reason": "every task-required region is inside the selected context",
+  "required_hunks": 2,
+  "required_regions": {
+   "src/icalendar/cal/alarm.py": [
+    [
+     481,
+     488
+    ],
+    [
+     567,
+     576
+    ]
+   ]
+  },
+  "selected_chars": 27839,
+  "selected_files": [
+   "src/icalendar/cal/alarm.py",
+   "src/icalendar/attr.py",
+   "src/icalendar/cal/component.py",
+   "src/icalendar/cal/examples.py",
+   "src/icalendar/error.py",
+   "src/icalendar/enums.py"
+  ],
+  "selected_ranges": {
+   "src/icalendar/attr.py": [
+    [
+     1,
+     13
+    ]
+   ],
+   "src/icalendar/cal/alarm.py": [
+    [
+     469,
+     493
+    ],
+    [
+     555,
+     579
+    ]
+   ],
+   "src/icalendar/cal/component.py": [
+    [
+     1,
+     13
+    ]
+   ],
+   "src/icalendar/cal/examples.py": [
+    [
+     1,
+     23
+    ]
+   ],
+   "src/icalendar/enums.py": [
+    [
+     1,
+     507
+    ]
+   ],
+   "src/icalendar/error.py": [
+    [
+     1,
+     238
+    ]
+   ]
+  },
+  "selection_reason": {
+   "src/icalendar/attr.py": "bounded windows (no complete definition fits the per-file budget)",
+   "src/icalendar/cal/alarm.py": "bounded windows (no complete definition fits the per-file budget)",
+   "src/icalendar/cal/component.py": "bounded windows (no complete definition fits the per-file budget)",
+   "src/icalendar/cal/examples.py": "whole file (within the per-file budget)",
+   "src/icalendar/enums.py": "whole file (within the per-file budget)",
+   "src/icalendar/error.py": "whole file (within the per-file budget)"
+  },
+  "src_layout": "src",
+  "stages": {
+   "grep": [],
+   "imports": [],
+   "reexports": [],
+   "traceback": [
+    "/repos/.cases/icalendar-62cbf833-version_mismatch-parent/src/icalendar/cal/alarm.py",
+    "src/icalendar/tests/test_with_doctest.py"
+   ],
+   "unresolved": [
+    "Path"
+   ],
+   "used_dependencies": [
+    "src/icalendar/attr.py",
+    "src/icalendar/cal/component.py",
+    "src/icalendar/cal/examples.py",
+    "src/icalendar/error.py",
+    "src/icalendar/enums.py",
+    "src/icalendar/parser_tools.py",
+    "src/icalendar/prop/__init__.py",
+    "src/icalendar/cal/component_factory.py",
+    "src/icalendar/caselessdict.py",
+    "src/icalendar/prop/adr.py",
+    "src/icalendar/prop/binary.py",
+    "src/icalendar/prop/boolean.py",
+    "src/icalendar/prop/broken.py",
+    "src/icalendar/__init__.py",
+    "src/icalendar/cal/alarm.py",
+    "src/icalendar/cal/availability.py"
+   ]
+  },
+  "target": "src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm]",
+  "upstream_source_hunks": 4,
+  "verdict": "COVERED"
+ }
+]

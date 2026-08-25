@@ -1,0 +1,4000 @@
+[
+ {
+  "adjacent_test_functions": 216,
+  "behavioural_lines": 9,
+  "date": "2015-05-30T20:29:40-07:00",
+  "edit_sites": 4,
+  "fix_commit": "615b164c4368528cf4f986aeaa8a6131e18c5b2d",
+  "new_test_functions": 0,
+  "parent": "e3cb60f1a3b5d493f24fe996a53a5238e7a2c788",
+  "repo": "arrow",
+  "score": 17,
+  "source_files": [
+   "arrow/factory.py",
+   "arrow/util.py"
+  ],
+  "source_lines_added": 14,
+  "source_lines_removed": 7,
+  "structures": [
+   "exception",
+   "locale_tz"
+  ],
+  "subject": "Avoid truncating oversized epoch timestamps. Fixes #216.",
+  "test_files": [
+   "tests/factory_tests.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 78,
+  "behavioural_lines": 2,
+  "date": "2021-07-16T21:12:39+01:00",
+  "edit_sites": 3,
+  "fix_commit": "c933f498683794d17f1646ef19896c64abde95db",
+  "new_test_functions": 1,
+  "parent": "41f23e25572277911e17bad29792c98e8ead0ae3",
+  "repo": "croniter",
+  "score": 17,
+  "source_files": [
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 1,
+  "structures": [
+   "boundary",
+   "exception"
+  ],
+  "subject": "Security fix: fix overflow when using cron ranges",
+  "test_files": [
+   "src/croniter/tests/test_croniter.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 94,
+  "behavioural_lines": 5,
+  "date": "2017-08-17T16:44:48+01:00",
+  "edit_sites": 4,
+  "fix_commit": "ebe06a4976526c3c15188a8ac3e2a02e13648a40",
+  "new_test_functions": 1,
+  "parent": "68e33af1c80f80edf64f72980b7e348315394f0a",
+  "repo": "icalendar",
+  "score": 17,
+  "source_files": [
+   "src/icalendar/cal.py"
+  ],
+  "source_lines_added": 20,
+  "source_lines_removed": 5,
+  "structures": [
+   "exception",
+   "locale_tz"
+  ],
+  "subject": "Fix non-ascii TZID and TZNAME handling in python 2",
+  "test_files": [
+   "src/icalendar/tests/test_fixed_issues.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 41,
+  "behavioural_lines": 5,
+  "date": "2011-05-20T14:01:15+02:00",
+  "edit_sites": 2,
+  "fix_commit": "8a937b3e0d6861b33f6d7f4e26e4f20a7695b3ab",
+  "new_test_functions": 1,
+  "parent": "045a963c40d7450d18200b3667bbc9258c4c07e4",
+  "repo": "werkzeug",
+  "score": 17,
+  "source_files": [
+   "werkzeug/urls.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 8,
+  "structures": [
+   "boundary",
+   "exception"
+  ],
+  "subject": "Don't quote URLs twice in certain code paths.  This fixes #61",
+  "test_files": [
+   "tests/test_urls.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 30,
+  "behavioural_lines": 3,
+  "date": "2023-06-30T15:58:12+02:00",
+  "edit_sites": 4,
+  "fix_commit": "647e7312544b29ffdca6bd821a5ce98f29a49156",
+  "new_test_functions": 1,
+  "parent": "f425205cee88d6d77021f78a92619d3f4909c8b6",
+  "repo": "humanize",
+  "score": 16,
+  "source_files": [
+   "src/humanize/time.py"
+  ],
+  "source_lines_added": 13,
+  "source_lines_removed": 2,
+  "structures": [
+   "locale_tz",
+   "mutation_order"
+  ],
+  "subject": "Fix issue #122",
+  "test_files": [
+   "tests/test_time.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 57,
+  "behavioural_lines": 4,
+  "date": "2015-09-22T20:41:54+02:00",
+  "edit_sites": 3,
+  "fix_commit": "f8b0f34ade3d5dde87b599ed6baa0c4f3b5f559e",
+  "new_test_functions": 2,
+  "parent": "60d81f25bf86c5fe39fc24f0d4cd5d7e5f63998b",
+  "repo": "pluggy",
+  "score": 15,
+  "source_files": [
+   "pluggy.py"
+  ],
+  "source_lines_added": 14,
+  "source_lines_removed": 3,
+  "structures": [
+   "cache",
+   "exception"
+  ],
+  "subject": "fix issue #4: raise specific HookCallError exception when arguments mismatch",
+  "test_files": [
+   "testing/test_pluggy.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 289,
+  "behavioural_lines": 5,
+  "date": "2016-09-08T14:45:22+04:00",
+  "edit_sites": 2,
+  "fix_commit": "b8e03bc9c6206db52ba2394cf277ac7e5d6e982b",
+  "new_test_functions": 2,
+  "parent": "c2d631e89e12fb8bda64c4d3d4d45de29e98d18b",
+  "repo": "werkzeug",
+  "score": 15,
+  "source_files": [
+   "werkzeug/datastructures.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 1,
+  "structures": [
+   "boundary",
+   "exception"
+  ],
+  "subject": "fix multidict behavior for pop for empty lists (#1000)",
+  "test_files": [
+   "tests/test_datastructures.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 109,
+  "behavioural_lines": 4,
+  "date": "2017-11-04T14:38:03+01:00",
+  "edit_sites": 3,
+  "fix_commit": "c1adf5cfc666a89084594b82942fd67e4ae24c3e",
+  "new_test_functions": 1,
+  "parent": "1bb8fbd5ef0ba82265cb993444fe2838477cba4f",
+  "repo": "attrs",
+  "score": 14,
+  "source_files": [
+   "src/attr/_make.py"
+  ],
+  "source_lines_added": 14,
+  "source_lines_removed": 4,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix pickling for instances of classes created using make_class() (#282)",
+  "test_files": [
+   "tests/test_dark_magic.py",
+   "tests/test_make.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 47,
+  "behavioural_lines": 2,
+  "date": "2016-04-01T11:48:29+02:00",
+  "edit_sites": 1,
+  "fix_commit": "977e1c4f194cfd3c23679d2c32f645aec6d27da0",
+  "new_test_functions": 0,
+  "parent": "d20f70bd188e490f24d093675dd182786a29ec2d",
+  "repo": "cachetools",
+  "score": 14,
+  "source_files": [
+   "cachetools/cache.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 1,
+  "structures": [
+   "cache",
+   "exception"
+  ],
+  "subject": "Fix #63: Handle ValueError in Cache.__missing__().",
+  "test_files": [
+   "tests/__init__.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 52,
+  "behavioural_lines": 4,
+  "date": "2014-04-10T18:57:04+02:00",
+  "edit_sites": 2,
+  "fix_commit": "fc6f354eedf85f2c9ef2a8cf7a60e55e5f32656f",
+  "new_test_functions": 0,
+  "parent": "c4e802e2fe8b9527a9ee11824b3fdc4885bfe7fe",
+  "repo": "cerberus",
+  "score": 14,
+  "source_files": [
+   "cerberus/cerberus.py",
+   "cerberus/errors.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 3,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fixed validation of not-nullable fields w/out type",
+  "test_files": [
+   "cerberus/tests/__init__.py",
+   "cerberus/tests/tests.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 100,
+  "behavioural_lines": 7,
+  "date": "2025-05-22T22:14:23+02:00",
+  "edit_sites": 3,
+  "fix_commit": "93c6966eb3a575c2b600434d1cc9f4b3aee505ac",
+  "new_test_functions": 0,
+  "parent": "b63239d657aab7c4e04667a62e7177f617b37230",
+  "repo": "click",
+  "score": 14,
+  "source_files": [
+   "src/click/testing.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 9,
+  "structures": [
+   "exception"
+  ],
+  "subject": "testing/CliRunner: Fix regression related to EOF introduced in 262bdf0",
+  "test_files": [
+   "tests/test_chain.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 61,
+  "behavioural_lines": 5,
+  "date": "2015-11-05T23:24:42+01:00",
+  "edit_sites": 2,
+  "fix_commit": "262c275d8513a377fdc741695c7ab11920fc8391",
+  "new_test_functions": 0,
+  "parent": "2df17b6e6642ecc8fdcbd259222ce176cf65af98",
+  "repo": "click",
+  "score": 14,
+  "source_files": [
+   "click/_compat.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 2,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fixed broken tests and behavior on windows.",
+  "test_files": [
+   "tests/test_arguments.py",
+   "tests/test_imports.py",
+   "tests/test_testing.py",
+   "tests/test_utils.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 494,
+  "behavioural_lines": 3,
+  "date": "2014-12-10T19:53:27+02:00",
+  "edit_sites": 2,
+  "fix_commit": "b8e944b5111350c79e2abfa77076d5a749f1de4d",
+  "new_test_functions": 1,
+  "parent": "b2615c76fec3e6317a9967f791679d2b0a5e98aa",
+  "repo": "dateutil",
+  "score": 14,
+  "source_files": [
+   "dateutil/tzwin.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 0,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "windows: fix tzinfo for timezones without dst",
+  "test_files": [
+   "dateutil/test/test.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 124,
+  "behavioural_lines": 2,
+  "date": "2017-01-07T02:44:37+01:00",
+  "edit_sites": 2,
+  "fix_commit": "01d9e7e906386d24ef3d067bee40401a138098e6",
+  "new_test_functions": 0,
+  "parent": "e8ef8aaceea50af07a14fcfb26360d3cf9715639",
+  "repo": "jinja",
+  "score": 14,
+  "source_files": [
+   "jinja2/asyncfilters.py",
+   "jinja2/nodes.py"
+  ],
+  "source_lines_added": 9,
+  "source_lines_removed": 0,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Smaller fixes to stuff that broke on 3.x",
+  "test_files": [
+   "tests/test_filters.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 330,
+  "behavioural_lines": 3,
+  "date": "2014-12-13T18:16:52+01:00",
+  "edit_sites": 3,
+  "fix_commit": "1f28e30b244def9bce2bce4b9302bc4989590c04",
+  "new_test_functions": 1,
+  "parent": "2658046876dc952a37eef97319217383dd919652",
+  "repo": "marshmallow",
+  "score": 14,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 3,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Add failing test case for TimeDelta and also fix all of the errors",
+  "test_files": [
+   "tests/test_deserialization.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 134,
+  "behavioural_lines": 3,
+  "date": "2014-04-09T20:52:42-04:00",
+  "edit_sites": 3,
+  "fix_commit": "dd75c8675b9369926241fd74c23a3afa8c23e029",
+  "new_test_functions": 1,
+  "parent": "19cf3ce661ee5eded287db2090407efbbb5b9bd4",
+  "repo": "marshmallow",
+  "score": 14,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 11,
+  "source_lines_removed": 3,
+  "structures": [
+   "exception"
+  ],
+  "subject": "added required fields flag, fixes #16",
+  "test_files": [
+   "tests/test_marshmallow.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 70,
+  "behavioural_lines": 6,
+  "date": "2013-11-14T01:15:21-06:00",
+  "edit_sites": 4,
+  "fix_commit": "6f250eb0e247b211c9e88fc8845d8d95282f2dca",
+  "new_test_functions": 0,
+  "parent": "fceeacaff9496cd8481e7f5150cfb3d061ed1fb0",
+  "repo": "marshmallow",
+  "score": 14,
+  "source_files": [
+   "marshmallow/fields.py",
+   "marshmallow/serializer.py"
+  ],
+  "source_lines_added": 15,
+  "source_lines_removed": 14,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix failing tests",
+  "test_files": [
+   "tests/test_marshmallow.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 97,
+  "behavioural_lines": 2,
+  "date": "2026-01-05T19:05:45-05:00",
+  "edit_sites": 3,
+  "fix_commit": "b20096ccce1ca389fa1d3c4290065ab4ede370cc",
+  "new_test_functions": 1,
+  "parent": "65092ce350ac2cc73e61d770f5d16a0957bf6e45",
+  "repo": "packaging",
+  "score": 14,
+  "source_files": [
+   "src/packaging/markers.py"
+  ],
+  "source_lines_added": 9,
+  "source_lines_removed": 5,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "fix: don't renormalize extras (#1028)",
+  "test_files": [
+   "tests/test_markers.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 90,
+  "behavioural_lines": 3,
+  "date": "2024-09-05T19:59:35+01:00",
+  "edit_sites": 2,
+  "fix_commit": "a716c52b5f3ca9b4a512f538b80ced8ee01b2775",
+  "new_test_functions": 0,
+  "parent": "2b06f90cbe2ffbde64ea23ca36c96c35e2aca05a",
+  "repo": "packaging",
+  "score": 14,
+  "source_files": [
+   "src/packaging/metadata.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 2,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix uninformative error message (#830)",
+  "test_files": [
+   "tests/test_metadata.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 124,
+  "behavioural_lines": 2,
+  "date": "2016-02-02T13:03:02+01:00",
+  "edit_sites": 1,
+  "fix_commit": "3c6eb0e8258c7d90aa08800da9f60441d7dcb485",
+  "new_test_functions": 1,
+  "parent": "b5b5a55e5c37cc7f02b7b24ba9efe73c5756b55f",
+  "repo": "pygments",
+  "score": 14,
+  "source_files": [
+   "pygments/token.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 0,
+  "structures": [
+   "cache",
+   "mutation_order"
+  ],
+  "subject": "Fixed deepcopy-ing of Token instances (closes #1168)",
+  "test_files": [
+   "tests/test_token.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 79,
+  "behavioural_lines": 3,
+  "date": "2019-04-08T11:40:27+02:00",
+  "edit_sites": 3,
+  "fix_commit": "a7b83aeb487bf8de6b8f601d5b2e35f7141e8a4e",
+  "new_test_functions": 1,
+  "parent": "bd3211786a0d23d4e889e6238ac99f0b253f0867",
+  "repo": "tenacity",
+  "score": 14,
+  "source_files": [
+   "tenacity/compat.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 3,
+  "structures": [
+   "exception"
+  ],
+  "subject": "compat: fix Python 2 method compat calling",
+  "test_files": [
+   "tenacity/tests/test_tenacity.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 198,
+  "behavioural_lines": 2,
+  "date": "2017-12-28T22:14:38+01:00",
+  "edit_sites": 1,
+  "fix_commit": "c5a0f223ccd8d32aef04c3d59c78028abd10ff1d",
+  "new_test_functions": 1,
+  "parent": "7a3a91a45f2e7c46e9a4169c38ec4509c0743dec",
+  "repo": "werkzeug",
+  "score": 14,
+  "source_files": [
+   "werkzeug/contrib/cache.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 0,
+  "structures": [
+   "cache",
+   "exception"
+  ],
+  "subject": "Improve error message for Redis Cache with None as host -- fixes #1179 (#1182)",
+  "test_files": [
+   "tests/contrib/cache/test_cache.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 287,
+  "behavioural_lines": 4,
+  "date": "2016-08-19T23:57:32+05:00",
+  "edit_sites": 2,
+  "fix_commit": "f8f27d9dba621bb9559732407efd4395f24c57a4",
+  "new_test_functions": 1,
+  "parent": "be041300788cafadbd489388bcf1bcbc8a53aa39",
+  "repo": "werkzeug",
+  "score": 14,
+  "source_files": [
+   "werkzeug/datastructures.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 1,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "fix multidict behavior for empty lists",
+  "test_files": [
+   "tests/test_datastructures.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 43,
+  "behavioural_lines": 2,
+  "date": "2011-01-24T15:25:31+01:00",
+  "edit_sites": 2,
+  "fix_commit": "f506104e6cf2bc7cad0b991de020f1098396dc1e",
+  "new_test_functions": 1,
+  "parent": "0a75bcc9ca686cfdcff520a4a686d7fd033caf4a",
+  "repo": "werkzeug",
+  "score": 14,
+  "source_files": [
+   "werkzeug/formparser.py"
+  ],
+  "source_lines_added": 9,
+  "source_lines_removed": 1,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fixed a parsing bug in the multipart parser",
+  "test_files": [
+   "tests/test_formparser.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 35,
+  "behavioural_lines": 3,
+  "date": "2018-05-12T12:57:44+02:00",
+  "edit_sites": 2,
+  "fix_commit": "83335b6d9281380ce5268f33fb930d8702814b28",
+  "new_test_functions": 1,
+  "parent": "d456411316cca0ea7bf709feee013f5a816d9de6",
+  "repo": "cachetools",
+  "score": 13,
+  "source_files": [
+   "cachetools/rr.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 1,
+  "structures": [
+   "cache"
+  ],
+  "subject": "Fix #95: Fix Python 2.7 RRCache pickling issues.",
+  "test_files": [
+   "tests/test_rr.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 32,
+  "behavioural_lines": 2,
+  "date": "2014-01-29T20:51:35+01:00",
+  "edit_sites": 3,
+  "fix_commit": "4b8322cedeb5a4a6c7cbb3721d985045113b0f70",
+  "new_test_functions": 0,
+  "parent": "0ab6051df78bcde3a4137a77e623997f850cfee0",
+  "repo": "croniter",
+  "score": 13,
+  "source_files": [
+   "setup.py",
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 12,
+  "structures": [
+   "exception"
+  ],
+  "subject": "fix tests",
+  "test_files": [
+   "src/croniter/tests/test_croniter.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 24,
+  "behavioural_lines": 1,
+  "date": "2021-06-03T13:53:19-05:00",
+  "edit_sites": 3,
+  "fix_commit": "1cb8c97be48e2b79751250ebb2e10efbbcb8f466",
+  "new_test_functions": 1,
+  "parent": "ca43530c384807393bf2812ea86a16978738b2af",
+  "repo": "faker",
+  "score": 13,
+  "source_files": [
+   "faker/proxy.py"
+  ],
+  "source_lines_added": 15,
+  "source_lines_removed": 1,
+  "structures": [
+   "cache",
+   "mutation_order"
+  ],
+  "subject": "Fix #1452. Implement __deepcopy__ for Faker objects. (#1453)",
+  "test_files": [
+   "tests/test_proxy.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 6,
+  "behavioural_lines": 9,
+  "date": "2013-07-10T13:45:42-04:00",
+  "edit_sites": 3,
+  "fix_commit": "1bf3f4c741979c7b5be62ef302ecbb858bbff83b",
+  "new_test_functions": 1,
+  "parent": "a09068a5d05b967dce1d8ee32b2af39b072d7048",
+  "repo": "humanize",
+  "score": 13,
+  "source_files": [
+   "humanize/__init__.py",
+   "humanize/time.py"
+  ],
+  "source_lines_added": 17,
+  "source_lines_removed": 2,
+  "structures": [
+   "boundary",
+   "exception"
+  ],
+  "subject": "add humanize.humandate which overflows to include the year on dates 365+ days in the past, unlike humanize.humanday which always shows the m",
+  "test_files": [
+   "tests/time.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 32,
+  "behavioural_lines": 8,
+  "date": "2011-07-12T20:31:47+02:00",
+  "edit_sites": 4,
+  "fix_commit": "b0d8c9aca8598e31b9e51714959a37f897d419fd",
+  "new_test_functions": 0,
+  "parent": "efdd649a3b3639eca446e8f00285a7f5656789d1",
+  "repo": "werkzeug",
+  "score": 13,
+  "source_files": [
+   "werkzeug/routing.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 6,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fixed default based URL building edge case.",
+  "test_files": [
+   "tests/test_routing.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 40,
+  "behavioural_lines": 5,
+  "date": "2017-05-04T13:20:39+02:00",
+  "edit_sites": 3,
+  "fix_commit": "b79a49e9a4d619f33b9025ee93d27d3d0141263e",
+  "new_test_functions": 3,
+  "parent": "beca34403413ded4879362e08fa96f69902df283",
+  "repo": "attrs",
+  "score": 12,
+  "source_files": [
+   "src/attr/_funcs.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 19,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix evolve (cont) (#182)",
+  "test_files": [
+   "tests/test_funcs.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 23,
+  "behavioural_lines": 4,
+  "date": "2008-06-17T20:40:36Z",
+  "edit_sites": 1,
+  "fix_commit": "e82fcf5d4ee6e2c05a960cc1799fac3d7bdf5fda",
+  "new_test_functions": 1,
+  "parent": "b9a0aea04102fab53afd53d1a5e7c3472eea2bcf",
+  "repo": "babel",
+  "score": 12,
+  "source_files": [
+   "babel/messages/pofile.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 2,
+  "structures": [
+   "exception",
+   "locale_tz"
+  ],
+  "subject": "Fixed #59 by falling back silently on invalid location comments.",
+  "test_files": [
+   "babel/messages/tests/pofile.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 64,
+  "behavioural_lines": 1,
+  "date": "2025-07-28T16:56:51-07:00",
+  "edit_sites": 4,
+  "fix_commit": "812b8000f79c1fbb747a2de5114fc74515558857",
+  "new_test_functions": 0,
+  "parent": "a8b41c077b225c30921a78190507a463a20ebb1b",
+  "repo": "click",
+  "score": 12,
+  "source_files": [
+   "src/click/termui.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 6,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fix rendering when `prompt_suffix` is empty",
+  "test_files": [
+   "tests/test_utils.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 22,
+  "behavioural_lines": 5,
+  "date": "2012-05-03T20:34:24-05:00",
+  "edit_sites": 4,
+  "fix_commit": "df57e1b291c94b07ce64bfb4cb0a07b7a446a6e3",
+  "new_test_functions": 0,
+  "parent": "ea46a70199897433b45f6e534793184b9439994e",
+  "repo": "croniter",
+  "score": 12,
+  "source_files": [
+   "croniter/__init__.py",
+   "croniter/croniter.py"
+  ],
+  "source_lines_added": 11,
+  "source_lines_removed": 7,
+  "structures": [
+   "exception"
+  ],
+  "subject": "fix python3 and python2.7 runtime errors",
+  "test_files": [
+   "croniter/croniter_test.py",
+   "croniter/speed_test.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 44,
+  "behavioural_lines": 1,
+  "date": "2015-03-19T18:21:46-04:00",
+  "edit_sites": 2,
+  "fix_commit": "b0dfb4247864e62a8f71b87fef623219ec884c2f",
+  "new_test_functions": 1,
+  "parent": "c8305dccf6cb110eaa26b9eda52c53b57f8ac9a4",
+  "repo": "freezegun",
+  "score": 12,
+  "source_files": [
+   "freezegun/api.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 2,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "Fix `FakeTime.__call__()` to return the correct value when daylight savings is in effect.",
+  "test_files": [
+   "tests/test_datetimes.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 211,
+  "behavioural_lines": 1,
+  "date": "2014-08-21T15:54:05-04:00",
+  "edit_sites": 3,
+  "fix_commit": "4c8f331d616a8be18a7570abd3f963e8be9a31f3",
+  "new_test_functions": 1,
+  "parent": "7263b6662baae0c8015e175cde450a59df020dd2",
+  "repo": "marshmallow",
+  "score": 12,
+  "source_files": [
+   "marshmallow/fields.py",
+   "marshmallow/serializer.py"
+  ],
+  "source_lines_added": 11,
+  "source_lines_removed": 3,
+  "structures": [
+   "mutation_order"
+  ],
+  "subject": "Fix ordering of declared fields",
+  "test_files": [
+   "tests/test_serializer.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 74,
+  "behavioural_lines": 5,
+  "date": "2013-11-15T01:58:17-06:00",
+  "edit_sites": 3,
+  "fix_commit": "3f8828082280926aa60c7899d85ca233533907e9",
+  "new_test_functions": 2,
+  "parent": "e7109adb6a4c9c5374a6964f67599592a6341cbc",
+  "repo": "marshmallow",
+  "score": 12,
+  "source_files": [
+   "marshmallow/fields.py",
+   "marshmallow/serializer.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 3,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fix serializing empty list",
+  "test_files": [
+   "tests/test_marshmallow.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 47,
+  "behavioural_lines": 7,
+  "date": "2013-11-12T15:21:09-06:00",
+  "edit_sites": 3,
+  "fix_commit": "f412a5254818d8c39c4815217f753df86703f30b",
+  "new_test_functions": 2,
+  "parent": "78a237f932c3780589a50dd21c541727a3ef8c87",
+  "repo": "marshmallow",
+  "score": 12,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 14,
+  "source_lines_removed": 4,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix storing errors on Nested serializers",
+  "test_files": [
+   "tests/test_marshmallow.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 55,
+  "behavioural_lines": 2,
+  "date": "2016-02-22T11:35:38+11:00",
+  "edit_sites": 2,
+  "fix_commit": "eebfdd68e2e692757c8917e50ff136bb265bc3f8",
+  "new_test_functions": 2,
+  "parent": "4c06f4d76303ba3a9295a4f2ef59da56a9f3643c",
+  "repo": "packaging",
+  "score": 12,
+  "source_files": [
+   "packaging/requirements.py",
+   "packaging/specifiers.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 4,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix to parse requirements that use legacy versions",
+  "test_files": [
+   "tests/test_requirements.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 44,
+  "behavioural_lines": 1,
+  "date": "2019-05-12T15:01:42-07:00",
+  "edit_sites": 2,
+  "fix_commit": "0e669f6be532801267d35de23c5f5237b8406d8a",
+  "new_test_functions": 1,
+  "parent": "bdc17e4cd10bbb17449006cef385ec953a11fc36",
+  "repo": "werkzeug",
+  "score": 12,
+  "source_files": [
+   "src/werkzeug/debug/tbtools.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 2,
+  "structures": [
+   "cache"
+  ],
+  "subject": "Fix unhashable exception types",
+  "test_files": [
+   "tests/test_debug.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 21,
+  "behavioural_lines": 9,
+  "date": "2019-05-07T07:43:29-04:00",
+  "edit_sites": 4,
+  "fix_commit": "4ccf3d0ff8ad88d5aaf2adf4e7c7495f34e16c99",
+  "new_test_functions": 1,
+  "parent": "627a90e4c06854dd3d0c49556f9eb69fa68238e6",
+  "repo": "werkzeug",
+  "score": 12,
+  "source_files": [
+   "src/werkzeug/serving.py"
+  ],
+  "source_lines_added": 22,
+  "source_lines_removed": 3,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix folding headers in Python 2.7 (#1535)",
+  "test_files": [
+   "tests/test_serving.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 321,
+  "behavioural_lines": 5,
+  "date": "2017-04-15T15:21:37-03:00",
+  "edit_sites": 2,
+  "fix_commit": "026bd27bd9eebed9a24f409bd491cc6a69a02b13",
+  "new_test_functions": 3,
+  "parent": "558a068e0eac5e5c36e13ff998d9f0732337ba22",
+  "repo": "werkzeug",
+  "score": 12,
+  "source_files": [
+   "werkzeug/datastructures.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 3,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix bug in TyppeConversionDict (#1107)",
+  "test_files": [
+   "tests/test_datastructures.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 329,
+  "behavioural_lines": 1,
+  "date": "2016-08-25T11:28:59+02:00",
+  "edit_sites": 2,
+  "fix_commit": "7c07654250461b0f753efd6dc3976df44d3b94f8",
+  "new_test_functions": 1,
+  "parent": "6a4c502e2de80f9e34811fbbd3f198d81d1a810a",
+  "repo": "werkzeug",
+  "score": 12,
+  "source_files": [
+   "werkzeug/http.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 2,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fix parse_options_header for invalid content types (#995)",
+  "test_files": [
+   "tests/test_http.py",
+   "tests/test_wrappers.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 175,
+  "behavioural_lines": 3,
+  "date": "2013-06-05T07:35:01-07:00",
+  "edit_sites": 1,
+  "fix_commit": "049ccb4438c8e6095e443257752630ecb2ed6672",
+  "new_test_functions": 1,
+  "parent": "56418534f61eba795305293f315b65844ff664d7",
+  "repo": "arrow",
+  "score": 11,
+  "source_files": [
+   "arrow/arrow.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 1,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "fix for blank output in __format__ with empty format string",
+  "test_files": [
+   "tests/arrow_tests.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 89,
+  "behavioural_lines": 2,
+  "date": "2016-09-05T14:47:06+02:00",
+  "edit_sites": 4,
+  "fix_commit": "a624035cec86a85a925ee4738b05748f2598035e",
+  "new_test_functions": 1,
+  "parent": "60017ee06f145130cab3e3df65588f028d16a1f1",
+  "repo": "attrs",
+  "score": 11,
+  "source_files": [
+   "src/attr/_make.py"
+  ],
+  "source_lines_added": 9,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Fix converters on frozen classes",
+  "test_files": [
+   "tests/test_make.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 81,
+  "behavioural_lines": 2,
+  "date": "2015-09-16T15:12:46-05:00",
+  "edit_sites": 3,
+  "fix_commit": "2e7b7506966fa7fd1ca5b5ec71feb14b28a9be83",
+  "new_test_functions": 1,
+  "parent": "20357d4368dfe471010e8aa9a0ab7ff6781c53ef",
+  "repo": "attrs",
+  "score": 11,
+  "source_files": [
+   "src/attr/_make.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 8,
+  "structures": [],
+  "subject": "convert before validate, also fix two-space thing",
+  "test_files": [
+   "tests/test_make.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 125,
+  "behavioural_lines": 2,
+  "date": "2008-12-18T01:36:14Z",
+  "edit_sites": 1,
+  "fix_commit": "65cbc32abbbf9dca5fe7e958ebfa04c564189130",
+  "new_test_functions": 1,
+  "parent": "77c4dab5ef3d3464ed232b69d62e5e3c8fb92ac2",
+  "repo": "babel",
+  "score": 11,
+  "source_files": [
+   "babel/messages/catalog.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 0,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "Final and complete fix for #148.",
+  "test_files": [
+   "babel/messages/tests/catalog.py",
+   "babel/messages/tests/checkers.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 83,
+  "behavioural_lines": 3,
+  "date": "2008-07-15T16:34:18Z",
+  "edit_sites": 1,
+  "fix_commit": "0e9283a33bd292685f749bf42aee07149f79f774",
+  "new_test_functions": 1,
+  "parent": "77b35a7eca5268e1e87c7e9c49f98088bd0223c2",
+  "repo": "babel",
+  "score": 11,
+  "source_files": [
+   "babel/dates.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 0,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "Fixed quarters in date formatting.",
+  "test_files": [
+   "babel/tests/dates.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 55,
+  "behavioural_lines": 2,
+  "date": "2008-06-26T21:02:20Z",
+  "edit_sites": 3,
+  "fix_commit": "af76ec42708d55450db18a6474805d2ecc931482",
+  "new_test_functions": 1,
+  "parent": "c9fba6f3a0a70dfa38bb86e68755ef60f4dca539",
+  "repo": "babel",
+  "score": 11,
+  "source_files": [
+   "babel/messages/extract.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Test and respective fix for gettext calls that spawn multiple lines. Fixes #119.",
+  "test_files": [
+   "babel/messages/tests/extract.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 58,
+  "behavioural_lines": 10,
+  "date": "2007-08-26T13:38:58Z",
+  "edit_sites": 4,
+  "fix_commit": "d8188245fb04230ca8cd4ad8fafe2f263ffe6b6c",
+  "new_test_functions": 1,
+  "parent": "533ebf9110ae92f153259cdc6e4f373cc513398f",
+  "repo": "babel",
+  "score": 11,
+  "source_files": [
+   "babel/dates.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 4,
+  "structures": [],
+  "subject": "Fixed formatting bug with 12-hour clock patterns.",
+  "test_files": [
+   "babel/tests/dates.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 46,
+  "behavioural_lines": 3,
+  "date": "2018-06-29T13:12:31-04:00",
+  "edit_sites": 1,
+  "fix_commit": "9319ec77a06c582bd5e7726c0b3c69139ad67732",
+  "new_test_functions": 1,
+  "parent": "e1a6ba29495188eedca14b6a3884cb4e94732056",
+  "repo": "bleach",
+  "score": 11,
+  "source_files": [
+   "bleach/sanitizer.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 3,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix error when parsing invalid URI",
+  "test_files": [
+   "tests/test_clean.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 12,
+  "behavioural_lines": 8,
+  "date": "2020-04-08T12:50:56+02:00",
+  "edit_sites": 4,
+  "fix_commit": "9a6cb65aae884cff1b1287d5288ff43c751a6f32",
+  "new_test_functions": 1,
+  "parent": "d6f962e80ed405756fb478bcb4165e85796371f9",
+  "repo": "cachetools",
+  "score": 11,
+  "source_files": [
+   "cachetools/func.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 0,
+  "structures": [
+   "cache"
+  ],
+  "subject": "Fix #163: Support user_function with cachetools.func decorators.",
+  "test_files": [
+   "tests/test_func.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 107,
+  "behavioural_lines": 2,
+  "date": "2025-09-22T08:55:58-05:00",
+  "edit_sites": 3,
+  "fix_commit": "1c20dc6e724cd5625faaa17b715ba928d44c08bf",
+  "new_test_functions": 1,
+  "parent": "6a1c0d077311f180b356965914e2de5b9e0fdb44",
+  "repo": "click",
+  "score": 11,
+  "source_files": [
+   "src/click/core.py"
+  ],
+  "source_lines_added": 11,
+  "source_lines_removed": 5,
+  "structures": [],
+  "subject": "Fix default handling to defer UNSET normalization",
+  "test_files": [
+   "tests/test_defaults.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 54,
+  "behavioural_lines": 4,
+  "date": "2018-10-10T15:38:04+02:00",
+  "edit_sites": 3,
+  "fix_commit": "e74508119a1e8ba59bf96a45fa1a149cd292a79d",
+  "new_test_functions": 0,
+  "parent": "69a25da0c0a8a78564f0fef700e1d6e5b21c1e8a",
+  "repo": "click",
+  "score": 11,
+  "source_files": [
+   "src/click/_termui_impl.py",
+   "src/click/termui.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "progressbar: fix regression with hidden bars",
+  "test_files": [
+   "tests/test_termui.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 123,
+  "behavioural_lines": 3,
+  "date": "2021-04-26T14:26:35+03:00",
+  "edit_sites": 1,
+  "fix_commit": "7d319c510b863827073d42ecee787f3c5a046f7c",
+  "new_test_functions": 1,
+  "parent": "6343c5b2fc65a0ed488793ab55f88be4bc330155",
+  "repo": "croniter",
+  "score": 11,
+  "source_files": [
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 1,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix ZeroDivisionError with \"* * R/0 * *\"",
+  "test_files": [
+   "src/croniter/tests/test_croniter_hash.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 79,
+  "behavioural_lines": 2,
+  "date": "2021-02-26T13:24:27+02:00",
+  "edit_sites": 3,
+  "fix_commit": "b4097ee46d692ee9813dd0396522a26dd7ebd48e",
+  "new_test_functions": 0,
+  "parent": "82ea1ffd1172591377e75ea693cdf078bd75b65a",
+  "repo": "croniter",
+  "score": 11,
+  "source_files": [
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Fix _expand to reject int literals with underscores",
+  "test_files": [
+   "src/croniter/tests/test_croniter.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 51,
+  "behavioural_lines": 2,
+  "date": "2018-05-22T14:37:22+03:00",
+  "edit_sites": 3,
+  "fix_commit": "50b7affe924fc13cc4ca437d633c29294d8241f4",
+  "new_test_functions": 1,
+  "parent": "90597d2c7e7d9d8dde7ab9519b55e739a4b7a883",
+  "repo": "croniter",
+  "score": 11,
+  "source_files": [
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix `get_next` while perserving the fix of `get_prev` in bfbcc9f32",
+  "test_files": [
+   "src/croniter/tests/test_croniter.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 18,
+  "behavioural_lines": 6,
+  "date": "2011-10-30T06:01:31+09:00",
+  "edit_sites": 4,
+  "fix_commit": "dc08fbdf349849478aee1a63c1caf66ae22b6721",
+  "new_test_functions": 1,
+  "parent": "6421bfb58fe50ff7cf2067c357636377163be43c",
+  "repo": "croniter",
+  "score": 11,
+  "source_files": [
+   "croniter/croniter.py"
+  ],
+  "source_lines_added": 16,
+  "source_lines_removed": 3,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "fixed following bug.   can't calclate previous date with week day condition",
+  "test_files": [
+   "croniter/croniter_test.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 30,
+  "behavioural_lines": 2,
+  "date": "2014-08-13T20:30:26-04:00",
+  "edit_sites": 3,
+  "fix_commit": "fb8f822e3c0a74c6136876ac975e654a4a715add",
+  "new_test_functions": 2,
+  "parent": "5216a43e26a1f83ca7504f0e610018c9699f1901",
+  "repo": "freezegun",
+  "score": 11,
+  "source_files": [
+   "freezegun/api.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 1,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "Add a fix for when timezone-aware datetimes are passed in. cc #48.",
+  "test_files": [
+   "tests/test_datetimes.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 186,
+  "behavioural_lines": 2,
+  "date": "2024-07-26T00:37:53+05:00",
+  "edit_sites": 2,
+  "fix_commit": "4375aea9f19cff78f5f3fd3cc84bdec150b3a80e",
+  "new_test_functions": 0,
+  "parent": "9eaf95c585bf81b0096c5927d39d475aab0cf9c5",
+  "repo": "icalendar",
+  "score": 11,
+  "source_files": [
+   "src/icalendar/prop.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fixed __repr__ for vBinary and vCalAddress.",
+  "test_files": [
+   "src/icalendar/tests/prop/test_vBinary.py",
+   "src/icalendar/tests/prop/test_vCalAddress.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 83,
+  "behavioural_lines": 2,
+  "date": "2016-01-21T16:22:45+01:00",
+  "edit_sites": 1,
+  "fix_commit": "63fcf7436e753417b599802c565e04bf36df50ce",
+  "new_test_functions": 1,
+  "parent": "f1f4bc52db91982c8231c39d15a98f4fb60c2eaa",
+  "repo": "icalendar",
+  "score": 11,
+  "source_files": [
+   "src/icalendar/cal.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 1,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fixes IndexError in Component.from_ical()",
+  "test_files": [
+   "src/icalendar/tests/test_fixed_issues.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 51,
+  "behavioural_lines": 2,
+  "date": "2013-10-24T02:39:05+02:00",
+  "edit_sites": 4,
+  "fix_commit": "11c8e9d72de3e7ad6a3b4b701f3aad28c6f43425",
+  "new_test_functions": 0,
+  "parent": "f1b1f9a1b20948ffd43b4d91634de3b4043039c4",
+  "repo": "icalendar",
+  "score": 11,
+  "source_files": [
+   "src/icalendar/prop.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "fixed the base64 incompat.",
+  "test_files": [
+   "src/icalendar/tests/test_unit_prop.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 35,
+  "behavioural_lines": 1,
+  "date": "2013-10-20T21:18:38+02:00",
+  "edit_sites": 4,
+  "fix_commit": "c32987cf1279f7da21b7132400aab09431bf5113",
+  "new_test_functions": 0,
+  "parent": "f81549370763087c0066e0ae887a1549d2e7ea53",
+  "repo": "icalendar",
+  "score": 11,
+  "source_files": [
+   "src/icalendar/parser.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 5,
+  "structures": [
+   "exception"
+  ],
+  "subject": "fixed some encoding problems",
+  "test_files": [
+   "src/icalendar/tests/test_encoding.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 48,
+  "behavioural_lines": 3,
+  "date": "2013-03-20T13:04:47+01:00",
+  "edit_sites": 4,
+  "fix_commit": "3aef43f035d770ca4aa26c4fcc6016e203b7ae08",
+  "new_test_functions": 1,
+  "parent": "616fa68655324976afadd7e2cf64165580c0d517",
+  "repo": "icalendar",
+  "score": 11,
+  "source_files": [
+   "src/icalendar/prop.py"
+  ],
+  "source_lines_added": 15,
+  "source_lines_removed": 11,
+  "structures": [],
+  "subject": "Allow seconds in vUTCOffset properties. Fixes #55.",
+  "test_files": [
+   "src/icalendar/tests/test_fixed_issues.py",
+   "src/icalendar/tests/test_prop.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 58,
+  "behavioural_lines": 3,
+  "date": "2013-03-20T11:35:42+01:00",
+  "edit_sites": 2,
+  "fix_commit": "616fa68655324976afadd7e2cf64165580c0d517",
+  "new_test_functions": 1,
+  "parent": "845803a60281c8add56695090715ac8d347e5867",
+  "repo": "icalendar",
+  "score": 11,
+  "source_files": [
+   "src/icalendar/cal.py",
+   "src/icalendar/prop.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Let ``Component.decode`` correctly decode vRecur properties. Fixes #70.",
+  "test_files": [
+   "src/icalendar/tests/test_fixed_issues.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 43,
+  "behavioural_lines": 2,
+  "date": "2013-03-18T23:22:03+01:00",
+  "edit_sites": 3,
+  "fix_commit": "e05916db16b324a8b3df75bab8227beb32ea4980",
+  "new_test_functions": 1,
+  "parent": "2d8638f642db0287e490c5d963ce5441025e35d2",
+  "repo": "icalendar",
+  "score": 11,
+  "source_files": [
+   "src/icalendar/parser.py",
+   "src/icalendar/prop.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 5,
+  "structures": [],
+  "subject": "convert from encoded back to unicode, for internal use. FIXES #80",
+  "test_files": [
+   "src/icalendar/tests/test_encoding.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 106,
+  "behavioural_lines": 2,
+  "date": "2019-08-10T22:08:39+01:00",
+  "edit_sites": 3,
+  "fix_commit": "8afc7e57c94bca530c0094e3cdbdbd8b4a1a5541",
+  "new_test_functions": 1,
+  "parent": "e68d9b870536d1d019b6f26750d4c68a89df25e3",
+  "repo": "jinja",
+  "score": 11,
+  "source_files": [
+   "jinja2/runtime.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 4,
+  "structures": [],
+  "subject": "Fix bug with when using Markup on ChainableUndefined",
+  "test_files": [
+   "tests/test_regression.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 84,
+  "behavioural_lines": 7,
+  "date": "2017-01-28T15:33:09+01:00",
+  "edit_sites": 4,
+  "fix_commit": "add79164c421df81022b0b93ebd021cf9ae64096",
+  "new_test_functions": 1,
+  "parent": "6295976154cbfdd530d33daeb3051b3a81d66d27",
+  "repo": "jinja",
+  "score": 11,
+  "source_files": [
+   "jinja2/asyncsupport.py",
+   "jinja2/runtime.py"
+  ],
+  "source_lines_added": 22,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fixed async macro autoescape. Fixes #671",
+  "test_files": [
+   "tests/test_async.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 108,
+  "behavioural_lines": 2,
+  "date": "2017-01-12T15:53:09+01:00",
+  "edit_sites": 2,
+  "fix_commit": "785485114f8b008572bd863eb93e43de5386a15f",
+  "new_test_functions": 1,
+  "parent": "78c9612299ca9744de2e955115e650654cc9277e",
+  "repo": "jinja",
+  "score": 11,
+  "source_files": [
+   "jinja2/filters.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Restore original tuple repr for grouper.  Fixes #654",
+  "test_files": [
+   "tests/test_regression.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 83,
+  "behavioural_lines": 4,
+  "date": "2015-08-04T18:28:42+02:00",
+  "edit_sites": 2,
+  "fix_commit": "d4f0dd9032ce82421b3525a1236679c1380f42d4",
+  "new_test_functions": 0,
+  "parent": "8189d2164dd671c7607771cc132c684f512b8bee",
+  "repo": "jinja",
+  "score": 11,
+  "source_files": [
+   "jinja2/filters.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fixed int() filter for non-string objects #466",
+  "test_files": [
+   "tests/test_filters.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 11,
+  "behavioural_lines": 4,
+  "date": "2010-02-09T01:27:57+01:00",
+  "edit_sites": 2,
+  "fix_commit": "88dc32cb4b0d0e883a26e6e18759bf4ee22a91e9",
+  "new_test_functions": 1,
+  "parent": "9b4cc9ff08b2a80c948c442344b6fca1650e64e6",
+  "repo": "jinja",
+  "score": 11,
+  "source_files": [
+   "jinja2/loaders.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 2,
+  "structures": [
+   "exception"
+  ],
+  "subject": "PrefixLoader raises correct error message now.  This fixes #358.",
+  "test_files": [
+   "tests/test_old_bugs.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 98,
+  "behavioural_lines": 2,
+  "date": "2008-09-06T16:15:38+02:00",
+  "edit_sites": 2,
+  "fix_commit": "4720c36a96012c22c648e15de9f33bbed1c49ef8",
+  "new_test_functions": 1,
+  "parent": "ce677103251180952bd27b6559e3fc87e6b518b7",
+  "repo": "jinja",
+  "score": 11,
+  "source_files": [
+   "jinja2/ext.py"
+  ],
+  "source_lines_added": 13,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fixed a bug in the i18n extension that caused the explicit pluralization block to look up the wrong variable.",
+  "test_files": [
+   "tests/test_i18n.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 371,
+  "behavioural_lines": 2,
+  "date": "2015-02-01T13:59:13-05:00",
+  "edit_sites": 2,
+  "fix_commit": "6f529f39ef59c8e338528175c2fbe2d3e30b97c6",
+  "new_test_functions": 1,
+  "parent": "a23da1c4520916c8d06d07bebfa3b4bec424c4a6",
+  "repo": "marshmallow",
+  "score": 11,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 11,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix allow_blank serialization behavior for URL and Email fields",
+  "test_files": [
+   "tests/test_schema.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 265,
+  "behavioural_lines": 2,
+  "date": "2014-10-19T12:54:32-04:00",
+  "edit_sites": 2,
+  "fix_commit": "98159735bf635dbe1751104fe85c82141e86ee50",
+  "new_test_functions": 0,
+  "parent": "1e2014f7d11c2c379b461cb96499d58f9ecfe9bf",
+  "repo": "marshmallow",
+  "score": 11,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 4,
+  "structures": [],
+  "subject": "Fix datetime deserialization when dateutil isn't installed",
+  "test_files": [
+   "tests/test_deserialization.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 100,
+  "behavioural_lines": 2,
+  "date": "2013-11-24T18:33:07-06:00",
+  "edit_sites": 2,
+  "fix_commit": "37cb1e18cc1661c316e34b4c84d4669b7daeac06",
+  "new_test_functions": 1,
+  "parent": "8bc0fa165d7a32af3e4d21e4245f9d5f889d7f9f",
+  "repo": "marshmallow",
+  "score": 11,
+  "source_files": [
+   "marshmallow/serializer.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix bug with serializing None",
+  "test_files": [
+   "tests/test_marshmallow.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 97,
+  "behavioural_lines": 2,
+  "date": "2013-11-24T15:40:18-06:00",
+  "edit_sites": 2,
+  "fix_commit": "6032e910fb9bcd38f3691b5bc2a2e43873cd5a36",
+  "new_test_functions": 1,
+  "parent": "23314215a40876bf24787dc13e52a336013a15a5",
+  "repo": "marshmallow",
+  "score": 11,
+  "source_files": [
+   "marshmallow/utils.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix bug with including a property in fields list",
+  "test_files": [
+   "tests/test_marshmallow.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 96,
+  "behavioural_lines": 2,
+  "date": "2013-11-24T14:59:05-06:00",
+  "edit_sites": 4,
+  "fix_commit": "23314215a40876bf24787dc13e52a336013a15a5",
+  "new_test_functions": 0,
+  "parent": "43a54dd8c8ff645ea6b23048b264cc1336211ce9",
+  "repo": "marshmallow",
+  "score": 11,
+  "source_files": [
+   "marshmallow/compat.py",
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 11,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix py26 compatibility with timedelta",
+  "test_files": [
+   "tests/test_marshmallow.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 96,
+  "behavioural_lines": 6,
+  "date": "2026-01-05T10:42:39-05:00",
+  "edit_sites": 2,
+  "fix_commit": "1c09ddf30b79428c21aec180f52e10f6dedc1d8a",
+  "new_test_functions": 1,
+  "parent": "8a805e3baac2d71958ec0d0beffbe4d51fd5795f",
+  "repo": "packaging",
+  "score": 11,
+  "source_files": [
+   "src/packaging/markers.py"
+  ],
+  "source_lines_added": 18,
+  "source_lines_removed": 10,
+  "structures": [],
+  "subject": "fix: normalize all extras, not just the first one (#1024)",
+  "test_files": [
+   "tests/test_requirements.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 180,
+  "behavioural_lines": 4,
+  "date": "2025-10-30T21:02:01-04:00",
+  "edit_sites": 3,
+  "fix_commit": "b68980bcd1f6c824a2a154d8b0e8aa5e0a1faa02",
+  "new_test_functions": 1,
+  "parent": "a1f705642e50b79da6be83fb0f6149daa32fc7cc",
+  "repo": "packaging",
+  "score": 11,
+  "source_files": [
+   "src/packaging/specifiers.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Fix arbitrary equality intersection preservation in `SpecifierSet` (#951)",
+  "test_files": [
+   "tests/test_specifiers.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 66,
+  "behavioural_lines": 2,
+  "date": "2009-09-12T08:05:34+02:00",
+  "edit_sites": 3,
+  "fix_commit": "3d13c5d4bb14f76d407285f2a91e7061585fd6da",
+  "new_test_functions": 1,
+  "parent": "29590e09223ca9eb44e15429488664cff9db5f9e",
+  "repo": "sqlparse",
+  "score": 11,
+  "source_files": [
+   "sqlparse/engine/grouping.py",
+   "sqlparse/sql.py"
+  ],
+  "source_lines_added": 9,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Prevent WHERE grouper from consuming closing parenthesis (fixes issue9, reported by estama).",
+  "test_files": [
+   "tests/test_grouping.py",
+   "tests/test_regressions.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 70,
+  "behavioural_lines": 4,
+  "date": "2018-07-20T22:26:11+02:00",
+  "edit_sites": 3,
+  "fix_commit": "219d980aeebff056de485b7c1dfde3579adc0a30",
+  "new_test_functions": 1,
+  "parent": "ef9a0acd11b8dfa0aad579561011ad2597a6aac4",
+  "repo": "tenacity",
+  "score": 11,
+  "source_files": [
+   "tenacity/wait.py"
+  ],
+  "source_lines_added": 17,
+  "source_lines_removed": 9,
+  "structures": [],
+  "subject": "Fix wait_chain to be runnable multiple times",
+  "test_files": [
+   "tenacity/tests/test_tenacity.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 241,
+  "behavioural_lines": 2,
+  "date": "2011-07-05T11:10:05+02:00",
+  "edit_sites": 2,
+  "fix_commit": "49340433c46e26f9e67fc4790d5966dc1b906b4c",
+  "new_test_functions": 1,
+  "parent": "1550743e56802984408c71fbc82bdf8b8e7a804a",
+  "repo": "werkzeug",
+  "score": 11,
+  "source_files": [
+   "werkzeug/test.py"
+  ],
+  "source_lines_added": 20,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Added cookie forging support to the test client.  This fixes #73",
+  "test_files": [
+   "tests/test_test.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 31,
+  "behavioural_lines": 2,
+  "date": "2008-12-18T00:19:47Z",
+  "edit_sites": 2,
+  "fix_commit": "77c4dab5ef3d3464ed232b69d62e5e3c8fb92ac2",
+  "new_test_functions": 0,
+  "parent": "b80d451e7831dd8e077d287c0ca3663fb5b074d1",
+  "repo": "babel",
+  "score": 10,
+  "source_files": [
+   "babel/messages/pofile.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Include patch from Asheesh Laroia. Fixes #45.",
+  "test_files": [
+   "babel/messages/tests/pofile.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 20,
+  "behavioural_lines": 1,
+  "date": "2019-05-17T18:09:42+02:00",
+  "edit_sites": 3,
+  "fix_commit": "462e867950883c8ffbcfff715efd767b20c6c749",
+  "new_test_functions": 1,
+  "parent": "3e5fe022716b0263488ef8146e18e162b2bcbe96",
+  "repo": "cachetools",
+  "score": 10,
+  "source_files": [
+   "cachetools/keys.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 1,
+  "structures": [
+   "cache"
+  ],
+  "subject": "Fix #130: Fix pickling/unpickling of cache keys.",
+  "test_files": [
+   "tests/test_keys.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 38,
+  "behavioural_lines": 5,
+  "date": "2026-04-30T01:37:31+02:00",
+  "edit_sites": 4,
+  "fix_commit": "19fd4d6e18bc9fce451f92f422696b11169faa57",
+  "new_test_functions": 1,
+  "parent": "c69643b60cf971cd5d8e5d3902632807ceab9b8f",
+  "repo": "click",
+  "score": 10,
+  "source_files": [
+   "src/click/shell_completion.py"
+  ],
+  "source_lines_added": 18,
+  "source_lines_removed": 5,
+  "structures": [],
+  "subject": "Fix: Ensure fish completion handles multiline help strings correctly (#3126)",
+  "test_files": [
+   "tests/test_shell_completion.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 36,
+  "behavioural_lines": 11,
+  "date": "2025-07-21T21:35:04+02:00",
+  "edit_sites": 2,
+  "fix_commit": "a1235aacb1be55dc66ddcfefbf64dec44b6ab54d",
+  "new_test_functions": 1,
+  "parent": "565f36d5bc4a15d304337b749e113fb4477b1843",
+  "repo": "click",
+  "score": 10,
+  "source_files": [
+   "src/click/shell_completion.py"
+  ],
+  "source_lines_added": 21,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix Zsh completions with colons (#2846)",
+  "test_files": [
+   "tests/test_shell_completion.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 39,
+  "behavioural_lines": 3,
+  "date": "2018-05-14T17:52:45-04:00",
+  "edit_sites": 1,
+  "fix_commit": "2bc3b2c12c6deb68164313386a036dc7543461fa",
+  "new_test_functions": 1,
+  "parent": "961a441af08dd24ff539e4640b6e6261a4006d22",
+  "repo": "click",
+  "score": 10,
+  "source_files": [
+   "click/testing.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 2,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix #616: allow setting prog_name in CliRunner.invoke",
+  "test_files": [
+   "tests/test_testing.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 38,
+  "behavioural_lines": 5,
+  "date": "2016-01-12T21:47:41+02:00",
+  "edit_sites": 3,
+  "fix_commit": "d611e66093ab5485018a9b48287a253ec947b9f0",
+  "new_test_functions": 1,
+  "parent": "7cfd1818c163c30e3bd883b6cd142272c68e1f87",
+  "repo": "croniter",
+  "score": 10,
+  "source_files": [
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Bug fix: The get_prev API crashed when last day of month token was used. Some essential logic was missing.",
+  "test_files": [
+   "src/croniter/tests/test_croniter.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 9,
+  "behavioural_lines": 2,
+  "date": "2011-01-28T00:03:38+09:00",
+  "edit_sites": 2,
+  "fix_commit": "e558b61246034c046365413b37b939e91fa71e8d",
+  "new_test_functions": 1,
+  "parent": "315c6ebeb1694b26c06c26eec2ee9e51af661d0f",
+  "repo": "croniter",
+  "score": 10,
+  "source_files": [
+   "croniter/croniter.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 1,
+  "structures": [
+   "exception"
+  ],
+  "subject": "bug fix. now we can treat isoweek. (mon:1 => sun:7. and 0 is also treated as sunday)",
+  "test_files": [
+   "croniter/croniter_test.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 33,
+  "behavioural_lines": 3,
+  "date": "2014-12-31T17:19:00+01:00",
+  "edit_sites": 3,
+  "fix_commit": "a1744be2e252d7f52c13b82300613339f535052f",
+  "new_test_functions": 1,
+  "parent": "415314bbed741a20d123d0479c480d01c2ad4286",
+  "repo": "freezegun",
+  "score": 10,
+  "source_files": [
+   "freezegun/api.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Fixed #73 - replace based on identity (is) comparision.",
+  "test_files": [
+   "tests/fake_module.py",
+   "tests/test_class_import.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 37,
+  "behavioural_lines": 5,
+  "date": "2022-08-25T21:18:37+02:00",
+  "edit_sites": 3,
+  "fix_commit": "33005e5abf19a5a1f0dd33441d73ff43fa906ca5",
+  "new_test_functions": 0,
+  "parent": "e0a0ef00767fa2c0dffb34ff782cf21f0f2862dd",
+  "repo": "humanize",
+  "score": 10,
+  "source_files": [
+   "src/humanize/number.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 7,
+  "structures": [],
+  "subject": "Fix intcomma() failing with a string as input when ndigits is not None",
+  "test_files": [
+   "tests/test_number.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 355,
+  "behavioural_lines": 1,
+  "date": "2025-10-27T04:34:33+05:30",
+  "edit_sites": 2,
+  "fix_commit": "f6b2965221eafc68b25265c7359ca61c41e149c7",
+  "new_test_functions": 2,
+  "parent": "01b3bcfc17b09eb9259c05dd9940f6296498ea02",
+  "repo": "icalendar",
+  "score": 10,
+  "source_files": [
+   "src/icalendar/cal/timezone.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 2,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "Fix #321: AssertionError with VTIMEZONE only DAYLIGHT (#942)",
+  "test_files": [
+   "src/icalendar/tests/test_issue_321_dst_offset.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 33,
+  "behavioural_lines": 2,
+  "date": "2022-01-15T20:57:37+01:00",
+  "edit_sites": 4,
+  "fix_commit": "1afa99398a1519af79c5f8c534726eb5dc34d68d",
+  "new_test_functions": 1,
+  "parent": "d297b9df1ddc7267aabc93904f8b101d46f15042",
+  "repo": "icalendar",
+  "score": 10,
+  "source_files": [
+   "src/icalendar/tools.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 4,
+  "structures": [],
+  "subject": "Fix #345",
+  "test_files": [
+   "src/icalendar/tests/test_fixed_issues.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 23,
+  "behavioural_lines": 1,
+  "date": "2013-09-06T16:51:26+02:00",
+  "edit_sites": 2,
+  "fix_commit": "bf80fa60ac248467feae45ff719b28afcb55302e",
+  "new_test_functions": 1,
+  "parent": "228661e23409ef979ba78f934763743593e6a293",
+  "repo": "structlog",
+  "score": 10,
+  "source_files": [
+   "structlog/threadlocal.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 12,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fix edge case in tmp_bind",
+  "test_files": [
+   "tests/test_threadlocal.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 33,
+  "behavioural_lines": 2,
+  "date": "2011-09-03T16:36:06+02:00",
+  "edit_sites": 3,
+  "fix_commit": "5639c68489f174aac13fbe6d487cddcf8f2412e1",
+  "new_test_functions": 1,
+  "parent": "38dfbdc463e2411a83ffbb13ae4aa742f800c748",
+  "repo": "werkzeug",
+  "score": 10,
+  "source_files": [
+   "werkzeug/routing.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Normalize server names to lowercase on matching in the routing system.  This fixes #99",
+  "test_files": [
+   "tests/test_routing.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 31,
+  "behavioural_lines": 3,
+  "date": "2011-07-05T12:22:09+02:00",
+  "edit_sites": 2,
+  "fix_commit": "6afbf0f87eb51059b3e2808f9dfc6cb4e9900268",
+  "new_test_functions": 0,
+  "parent": "443cd71d38b53252e525b68f9f3867912bc25083",
+  "repo": "werkzeug",
+  "score": 10,
+  "source_files": [
+   "werkzeug/routing.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fixed a bug with host matching and added a testcase",
+  "test_files": [
+   "tests/test_routing.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 118,
+  "behavioural_lines": 1,
+  "date": "2017-06-01T00:30:31-07:00",
+  "edit_sites": 4,
+  "fix_commit": "a6cf2d5637b60f0c6d6cb0f907a785575515e5ba",
+  "new_test_functions": 1,
+  "parent": "f8dab9b7ac9306169aee2b740c2e42c96b51c228",
+  "repo": "attrs",
+  "score": 9,
+  "source_files": [
+   "src/attr/_make.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 5,
+  "structures": [],
+  "subject": "Fix unbound __str__ on Python 2 when slots=True (#199)",
+  "test_files": [
+   "tests/test_dunders.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 97,
+  "behavioural_lines": 1,
+  "date": "2008-06-17T21:55:14Z",
+  "edit_sites": 2,
+  "fix_commit": "5d2a30deb7507385ff70796caa00b6dd3efc91bb",
+  "new_test_functions": 1,
+  "parent": "b17bcf748ebe63b557531b6663606dabaf3bfc03",
+  "repo": "babel",
+  "score": 9,
+  "source_files": [
+   "babel/messages/catalog.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Message.clone doesn't return a shallow copy any longer.  This fixes a bug with update where flags where shared.",
+  "test_files": [
+   "babel/messages/tests/catalog.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 108,
+  "behavioural_lines": 1,
+  "date": "2026-04-01T18:42:50+02:00",
+  "edit_sites": 1,
+  "fix_commit": "d340b0c1202284a1b9d0ca892549208527d586ce",
+  "new_test_functions": 1,
+  "parent": "04ef3a6f473deb2499721a8d11f92a7d2c0912f2",
+  "repo": "click",
+  "score": 9,
+  "source_files": [
+   "src/click/core.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fix speculative speculative empty string check",
+  "test_files": [
+   "tests/test_options.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 108,
+  "behavioural_lines": 3,
+  "date": "2025-10-07T20:52:09+05:30",
+  "edit_sites": 3,
+  "fix_commit": "91de59c6c8abc8251e7af551cd4546cc964288af",
+  "new_test_functions": 2,
+  "parent": "7f7bbe4569ea68e8dabee232eade069ef3310aea",
+  "repo": "click",
+  "score": 9,
+  "source_files": [
+   "src/click/core.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Fix #3084: Correct flag optional value behavior and add comprehensive tests",
+  "test_files": [
+   "tests/test_options.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 73,
+  "behavioural_lines": 1,
+  "date": "2024-05-20T11:57:28-04:00",
+  "edit_sites": 1,
+  "fix_commit": "61f8101f4e0d02cb902ef17853fa35ad88185265",
+  "new_test_functions": 1,
+  "parent": "c021f05c838c1d0401ebc340d1de9b663c7fb578",
+  "repo": "click",
+  "score": 9,
+  "source_files": [
+   "src/click/core.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 0,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fix printing of default option value to handle empty strings",
+  "test_files": [
+   "tests/test_options.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 64,
+  "behavioural_lines": 1,
+  "date": "2015-12-13T19:45:16+01:00",
+  "edit_sites": 4,
+  "fix_commit": "11a662df615c302e50a5d387df0803cbe2398d43",
+  "new_test_functions": 1,
+  "parent": "79e80fe69381ca091036e40621775d10029b93f2",
+  "repo": "click",
+  "score": 9,
+  "source_files": [
+   "click/_compat.py",
+   "click/_termui_impl.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "introduce int_types compat to fix python3 type error in _length_hint",
+  "test_files": [
+   "tests/test_termui.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 29,
+  "behavioural_lines": 2,
+  "date": "2015-06-19T19:56:24+02:00",
+  "edit_sites": 3,
+  "fix_commit": "807c5df0b9528d387ff48f0e593907760b2ad6ce",
+  "new_test_functions": 1,
+  "parent": "8056132bfe09d59eb7f4cb199a87e63ec634d052",
+  "repo": "click",
+  "score": 9,
+  "source_files": [
+   "click/testing.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fixed issue #362.",
+  "test_files": [
+   "tests/test_testing.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 29,
+  "behavioural_lines": 3,
+  "date": "2013-03-04T22:06:17-05:00",
+  "edit_sites": 2,
+  "fix_commit": "acc137671e97ef12b5929af69e90d734daa92fc3",
+  "new_test_functions": 1,
+  "parent": "bcfc503310e513334468c690bb55b79f5947b2b5",
+  "repo": "croniter",
+  "score": 9,
+  "source_files": [
+   "croniter/croniter.py"
+  ],
+  "source_lines_added": 13,
+  "source_lines_removed": 15,
+  "structures": [],
+  "subject": "- Fixed bug: https://github.com/taichino/croniter/issues/20 - Added test case for the case above",
+  "test_files": [
+   "croniter/croniter_test.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 20,
+  "behavioural_lines": 2,
+  "date": "2012-04-02T16:28:12-04:00",
+  "edit_sites": 3,
+  "fix_commit": "707e4ce2c89f2fabf8340acd619b9566fde17c33",
+  "new_test_functions": 1,
+  "parent": "f81eafaf5ffd3c8b552e5363e4d73a4d6021315d",
+  "repo": "croniter",
+  "score": 9,
+  "source_files": [
+   "croniter/croniter.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix `get_prev()` when crossing into previous month",
+  "test_files": [
+   "croniter/croniter_test.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 125,
+  "behavioural_lines": 6,
+  "date": "2023-09-01T15:15:09+02:00",
+  "edit_sites": 1,
+  "fix_commit": "088eea77e18fb893026468212110433de9724dc2",
+  "new_test_functions": 2,
+  "parent": "b0ffff880bee74008e4642e76130d30a704c5399",
+  "repo": "icalendar",
+  "score": 9,
+  "source_files": [
+   "src/icalendar/cal.py"
+  ],
+  "source_lines_added": 16,
+  "source_lines_removed": 0,
+  "structures": [
+   "mutation_order"
+  ],
+  "subject": "fix #526",
+  "test_files": [
+   "src/icalendar/tests/test_unit_cal.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 169,
+  "behavioural_lines": 4,
+  "date": "2020-06-23T15:36:48-04:00",
+  "edit_sites": 1,
+  "fix_commit": "49d5f9788c32033d624ce443f1830871a0c79675",
+  "new_test_functions": 2,
+  "parent": "f71f5ebab2e76c5ee6f5f705a2703f3891e762bc",
+  "repo": "jinja",
+  "score": 9,
+  "source_files": [
+   "src/jinja2/environment.py"
+  ],
+  "source_lines_added": 10,
+  "source_lines_removed": 0,
+  "structures": [
+   "cache"
+  ],
+  "subject": "fix bug with cached templates not using new globals",
+  "test_files": [
+   "tests/test_regression.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 28,
+  "behavioural_lines": 2,
+  "date": "2017-01-24T20:22:19+01:00",
+  "edit_sites": 2,
+  "fix_commit": "8df94bd3447b0432ef41540abe67e5f46920af75",
+  "new_test_functions": 1,
+  "parent": "ca124c5cfe69ea695ac4caa05d0acb611de52adf",
+  "repo": "jinja",
+  "score": 9,
+  "source_files": [
+   "jinja2/compiler.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Resolved extends errors in async mode (Fixes #668)",
+  "test_files": [
+   "tests/test_async.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 326,
+  "behavioural_lines": 4,
+  "date": "2014-12-10T19:38:12-05:00",
+  "edit_sites": 3,
+  "fix_commit": "c501c3e256a8ab33bab1be5095f7c220ccad55bb",
+  "new_test_functions": 3,
+  "parent": "0dfb64751535a4c7064ab3a38cf84d602eada9be",
+  "repo": "marshmallow",
+  "score": 9,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 11,
+  "source_lines_removed": 6,
+  "structures": [],
+  "subject": "Fix `as_string` of Number fields when serializing to default val",
+  "test_files": [
+   "tests/test_serialization.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 350,
+  "behavioural_lines": 5,
+  "date": "2014-12-07T21:24:32-05:00",
+  "edit_sites": 4,
+  "fix_commit": "ae43a733b5fdf2d1084ec0ad6266d73c2bfbfaa8",
+  "new_test_functions": 3,
+  "parent": "1ad220826c888d6d4b806585aecadedd266d6138",
+  "repo": "marshmallow",
+  "score": 9,
+  "source_files": [
+   "marshmallow/fields.py",
+   "marshmallow/utils.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 4,
+  "structures": [],
+  "subject": "Fix bug that raised AttributeError when using a class Validator",
+  "test_files": [
+   "tests/test_deserialization.py",
+   "tests/test_utils.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 242,
+  "behavioural_lines": 1,
+  "date": "2014-10-18T11:58:25-04:00",
+  "edit_sites": 2,
+  "fix_commit": "89a760a8c759776e85f7b12ec3c4eda2a7b7807b",
+  "new_test_functions": 0,
+  "parent": "52b1a6a936ad8d3bd67b10d41afaf819b7697f24",
+  "repo": "marshmallow",
+  "score": 9,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix UUID deserialization",
+  "test_files": [
+   "tests/test_deserialization.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 111,
+  "behavioural_lines": 1,
+  "date": "2014-08-11T22:09:02-04:00",
+  "edit_sites": 2,
+  "fix_commit": "e171b1ab6b4d75e25f8bf365557ce7f72b86c93d",
+  "new_test_functions": 0,
+  "parent": "e0aa7fd7b4029374c3f50665aad375ef01e05b30",
+  "repo": "marshmallow",
+  "score": 9,
+  "source_files": [
+   "marshmallow/serializer.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix dumps (receive errors)",
+  "test_files": [
+   "tests/test_serializer.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 108,
+  "behavioural_lines": 1,
+  "date": "2023-09-02T01:44:51+02:00",
+  "edit_sites": 2,
+  "fix_commit": "c1346dfdafecffc30ca777ac004ed2898e60e34e",
+  "new_test_functions": 1,
+  "parent": "7e68d828f265ef05cf4cd3b5def9baffef8c2968",
+  "repo": "packaging",
+  "score": 9,
+  "source_files": [
+   "src/packaging/tags.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix: Detect when a platform is 32-bit more accurately (#711)",
+  "test_files": [
+   "tests/test_tags.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 25,
+  "behavioural_lines": 2,
+  "date": "2023-01-14T11:42:39Z",
+  "edit_sites": 3,
+  "fix_commit": "068a0b5975a95a5cc30262599ca29bb6ceabe4af",
+  "new_test_functions": 1,
+  "parent": "f4463e2e0edb016d7e5843471cbe050eff5d50f1",
+  "repo": "packaging",
+  "score": 9,
+  "source_files": [
+   "src/packaging/_parser.py",
+   "src/packaging/_tokenizer.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Add dedicated error for specifiers with incorrect `.*` suffix",
+  "test_files": [
+   "tests/test_requirements.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 24,
+  "behavioural_lines": 4,
+  "date": "2014-06-22T18:40:55-04:00",
+  "edit_sites": 2,
+  "fix_commit": "314effac7413d08926fff93f1570897a55dd07f5",
+  "new_test_functions": 0,
+  "parent": "4b016f0088b201889d7fdff37fff4370075dce7c",
+  "repo": "packaging",
+  "score": 9,
+  "source_files": [
+   "packaging/version.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 5,
+  "structures": [],
+  "subject": "Fix the normalization of letter versions and local versions",
+  "test_files": [
+   "tests/test_version.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 14,
+  "behavioural_lines": 1,
+  "date": "2012-01-10T13:16:26+01:00",
+  "edit_sites": 2,
+  "fix_commit": "c794c97531c09e66b6a7ffac76626a727ad02f5e",
+  "new_test_functions": 1,
+  "parent": "a66921a2b67ef725f31658697003c383e58a4236",
+  "repo": "sqlparse",
+  "score": 9,
+  "source_files": [
+   "sqlparse/lexer.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 5,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fixed lexer to accept negative numbers (fixes issue56).",
+  "test_files": [
+   "tests/test_tokenize.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 134,
+  "behavioural_lines": 1,
+  "date": "2026-02-19T10:59:22+01:00",
+  "edit_sites": 2,
+  "fix_commit": "213446e8f5f73ca0d20e22ec8ee38b1f75a45434",
+  "new_test_functions": 1,
+  "parent": "6be363b0439bd213dd5ea4cb0c0c184bf616232a",
+  "repo": "tenacity",
+  "score": 9,
+  "source_files": [
+   "tenacity/after.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix: guard against None seconds_since_start in after_log (#591)",
+  "test_files": [
+   "tests/test_after.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 12,
+  "behavioural_lines": 1,
+  "date": "2023-01-30T10:47:32+01:00",
+  "edit_sites": 2,
+  "fix_commit": "0b1cef0be60b2ab730cacf38d9d456787ad6d6ff",
+  "new_test_functions": 0,
+  "parent": "e1323a0e0ff9f7d867d3632c3ebf582f446b0a91",
+  "repo": "tenacity",
+  "score": 9,
+  "source_files": [
+   "tenacity/_asyncio.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 2,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fix async loop with retrying code block when result is available (#369)",
+  "test_files": [
+   "tests/test_asyncio.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 286,
+  "behavioural_lines": 1,
+  "date": "2016-03-02T12:55:49-07:00",
+  "edit_sites": 1,
+  "fix_commit": "767485dfbcf93c069225e842ace382f314e64c9b",
+  "new_test_functions": 1,
+  "parent": "bd016822a66ff580292f48e41f7118502940c539",
+  "repo": "werkzeug",
+  "score": 9,
+  "source_files": [
+   "werkzeug/datastructures.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fixed infinite loop FileStorage iter in python 3",
+  "test_files": [
+   "tests/test_datastructures.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 46,
+  "behavioural_lines": 3,
+  "date": "2015-03-18T23:48:40+01:00",
+  "edit_sites": 2,
+  "fix_commit": "8157695591b26f1bbffe37852aa2f54b7de5cbc1",
+  "new_test_functions": 2,
+  "parent": "646c05ea43966736a4a1e8762aae738ef78b3abe",
+  "repo": "werkzeug",
+  "score": 9,
+  "source_files": [
+   "werkzeug/routing.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 4,
+  "structures": [],
+  "subject": "Fix regression in routing system",
+  "test_files": [
+   "tests/test_routing.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 130,
+  "behavioural_lines": 1,
+  "date": "2010-12-08T18:47:32+01:00",
+  "edit_sites": 2,
+  "fix_commit": "db29873c6e85ff13d506bc306e452bd099a2af5f",
+  "new_test_functions": 0,
+  "parent": "451c6f3e1e23c8a69a1bcdf41b704286909096b8",
+  "repo": "werkzeug",
+  "score": 9,
+  "source_files": [
+   "werkzeug/datastructures.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fixed .fromkeys for immutable dicts",
+  "test_files": [
+   "tests/test_datastructures.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 33,
+  "behavioural_lines": 1,
+  "date": "2009-03-17T22:26:03Z",
+  "edit_sites": 1,
+  "fix_commit": "4563a351add903fd1a93e683fccda7ccc42e416e",
+  "new_test_functions": 1,
+  "parent": "57830ae6f1b2ac3bf0e983dcd4ebff348e5216d5",
+  "repo": "babel",
+  "score": 8,
+  "source_files": [
+   "babel/messages/pofile.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 0,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "Fix for msgctxt parsing in PO files. Thanks to Asheesh Laroia for the patch. Closes #159.",
+  "test_files": [
+   "babel/messages/tests/pofile.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 41,
+  "behavioural_lines": 2,
+  "date": "2007-07-18T20:49:12Z",
+  "edit_sites": 1,
+  "fix_commit": "732758b4819effdac88ed182ee0788d4cf89a7c6",
+  "new_test_functions": 0,
+  "parent": "2d06b2b55e56de82c269eb692240322d00267cf3",
+  "repo": "babel",
+  "score": 8,
+  "source_files": [
+   "babel/messages/extract.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "fix skipping of class definitions without parens fixes #55",
+  "test_files": [
+   "babel/messages/tests/extract.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 36,
+  "behavioural_lines": 1,
+  "date": "2017-11-10T14:10:42+01:00",
+  "edit_sites": 1,
+  "fix_commit": "3d4eaebb0888e2f5f11c8fe66ccb2cce9fcdcaa8",
+  "new_test_functions": 0,
+  "parent": "c0c7d0daa361c0673e4e398481287f1f7bf0bfb6",
+  "repo": "bleach",
+  "score": 8,
+  "source_files": [
+   "bleach/sanitizer.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 1,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Insert the provided type in error message when it's a wrong one",
+  "test_files": [
+   "tests/test_clean.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 76,
+  "behavioural_lines": 4,
+  "date": "2026-03-11T01:28:21+09:00",
+  "edit_sites": 1,
+  "fix_commit": "a09c1c655eef3d43181eb46036b66cf058d72df4",
+  "new_test_functions": 1,
+  "parent": "fc6c7c47edd6110b6bd5a1a5297b2035214b0cd1",
+  "repo": "click",
+  "score": 8,
+  "source_files": [
+   "src/click/termui.py"
+  ],
+  "source_lines_added": 14,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix: show custom error message in prompt with hide_input=True",
+  "test_files": [
+   "tests/test_termui.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 95,
+  "behavioural_lines": 2,
+  "date": "2024-11-02T18:45:03-04:00",
+  "edit_sites": 1,
+  "fix_commit": "1a4d8c1bb1e8f8e214ede7223bd2c05dc2ce006a",
+  "new_test_functions": 1,
+  "parent": "02046e7a19480f85fff7e4577486518abe47e401",
+  "repo": "click",
+  "score": 8,
+  "source_files": [
+   "src/click/types.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix metavar for Choice options when show_choices=False (#2365)",
+  "test_files": [
+   "tests/test_options.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 85,
+  "behavioural_lines": 3,
+  "date": "2022-01-05T21:16:43-06:00",
+  "edit_sites": 1,
+  "fix_commit": "e0033315510510acdba14e880a361ccca091fb4b",
+  "new_test_functions": 1,
+  "parent": "19be092b6db4e4300e31906498e354ec0adf870c",
+  "repo": "click",
+  "score": 8,
+  "source_files": [
+   "src/click/types.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix ParamType.to_info_dict() with no name",
+  "test_files": [
+   "tests/test_info_dict.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 17,
+  "behavioural_lines": 5,
+  "date": "2017-05-02T08:19:11-07:00",
+  "edit_sites": 4,
+  "fix_commit": "92c8053bb9e7221efc87355c364fee256e1efc76",
+  "new_test_functions": 1,
+  "parent": "5f2ff4faf627dc9d0925cffb7d9b8f3162fbdaad",
+  "repo": "click",
+  "score": 8,
+  "source_files": [
+   "click/_bashcomplete.py"
+  ],
+  "source_lines_added": 14,
+  "source_lines_removed": 5,
+  "structures": [],
+  "subject": "Fix bashautocompletion of arguments on chained commands",
+  "test_files": [
+   "tests/test_bashcomplete.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 15,
+  "behavioural_lines": 4,
+  "date": "2015-08-08T14:06:14+02:00",
+  "edit_sites": 2,
+  "fix_commit": "349875d795837a8ca1173621001bb585e1640207",
+  "new_test_functions": 1,
+  "parent": "dbd40696e31409a50eb4722c806b4ac1c527ca8c",
+  "repo": "click",
+  "score": 8,
+  "source_files": [
+   "click/_termui_impl.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Ignore broken PAGER values",
+  "test_files": [
+   "tests/test_utils.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 42,
+  "behavioural_lines": 2,
+  "date": "2017-02-16T01:05:06+09:00",
+  "edit_sites": 1,
+  "fix_commit": "79ce210a03512bff96878744ab69711261dfb6a3",
+  "new_test_functions": 1,
+  "parent": "6fe4362635233543b8041b7b8d500dbb7b481a95",
+  "repo": "croniter",
+  "score": 8,
+  "source_files": [
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix bug around multiple conditions and range_val in _get_prev_nearest_diff",
+  "test_files": [
+   "src/croniter/tests/test_croniter.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 31,
+  "behavioural_lines": 15,
+  "date": "2014-11-19T22:54:56-05:00",
+  "edit_sites": 2,
+  "fix_commit": "70518d630c71a37d3c651dee7b73d347b5d75405",
+  "new_test_functions": 2,
+  "parent": "8e6bc4257f6e3a0ef24abb02f4b5c8afc198fcf0",
+  "repo": "freezegun",
+  "score": 8,
+  "source_files": [
+   "freezegun/api.py"
+  ],
+  "source_lines_added": 25,
+  "source_lines_removed": 16,
+  "structures": [],
+  "subject": "Fix for aliased datetime, date, and time imports. Closes #64.",
+  "test_files": [
+   "tests/test_datetimes.py",
+   "tests/test_import_alias.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 18,
+  "behavioural_lines": 3,
+  "date": "2013-05-04T22:26:32-04:00",
+  "edit_sites": 1,
+  "fix_commit": "d9869544147b4b9fe717bbcd567ce2f72994f4e1",
+  "new_test_functions": 0,
+  "parent": "c1c6b9b1c8ed7e44c87d91d54ca70f7414cd314d",
+  "repo": "freezegun",
+  "score": 8,
+  "source_files": [
+   "freezegun/api.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 1,
+  "structures": [
+   "exception"
+  ],
+  "subject": "Fixed problem with Python3 and basestring.",
+  "test_files": [
+   "tests/test_datetimes.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 35,
+  "behavioural_lines": 1,
+  "date": "2022-06-21T10:21:43+03:00",
+  "edit_sites": 2,
+  "fix_commit": "03863fed6c2ba02cfd13d5b1e0b161f680c7b966",
+  "new_test_functions": 0,
+  "parent": "29d37fb15945433d295b942bd839ae152770eca0",
+  "repo": "humanize",
+  "score": 8,
+  "source_files": [
+   "src/humanize/number.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix intcomma with ndigits=0",
+  "test_files": [
+   "tests/test_number.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 11,
+  "behavioural_lines": 7,
+  "date": "2025-10-20T11:18:33+05:30",
+  "edit_sites": 1,
+  "fix_commit": "66fc205ab56345e2327fbd90623262d38b41345a",
+  "new_test_functions": 1,
+  "parent": "8e3d091c880a9465f5347204e3bc9a46774a277e",
+  "repo": "icalendar",
+  "score": 8,
+  "source_files": [
+   "src/icalendar/prop/conference.py"
+  ],
+  "source_lines_added": 15,
+  "source_lines_removed": 9,
+  "structures": [
+   "boundary"
+  ],
+  "subject": "Fix Conference parameters list normalisation (#921)",
+  "test_files": [
+   "src/icalendar/tests/test_conference.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 58,
+  "behavioural_lines": 2,
+  "date": "2017-01-19T12:39:09+01:00",
+  "edit_sites": 1,
+  "fix_commit": "0f408d8cce66a0d0ae284afbf9811836bcdf1299",
+  "new_test_functions": 0,
+  "parent": "b82893ff56f8f8caab1aa337b039ba31a8db157b",
+  "repo": "icalendar",
+  "score": 8,
+  "source_files": [
+   "src/icalendar/parser.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fix q_split for maxsplit=0",
+  "test_files": [
+   "src/icalendar/tests/test_icalendar.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 192,
+  "behavioural_lines": 2,
+  "date": "2014-08-10T20:52:18-04:00",
+  "edit_sites": 1,
+  "fix_commit": "6a12c3ca7d28557f5ac33f8d0dfad95dffed31c2",
+  "new_test_functions": 0,
+  "parent": "3addca88017084468e483ed5fe4c18d1ee2147a1",
+  "repo": "marshmallow",
+  "score": 8,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fix String deserialization of None",
+  "test_files": [
+   "tests/test_deserialization.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 61,
+  "behavioural_lines": 2,
+  "date": "2016-11-11T12:30:16+01:00",
+  "edit_sites": 1,
+  "fix_commit": "df1f335a2c18a7a0ae801b1f21ff92557d5fd28e",
+  "new_test_functions": 0,
+  "parent": "6aaaf0eaca09c6402c09839fe762d8026f4ce89f",
+  "repo": "pluggy",
+  "score": 8,
+  "source_files": [
+   "pluggy.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "fix issue #17 by considering only `routines` as hooks",
+  "test_files": [
+   "testing/test_pluggy.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 15,
+  "behavioural_lines": 3,
+  "date": "2014-11-11T19:14:13+01:00",
+  "edit_sites": 3,
+  "fix_commit": "b67f3335c7c7287c9e04c56d9e37213e27b0dd84",
+  "new_test_functions": 0,
+  "parent": "30dbbc3afaea6d78e0e210bd52f63bac622ec684",
+  "repo": "pygments",
+  "score": 8,
+  "source_files": [
+   "pygments/cmdline.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix -H return codes and test them.",
+  "test_files": [
+   "tests/test_cmdline.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 10,
+  "behavioural_lines": 2,
+  "date": "2020-12-15T17:28:27+08:00",
+  "edit_sites": 2,
+  "fix_commit": "db0f9586e02d5235d571dc549b04ff3d5f13de47",
+  "new_test_functions": 1,
+  "parent": "be9bccbb731d28ab0bcd8a4ee5acae70988bf593",
+  "repo": "tenacity",
+  "score": 8,
+  "source_files": [
+   "tenacity/_asyncio.py"
+  ],
+  "source_lines_added": 9,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Fix iscoroutinefunction check (for both inspect & asyncio) (#265)",
+  "test_files": [
+   "tenacity/tests/test_asyncio.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 186,
+  "behavioural_lines": 5,
+  "date": "2011-07-13T15:27:47-07:00",
+  "edit_sites": 1,
+  "fix_commit": "ce97081818af376b2b60c0618a6ae685db8b6022",
+  "new_test_functions": 1,
+  "parent": "b0d8c9aca8598e31b9e51714959a37f897d419fd",
+  "repo": "werkzeug",
+  "score": 8,
+  "source_files": [
+   "werkzeug/datastructures.py"
+  ],
+  "source_lines_added": 12,
+  "source_lines_removed": 10,
+  "structures": [],
+  "subject": "Fixed the issue #78 with FileMultiDict",
+  "test_files": [
+   "tests/test_datastructures.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 146,
+  "behavioural_lines": 2,
+  "date": "2011-07-05T10:37:03+02:00",
+  "edit_sites": 1,
+  "fix_commit": "3c6c6a59e926b55b5d663c0f4417a1efcf3ed5da",
+  "new_test_functions": 1,
+  "parent": "5ab30ae2a3673ccb04936e1028484b7b437653b0",
+  "repo": "werkzeug",
+  "score": 8,
+  "source_files": [
+   "werkzeug/wrappers.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Do not add the content length detection for 304 responses.  This fixes #304",
+  "test_files": [
+   "tests/test_wrappers.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 20,
+  "behavioural_lines": 1,
+  "date": "2007-06-19T12:13:46Z",
+  "edit_sites": 3,
+  "fix_commit": "332a7a966782a93f8fa9b15e375237afcf07b5d6",
+  "new_test_functions": 0,
+  "parent": "a6f5fde22d9e3fb83bcfc202a9fd6cdb39e61acf",
+  "repo": "babel",
+  "score": 7,
+  "source_files": [
+   "babel/messages/pofile.py",
+   "babel/util.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "More fixes for Windows compatibility:  * normalize path segment separator to \"/\"  * use `dates.format_date` also to set the expected date-st",
+  "test_files": [
+   "babel/messages/tests/frontend.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 6,
+  "behavioural_lines": 4,
+  "date": "2007-06-11T23:29:45Z",
+  "edit_sites": 4,
+  "fix_commit": "3c8281380e9d80cadcfa442a4405f4072cafceda",
+  "new_test_functions": 1,
+  "parent": "de5b2bb5b376f3be0bbf881157a76fc8cf35d37b",
+  "repo": "babel",
+  "score": 7,
+  "source_files": [
+   "babel/messages/extract.py"
+  ],
+  "source_lines_added": 13,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Fixed bug introduced in [92], bad use of `lstrip()`. Added a unittest to test multiple translator comment tags.",
+  "test_files": [
+   "babel/messages/tests/extract.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 21,
+  "behavioural_lines": 1,
+  "date": "2014-12-19T15:59:10+01:00",
+  "edit_sites": 1,
+  "fix_commit": "5c2a69ba94a59754da84a2659c0927c8a6cea694",
+  "new_test_functions": 0,
+  "parent": "f3437a1226f630f011097692b3ee3a3e4e64a1d7",
+  "repo": "cachetools",
+  "score": 7,
+  "source_files": [
+   "cachetools/rr.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 0,
+  "structures": [
+   "cache"
+  ],
+  "subject": "Fix #30: Provide RRCache.choice property.",
+  "test_files": [
+   "tests/test_rr.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 102,
+  "behavioural_lines": 1,
+  "date": "2025-05-20T08:35:46-04:00",
+  "edit_sites": 2,
+  "fix_commit": "4fd2fea0db423d242aedcae0a5f664efe0a93484",
+  "new_test_functions": 2,
+  "parent": "9ce34f20d2370f2e298268227edf0ffce6b9725f",
+  "repo": "click",
+  "score": 7,
+  "source_files": [
+   "src/click/core.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix condition for setting flag value when type is provided",
+  "test_files": [
+   "tests/test_options.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 31,
+  "behavioural_lines": 2,
+  "date": "2014-10-26T19:22:27-04:00",
+  "edit_sites": 1,
+  "fix_commit": "747e496124ab42b497e9e099d5a93d7c419da827",
+  "new_test_functions": 0,
+  "parent": "c960eb3711d9421c401505a8ac2679352c404362",
+  "repo": "freezegun",
+  "score": 7,
+  "source_files": [
+   "freezegun/api.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fix to not patch classmethods.",
+  "test_files": [
+   "tests/test_datetimes.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 185,
+  "behavioural_lines": 1,
+  "date": "2024-07-24T17:52:52+05:00",
+  "edit_sites": 1,
+  "fix_commit": "953201e771224cae4e781584622221774db92530",
+  "new_test_functions": 2,
+  "parent": "bde1275c5b17d5ff8a8c3fa111a1184f84f6fd3e",
+  "repo": "icalendar",
+  "score": 7,
+  "source_files": [
+   "src/icalendar/prop.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [
+   "exception"
+  ],
+  "subject": "fixed two problems",
+  "test_files": [
+   "src/icalendar/tests/prop/test_vBinary.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 93,
+  "behavioural_lines": 1,
+  "date": "2022-06-17T23:40:54+02:00",
+  "edit_sites": 2,
+  "fix_commit": "67c4a2820c549070bbfc4bfbf5e2a250075048da",
+  "new_test_functions": 2,
+  "parent": "8b86d85797b9f26d98ecfbe0271ce4dc9495d98c",
+  "repo": "packaging",
+  "score": 7,
+  "source_files": [
+   "packaging/tags.py"
+  ],
+  "source_lines_added": 17,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "fix: macOS platform tags with old macOS SDK (#513)",
+  "test_files": [
+   "tests/test_tags.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 6,
+  "behavioural_lines": 6,
+  "date": "2009-04-21T22:10:55+02:00",
+  "edit_sites": 4,
+  "fix_commit": "46491ddc3790ce95f72af78007edb325e0fe4b7b",
+  "new_test_functions": 1,
+  "parent": "7cee18dbf802e8efe443f0085da96a5c8670ef53",
+  "repo": "sqlparse",
+  "score": 7,
+  "source_files": [
+   "sqlparse/engine/grouping.py"
+  ],
+  "source_lines_added": 16,
+  "source_lines_removed": 13,
+  "structures": [],
+  "subject": "Analyse AS recursive (fixes issue4).",
+  "test_files": [
+   "tests/test_format.py",
+   "tests/test_grouping.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 395,
+  "behavioural_lines": 1,
+  "date": "2020-02-19T22:17:38+01:00",
+  "edit_sites": 1,
+  "fix_commit": "c341a0ab6fd9ed375e8bb902504f4747160f98f2",
+  "new_test_functions": 2,
+  "parent": "32f3b07f8178d71a21dfb6256aa03caa14cd1314",
+  "repo": "werkzeug",
+  "score": 7,
+  "source_files": [
+   "src/werkzeug/datastructures.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 1,
+  "structures": [
+   "locale_tz"
+  ],
+  "subject": "fix os.fspath call on file-like objects",
+  "test_files": [
+   "tests/test_datastructures.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 27,
+  "behavioural_lines": 2,
+  "date": "2011-01-28T16:50:42+01:00",
+  "edit_sites": 4,
+  "fix_commit": "2d016dd8e4a3094d984bed03a66d84bcc854953d",
+  "new_test_functions": 2,
+  "parent": "da2188b7639bc4b1ec92da9bffd98a9c0fe0c3cb",
+  "repo": "werkzeug",
+  "score": 7,
+  "source_files": [
+   "werkzeug/routing.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 3,
+  "structures": [],
+  "subject": "Fixed a redirection bug introduced a few commits back and added testcases",
+  "test_files": [
+   "tests/test_routing.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 47,
+  "behavioural_lines": 1,
+  "date": "2014-07-29T12:48:48-04:00",
+  "edit_sites": 1,
+  "fix_commit": "2876bf8582a85f9ff5626e5a9616fd055de67e58",
+  "new_test_functions": 1,
+  "parent": "9e0ecf95192a369494fc12aeac7e4d3698e3d4e2",
+  "repo": "arrow",
+  "score": 6,
+  "source_files": [
+   "arrow/parser.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fixed discrepancy between specifying 'X' to arrow.get and specifying no template",
+  "test_files": [
+   "tests/factory_tests.py",
+   "tests/parser_tests.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 84,
+  "behavioural_lines": 1,
+  "date": "2016-04-28T10:32:38+02:00",
+  "edit_sites": 1,
+  "fix_commit": "4b94e0314cd9a0d53dd2ad1cf664d83c5cba8e7f",
+  "new_test_functions": 0,
+  "parent": "2da44740ce5304f48940c9787d0d4338bec5b21b",
+  "repo": "attrs",
+  "score": 6,
+  "source_files": [
+   "src/attr/_make.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix _Nothing class' __eq__",
+  "test_files": [
+   "tests/test_dunders.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 84,
+  "behavioural_lines": 4,
+  "date": "2016-03-16T22:28:43+01:00",
+  "edit_sites": 1,
+  "fix_commit": "1d21609c1444edfe8f6365190c3f7ba7cb2dfb37",
+  "new_test_functions": 2,
+  "parent": "bef877320db8868ec6c005224badd5c4aa2b2f6f",
+  "repo": "attrs",
+  "score": 6,
+  "source_files": [
+   "src/attr/_make.py"
+  ],
+  "source_lines_added": 11,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix reprs.",
+  "test_files": [
+   "tests/test_make.py",
+   "tests/test_slots.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 79,
+  "behavioural_lines": 1,
+  "date": "2015-08-20T13:25:32+02:00",
+  "edit_sites": 1,
+  "fix_commit": "e245f3d3df7113a4e35d238475d371bed8e22c53",
+  "new_test_functions": 0,
+  "parent": "82de57793276a229916f820178f0498e92fcbad0",
+  "repo": "attrs",
+  "score": 6,
+  "source_files": [
+   "attr/_make.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix multi-level inheritance",
+  "test_files": [
+   "tests/test_make.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 77,
+  "behavioural_lines": 1,
+  "date": "2007-09-28T05:16:25Z",
+  "edit_sites": 1,
+  "fix_commit": "cb99207f5648e684d179806c6dcfc884bd9b6798",
+  "new_test_functions": 1,
+  "parent": "ddc1319d0b8545f824b0e60919fc9b4d637eea71",
+  "repo": "babel",
+  "score": 6,
+  "source_files": [
+   "babel/messages/catalog.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix catalogs' charset values not being recognized thanks Jose Galvez",
+  "test_files": [
+   "babel/messages/tests/pofile.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 58,
+  "behavioural_lines": 1,
+  "date": "2007-08-26T13:43:06Z",
+  "edit_sites": 1,
+  "fix_commit": "0513523521bf2c4f3f33a9c6b65598275e8d8ca5",
+  "new_test_functions": 0,
+  "parent": "d8188245fb04230ca8cd4ad8fafe2f263ffe6b6c",
+  "repo": "babel",
+  "score": 6,
+  "source_files": [
+   "babel/dates.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fixed a bug introduced by [301].",
+  "test_files": [
+   "babel/tests/dates.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 64,
+  "behavioural_lines": 1,
+  "date": "2014-07-04T10:42:17+02:00",
+  "edit_sites": 1,
+  "fix_commit": "2ab5ae4984e644f0a34a548400eac74d04753f5a",
+  "new_test_functions": 0,
+  "parent": "470a8f4b7868c69ed94f3d2ad84b30bac78379ef",
+  "repo": "cerberus",
+  "score": 6,
+  "source_files": [
+   "cerberus/cerberus.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix line lenght",
+  "test_files": [
+   "cerberus/tests/tests.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 55,
+  "behavioural_lines": 3,
+  "date": "2026-05-16T08:19:58+02:00",
+  "edit_sites": 1,
+  "fix_commit": "0551bf53588ae87f462d336f24f853a156fefe3a",
+  "new_test_functions": 3,
+  "parent": "7c99ebe23b931f27562d926814423cce85fd9766",
+  "repo": "click",
+  "score": 6,
+  "source_files": [
+   "src/click/formatting.py"
+  ],
+  "source_lines_added": 8,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fix `HelpFormatter.write_usage` producing spurious characters",
+  "test_files": [
+   "tests/test_formatting.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 30,
+  "behavioural_lines": 1,
+  "date": "2023-05-08T05:01:21+01:00",
+  "edit_sites": 3,
+  "fix_commit": "e002dbc40ceb6a7e78dbe5e5868744690ba3120f",
+  "new_test_functions": 3,
+  "parent": "eb1d760fb433d08278816d7ba49477ce86b691a7",
+  "repo": "click",
+  "score": 6,
+  "source_files": [
+   "src/click/shell_completion.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix return value and type signature of `shell_completion.add_completion_class` function (#2421)",
+  "test_files": [
+   "tests/test_shell_completion.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 64,
+  "behavioural_lines": 1,
+  "date": "2021-05-24T16:49:32+02:00",
+  "edit_sites": 1,
+  "fix_commit": "ee56925bc4f5451a125317e183f498e8bd1aecb3",
+  "new_test_functions": 1,
+  "parent": "da2b658e6185b5ae69abcefe755077336024a5e6",
+  "repo": "click",
+  "score": 6,
+  "source_files": [
+   "src/click/core.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix is_bool_flag being set to True even if is_flag is False",
+  "test_files": [
+   "tests/test_options.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 55,
+  "behavioural_lines": 1,
+  "date": "2021-04-06T20:51:19+05:30",
+  "edit_sites": 1,
+  "fix_commit": "4aff02676c0d9628e095731c124b647ed256ee5a",
+  "new_test_functions": 0,
+  "parent": "b625b9f39082f366dd85ad13024e43c8f5e78b87",
+  "repo": "click",
+  "score": 6,
+  "source_files": [
+   "src/click/termui.py"
+  ],
+  "source_lines_added": 4,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "fix backspace in prompt with readline enabled",
+  "test_files": [
+   "tests/test_utils.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 48,
+  "behavioural_lines": 1,
+  "date": "2018-06-20T09:34:30+02:00",
+  "edit_sites": 1,
+  "fix_commit": "11c286a37d55357b82c7e5db7237544cd79fe25a",
+  "new_test_functions": 1,
+  "parent": "77cb2574cb98e0afb9bf294b086425501cc051ce",
+  "repo": "click",
+  "score": 6,
+  "source_files": [
+   "src/click/_termui_impl.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "fix edit() require_save check for fast editors",
+  "test_files": [
+   "tests/test_termui.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 75,
+  "behavioural_lines": 6,
+  "date": "2019-05-06T15:00:36-04:00",
+  "edit_sites": 1,
+  "fix_commit": "99ef35e3b4919b5dc33d1ee4b1e04b437b6307a5",
+  "new_test_functions": 2,
+  "parent": "14fa50aefbfe7b8b1b978d7ea8c02f5b14d60032",
+  "repo": "click",
+  "score": 6,
+  "source_files": [
+   "click/exceptions.py"
+  ],
+  "source_lines_added": 13,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fix for string cast of MissingParameter",
+  "test_files": [
+   "tests/test_arguments.py",
+   "tests/test_options.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 77,
+  "behavioural_lines": 1,
+  "date": "2021-06-01T21:24:42+01:00",
+  "edit_sites": 1,
+  "fix_commit": "a236b002a8358f2eedbf985e2f1f4530e18298f9",
+  "new_test_functions": 1,
+  "parent": "f44d0448ceb05a795fcee0bb6a09f7016f8454cb",
+  "repo": "croniter",
+  "score": 6,
+  "source_files": [
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix match when datetime has microseconds",
+  "test_files": [
+   "src/croniter/tests/test_croniter.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 52,
+  "behavioural_lines": 1,
+  "date": "2018-06-20T18:56:00+02:00",
+  "edit_sites": 1,
+  "fix_commit": "66c0deceee632b7fbbde78037391aa8bf4ed9759",
+  "new_test_functions": 1,
+  "parent": "2e18e2e34dc8885342af0c272ac1eaaf46ff8356",
+  "repo": "croniter",
+  "score": 6,
+  "source_files": [
+   "src/croniter/croniter.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "(fix#107): microsecond threshold",
+  "test_files": [
+   "src/croniter/tests/test_croniter.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 47,
+  "behavioural_lines": 1,
+  "date": "2015-06-13T20:06:30-04:00",
+  "edit_sites": 1,
+  "fix_commit": "779eb99f5c1dfea9f9a4c411221a249affbc5f95",
+  "new_test_functions": 1,
+  "parent": "7dca98589f239aefa7882aeb360dc93f4238d2df",
+  "repo": "freezegun",
+  "score": 6,
+  "source_files": [
+   "freezegun/api.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fix datetime.date method. Closes #97.",
+  "test_files": [
+   "tests/test_datetimes.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 19,
+  "behavioural_lines": 1,
+  "date": "2013-06-21T13:04:44-04:00",
+  "edit_sites": 2,
+  "fix_commit": "4414d5e3c209449777e726051d672d8ff67c3f9e",
+  "new_test_functions": 0,
+  "parent": "c89a7894489d776058393b85e99b18e7d5f45b28",
+  "repo": "freezegun",
+  "score": 6,
+  "source_files": [
+   "freezegun/api.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix bug with date returing True for isinstance of datetime.",
+  "test_files": [
+   "tests/test_class_import.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 30,
+  "behavioural_lines": 1,
+  "date": "2025-10-11T15:25:46-07:00",
+  "edit_sites": 3,
+  "fix_commit": "be5c387a6ff08189865637df2add9fb5118a584f",
+  "new_test_functions": 3,
+  "parent": "4fd6af68410e83ed40f473b5b61919682ec3db4f",
+  "repo": "icalendar",
+  "score": 6,
+  "source_files": [
+   "src/icalendar/cli.py"
+  ],
+  "source_lines_added": 9,
+  "source_lines_removed": 7,
+  "structures": [],
+  "subject": "Fix issue #821 to read file from stdin & removed pathlib",
+  "test_files": [
+   "src/icalendar/tests/test_issue_821_stdin_parse.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 110,
+  "behavioural_lines": 1,
+  "date": "2023-09-30T16:05:17+02:00",
+  "edit_sites": 1,
+  "fix_commit": "0e06a37b58fe6c6b651206a7dbef01592183e09d",
+  "new_test_functions": 1,
+  "parent": "0fdbdfb99722b5a17147b9b55bf9e8c67820270a",
+  "repo": "icalendar",
+  "score": 6,
+  "source_files": [
+   "src/icalendar/prop.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix #322",
+  "test_files": [
+   "src/icalendar/tests/test_issue_322_single_strings_characters_split_into_multiple_categories.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 93,
+  "behavioural_lines": 1,
+  "date": "2017-05-23T10:24:52-07:00",
+  "edit_sites": 1,
+  "fix_commit": "9f30bc8c4d6702a2e206fd8027443d2edafe4729",
+  "new_test_functions": 0,
+  "parent": "5b335b7a9eadacbb802c302c3c5879e820e072b6",
+  "repo": "jinja",
+  "score": 6,
+  "source_files": [
+   "jinja2/utils.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Make tojson always safe (fix #709)",
+  "test_files": [
+   "tests/test_filters.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 15,
+  "behavioural_lines": 1,
+  "date": "2009-04-01T19:16:25+02:00",
+  "edit_sites": 2,
+  "fix_commit": "1bb3ab72c9d369d3c16f81282b45f35618f8a48c",
+  "new_test_functions": 0,
+  "parent": "db7985dead0c12df0fbda41e7ccda37fbd09be18",
+  "repo": "jinja",
+  "score": 6,
+  "source_files": [
+   "jinja2/lexer.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fixed another bug with line comments",
+  "test_files": [
+   "tests/test_parser.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 345,
+  "behavioural_lines": 3,
+  "date": "2014-12-22T01:09:00-05:00",
+  "edit_sites": 1,
+  "fix_commit": "3ca29d046d1aa2117f6b378f5c5a9143e69417ba",
+  "new_test_functions": 3,
+  "parent": "e5e7520d93dc4981eb484dfa3ffab0155f6d05af",
+  "repo": "marshmallow",
+  "score": 6,
+  "source_files": [
+   "marshmallow/fields.py"
+  ],
+  "source_lines_added": 6,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix handling schema validation errors with dict or list",
+  "test_files": [
+   "tests/test_schema.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 308,
+  "behavioural_lines": 2,
+  "date": "2014-11-23T10:48:42-05:00",
+  "edit_sites": 1,
+  "fix_commit": "3eff74cee08cc53c81e057660ce0c45f23dde7fa",
+  "new_test_functions": 2,
+  "parent": "cbc199af077e710f0cd7efd370be86ff857e0d18",
+  "repo": "marshmallow",
+  "score": 6,
+  "source_files": [
+   "marshmallow/utils.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 0,
+  "structures": [],
+  "subject": "Fix accessing dictionary values when keys are a method of dict",
+  "test_files": [
+   "tests/test_utils.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 193,
+  "behavioural_lines": 1,
+  "date": "2026-02-27T22:55:01-08:00",
+  "edit_sites": 1,
+  "fix_commit": "16f558722612e8ad637c37f11464d5de62c8bb33",
+  "new_test_functions": 0,
+  "parent": "65ed5e92673aaabbfbeafa9b70463ba41bbae9db",
+  "repo": "packaging",
+  "score": 6,
+  "source_files": [
+   "src/packaging/specifiers.py"
+  ],
+  "source_lines_added": 5,
+  "source_lines_removed": 5,
+  "structures": [],
+  "subject": "Fix > comparison for versions with dev+local segments (#1097)",
+  "test_files": [
+   "tests/test_specifiers.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 74,
+  "behavioural_lines": 1,
+  "date": "2011-03-17T09:41:39+01:00",
+  "edit_sites": 1,
+  "fix_commit": "92ccbfc012107a6b6ea27b51fa1c609ac449ce66",
+  "new_test_functions": 1,
+  "parent": "2bd7658034545aa7db5752cd35d400526af5439e",
+  "repo": "sqlparse",
+  "score": 6,
+  "source_files": [
+   "sqlparse/sql.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Ignore case in token.match() for all keyword types (fixes issue34).",
+  "test_files": [
+   "tests/test_regressions.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 13,
+  "behavioural_lines": 1,
+  "date": "2023-02-06T11:29:32+01:00",
+  "edit_sites": 1,
+  "fix_commit": "78c8d4bc8596af1143801076faa922f2f21c1bba",
+  "new_test_functions": 0,
+  "parent": "b93e4dca90cbadfc7db10c23253b4010b991b58f",
+  "repo": "tenacity",
+  "score": 6,
+  "source_files": [
+   "tenacity/_asyncio.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 0,
+  "structures": [
+   "exception"
+  ],
+  "subject": "fix: remove __iter__ from AsyncRetring (#387)",
+  "test_files": [
+   "tests/test_asyncio.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 74,
+  "behavioural_lines": 1,
+  "date": "2020-01-03T14:54:41-08:00",
+  "edit_sites": 1,
+  "fix_commit": "121d4f1c11ed453da51316de82a68920f1ce4438",
+  "new_test_functions": 1,
+  "parent": "c0f7efe3e4acbe7253677266e2b77b1a127096c6",
+  "repo": "werkzeug",
+  "score": 6,
+  "source_files": [
+   "src/werkzeug/formparser.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "fix tests and update ci config",
+  "test_files": [
+   "tests/test_serving.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 348,
+  "behavioural_lines": 1,
+  "date": "2018-02-13T18:24:07+09:00",
+  "edit_sites": 1,
+  "fix_commit": "e07303d989ba023b8edfea0754e6b2d8e4eebaaa",
+  "new_test_functions": 0,
+  "parent": "8b1799738de72dd45d1136d943a049d45617ad09",
+  "repo": "werkzeug",
+  "score": 6,
+  "source_files": [
+   "werkzeug/wsgi.py"
+  ],
+  "source_lines_added": 7,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fix ProxyMiddleware with query string",
+  "test_files": [
+   "tests/test_wsgi.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 376,
+  "behavioural_lines": 1,
+  "date": "2015-03-19T17:25:30+01:00",
+  "edit_sites": 1,
+  "fix_commit": "0647b54045634aaace5228a429a147f4399efe25",
+  "new_test_functions": 0,
+  "parent": "fb9e7c3eeccfdf39670518439dfae154c717ef18",
+  "repo": "werkzeug",
+  "score": 6,
+  "source_files": [
+   "werkzeug/test.py"
+  ],
+  "source_lines_added": 2,
+  "source_lines_removed": 2,
+  "structures": [],
+  "subject": "Fix a bug in Werkzeug regarding closing iterators",
+  "test_files": [
+   "tests/test_test.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 44,
+  "behavioural_lines": 1,
+  "date": "2015-02-01T00:12:48-05:00",
+  "edit_sites": 1,
+  "fix_commit": "f88e865b3915cfea88b438683b5632554f9b9304",
+  "new_test_functions": 0,
+  "parent": "a5398b1b95d295198b95780c9cbba5c8b50a5edb",
+  "repo": "werkzeug",
+  "score": 6,
+  "source_files": [
+   "werkzeug/routing.py"
+  ],
+  "source_lines_added": 3,
+  "source_lines_removed": 4,
+  "structures": [],
+  "subject": "fix regression from #660",
+  "test_files": [
+   "tests/test_routing.py"
+  ]
+ },
+ {
+  "adjacent_test_functions": 173,
+  "behavioural_lines": 1,
+  "date": "2011-01-07T01:48:55+01:00",
+  "edit_sites": 1,
+  "fix_commit": "fb7c24c53d218079479bb0bf7c7d20b239ed06cd",
+  "new_test_functions": 0,
+  "parent": "54a6bb8189e2ae636b9d3ccea58a3ec3e6d61849",
+  "repo": "werkzeug",
+  "score": 6,
+  "source_files": [
+   "werkzeug/datastructures.py"
+  ],
+  "source_lines_added": 1,
+  "source_lines_removed": 1,
+  "structures": [],
+  "subject": "Fixed a ValueError for MIMEAccept.best_match",
+  "test_files": [
+   "tests/test_http.py"
+  ]
+ }
+]

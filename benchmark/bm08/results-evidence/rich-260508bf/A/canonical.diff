@@ -1,0 +1,23 @@
+--- a/rich/segment.py
++++ b/rich/segment.py
+@@ -469,7 +469,7 @@ class Segment(NamedTuple):
+             while segment.text:
+                 end_pos = pos + segment.cell_length
+                 if end_pos < cut:
+-                    add_segment(segment)
++                    add_segment(segment)  
+                     pos = end_pos
+                     break
+ 
+@@ -484,9 +484,9 @@ class Segment(NamedTuple):
+                     else:
+                         before, segment = segment.split_cells(cut - pos)
+                         add_segment(before)
+-                        yield split_segments[:]
+-                        del split_segments[:]
+                         pos = cut
++                        yield split_segments[:]
++                        del split_segments[:]
+                     finally:
+                         try:
+                             cut = next(iter_cuts)

@@ -1,0 +1,23 @@
+--- a/src/icalendar/cal/alarm.py
++++ b/src/icalendar/cal/alarm.py
+@@ -478,7 +478,7 @@ class Alarm(Component):
+         >>> print(alarm.to_ical().decode())
+         BEGIN:VALARM
+         ACTION:AUDIO
+-        TRIGGER:-PT5M
+         ATTACH:ftp://example.com/pub/sounds/bell-01.aud
++        TRIGGER:-PT5M
+         END:VALARM
+ 
+@@ -564,8 +564,8 @@ class Alarm(Component):
+         >>> print(alarm.to_ical().decode())
+         BEGIN:VALARM
+         ACTION:EMAIL
+-        SUMMARY:Meeting reminder
+-        DESCRIPTION:Your meeting starts in 30 minutes.
+-        TRIGGER:-PT30M
+         ATTENDEE:mailto:user@example.com
++        DESCRIPTION:Your meeting starts in 30 minutes.
++        SUMMARY:Meeting reminder
++        TRIGGER:-PT30M
+         END:VALARM

@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import pathlib
 import subprocess
 import sys
 from pathlib import Path
@@ -38,13 +39,96 @@ def load_driver():
     return module
 
 
+@pytest.fixture(autouse=True)
+def _configured_model(monkeypatch):
+    """The manifest fixtures declare this model, and DAR-026 requires the
+    configured one to match it before any run is valid."""
+    monkeypatch.setenv("RIFT_LLM_MODEL", "claude-sonnet-5")
+
+
 def fake_proc(stdout: str = "", returncode: int = 0) -> subprocess.CompletedProcess:
     return subprocess.CompletedProcess(args=["fake"], returncode=returncode, stdout=stdout, stderr="")
 
 
+def seed_task_ledger(worktree: Path, task_id: str = "t1", model: str = "claude-sonnet-5") -> None:
+    """The provider evidence an arm's receipt points at.
+
+    Since DAR-027 the driver reads `model_reported` from this ledger rather than
+    from its own configuration, so a fixture that omits it is an arm whose
+    provider identity cannot be attributed — and that fails closed by design.
+    """
+    import json as _json
+
+    path = Path(worktree) / ".rift" / "tasks" / task_id / "ledger.jsonl"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        _json.dumps({"kind": "model_response_received", "payload": {"model_reported": model}}) + "\n",
+        encoding="utf-8",
+    )
+
+
+def bound_for(d, tmp_path: Path):
+    """A `Bound` over a throwaway runtime, with identity checks stood down.
+
+    Runtime binding has its own dedicated tests in `test_dar026_enforcement.py`;
+    the tests here are about what the evaluation *issues*, so the identity
+    assertion is neutralised rather than satisfied with a real tree.
+    """
+    root = tmp_path / "rt-for-bound"
+    (root / "src" / "riftagent").mkdir(parents=True, exist_ok=True)
+    (root / "src" / "riftagent" / "__init__.py").write_text("x = 1\n", encoding="utf-8")
+    bound = d.Bound(root, d.runtime_hash(root)[0])
+    bound.check = lambda cwd, when: None  # type: ignore[method-assign]
+    return bound
+
+
+def pinned_repo(tmp_path: Path, name: str = "demo") -> tuple[Path, str, str]:
+    """A real repository with a real parent -> fix pair.
+
+    Since DAR-023 a manifest must carry a parent that git can confirm is the fix
+    commit's direct parent, so a fixture naming a repository that does not exist
+    is no longer a valid manifest — which is the point of the invariant.
+    """
+    import subprocess
+
+    repos = tmp_path / "repos"
+    root = repos / name
+    root.mkdir(parents=True, exist_ok=True)
+
+    def g(*args: str) -> str:
+        return subprocess.run(
+            ["git", "-C", str(root), *args], capture_output=True, text=True, check=False
+        ).stdout.strip()
+
+    g("init", "-q")
+    g("config", "user.email", "t@t")
+    g("config", "user.name", "t")
+    (root / "mod.py").write_text("x = 1\n", encoding="utf-8")
+    g("add", "-A")
+    g("commit", "-qm", "parent")
+    parent = g("rev-parse", "HEAD")
+    (root / "mod.py").write_text("x = 2\n", encoding="utf-8")
+    g("add", "-A")
+    g("commit", "-qm", "fix")
+    return repos, parent, g("rev-parse", "HEAD")
+
+
+def checkout_at(repos: pathlib.Path | Path, parent: str, dest: Path) -> Path:
+    """A worktree whose HEAD is the pinned parent, as the driver requires."""
+    import subprocess
+
+    subprocess.run(
+        ["git", "clone", "-q", str(Path(repos) / "demo"), str(dest)], capture_output=True, text=True, check=False
+    )
+    subprocess.run(["git", "-C", str(dest), "checkout", "-q", parent], capture_output=True, text=True, check=False)
+    (dest / ".rift").mkdir(parents=True, exist_ok=True)
+    return dest
+
+
 def manifest_with(tmp_path: Path, **overrides) -> dict:
-    worktree = tmp_path / "repo"
-    (worktree / ".rift").mkdir(parents=True, exist_ok=True)
+    repos, parent, commit = pinned_repo(tmp_path)
+    worktree = checkout_at(repos, parent, tmp_path / "repo")
+    seed_task_ledger(worktree)
     base = {
         "manifest_hash": "deadbeef",
         "arms": {"A": {}, "B": {"seed": 20260818}, "C": {}},
@@ -63,6 +147,8 @@ def manifest_with(tmp_path: Path, **overrides) -> dict:
             {
                 "case_id": "c1",
                 "repo": "demo",
+                "parent": parent,
+                "commit": commit,
                 "worktree": str(worktree),
                 "target": "tests/test_x.py::test_y",
                 "label": "gateable",
@@ -70,6 +156,7 @@ def manifest_with(tmp_path: Path, **overrides) -> dict:
                 "status": "OK",
                 "signature": "AssertionError: boom",
                 "preserve": ["tests/test_x.py::test_keep"],
+                "baseline_tree_hash": load_driver().baseline_tree_hash(worktree),
             }
         ],
     }
@@ -85,12 +172,16 @@ def test_an_invalid_manifest_makes_zero_requests(tmp_path: Path, monkeypatch):
     the ceiling protects nothing."""
     d = load_driver()
     calls: list[list[str]] = []
-    monkeypatch.setattr(d, "rift", lambda args, cwd, timeout=3600.0: calls.append(args) or fake_proc())
+    monkeypatch.setattr(d, "_rift", lambda args, cwd, timeout=3600.0, env=None: calls.append(args) or fake_proc())
 
     manifest = manifest_with(tmp_path, budget={})  # no ceiling
     path = tmp_path / "m.json"
     path.write_text(json.dumps(manifest), encoding="utf-8")
-    monkeypatch.setattr(sys, "argv", ["driver", "--manifest", str(path), "--out", str(tmp_path / "r.json")])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["driver", "--manifest", str(path), "--out", str(tmp_path / "r.json"), "--repos", str(tmp_path / "repos")],
+    )
 
     assert d.main() == 2, "an invalid manifest must not be run"
     assert calls == [], f"a request was made despite invalid manifest: {calls}"
@@ -113,13 +204,15 @@ def test_validation_rejects_each_missing_property(tmp_path: Path, mutate, expect
     d = load_driver()
     manifest = manifest_with(tmp_path)
     mutate(manifest)
-    failures = d.validate_manifest(manifest, tmp_path)
+    failures = d.validate_manifest(manifest, tmp_path, tmp_path / "repos")
     assert any(expected in f for f in failures), f"expected {expected!r} in {failures}"
 
 
 def test_a_complete_manifest_validates(tmp_path: Path):
+    """Complete now includes a parent that git can confirm (DAR-023), so the
+    repository root has to be supplied for the manifest to be checkable."""
     d = load_driver()
-    assert d.validate_manifest(manifest_with(tmp_path), tmp_path) == []
+    assert d.validate_manifest(manifest_with(tmp_path), tmp_path, tmp_path / "repos") == []
 
 
 # --------------------------------------------------------------- arms differ
@@ -193,18 +286,20 @@ def test_an_unsupported_arm_is_refused_not_substituted(tmp_path: Path, monkeypat
     d = load_driver()
     issued: list[list[str]] = []
 
-    def fake_rift(args, cwd, timeout=3600.0):
+    def fake_rift(args, cwd, timeout=3600.0, env=None):
         if args[:2] == ["fix", "--help"]:
             return fake_proc(stdout="usage: rift fix [--max-probes N]")  # neither flag offered
         issued.append(args)
-        return fake_proc(stdout=json.dumps({"verdict": "abstained"}))
+        return fake_proc(stdout=json.dumps({"verdict": "abstained", "task_id": "t1"}))
 
-    monkeypatch.setattr(d, "rift", fake_rift)
+    monkeypatch.setattr(d, "_rift", fake_rift)
     manifest = manifest_with(tmp_path)
     path = tmp_path / "m.json"
     path.write_text(json.dumps(manifest), encoding="utf-8")
     out = tmp_path / "r.json"
-    monkeypatch.setattr(sys, "argv", ["driver", "--manifest", str(path), "--out", str(out)])
+    monkeypatch.setattr(
+        sys, "argv", ["driver", "--manifest", str(path), "--out", str(out), "--repos", str(tmp_path / "repos")]
+    )
 
     assert d.main() == 0
     records = json.loads(out.read_text(encoding="utf-8"))["records"]
@@ -221,7 +316,7 @@ def test_acceptance_comes_from_the_verdict_not_the_return_code(tmp_path: Path):
     rec = d.record(
         manifest_with(tmp_path)["cases"][0],
         "C",
-        fake_proc(stdout=json.dumps({"verdict": "abstained_model_unavailable"}), returncode=0),
+        fake_proc(stdout=json.dumps({"verdict": "abstained_model_unavailable", "task_id": "t1"}), returncode=0),
         {"accepted": False},
     )
     assert rec["verdict"] == "abstained_model_unavailable"
@@ -236,13 +331,15 @@ def test_shadow_evaluation_uses_arm_a_patch_bytes(tmp_path: Path, monkeypatch):
     patch.write_text("--- a\n+++ b\n", encoding="utf-8")
     seen: list[str] = []
 
-    def fake_rift(args, cwd, timeout=3600.0):
+    def fake_rift(args, cwd, timeout=3600.0, env=None):
+        if args[:2] == ["fix", "--help"]:
+            return fake_proc(stdout="--model-alone --probe-policy --precondition --expect-signature")
         seen.extend(args)
-        return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks"}))
+        return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks", "task_id": "t1"}))
 
-    monkeypatch.setattr(d, "rift", fake_rift)
+    monkeypatch.setattr(d, "_rift", fake_rift)
     case = manifest_with(tmp_path)["cases"][0]
-    out = d.evaluate_under_gate(case, patch, tmp_path)
+    out = d.evaluate_under_gate(case, patch, tmp_path, bound_for(d, tmp_path))
     assert out["evaluated"] is True
     assert str(patch) in seen, "the gate was not given arm A's patch bytes"
     assert out["verdict"] == "verified_against_approved_checks"
@@ -250,7 +347,7 @@ def test_shadow_evaluation_uses_arm_a_patch_bytes(tmp_path: Path, monkeypatch):
 
 def test_no_patch_means_not_evaluated_rather_than_a_verdict(tmp_path: Path):
     d = load_driver()
-    out = d.evaluate_under_gate(manifest_with(tmp_path)["cases"][0], None, tmp_path)
+    out = d.evaluate_under_gate(manifest_with(tmp_path)["cases"][0], None, tmp_path, bound_for(d, tmp_path))
     assert out["evaluated"] is False and "no patch" in out["reason"]
 
 
@@ -304,14 +401,14 @@ def test_ground_truth_correctness_is_set_on_a_live_run(tmp_path: Path, monkeypat
     scored as incorrect regardless of what the arm did."""
     d = load_driver()
 
-    def fake_rift(args, cwd, timeout=3600.0):
+    def fake_rift(args, cwd, timeout=3600.0, env=None):
         if args[:2] == ["fix", "--help"]:
-            return fake_proc(stdout="--model-alone --probe-policy")
+            return fake_proc(stdout="--model-alone --probe-policy --precondition --expect-signature")
         if "verify" in args:
-            return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks"}))
+            return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks", "task_id": "t1"}))
         return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks", "task_id": "t1"}))
 
-    monkeypatch.setattr(d, "rift", fake_rift)
+    monkeypatch.setattr(d, "_rift", fake_rift)
     manifest = manifest_with(tmp_path)
     repo = Path(manifest["cases"][0]["worktree"])
     td = repo / ".rift" / "tasks" / "t1"
@@ -322,7 +419,19 @@ def test_ground_truth_correctness_is_set_on_a_live_run(tmp_path: Path, monkeypat
     path.write_text(json.dumps(manifest), encoding="utf-8")
     out = tmp_path / "r.json"
     monkeypatch.setattr(
-        sys, "argv", ["driver", "--manifest", str(path), "--out", str(out), "--patches", str(tmp_path / "p")]
+        sys,
+        "argv",
+        [
+            "driver",
+            "--manifest",
+            str(path),
+            "--out",
+            str(out),
+            "--patches",
+            str(tmp_path / "p"),
+            "--repos",
+            str(tmp_path / "repos"),
+        ],
     )
     assert d.main() == 0
 
@@ -430,13 +539,13 @@ def test_ground_truth_and_shadow_receive_the_exact_reproducer(tmp_path: Path, mo
     d = load_driver()
     issued: list[list[str]] = []
 
-    def fake_rift(args, cwd, timeout=3600.0):
+    def fake_rift(args, cwd, timeout=3600.0, env=None):
         if args[:2] == ["fix", "--help"]:
             return fake_proc(stdout="--precondition --expect-signature")
         issued.append(args)
-        return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks"}))
+        return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks", "task_id": "t1"}))
 
-    monkeypatch.setattr(d, "rift", fake_rift)
+    monkeypatch.setattr(d, "_rift", fake_rift)
     case = dict(
         manifest_with(tmp_path)["cases"][0],
         reproducer=["tests/test_pollute.py::test_pollute"],
@@ -445,7 +554,7 @@ def test_ground_truth_and_shadow_receive_the_exact_reproducer(tmp_path: Path, mo
     patch = tmp_path / "p.diff"
     patch.write_text("--- a\n+++ b\n", encoding="utf-8")
 
-    out = d.evaluate_under_gate(case, patch, tmp_path)
+    out = d.evaluate_under_gate(case, patch, tmp_path, bound_for(d, tmp_path))
     assert out["evaluated"] is True
     flat = " ".join(issued[0])
     assert "--precondition tests/test_pollute.py::test_pollute" in flat, flat
@@ -459,18 +568,18 @@ def test_a_missing_reproducer_capability_refuses_rather_than_falling_back(tmp_pa
     d = load_driver()
     issued: list[list[str]] = []
 
-    def fake_rift(args, cwd, timeout=3600.0):
+    def fake_rift(args, cwd, timeout=3600.0, env=None):
         if args[:2] == ["fix", "--help"]:
             return fake_proc(stdout="usage: rift fix [--max-probes N]")  # no --precondition
         issued.append(args)
-        return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks"}))
+        return fake_proc(stdout=json.dumps({"verdict": "verified_against_approved_checks", "task_id": "t1"}))
 
-    monkeypatch.setattr(d, "rift", fake_rift)
+    monkeypatch.setattr(d, "_rift", fake_rift)
     case = dict(manifest_with(tmp_path)["cases"][0], reproducer=["tests/test_pollute.py::test_pollute"])
     patch = tmp_path / "p.diff"
     patch.write_text("--- a\n+++ b\n", encoding="utf-8")
 
-    out = d.evaluate_under_gate(case, patch, tmp_path)
+    out = d.evaluate_under_gate(case, patch, tmp_path, bound_for(d, tmp_path))
     assert out == {"evaluated": False, "reason": "NOT_RUN_REPRODUCER_UNSUPPORTED"}
     assert issued == [], "a verify ran despite the capability being absent"
 
@@ -481,15 +590,15 @@ def test_validation_requires_complete_arm_definitions_and_a_frozen_seed(tmp_path
     d = load_driver()
     manifest = manifest_with(tmp_path)
     del manifest["arms"]["B"]
-    assert any("arms.B is not defined" in f for f in d.validate_manifest(manifest, tmp_path))
+    assert any("arms.B is not defined" in f for f in d.validate_manifest(manifest, tmp_path, tmp_path / "repos"))
 
     manifest = manifest_with(tmp_path)
     manifest["arms"]["B"] = {}
-    assert any("arms.B.seed is missing" in f for f in d.validate_manifest(manifest, tmp_path))
+    assert any("arms.B.seed is missing" in f for f in d.validate_manifest(manifest, tmp_path, tmp_path / "repos"))
 
     manifest = manifest_with(tmp_path)
     del manifest["model"]["max_probes"]
-    assert any("model.max_probes is missing" in f for f in d.validate_manifest(manifest, tmp_path))
+    assert any("model.max_probes is missing" in f for f in d.validate_manifest(manifest, tmp_path, tmp_path / "repos"))
 
 
 def test_the_patch_is_captured_once(tmp_path: Path):

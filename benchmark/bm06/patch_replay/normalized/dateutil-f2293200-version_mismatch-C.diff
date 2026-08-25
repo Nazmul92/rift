@@ -1,0 +1,10 @@
+--- a/src/dateutil/tz/tz.py
++++ b/src/dateutil/tz/tz.py
+@@ -34,6 +34,6 @@
+ # For warning about rounding tzinfo
+ from warnings import warn
+ 
+ ZERO = datetime.timedelta(0)
+-EPOCH = datetime.datetime.utcfromtimestamp(0)
++EPOCH = datetime.datetime(1970, 1, 1, 0, 0, 0)
+ EPOCHORDINAL = EPOCH.toordinal()

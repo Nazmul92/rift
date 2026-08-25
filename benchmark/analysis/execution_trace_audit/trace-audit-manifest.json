@@ -1,0 +1,310 @@
+{
+ "additional_spend_usd": 0.0,
+ "cases": [
+  {
+   "attribution_bucket": "TRACEBACK_DID_NOT_REACH_FIX_FILE",
+   "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+   "case_id": "click-a17b5447",
+   "fix_files": [
+    "click/decorators.py"
+   ],
+   "fix_region_identity": {
+    "click/decorators.py": "60e738f9dd608b598dd623f7af5c6fc21ed0902aa2539eaaf4fb5010cd47f480"
+   },
+   "fix_regions": {
+    "click/decorators.py": [
+     [
+      167,
+      170
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n --testoption TEXT you wont see me\\n --help Show this message and exit.\\n'"
+   },
+   "parent": "9c456ec2679418442b71b2c1a5e4e62f0b41cbda",
+   "repository": "click",
+   "target_node": "tests/test_options.py::test_option_custom_class_reusable"
+  },
+  {
+   "attribution_bucket": "GREP_DID_NOT_FIND_FIX_REGION",
+   "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+   "case_id": "dnspython-227eace4",
+   "fix_files": [
+    "dns/rdtypes/ANY/LP.py",
+    "dns/rdtypes/ANY/TKEY.py",
+    "dns/rdtypes/IN/NAPTR.py",
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "fix_region_identity": {
+    "dns/rdtypes/ANY/LP.py": "94d32ffeff38d7c6559297a04f345ffc73599947dfc82bb0759c8e77e6666f3b",
+    "dns/rdtypes/ANY/TKEY.py": "5191ca5eff7d4d81a429818d5aed59b8dea59c396ce215630156a6532b90c562",
+    "dns/rdtypes/IN/NAPTR.py": "78a6ceb54d0a29cb2bbbde37d3b001d3f69b8b957401376649c6db12f397307a",
+    "dns/rdtypes/IN/SRV.py": "8254c01195ee06bcc64f263bfe9d662045a65b81d8afbdace2bc64e60a0373d8"
+   },
+   "fix_regions": {
+    "dns/rdtypes/ANY/LP.py": [
+     [
+      36,
+      36
+     ]
+    ],
+    "dns/rdtypes/ANY/TKEY.py": [
+     [
+      90,
+      90
+     ]
+    ],
+    "dns/rdtypes/IN/NAPTR.py": [
+     [
+      83,
+      83
+     ]
+    ],
+    "dns/rdtypes/IN/SRV.py": [
+     [
+      59,
+      59
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "False is not true"
+   },
+   "parent": "fdbbf4b429472242531d4121ff668c63c81d3a1a",
+   "repository": "dnspython",
+   "target_node": "tests/test_zone.py::ZoneTestCase::testToCompressOrNotToCompressAndCanonicalization"
+  },
+  {
+   "attribution_bucket": "TRACEBACK_DID_NOT_REACH_FIX_FILE",
+   "baseline_tree_hash": "12710f9cff4ca7f0c98e2fc530bdb92cd314b876c9872dec157bd6f2e917cd97",
+   "case_id": "dnspython-c9f6c819",
+   "fix_files": [
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "fix_region_identity": {
+    "dns/rdtypes/IN/SRV.py": "a16ec67d23813cbf9e415721cf701983c2c252780a9eadff65b6683dc3d40e01"
+   },
+   "fix_regions": {
+    "dns/rdtypes/IN/SRV.py": [
+     [
+      17,
+      18
+     ],
+     [
+      59,
+      60
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00"
+   },
+   "parent": "8cc4963a1a7323ec320f7cd4b02a70b8b9df04f6",
+   "repository": "dnspython",
+   "target_node": "tests/test_bugs.py::BugsTestCase::test_lowercase_canonicals"
+  },
+  {
+   "attribution_bucket": "TRACEBACK_DID_NOT_REACH_FIX_FILE",
+   "baseline_tree_hash": "317a30f642d1f7f43283f9cc5e8db77fd26e6a98276402965beb578d1757a290",
+   "case_id": "isort-49bb9bab",
+   "fix_files": [
+    "isort/parse.py"
+   ],
+   "fix_region_identity": {
+    "isort/parse.py": "782407e34184ecc5d25a5c5ba6160804a5f706197de2a09a402b87012139ef0a"
+   },
+   "fix_regions": {
+    "isort/parse.py": [
+     [
+      221,
+      222
+     ],
+     [
+      224,
+      226
+     ],
+     [
+      229,
+      231
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert False"
+   },
+   "parent": "c2412345aa9b75ec732aca57ba60ef4fe4b6c0aa",
+   "repository": "isort",
+   "target_node": "tests/unit/test_regressions.py::test_isort_shouldnt_split_skip_issue_1556"
+  },
+  {
+   "attribution_bucket": "GREP_DID_NOT_FIND_FIX_REGION",
+   "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+   "case_id": "lark-96873d64",
+   "fix_files": [
+    "lark/common.py",
+    "lark/lark.py",
+    "lark/parser_frontends.py"
+   ],
+   "fix_region_identity": {
+    "lark/common.py": "33c9057b0448e08c0ee2d58b8b1a5b40c1df2f8be44c2dbd47b511f190625e63",
+    "lark/lark.py": "ed30092524a5513c3c9275ec13349b3716258f47e126069d471f569d34e4f90c",
+    "lark/parser_frontends.py": "1787d8c0df1798a32aa0f6e4a54d5ebad2ea6a46610b55e3dc52091a61314cb0"
+   },
+   "fix_regions": {
+    "lark/common.py": [
+     [
+      20,
+      22
+     ]
+    ],
+    "lark/lark.py": [
+     [
+      347,
+      347
+     ]
+    ],
+    "lark/parser_frontends.py": [
+     [
+      3,
+      3
+     ],
+     [
+      60,
+      61
+     ],
+     [
+      76,
+      76
+     ],
+     [
+      79,
+      80
+     ],
+     [
+      232,
+      232
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+   },
+   "parent": "c9ca287e9e2ae2a3f5ad7cf028fdabf408f053a1",
+   "repository": "lark",
+   "target_node": "tests/test_tools.py::TestStandalone::test_transformer"
+  },
+  {
+   "attribution_bucket": "TRACEBACK_DID_NOT_REACH_FIX_FILE",
+   "baseline_tree_hash": "19242c9935395b0558e605e88d3634785b2cc8668918f8589543f94fd2e976d3",
+   "case_id": "mistune-f4237046",
+   "fix_files": [
+    "src/mistune/directives/image.py",
+    "src/mistune/renderers/html.py",
+    "src/mistune/util.py"
+   ],
+   "fix_region_identity": {
+    "src/mistune/directives/image.py": "85ad3c037d31546e186d2b078f8f5d533f8178cbb14cfaaa4765540fd016bc8e",
+    "src/mistune/renderers/html.py": "8f4af7cced252d4257467f18162533278c36c86a46485b52e1d74dd7f923584f",
+    "src/mistune/util.py": "20bca1c5c70661a12827e542a8f01da763a55b667c907b4405d1d2d2eca8cc1b"
+   },
+   "fix_regions": {
+    "src/mistune/directives/image.py": [
+     [
+      67,
+      67
+     ],
+     [
+      93,
+      93
+     ]
+    ],
+    "src/mistune/renderers/html.py": [
+     [
+      56,
+      56
+     ],
+     [
+      61,
+      61
+     ],
+     [
+      66,
+      66
+     ]
+    ],
+    "src/mistune/util.py": [
+     [
+      39,
+      39
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]"
+   },
+   "parent": "0772c78bc0a62771768278263ef740345f58c0f0",
+   "repository": "mistune",
+   "target_node": "tests/test_misc.py::TestMiscCases::test_ast_url"
+  }
+ ],
+ "decision_rule": {
+  "EXECUTION_CITATION_NOT_SUPPORTED": "<=2/6 fix files STABLE_3_OF_3",
+  "EXECUTION_CITATION_PARTIALLY_SUPPORTED": "3-4/6 fix files STABLE_3_OF_3",
+  "EXECUTION_CITATION_STRONGLY_SUPPORTED": ">=5/6 fix files STABLE_3_OF_3 with identity preserved",
+  "INCONCLUSIVE_TRACE_PERTURBATION": "perturbation or invalidity prevents reliable measurement"
+ },
+ "evaluator_only": true,
+ "execution_environment": {
+  "container_image": "rift-reference-iso:3.12-slim",
+  "container_image_digest": "sha256:279f2c1816d32e452951eae861bb3bbb65aad5b3da0ff5035e27a17069a2f8f3",
+  "docker_security_flags": "--cap-add SYS_ADMIN --cap-add NET_ADMIN --security-opt seccomp=unconfined",
+  "harness_confinement": {
+   "executable": "/usr/bin/unshare",
+   "mechanism": "unshare --user --net --map-root-user",
+   "network_policy": "repository subprocess: no interfaces except empty loopback",
+   "version": "unshare from util-linux 2.41"
+  },
+  "network_policy": {
+   "provider_and_controller": "allowed",
+   "repository_controlled_execution": "denied"
+  },
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python_implementation": "CPython",
+  "python_version": "3.12.14",
+  "rift_repository_isolation": {
+   "bwrap": "/usr/bin/bwrap",
+   "bwrap_version": "bubblewrap 0.11.0",
+   "detail": "linux + bubblewrap: host read-only, worktree and tmp writable, network unshared",
+   "level": "full"
+  }
+ },
+ "execution_environment_hash": "9de6886df3d526affb979312048437580a6860ce5491abfd84371c36fed83de3",
+ "execution_trace_audit_manifest_hash": "669dc5bae7711c2cfe66a76dfb055a72cdcdacee0e2f10aca9a50398a92fef74",
+ "failure_identity_comparison_rule": "the untraced reproduction must reproduce the frozen official failure identity (exception type); each traced repeat must reproduce the untraced identity exactly, or that observation is INVALID_OBSERVER_PERTURBATION and is not counted",
+ "file_execution_rule": "a fix file counts as executed only if the tracer recorded an executed line inside it during the failing reproduction; imported, discovered, on sys.path or statically present does not count",
+ "fresh_process_rule": "each observation runs in its own process; no coverage state is reused",
+ "governed_observer_hash": "d16d33019a2e10779d16aa010dcb09930e668b3eb1cbef56814d915163db0716",
+ "label": "EXECUTION-TRACE PREMISE AUDIT \u2014 ZERO COST \u2014 EVALUATOR-ONLY \u2014 NOT A SELECTOR CHANGE",
+ "not_a_selector_change": "This audit decides only whether execution citation belongs in a future selector DAR.",
+ "provider_calls": 0,
+ "python_version": "3.12.14",
+ "question": "For the 6 never-discovered BM-08 cases, would deterministic execution tracing during the frozen failing reproduction have exposed the historical fix file and/or the historical fix region?",
+ "region_execution_rule": "a fix region counts as executed only if an executed line number falls inside the historical fix-touched span",
+ "repeats": 3,
+ "stability_classification_rule": {
+  "STABLE_0_OF_3": "executed in none",
+  "STABLE_3_OF_3": "executed in all three valid observations",
+  "TRACE_INVALID": "fewer than three valid observations",
+  "UNSTABLE_1_OF_3": "one of three",
+  "UNSTABLE_2_OF_3": "two of three; never promoted to stable"
+ },
+ "trace_implementation_hash": "78e8d3fde0f5dc8ae11deacc6d7691336c5b68357a032255eb3d3ce9c6b52816",
+ "trace_mechanism": "stdlib sys.settrace + threading.settrace, line events, repository-tree filtered"
+}

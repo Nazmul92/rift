@@ -1,0 +1,19 @@
+--- a/src/mistune/helpers.py
++++ b/src/mistune/helpers.py
+@@ -1,6 +1,6 @@
+ import re
+ from typing import Any, Dict, Optional, Tuple
+-from .util import escape_url, unescape_char
++from .util import unescape_char
+ 
+ PREVENT_BACKSLASH = r'(?<!\\)(?:\\\\)*'
+ 
+@@ -84,7 +85,7 @@ def parse_link(src: str, pos: int) -> Tuple[Optional[Dict[str, Any]], Optional[
+     url = src[pos:new_pos].strip()
+     if url.startswith('<') and url.endswith('>'):
+         url = url[1:-1]
+-    attrs['url'] = escape_url(url)
++    attrs['url'] = url
+     pos = new_pos
+ 
+     m = _LINK_TITLE_RE.match(src, pos)

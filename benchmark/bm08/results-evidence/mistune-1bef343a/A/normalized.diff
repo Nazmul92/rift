@@ -1,0 +1,27 @@
+--- a/src/mistune/directives/include.py
++++ b/src/mistune/directives/include.py
+@@ -1,4 +1,5 @@
+ import os
++import re
+ from typing import TYPE_CHECKING, Any, Dict, Optional
+ 
+ if TYPE_CHECKING:
+@@ -30,6 +31,16 @@ class Include(DirectivePlugin):
+         relpath = attrs.get("argument", "")
+         if not relpath:
+             return '<div class="error">Include directive missing file argument</div>'
++
++        # Security: reject absolute paths and path traversal
++        source_file = state.env.get("__file__", "")
++        if source_file:
++            source_dir = os.path.realpath(os.path.dirname(source_file))
++            if os.path.isabs(relpath):
++                target = os.path.realpath(relpath)
++            else:
++                target = os.path.realpath(os.path.join(os.path.dirname(source_file), relpath))
++            if not target.startswith(source_dir + os.sep) and target != source_dir:
++                return '<pre class="directive-include">\nCould not include outside source dir</pre>'
++
+         source_dir = os.path.dirname(state.env.get("__file__", ""))
+         filepath = os.path.join(source_dir, relpath)
+         try:

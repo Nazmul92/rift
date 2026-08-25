@@ -1,0 +1,28 @@
+--- a/click/decorators.py
++++ b/click/decorators.py
+@@ -1,6 +1,7 @@
+ # -*- coding: utf-8 -*-
+ import sys
+ import inspect
++import copy
+ 
+ from functools import update_wrapper
+ 
+@@ -150,7 +151,8 @@ def pass_obj(f):
+ 
+ def _make_decorator(param_decls, attrs, param_class):
+     def decorator(f):
+-        if 'cls' in attrs:
++        attrs_copy = copy.copy(attrs)
++        if 'cls' in attrs_copy:
+             param_class_to_use = attrs_copy.pop('cls')
+         else:
+             param_class_to_use = param_class
+@@ -158,7 +160,6 @@ def _make_decorator(param_decls, attrs, param_class):
+         return f
+     return decorator
+ 
+-
+ def argument(*param_decls, **attrs):
+     """Attaches an argument to the command.  All positional arguments are
+     passed as parameter declarations to :class:`Argument`; all keyword

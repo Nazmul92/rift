@@ -29,6 +29,7 @@ import random
 import re
 import sys
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -82,10 +83,16 @@ from riftagent.records import (
     VerificationReceipt,
     allocate_task_dir,
     canonical,
+    canonical_candidate_record,
     canonical_diff,
+    canonicalize_patch,
     changeset_record,
     content_hash,
     iter_task_dirs,
+    normalize_candidate,
+    normalized_candidate_record,
+    persist_candidate,
+    raw_candidate_record,
     read_events,
     reduce,
     replace,
@@ -101,6 +108,7 @@ from riftagent.sandbox import (
     SandboxError,
     Worktree,
     probe_isolation,
+    structural_parse,
     tree_hash,
 )
 
@@ -390,6 +398,7 @@ class Flow:
         self.renderer = renderer
         self.probe = probe
         self.allow_network = allow_network
+        self.last_failure_text = ""
 
     def append(self, kind: EventKind, payload: dict | None = None) -> Event:
         ev = self.ledger.append(kind, payload or {})
@@ -438,9 +447,14 @@ class Flow:
                 {"duration_s": round(res.duration_s, 3), "exit_code": res.exit_code, "phase": phase.value},
             )
 
-        result, _raw = run_check(
+        result, raw = run_check(
             check, worktree, phase, self.probe, self.allow_network, on_start=on_start, on_done=on_done
         )
+        # A disposable cache of the last observed output, for the one caller
+        # that appends its own CHECK_RESULT after validating the reproducer.
+        # The durable record is still the event, written immediately below or
+        # by that caller; nothing reads this across a process boundary.
+        self.last_failure_text = raw.combined if result.outcome is not Outcome.PASSED else ""
         if result.fallback:
             self.append(
                 EventKind.CHECK_FALLBACK,
@@ -452,8 +466,24 @@ class Flow:
                 },
             )
         if record:
-            self.append(EventKind.CHECK_RESULT, {"result": result.to_dict(), "index": index, "total": total})
+            self.append(EventKind.CHECK_RESULT, self.check_payload(result, index, total))
         return result
+
+    def check_payload(self, result: CheckResult, index: int, total: int) -> dict[str, Any]:
+        """What a CHECK_RESULT carries. One definition, three call sites.
+
+        A baseline failure also carries a bounded excerpt of the observed
+        output. A signature identifies a failure; it does not show where the
+        failure happened, and context selection needs the frames. Arm A never
+        runs diagnosis, which was the only place this was recorded, so it was
+        shown less source than arms B and C for the same failure — the arms
+        differed in what they could see rather than in what they did with it
+        (DAR-022).
+        """
+        payload: dict[str, Any] = {"result": result.to_dict(), "index": index, "total": total}
+        if result.phase is GatePhase.BASELINE and self.last_failure_text:
+            payload["failure_excerpt"] = self.last_failure_text[-FAILURE_EXCERPT_CHARS:]
+        return payload
 
     def finish_phase(self, phase: GatePhase, decision: kernel.PhaseDecision, artifacts: dict | None = None) -> bool:
         self.append(
@@ -898,7 +928,7 @@ def run_episode(
             "after",
             state_paths,
         )
-        flow.append(EventKind.CHECK_RESULT, {"result": result.to_dict(), "index": 1, "total": 1})
+        flow.append(EventKind.CHECK_RESULT, flow.check_payload(result, 1, 1))
         return result
 
     started = time.time()
@@ -955,7 +985,12 @@ def run_episode(
         exit_code=0,
         detail=obs.detail,
     )
-    flow.append(EventKind.CHECK_RESULT, {"result": result.to_dict(), "index": 1, "total": 1})
+    # This path runs the experiment through `run_probe`, not `Flow.execute`, so
+    # it sets the observed text itself. Without this the payload would carry
+    # whatever the previous command happened to leave behind — a stale excerpt
+    # attached to a different measurement.
+    flow.last_failure_text = obs.failure_text if obs.node_outcome is not Outcome.PASSED else ""
+    flow.append(EventKind.CHECK_RESULT, flow.check_payload(result, 1, 1))
     return result
 
 
@@ -2455,13 +2490,20 @@ def _extend_handles_with_model(
         EventKind.SPEND_SETTLED,
         {"operation": "propose_handles", "request_id": request_id, "spend_event_id": settled["event_id"]},
     )
-    try:
-        proposed = llm.validate_handles(llm.extract_json(reply.text), handles)
-    except llm.ModelResponseInvalid as exc:
-        flow.append(
-            EventKind.MODEL_RESPONSE_INVALID,
-            {"reason": str(exc), "operation": "propose_handles", "effect": "deterministic handles only"},
-        )
+    proposed = _accept_or_repair(
+        flow,
+        spend,
+        "propose_handles",
+        task_id,
+        config,
+        messages,
+        reply,
+        max_output,
+        0,
+        lambda raw: llm.validate_handles(raw, handles),
+        effect="deterministic handles only",
+    )
+    if proposed is None:
         return handles
 
     seen = {h.label for h in handles}
@@ -2548,13 +2590,20 @@ def _extend_hypotheses_with_model(
         EventKind.SPEND_SETTLED,
         {"operation": "propose_hypotheses", "request_id": request_id, "spend_event_id": settled["event_id"]},
     )
-    try:
-        proposed = llm.validate_hypotheses(llm.extract_json(reply.text), roles)
-    except (llm.ModelResponseInvalid, ValidationError) as exc:
-        flow.append(
-            EventKind.MODEL_RESPONSE_INVALID,
-            {"reason": str(exc), "operation": "propose_hypotheses", "effect": "enumerated theories only"},
-        )
+    proposed = _accept_or_repair(
+        flow,
+        spend,
+        "propose_hypotheses",
+        task_id,
+        config,
+        messages,
+        reply,
+        max_output,
+        0,
+        lambda raw: llm.validate_hypotheses(raw, roles),
+        effect="enumerated theories only",
+    )
+    if proposed is None:
         return []
 
     # An id already in use is refused rather than renamed. Renaming would put a
@@ -2767,10 +2816,16 @@ def cmd_why(args: argparse.Namespace) -> int:
 # --------------------------------------------------------------------------
 
 
-# Bounded context. Whole files are sent, but only files the failure itself
-# named, and only up to these caps: an unbounded prompt is an unbounded bill,
+# Bounded context: only files the failure itself named or the target's imports
+# reached, and only up to these caps. An unbounded prompt is an unbounded bill,
 # and a prompt assembled by relevance ranking is a component whose behaviour
 # nobody can bound.
+#
+# `MAX_FILE_CHARS` is the per-file policy and is enforced as
+# `min(MAX_FILE_CHARS, MAX_CONTEXT_CHARS - spent)`. It was defined and never
+# referenced before DAR-022, while an unnamed `MAX_EXCERPT_CHARS = 8_000` did
+# the actual limiting — a governed constant that governed nothing beside an
+# ungoverned one that did.
 MAX_CONTEXT_FILES = 6
 MAX_CONTEXT_CHARS = 60_000
 MAX_FILE_CHARS = 20_000
@@ -2801,12 +2856,16 @@ class FixRequest:
     max_attempts: int
 
 
-# Bounded excerpting. A window is lines around an anchor, never a whole file:
-# whole files put unbounded and unrelated repository content into a prompt, and
-# the parts a fix needs are the cited frames and the definitions under test.
+# Bounded excerpting, in the order `excerpt` tries: a file inside the per-file
+# budget is sent whole, a larger one is sent as complete AST definitions, and a
+# window around an anchor is the floor when neither is possible.
+#
+# It read "never a whole file" until DAR-022. That rule sent 770 characters of a
+# 23,272 character file, and the patch built from it could not be applied to any
+# line of the tree it described. What has to be bounded is the *budget*, not
+# completeness.
 WINDOW_RADIUS = 12
 MAX_WINDOWS_PER_FILE = 6
-MAX_EXCERPT_CHARS = 8_000
 
 # Scoped secret patterns. Deliberately narrow: this is a redaction pass over
 # text already selected for sending, not a repository scanner. A broad matcher
@@ -2842,61 +2901,161 @@ def redact(text: str) -> tuple[str, dict[str, int]]:
     return text, counts
 
 
-def _anchor_lines(source: str, cited: list[int], wanted: set[str]) -> list[int]:
-    """Where to centre windows: the cited frames, plus the definitions the test
-    actually imports. Both are observations, not relevance scores."""
-    anchors = set(cited)
-    if wanted:
-        for i, line in enumerate(source.splitlines(), start=1):
-            match = re.match(r"\s*(?:async\s+)?(?:def|class)\s+(\w+)", line)
-            if match and match.group(1) in wanted:
-                anchors.add(i)
-    return sorted(anchors)
+def definition_spans(source: str) -> list[tuple[int, int, str]]:
+    """Every top-level and nested definition, as (start, end, name).
+
+    Deterministic AST boundaries, not a regex over lines. The distinction is
+    the whole of DAR-022: a regex can find where `class TLRUCache` is *written*
+    but not where it *ends*, so a window centred on the match captures the
+    declaration and the lines that happen to precede it — which is how the
+    stopped run sent lines 575-599 of a class occupying 587-713, omitting the
+    `__setitem__` the fix had to change.
+    """
+    try:
+        tree = ast.parse(source)
+    except (SyntaxError, ValueError):
+        return []
+    out: list[tuple[int, int, str]] = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef):
+            end = getattr(node, "end_lineno", None)
+            if end:
+                # Decorators are part of the definition; a patch whose context
+                # starts below them describes a different region of the file.
+                start = min([node.lineno, *[d.lineno for d in node.decorator_list]])
+                out.append((start, int(end), node.name))
+    return sorted(out)
 
 
-def excerpt(source: str, cited: list[int], wanted: set[str]) -> tuple[str, list[tuple[int, int]]]:
-    """One bounded excerpt of a file. Returns (text, line ranges included).
+def enclosing_unit(spans: list[tuple[int, int, str]], line: int) -> tuple[int, int, str] | None:
+    """The outermost definition containing `line`.
 
-    Overlapping windows are merged so a reader sees continuous regions rather
-    than repeated lines, and elision is marked explicitly — a prompt that hides
-    the fact that it is partial invites a patch whose hunk context is wrong.
+    Outermost, not innermost: a traceback frame inside a method is usually
+    fixed by seeing the class it belongs to — its siblings, its `__init__`, the
+    attribute names it shares. The frozen design asks for the complete
+    enclosing function *or class*, and the class is the larger true answer.
+    """
+    holders = [s for s in spans if s[0] <= line <= s[1]]
+    return min(holders, key=lambda s: (s[0], -s[1])) if holders else None
+
+
+def _merge(spans: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    """Overlapping or adjacent ranges into one. No line is ever sent twice."""
+    out: list[tuple[int, int]] = []
+    for lo, hi in sorted(spans):
+        if out and lo <= out[-1][1] + 1:
+            out[-1] = (out[-1][0], max(out[-1][1], hi))
+        else:
+            out.append((lo, hi))
+    return out
+
+
+def excerpt(
+    source: str, cited: list[int], wanted: set[str], budget: int = MAX_FILE_CHARS
+) -> tuple[str, list[tuple[int, int]], str]:
+    """One bounded excerpt of a file. Returns (text, ranges kept, why).
+
+    Three rules, tried in order:
+
+    1. **A file that fits is sent whole.** Sending 770 characters of a 23,272
+       character file because a symbol matched on one line is how the stopped
+       run produced patches whose context lines were invented. If the whole
+       file is inside the per-file budget, the whole file is the answer.
+    2. **Otherwise, complete definitions.** Every cited traceback line is
+       resolved to its enclosing definition and that definition is sent in
+       full; so is every definition the test imports by name. Complete units
+       only — a half-sent function is exactly the input that produces an
+       unappliable hunk.
+    3. **Otherwise, bounded windows.** A single definition larger than the
+       budget, or a file with no parseable definitions, falls back to line
+       windows around the anchors. Truncation is disclosed in the text.
+
+    Elision is always marked. A prompt that hides the fact that it is partial
+    invites a patch whose hunk context is wrong, which is the failure this
+    function exists to stop causing.
     """
     lines = source.splitlines()
     total = len(lines)
-    anchors = _anchor_lines(source, cited, wanted)
-    if not anchors:
-        # Nothing cited and nothing imported: send the head rather than guess.
-        anchors = [1]
+    if not total:
+        return "", [], "empty file"
 
-    spans: list[tuple[int, int]] = []
-    for anchor in anchors[:MAX_WINDOWS_PER_FILE]:
-        lo = max(1, anchor - WINDOW_RADIUS)
-        hi = min(total, anchor + WINDOW_RADIUS)
-        if spans and lo <= spans[-1][1] + 1:
-            spans[-1] = (spans[-1][0], max(spans[-1][1], hi))
+    if len(source) <= budget:
+        return source, [(1, total)], "whole file (within the per-file budget)"
+
+    spans = definition_spans(source)
+    # Traceback-cited source outranks everything. It is the only region the
+    # failure itself named, and it is where a fix most often has to go.
+    #
+    # A cited line need not be inside any definition. `dateutil/tz/tz.py` fails
+    # on `EPOCH = datetime.datetime.utcfromtimestamp(0)` at module level, where
+    # `enclosing_unit` correctly returns None — and the previous implementation
+    # then contributed nothing for it, so imported class definitions filled the
+    # whole per-file budget and the one region the traceback pointed at was the
+    # one region not sent. A module-level cited line gets a bounded window.
+    primary: list[tuple[int, int]] = []
+    definitions: list[str] = []
+    module_level: list[str] = []
+    for line in cited:
+        unit = enclosing_unit(spans, line)
+        if unit:
+            primary.append((unit[0], unit[1]))
+            definitions.append(f"{unit[2]} encloses cited line {line}")
         else:
-            spans.append((lo, hi))
+            primary.append((max(1, line - WINDOW_RADIUS), min(total, line + WINDOW_RADIUS)))
+            module_level.append(str(line))
+    # Then, with whatever budget remains, the definitions the test imports.
+    secondary: list[tuple[int, int]] = []
+    for lo, hi, name in spans:
+        if name in wanted:
+            secondary.append((lo, hi))
+            definitions.append(f"{name} is imported by the test")
 
+    kept: list[tuple[int, int]] = []
     chunks: list[str] = []
     used = 0
-    kept: list[tuple[int, int]] = []
-    for lo, hi in spans:
-        if hi < lo:
-            # An empty file clamps to (1, 0). Emitting it would spend one of the
-            # six context slots on a header with no content and record a line
-            # range that describes nothing — a manifest entry claiming bytes
-            # were sent when none were.
-            continue
-        body = "\n".join(lines[lo - 1 : hi])
-        if used + len(body) > MAX_EXCERPT_CHARS:
-            break
-        used += len(body)
-        kept.append((lo, hi))
-        chunks.append(f"# lines {lo}-{hi}\n{body}")
+    reason = ""
+    if primary or secondary:
+        # Say what was actually selected. A window around a module-level line is
+        # not a complete definition, and a reason that called it one would make
+        # the ledger agree with a description of the code rather than the code.
+        clauses = []
+        if definitions:
+            clauses.append("complete definitions: " + "; ".join(dict.fromkeys(definitions)))
+        if module_level:
+            clauses.append("bounded windows around cited lines at module level: " + ", ".join(module_level))
+        reason = "; ".join(clauses)
+        # Merged within each tier, then emitted in tier order, so a lower
+        # priority unit can never displace a cited one.
+        ordered = _merge(primary) + [s for s in _merge(secondary) if s not in _merge(primary)]
+        for lo, hi in ordered:
+            body = "\n".join(lines[lo - 1 : hi])
+            if used + len(body) > budget:
+                continue
+            used += len(body)
+            kept.append((lo, hi))
+            chunks.append(f"# lines {lo}-{hi}\n{body}")
+        kept.sort()
+        chunks = [f"# lines {lo}-{hi}\n" + "\n".join(lines[lo - 1 : hi]) for lo, hi in kept]
 
-    if kept and (kept[0][0] > 1 or kept[-1][1] < total):
+    if not kept:
+        # No definition fitted, or none was found. Windows are the floor, not
+        # the design: they are what is left when a complete unit is impossible.
+        anchors = sorted(set(cited)) or [1]
+        windows = _merge([(max(1, a - WINDOW_RADIUS), min(total, a + WINDOW_RADIUS)) for a in anchors])
+        reason = "bounded windows (no complete definition fits the per-file budget)"
+        for lo, hi in windows[:MAX_WINDOWS_PER_FILE]:
+            if hi < lo:
+                continue
+            body = "\n".join(lines[lo - 1 : hi])
+            if used + len(body) > budget:
+                break
+            used += len(body)
+            kept.append((lo, hi))
+            chunks.append(f"# lines {lo}-{hi}\n{body}")
+
+    if kept and (kept[0][0] > 1 or kept[-1][1] < total or len(kept) > 1):
         chunks.append(f"# ... {total} lines total; only the ranges above were sent ...")
-    return "\n\n".join(chunks), kept
+    return "\n\n".join(chunks), kept, reason
 
 
 # Where a repository keeps importable source. Checked in order; the first hit
@@ -2967,6 +3126,154 @@ def imported_modules(repo_root: Path, test_file: str, cap: int = 8) -> list[str]
     return out[:cap]
 
 
+def defines(repo_root: Path, rel: str, names: set[str]) -> set[str]:
+    """Which of `names` this file actually defines, by AST."""
+    try:
+        source = (repo_root / rel).read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return set()
+    return {name for _, _, name in definition_spans(source)} & names
+
+
+def reexport_sources(repo_root: Path, rel: str, names: set[str], cap: int = 4) -> list[str]:
+    """Where a package re-exports a name from, one hop, by AST.
+
+    `from pygments.formatters import RawTokenFormatter` resolves to
+    `pygments/formatters/__init__.py`, which does not define it — the class
+    lives in `other.py`. Following the package's own `from . import x` one level
+    is deterministic and reaches the implementation. It is an observation of
+    what the package says about itself, not a search.
+    """
+    try:
+        tree = ast.parse((repo_root / rel).read_text(encoding="utf-8"))
+    except (OSError, ValueError, SyntaxError, UnicodeDecodeError):
+        return []
+    package = Path(rel).parent
+    out: list[str] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.ImportFrom):
+            continue
+        exported = {a.asname or a.name for a in node.names}
+        if not (names & exported or "*" in exported):
+            continue
+        module = node.module or ""
+        # A relative import resolves against this package. An absolute one
+        # resolves against each source root, because `pkg/plugins/other.py` is
+        # written `from pkg.plugins.other import X` whether the tree is flat or
+        # under `src/`. Only one level is followed either way.
+        stem = Path(module.replace(".", "/"))
+        bases = [package / stem] if node.level else [Path(r) / stem if r else stem for r in SOURCE_ROOTS]
+        found = ""
+        for base in bases:
+            for candidate in (base.with_suffix(".py"), base / "__init__.py"):
+                if (repo_root / candidate).is_file():
+                    found = candidate.as_posix()
+                    break
+            if found:
+                break
+        if found and found not in out and found != rel:
+            out.append(found)
+        if len(out) >= cap:
+            break
+    return out[:cap]
+
+
+def _resolve_module(repo_root: Path, rel: str, module: str, level: int) -> str:
+    """One import statement to one repository file, or "" if it is not local.
+
+    A relative import resolves against the importing file's package; an absolute
+    one against each source root, because the same package is written the same
+    way whether the tree is flat or under `src/`.
+    """
+    stem = Path(module.replace(".", "/"))
+    bases = [Path(rel).parent / stem] if level else [Path(r) / stem if r else stem for r in SOURCE_ROOTS]
+    for base in bases:
+        for candidate in (base.with_suffix(".py"), base / "__init__.py"):
+            if (repo_root / candidate).is_file():
+                return candidate.as_posix()
+    return ""
+
+
+def used_dependencies(repo_root: Path, rel: str, cap: int = 4) -> list[str]:
+    """Local modules whose imported names this file actually *uses*.
+
+    The frozen order is traceback, imports, then dependencies of what those
+    reached. This is that third step, and it is a traversal of edges the
+    selected code itself declares — not a crawl.
+
+    Two bounds make it that. Only **local** imports are followed, so the
+    standard library and site-packages are never candidates. And a name must be
+    **referenced in the body**, not merely imported: `icalendar/timezone/__init__.py`
+    imports four symbols from `.tzid` and one from `.tzp`, and constructs
+    `TZP()` — so `tzp.py` is a dependency the selected code demonstrably relies
+    on, while a re-export it never touches is not.
+
+    Deterministic: imports are visited in source order and the result is
+    deduplicated in that order.
+    """
+    try:
+        source = (repo_root / rel).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+    except (OSError, ValueError, SyntaxError, UnicodeDecodeError):
+        return []
+
+    imported: list[tuple[str, str]] = []  # (local name, resolved file)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom):
+            found = _resolve_module(repo_root, rel, node.module or "", node.level)
+            if found and found != rel:
+                imported.extend((a.asname or a.name, found) for a in node.names)
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                found = _resolve_module(repo_root, rel, alias.name, 0)
+                if found and found != rel:
+                    imported.append(((alias.asname or alias.name).split(".")[0], found))
+
+    referenced = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name)}
+    referenced |= {n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)}
+    out: list[str] = []
+    for name, found in imported:
+        if name in referenced and found not in out:
+            out.append(found)
+        if len(out) >= cap:
+            break
+    return out
+
+
+def grep_definitions(repo_root: Path, names: set[str], cap_files: int = 3, scan_cap: int = 2000) -> list[str]:
+    """Files defining any of `names`, found by scanning source text.
+
+    The last stage of the frozen selection order: traceback, then imports, then
+    grep. It runs only for names the first two stages did not resolve, so a
+    symbol that the import graph explains never reaches it.
+
+    Deterministic by construction — files are visited in sorted order, the
+    pattern is a literal definition of a known name, and both the number of
+    files scanned and the number returned are capped. It is a bounded text
+    search, not a relevance ranking.
+    """
+    if not names:
+        return []
+    pattern = re.compile(
+        r"^[ \t]*(?:async[ \t]+)?(?:def|class)[ \t]+(" + "|".join(map(re.escape, sorted(names))) + r")\b", re.M
+    )
+    out: list[str] = []
+    scanned = 0
+    for path in sorted(repo_root.rglob("*.py")):
+        if scanned >= scan_cap or len(out) >= cap_files:
+            break
+        parts = path.relative_to(repo_root).parts
+        if any(p in (".rift", ".git", ".venv", "node_modules", "build", "dist") for p in parts):
+            continue
+        scanned += 1
+        try:
+            if pattern.search(path.read_text(encoding="utf-8")):
+                out.append(path.relative_to(repo_root).as_posix())
+        except (OSError, UnicodeDecodeError):
+            continue
+    return out
+
+
 def select_context(
     repo_root: Path, failure_text: str, node_id: str, protected: tuple[str, ...]
 ) -> tuple[list[tuple[str, str]], dict[str, Any]]:
@@ -3000,9 +3307,49 @@ def select_context(
     cited.reverse()
 
     target_file = node_id.split("::")[0]
+    # Names the target test imports. Their definitions anchor a unit even when
+    # nothing raised inside them.
+    wanted = imported_names(root, target_file)
+    imported = imported_modules(root, target_file)
+
+    # The frozen selection order: traceback, then the import graph, then one
+    # re-export hop, then bounded grep. Each stage runs only on what the
+    # previous ones did not resolve, so grep is a floor and not a search
+    # strategy (DAR-022).
+    unresolved = set(wanted)
+    for rel in [*cited, *imported]:
+        unresolved -= defines(root, rel, unresolved)
+    reexported: list[str] = []
+    for rel in imported:
+        if not unresolved:
+            break
+        for found in reexport_sources(root, rel, unresolved):
+            if found not in reexported:
+                reexported.append(found)
+            unresolved -= defines(root, found, unresolved)
+    grepped = grep_definitions(root, unresolved) if unresolved else []
+
+    # Dependencies the already-reached code actually uses, followed breadth
+    # first from what the traceback and the import graph found. Bounded by the
+    # file cap rather than a hop count: the frontier stops when there is no more
+    # room, which is the only limit that means anything (DAR-024).
+    traversed: list[str] = []
+    frontier = [*cited, *imported]
+    seen_edges = set(frontier)
+    while frontier and len(traversed) + len(frontier) < MAX_CONTEXT_FILES * 3:
+        nxt: list[str] = []
+        for rel in frontier:
+            for found in used_dependencies(root, rel):
+                if found not in seen_edges:
+                    seen_edges.add(found)
+                    traversed.append(found)
+                    nxt.append(found)
+        frontier = nxt
+
     # Cited frames first (deepest first), then what the test imports, then the
-    # test itself. Both signals are observations; neither is a ranking.
-    ordered = [*cited, *imported_modules(root, target_file), target_file]
+    # dependencies that code uses, then re-exports, then grep, then the test
+    # itself. Every signal is an observation; none is a ranking.
+    ordered = [*cited, *imported, *traversed, *reexported, *grepped, target_file]
 
     chosen: list[tuple[str, str]] = []
     skipped: list[str] = []
@@ -3010,9 +3357,7 @@ def select_context(
     redactions: dict[str, int] = {}
     total = 0
     seen: set[str] = set()
-    # Names the target test imports. Their definitions anchor a window even
-    # when nothing raised inside them.
-    wanted = imported_names(root, target_file)
+    reasons: dict[str, str] = {}
     for rel in ordered:
         if len(chosen) >= MAX_CONTEXT_FILES:
             continue
@@ -3043,7 +3388,11 @@ def select_context(
         except (UnicodeDecodeError, OSError):
             skipped.append(f"{rel} (unreadable as UTF-8)")
             continue
-        text, ranges = excerpt(text, sorted(set(lines_for.get(rel, []))), wanted)
+        # Never more than the per-file budget, and never more than the global
+        # budget still unspent: the last file must not be able to blow the cap
+        # the first five respected.
+        budget = min(MAX_FILE_CHARS, MAX_CONTEXT_CHARS - total)
+        text, ranges, why = excerpt(text, sorted(set(lines_for.get(rel, []))), wanted, budget)
         text, counts = redact(text)
         for name, n in counts.items():
             redactions[name] = redactions.get(name, 0) + n
@@ -3055,6 +3404,7 @@ def select_context(
             continue
         total += len(text)
         sent_ranges[posix] = ranges
+        reasons[posix] = why
         chosen.append((posix, text))
 
     manifest = {
@@ -3068,10 +3418,27 @@ def select_context(
         "skipped": skipped,
         "cap_files": MAX_CONTEXT_FILES,
         "cap_chars": MAX_CONTEXT_CHARS,
+        "cap_file_chars": MAX_FILE_CHARS,
         "window_radius": WINDOW_RADIUS,
+        # Why each file looks the way it does, so a reader can tell a whole
+        # file from a complete definition from a truncated window without
+        # holding the source next to the ledger.
+        "selection_reason": reasons,
+        "stages": {
+            "traceback": cited,
+            "imports": imported,
+            "used_dependencies": traversed,
+            "reexports": reexported,
+            "grep": grepped,
+            "unresolved": sorted(
+                unresolved - set().union(*(defines(root, r, unresolved) for r in grepped)) if grepped else unresolved
+            ),
+        },
         "selection": (
-            "bounded windows around traceback-cited lines and imported definitions; "
-            "no whole files, no embedding, retrieval or ranking"
+            "traceback frames, then the import graph, then dependencies that code uses, then "
+            "re-exports, then bounded grep; cited regions outrank imported definitions within a file; "
+            "whole files when they fit the per-file budget, otherwise complete AST definitions, "
+            "otherwise bounded windows; no embedding, retrieval or ranking"
         ),
     }
     return chosen, manifest
@@ -3084,6 +3451,7 @@ def _request_change(
     messages: list[dict[str, str]],
     max_output_tokens: int,
     attempt: int,
+    td: Path,
 ) -> tuple[str, str] | None:
     """One bounded `propose_change` request, reserved before it is sent.
 
@@ -3154,10 +3522,202 @@ def _request_change(
         EventKind.SPEND_SETTLED,
         {"operation": "propose_change", "request_id": request_id, "spend_event_id": settled["event_id"]},
     )
+    proposal = _accept_or_repair(
+        flow, spend, "propose_change", task_id, config, messages, reply, max_output_tokens, attempt, llm.validate_change
+    )
+    return _canonicalize_proposal(flow, td, attempt, proposal)
+
+
+def _canonicalize_proposal(
+    flow: Flow, td: Path, attempt: int, proposal: tuple[str, str] | None
+) -> tuple[str, str] | None:
+    """Three deterministic stages, each persisted and hashed. Every arm, one path.
+
+        exact model diff  ->  candidate-attempt-NNN/raw.diff
+              |  transport normalisation (canonical_diff: CRLF, bare CR, final newline)
+              v
+        normalized        ->  candidate-attempt-NNN/normalized.diff
+              |  git-conditioned hunk-count canonicalisation (DAR-031, unchanged)
+              v
+        canonical         ->  candidate-attempt-NNN/canonical.diff  ->  ChangeSet, gate
+
+    They are separate because their authorities are different sizes and neither
+    invariant can describe the other. Normalisation rewrites line terminators
+    anywhere in the file; canonicalisation may alter only the digits inside a
+    valid `@@` header and must leave every other byte identical. Run as one
+    step, a receipt could say only that the bytes changed, and a reviewer asking
+    *what* changed would have to take the answer on trust (DAR-032).
+
+    `attempt` comes from the repair loop and addresses the artifacts, so a later
+    proposal cannot overwrite the evidence an earlier ledger event points at.
+    Every rejected candidate was requested, charged and refused on the evidence;
+    it stays reconstructable for exactly that reason (DAR-033).
+
+    Placed on the single path arms A, B and C all take: a canonicaliser
+    available to the full kernel but not to the model-alone ablation would be an
+    advantage the experiment then measured and attributed to the kernel.
+    """
+    if proposal is None:
+        return None
+    raw, summary = proposal
+
+    raw_record = raw_candidate_record(td, attempt)
+    normalized_record = normalized_candidate_record(td, attempt)
+    canonical_record = canonical_candidate_record(td, attempt)
+
+    # First, before anything can touch it. This is the model's output and the
+    # only artifact that can be checked against a provider transcript.
+    raw_hash = persist_candidate(raw_record, raw)
+
+    normalization = normalize_candidate(raw)
+    normalized_hash = persist_candidate(normalized_record, normalization.diff)
+
+    # Structural eligibility is asked of git — `git apply --numstat`, with and
+    # without `--recount`, in a temporary directory — so repository content can
+    # never influence whether count metadata is rewritten. It is asked of the
+    # normalised bytes, because a patch git rejects only for a missing final
+    # newline is not a hunk-count defect.
+    structural_raw = structural_parse(normalization.diff)
+    structural_recount = structural_parse(normalization.diff, recount=True) if structural_raw != 0 else 0
+    result = canonicalize_patch(normalization.diff, structural_raw, structural_recount)
+    canonical_hash = persist_candidate(canonical_record, result.diff)
+
+    flow.append(
+        EventKind.CANDIDATE_CANONICALIZED,
+        {
+            "attempt": attempt,
+            "raw_candidate_hash": raw_hash,
+            "normalized_candidate_hash": normalized_hash,
+            "canonical_candidate_hash": canonical_hash,
+            # Recorded relative to the task directory, so the event stays
+            # meaningful when the tree is archived or moved.
+            "raw_candidate_record": raw_record.relative_to(td).as_posix(),
+            "normalized_candidate_record": normalized_record.relative_to(td).as_posix(),
+            "canonical_candidate_record": canonical_record.relative_to(td).as_posix(),
+            "normalization": normalization.to_dict(),
+            "canonicalization": result.to_dict(),
+        },
+    )
+    # UNSAFE means "this cannot be canonicalised", not "this candidate is
+    # rejected". The normalised patch proceeds to `git apply --check` exactly as
+    # it would have — refusing to modify a patch is not refusing the patch.
+    return result.diff, summary
+
+
+def _accept_or_repair[T](
+    flow: Flow,
+    spend: SpendLedger,
+    operation: str,
+    task_id: str,
+    config: llm.ProviderConfig,
+    messages: list[dict[str, str]],
+    reply: llm.ModelReply,
+    max_output_tokens: int,
+    attempt: int,
+    validate: Callable[[dict[str, Any]], T],
+    effect: str = "",
+) -> T | None:
+    """Validate a reply; on failure make the one repair request, then abstain.
+
+    Shared by all three operations. `CLAUDE.md` grants the repair to every model
+    operation, not to `propose_change` alone, and a diagnosis that silently
+    discards well-reasoned hypotheses because they were badly serialised is the
+    same defect as discarding a patch — it just costs a worse verdict instead of
+    a visible abstention (DAR-021).
+    """
     try:
-        return llm.validate_change(llm.extract_json(reply.text))
+        return llm.extract_validated(reply.text, validate)
     except (llm.ModelResponseInvalid, ValidationError) as exc:
-        flow.append(EventKind.MODEL_RESPONSE_INVALID, {"reason": str(exc), "operation": "propose_change"})
+        payload = {
+            "reason": str(exc),
+            "operation": operation,
+            "finish_reason": reply.finish_reason,
+            "response_chars": len(reply.text),
+            "output_exhausted": llm.output_exhausted(reply),
+        }
+        if effect:
+            payload["effect"] = effect
+        flow.append(EventKind.MODEL_RESPONSE_INVALID, payload)
+        if llm.output_exhausted(reply):
+            # Nothing was said, so there is nothing to re-serialise. Asking
+            # again under the same allowance buys the identical failure twice,
+            # which is what the aborted preliminary run demonstrated at both
+            # 4,000 and 8,000 tokens.
+            return None
+        return _repair_request(
+            flow, spend, operation, task_id, config, messages, reply, str(exc), max_output_tokens, attempt, validate
+        )
+
+
+def _repair_request[T](
+    flow: Flow,
+    spend: SpendLedger,
+    operation: str,
+    task_id: str,
+    config: llm.ProviderConfig,
+    messages: list[dict[str, str]],
+    bad: llm.ModelReply,
+    reason: str,
+    max_output_tokens: int,
+    attempt: int,
+    validate: Callable[[dict[str, Any]], T],
+) -> T | None:
+    """The one schema-repair request the design allows, then abstention.
+
+    Reached only for a *completed* reply that failed extraction or validation.
+    It asks for the same proposal re-serialised and nothing else, so a repair
+    cannot become a second attempt at the task — `max_attempts` governs those.
+    """
+    op_repair = f"{operation}_repair"
+    repair_id = content_hash({"t": task_id, "op": op_repair, "a": attempt})[:16]
+    repair_messages = llm.repair_prompt(messages, bad.text, reason)
+    try:
+        reservation_id, _reserved = spend.reserve(
+            repair_id, task_id, attempt, token_ceiling(repair_messages), max_output_tokens
+        )
+    except BudgetRefused as exc:
+        flow.append(
+            EventKind.SPEND_REFUSED,
+            {"reason": str(exc), "operation": op_repair, "request_id": repair_id, "scope": spend.scope},
+        )
+        return None
+    flow.append(
+        EventKind.SPEND_RESERVED,
+        {
+            "operation": op_repair,
+            "request_id": repair_id,
+            "spend_event_id": reservation_id,
+            "scope": spend.scope,
+            "authoritative": ".rift/spend.jsonl",
+        },
+    )
+    flow.append(EventKind.MODEL_REPAIR_REQUESTED, {"operation": operation, "reason": reason, "attempt": attempt})
+    try:
+        repaired = llm.post_chat(config, repair_messages, max_output_tokens=max_output_tokens)
+    except (llm.ModelUnavailable, llm.ModelResponseInvalid) as exc:
+        settled = spend.settle(repair_id, task_id, attempt, ModelUsage())
+        flow.append(
+            EventKind.SPEND_SETTLED,
+            {"operation": op_repair, "request_id": repair_id, "spend_event_id": settled["event_id"]},
+        )
+        flow.append(EventKind.MODEL_UNAVAILABLE, {"reason": str(exc), "operation": op_repair})
+        return None
+
+    flow.append(EventKind.MODEL_RESPONSE_RECEIVED, {"operation": op_repair, **repaired.redacted()})
+    settled = spend.settle(repair_id, task_id, attempt, repaired.usage)
+    flow.append(
+        EventKind.SPEND_SETTLED,
+        {"operation": op_repair, "request_id": repair_id, "spend_event_id": settled["event_id"]},
+    )
+    try:
+        return llm.extract_validated(repaired.text, validate)
+    except (llm.ModelResponseInvalid, ValidationError) as exc:
+        # One repair, then abstain. A second would be an unbounded loop wearing
+        # a retry's name.
+        flow.append(
+            EventKind.MODEL_RESPONSE_INVALID,
+            {"reason": str(exc), "operation": op_repair, "repair_exhausted": True},
+        )
         return None
 
 
@@ -3270,18 +3830,31 @@ def cmd_fix(args: argparse.Namespace) -> int:
         },
     )
 
+    # The declared task identity applies to **every** path, not only the
+    # ablation. Freezing it inside the `--model-alone` branch meant arm A
+    # enforced the manifest's failure identity while arms B and C parsed the
+    # same arguments and derived their own from whatever they happened to
+    # observe — three arms solving three subtly different tasks, which is the
+    # one thing a comparison cannot survive.
+    frozen = freeze_declared_reproducer(flow, args, repo_root, checkset, probe, budgets)
+    if frozen is None:
+        return _emit_and_report(flow, td, args)
+    checkset = frozen
+    flow.append(EventKind.CHECKSET_FROZEN, {"checkset": checkset.to_dict(), "checkset_hash": checkset.content_hash})
+
     if args.model_alone:
-        # Arm A freezes the declared experiment through the same helper `verify`
-        # uses, so the task it reproduces is identical to the one B and C get.
-        frozen = freeze_declared_reproducer(flow, args, repo_root, checkset, probe, budgets)
-        if frozen is None:
-            return _emit_and_report(flow, td, args)
-        checkset = frozen
-        flow.append(EventKind.CHECKSET_FROZEN, {"checkset": checkset.to_dict(), "checkset_hash": checkset.content_hash})
         # The ablation branch. It shares this verb's setup — sandbox authority,
         # frozen judge, ledger, spend — and diverges only where BM-06 needs it
         # to: no diagnosis, no probing, target-pass acceptance.
         return run_model_alone(flow, req, checkset, td, args, spend)
+
+    declared = flow.projection().reproducer
+    if declared is not None and not reproduces_as_declared(flow, req, checkset, declared):
+        # Before diagnosis, and therefore before any model request. A task that
+        # does not reproduce as declared cannot be repaired against that
+        # declaration, and paying to propose against it would buy a patch for a
+        # different failure.
+        return _emit_and_report(flow, td, args)
 
     # 1. Diagnose first. A patch proposed without a located cause is a guess,
     #    and the diagnosis costs no model call.
@@ -3380,7 +3953,7 @@ def cmd_fix(args: argparse.Namespace) -> int:
     accepted = False
     for attempt in range(1, req.max_attempts + 1):
         messages = llm.change_prompt(args.test, failure_text, [c.label for c in diagnosis.causes], sources)
-        proposal = _request_change(flow, spend, task_id, messages, args.max_output_tokens, attempt)
+        proposal = _request_change(flow, spend, task_id, messages, args.max_output_tokens, attempt, td)
         if proposal is None:
             break
         diff, summary = proposal
@@ -3477,7 +4050,7 @@ def run_model_alone(flow: Flow, req: FixRequest, checkset: CheckSet, td: Path, a
         )
         return _emit_and_report(flow, td, args)
 
-    proposal = _request_change(flow, spend, flow.ledger.task_id, messages, args.max_output_tokens, 1)
+    proposal = _request_change(flow, spend, flow.ledger.task_id, messages, args.max_output_tokens, 1, td)
     if proposal is None:
         proj = flow.projection()
         return stop(proj.spend_refused or proj.model_unavailable or "no proposal was produced")
@@ -3499,7 +4072,25 @@ def run_model_alone(flow: Flow, req: FixRequest, checkset: CheckSet, td: Path, a
     # No withdrawal, no reapplication, no preservation — that difference is the
     # thing BM-06 measures, so it is not quietly repaired here.
     with Worktree(req.repo_root, "arm-a-candidate") as wt:
-        wt.apply_patch(changeset.diff)
+        try:
+            wt.apply_patch(changeset.diff)
+        except SandboxError as exc:
+            # A model patch that will not apply is an ordinary outcome, not an
+            # error in the harness: the arm proposed something the tree rejects,
+            # which is a failure to repair and must be *recorded* as one. This
+            # path was missing, so the process died with a traceback and emitted
+            # no receipt at all — the arm produced no verdict, and the benchmark
+            # driver could only report that something had gone wrong somewhere.
+            flow.append(
+                EventKind.GATE_PHASE_FINISHED,
+                {
+                    "phase": GatePhase.CANDIDATE.value,
+                    "passed": False,
+                    "reason": f"the proposed patch does not apply to the baseline tree: {exc}",
+                    "artifacts": {"ablation_verdict": ""},
+                },
+            )
+            return _emit_and_report(flow, td, args)
         # The reset that makes each episode clean removes anything the patch is
         # not known to own. Without naming the patch's paths it deletes the
         # patch itself, and the candidate measures the unpatched tree.
@@ -3525,6 +4116,41 @@ def run_model_alone(flow: Flow, req: FixRequest, checkset: CheckSet, td: Path, a
         },
     )
     return _emit_and_report(flow, td, args)
+
+
+def reproduces_as_declared(flow: Flow, req: FixRequest, checkset: CheckSet, reproducer: ReproductionContract) -> bool:
+    """Run the declared experiment once, before anything is proposed.
+
+    `run_gate` already checks the declared signature at baseline, but that is
+    after a patch exists — by then the request has been paid for. When a caller
+    states the failure identity, it is enforced here, at zero model cost, so a
+    mismatch stops the task instead of buying a proposal against a failure that
+    is not the declared one.
+    """
+    change_check = checkset.by_type(ClaimType.CHANGE)[0]
+    with Worktree(req.repo_root, "declared") as wt:
+        result = run_episode(flow, wt, change_check, GatePhase.BASELINE, reproducer, req.repo_root)
+    if result.outcome is not Outcome.FAILED:
+        flow.append(
+            EventKind.REPRODUCTION_FAILED,
+            {
+                "reason": "the declared task does not reproduce before any patch exists",
+                "observed_outcome": result.outcome.value,
+                "reproducer": reproducer.render(),
+            },
+        )
+        return False
+    if not signature_compatible(reproducer.signature, result.signature):
+        flow.append(
+            EventKind.REPRODUCTION_FAILED,
+            {
+                "reason": "the declared signature does not match the observed failure",
+                "expected": reproducer.signature.render(),
+                "observed": result.signature.render() if result.signature else "<none>",
+            },
+        )
+        return False
+    return True
 
 
 def _pricing_from_args(args: argparse.Namespace) -> Pricing:

@@ -1,0 +1,10 @@
+--- a/src/icalendar/prop.py
++++ b/src/icalendar/prop.py
+@@ -279,5 +279,7 @@ class vCategory(object):
+ 
+     @staticmethod
+     def from_ical(ical, timezone=None):
++        if isinstance(ical, bytes):
++            ical = ical.decode(DEFAULT_ENCODING)
+         out = unescape_char(ical).split(",")
+         return out

@@ -1,0 +1,11 @@
+Looking at the failing test, it's about `TLRUCache` where overwriting an existing key with an expired entry should work correctly. The test name is `test_overwrite_existing_with_expired`, and the error shows `1 unexpectedly found in TLRUCache({1: 5}, maxsize=2, currsize=1)`.
+
+The issue is likely in how `TLRUCache.__setitem__` handles overwriting an existing key that has expired. When checking if a key exists for the purpose of calculating size differences, the expired key is still counted as existing, but it shouldn't be overwriting correctly.
+
+Let me look at the `TLRUCache` portion of the code - it's cut off. The key issue is that when setting an item that already exists but is expired, the cache needs to properly remove the expired entry first before inserting the new one.
+
+The `Cache.__setitem__` checks `if key not in self.__data or self.__size[key] < size` to decide whether to evict items. For `TLRUCache`, a key might be in `__data` but expired. When we overwrite it with a new expiry, the old expired entry's timer link needs to be cleaned up, and the size accounting needs to handle the case where an expired key is being replaced.
+
+The fix should be in `TLRUCache.__setitem__` - before calling the parent `__setitem__`, if the key exists but is expired, we should delete it first so the parent treats it as a new entry.
+
+{"diff": "--- a/src/cachetools/__init__.py\n+++ b/src/cachetools/__init__.py\n@@ -388,6 +388,10 @@ class TLRUCache(Cache):\n     def __setitem__(self, key, value, cache_setitem=Cache.__setitem__):\n         expires, _ = self.__ttu(key, value, self.__timer())\n         if expires is None:\n             raise ValueError(\"expiry time must not be None\")\n+        # If the key exists but is expired, remove it first so the parent\n+        # treats this as a new insertion rather than an update.\n+        if key in self and key in self.__links and self.__links[key][0] <= self.__timer():\n+            cache_delitem(self, key)\n         cache_setitem(self, key, value)\n         if key in self.__links:\n             heapq.heappush(\n", "summary": "In TLRUCache.__setitem__, delete an expired key before reinserting so the parent Cache treats it as a new entry and properly handles size accounting."}

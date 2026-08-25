@@ -1,0 +1,28 @@
+--- a/sortedcontainers/sorteddict.py
++++ b/sortedcontainers/sorteddict.py
+@@ -214,5 +214,25 @@ class SortedDict(dict):
+         self._update(*args, **kwargs)
+ 
+ 
++    def __del__(self):
++        """Clear cached references to break reference cycles."""
++        try:
++            del self._dict_clear
++            del self._dict_delitem
++            del self._dict_iter
++            del self._dict_pop
++            del self._dict_setitem
++            del self._dict_update
++            del self._list_add
++            del self._list_clear
++            del self._list_iter
++            del self._list_reversed
++            del self._list_pop
++            del self._list_remove
++            del self._list_update
++        except AttributeError:
++            pass
++
++
+     @property
+     def key(self):

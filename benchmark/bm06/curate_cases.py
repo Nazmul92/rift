@@ -272,6 +272,20 @@ def main() -> int:
         )
 
     validated = [c for c in curated if c["curation"].get("validated")]
+
+    # The per-arm-run ceiling, from the frozen per-operation reservations rather
+    # than a literal. Arm A makes only propose_change; B and C also diagnose.
+    # Every arm may make one schema repair, and the ceiling assumes all of them do.
+    res = frozen["worst_case_reservation"]["per_operation"]
+    pin = frozen["pricing"]["selected"]["input_per_mtok"]
+    pout = frozen["pricing"]["selected"]["output_per_mtok"]
+
+    def op_usd(name: str) -> float:
+        return res[name]["input_ceiling"] * pin / 1e6 + res[name]["max_output"] * pout / 1e6
+
+    arm_a_usd = op_usd("propose_change") + op_usd("propose_change_repair")
+    arm_bc_usd = arm_a_usd + op_usd("propose_handles") + op_usd("propose_hypotheses")
+
     payload = {
         "schema": 1,
         "name": "preliminary",
@@ -286,11 +300,12 @@ def main() -> int:
         # refuse.
         "model": {
             "id": frozen["model"]["id"],
-            "price_input_per_mtok": frozen["pricing"]["introductory"]["input_per_mtok"],
-            "price_output_per_mtok": frozen["pricing"]["introductory"]["output_per_mtok"],
+            "price_input_per_mtok": frozen["pricing"]["selected"]["input_per_mtok"],
+            "price_output_per_mtok": frozen["pricing"]["selected"]["output_per_mtok"],
             "price_note": (
-                "introductory rates verified 2026-08-17 by documentation lookup; they expire "
-                f"{frozen['pricing']['introductory']['expires']} and must be reconfirmed before execution"
+                f"{frozen['model']['id']} at ${frozen['pricing']['selected']['input_per_mtok']:.2f}/MTok input "
+                f"and ${frozen['pricing']['selected']['output_per_mtok']:.2f}/MTok output, verified "
+                f"{frozen['pricing']['verified_on']} by documentation lookup; reconfirm before execution"
             ),
             **{k: frozen["runtime_configuration"][k] for k in ("max_probes", "max_attempts", "max_commands")},
             "max_output_tokens": frozen["request_parameters"]["max_output_tokens"],
@@ -300,8 +315,16 @@ def main() -> int:
             "scope": frozen["runtime_configuration"]["scope"],
             # Proportional to the validated case count, not the 30-case figure:
             # a ceiling sized for a run that cannot happen is not a ceiling.
-            "max_usd": round(0.1269 * 3 * len(validated), 2),
-            "worst_case_note": ("per-task worst case $0.1269 at the frozen caps, three arms per case. NOT AUTHORIZED."),
+            # Read from the same frozen reservation the manifest records, so a
+            # re-curation cannot quietly emit a ceiling the run no longer has.
+            "max_usd": round(
+                (arm_a_usd + 2 * arm_bc_usd) * len(validated) + 0.005,
+                2,
+            ),
+            "worst_case_note": (
+                f"per-task worst case ${arm_bc_usd:.4f} for arms B and C and ${arm_a_usd:.4f} for arm A at the "
+                "frozen caps, each including the one schema-repair request the adapter may make. NOT AUTHORIZED."
+            ),
         },
         "arms": {
             "A": {"description": "the model alone; accept when the target passes after applying the patch"},

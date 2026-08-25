@@ -1,0 +1,2046 @@
+{
+ "analysis_plan": {
+  "ci_method": {
+   "companion_test": "case-level sign-flip permutation on per-case mean paired differences, 10000 iterations",
+   "interval": "percentile, two-sided 95%",
+   "iterations": 10000,
+   "name": "case-cluster bootstrap of the paired S-U difference",
+   "rationale": "Both respect the cluster. Treating 72 U and 72 S observations as independent would understate the interval by roughly sqrt(3) and invent precision the design does not have.",
+   "resample": "cases with replacement, n = 24; all repeats of a resampled case travel with it"
+  },
+  "design_name": "repeated counterbalanced representation mechanism experiment",
+  "forbidden_claim": "Search/replace generally makes RIFT better. A fresh unseen corpus is required for any claim of that shape.",
+  "minimum_effect_of_interest": 0.15,
+  "minimum_effect_rationale": "BM-08 measured 5 of 24 truth-correct for arm A and 3 of 24 for arm C. An absolute improvement smaller than 0.15 \u2014 under four cases in 24 \u2014 would not change any decision about whether to move patch metadata out of the model, so it is not the effect this study is built to find.",
+  "missingness_rule": "If the oracle cannot return a verdict for infrastructure reasons \u2014 sandbox failure, repository resolution, isolation unavailable \u2014 the sample is classified INFRASTRUCTURE_FAILURE, is not silently scored 0, and the run stops for reconciliation. Scientific outcomes and infrastructure failures are never merged.",
+  "pairing": "case x repeat; each pair holds exactly one U and one S, with request order counterbalanced",
+  "powered": false,
+  "powered_note": "Not called powered. 144 samples cluster into 24 cases; see detectable_effect() for what the design can and cannot separate.",
+  "primary_estimand": "Paired difference in truth-correct probability, S minus U, on the 24 frozen BM-08 mechanism cases.",
+  "scoped_claim": "On the previously observed BM-08 mechanism corpus, repeated counterbalanced sampling showed higher truth-correct proposal yield under deterministic exact-edit compilation than direct unified-diff generation.",
+  "secondary_metrics": [
+   "u_raw_applicable",
+   "u_canonical_applicable",
+   "s_exact_source_valid",
+   "s_compile_success",
+   "s_compiled_applicable",
+   "s_canonical_applicable",
+   "target_pass",
+   "truth_correct",
+   "false_accept",
+   "correct_but_rejected",
+   "input_tokens",
+   "output_tokens",
+   "requests",
+   "actual_usd",
+   "truth_correct_per_dollar",
+   "historical_fix_region_coverage"
+  ],
+  "stratification": {
+   "levels": [
+    "COVERED",
+    "PARTIALLY_COVERED",
+    "NOT_COVERED"
+   ],
+   "not": "not a solvability claim, not an exclusion criterion, and not a stop rule; NOT_COVERED means the model was not shown this known fix region, and the audit already contains one NOT_COVERED case that BM-08 nonetheless got truth-correct",
+   "reporting": "primary estimand reported overall and within each coverage level",
+   "role": "preregistered stratification / explanatory variable",
+   "variable": "historical_fix_region_coverage"
+  },
+  "truth_outcome_rule": {
+   "no_candidate": 0,
+   "non_applicable_candidate": 0,
+   "note": "Failed generations stay in the primary denominator. A representation that cannot produce an applicable candidate has failed at the thing being measured, and dropping those samples would score each condition only on the samples it already survived.",
+   "oracle_wrong": 0,
+   "schema_invalid_after_governed_repair": 0,
+   "target_failing_candidate": 0,
+   "truth_correct_candidate": 1,
+   "truth_wrong_candidate": 0
+  },
+  "unit_of_generalization": "case (n = 24); the 3 repeats estimate within-case stochastic variation"
+ },
+ "analysis_plan_hash": "d0d23169a76dd40d5ef8430bab08bf6a4d2482d0ac5907dbeeab5e77901bc8d1",
+ "budget": {
+  "authorization_status": "NOT AUTHORIZED \u2014 recorded for independent approval only",
+  "authorized": false,
+  "derivation": "24 cases x 3 repeats x 2 conditions x 2 requests x $0.153000 = $44.0640",
+  "max_input_tokens": 31000,
+  "max_input_tokens_derivation": "largest reconstructed context 56955 chars + 4000 scaffold, at 3 chars/token with 50% headroom, rounded up to the next thousand",
+  "max_output_tokens": 4000,
+  "max_requests_per_sample": 2,
+  "per_request_usd": 0.153,
+  "per_sample_reservation_usd": 0.306,
+  "recommended_authorization_ceiling_usd": 45.0,
+  "samples": 144,
+  "spent": 0.0,
+  "total_usd_ceiling": 45.0,
+  "total_worst_case_usd": 44.064
+ },
+ "canonicalizer_identity": {
+  "records_py_sha256": "507b141fcdc3cadd4cb934753334e6bffa8fc7e7563f43457ccb8e81fb3cba64",
+  "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26"
+ },
+ "cases": [
+  {
+   "baseline_tree_hash": "d35e4bfa663d587baf9e188030b5e47cc3c2ccd39d139c06583f9375063a1bed",
+   "case_id": "voluptuous-44593ce7",
+   "context_files": [
+    "voluptuous/validators.py",
+    "voluptuous/schema_builder.py",
+    "voluptuous/__init__.py",
+    "voluptuous/humanize.py",
+    "voluptuous/util.py",
+    "voluptuous/error.py"
+   ],
+   "context_hash": "0b2b1a345b85fa89de54bc8083b103a7a61dce8679b51c4a30597733bc7a9160",
+   "expected_signature": {
+    "exception_type": "TypeError",
+    "message": "infinity and NaN have no precision"
+   },
+   "historical_fix_region_coverage": "PARTIALLY_COVERED",
+   "historical_fix_region_coverage_code_only": "COVERED",
+   "node_id": "voluptuous/tests/tests.py::test_number_validation_with_infinity_and_nan",
+   "repository": "voluptuous",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "da2c8412a6d8fbdb73d558fee97ab564fef900100e2b25b805dce406962b178e",
+   "case_id": "parse-e9aa02bd",
+   "context_files": [
+    "parse.py"
+   ],
+   "context_hash": "fe4aca94464bb99831f054b5dab090cff48e80b8dbb8ce29dcc7f1cb65284f23",
+   "expected_signature": {
+    "exception_type": "ValueError",
+    "message": "invalid literal for int() with base 10: 'Alice'"
+   },
+   "historical_fix_region_coverage": "PARTIALLY_COVERED",
+   "historical_fix_region_coverage_code_only": "PARTIALLY_COVERED",
+   "node_id": "test_parse.py::TestBugs::test_user_type_with_group_count_issue60",
+   "repository": "parse",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "62bbf4b68f29f7191f219fd2579083afa2d99b0eda2bcff7d93125dccdc14dbd",
+   "case_id": "rich-260508bf",
+   "context_files": [
+    "rich/segment.py",
+    "rich/style.py",
+    "rich/text.py",
+    "rich/console.py",
+    "rich/cells.py",
+    "rich/repr.py"
+   ],
+   "context_hash": "18bfff1c24da88b1aa031020fadaedfd9488bbcfcd972b24e083a56eb26afb9c",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "assert '\\x1b[48;5;94... \\x1b[0m\\n\\n' == '\\x1b[48;5;94... \\x1b[0m\\n\\n'"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_segment.py::test_divide_complex",
+   "repository": "rich",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "761870102420feaa220c2a7e96f564ef7821c98af6719eba7a7b39617d910d15",
+   "case_id": "rich-0138b189",
+   "context_files": [
+    "rich/console.py",
+    "rich/pretty.py",
+    "rich/__init__.py",
+    "rich/_emoji_replace.py",
+    "rich/_log_render.py",
+    "rich/align.py"
+   ],
+   "context_hash": "95a1dbc29552316ccc918e08460aad450871e1d27a713ec07c3de420fd72b2b2",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "assert '(1,)\\n(\\n\u2502 ...1\\n\u2502 )\\n)\\n' == '(1,)\\n(\\n\u2502 ...\\n\u2502 ),\\n)\\n'"
+   },
+   "historical_fix_region_coverage": "PARTIALLY_COVERED",
+   "historical_fix_region_coverage_code_only": "COVERED",
+   "node_id": "tests/test_pretty.py::test_tuples",
+   "repository": "rich",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "17eda88cad55260b06d3098c091f2b8fb8409dab5ef249efe4072fa7a89922ba",
+   "case_id": "xmltodict-927a025a",
+   "context_files": [
+    "xmltodict.py"
+   ],
+   "context_hash": "b53dd5e6852f5552b4da114d2b1bc2313e09db12af596f3478969657aa0b719f",
+   "expected_signature": {
+    "exception_type": "TypeError",
+    "message": "decoding to str: need a bytes-like object, int found"
+   },
+   "historical_fix_region_coverage": "PARTIALLY_COVERED",
+   "historical_fix_region_coverage_code_only": "PARTIALLY_COVERED",
+   "node_id": "tests/test_dicttoxml.py::DictToXMLTestCase::test_non_string_text_with_attributes",
+   "repository": "xmltodict",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "46353710f0033d57d3f409c46fca10afbc9e4b295745be1c364b0917fb51f582",
+   "case_id": "rich-a5eada7a",
+   "context_files": [
+    "rich/console.py",
+    "rich/measure.py",
+    "rich/rule.py",
+    "rich/spinner.py",
+    "rich/text.py",
+    "rich/__init__.py"
+   ],
+   "context_hash": "d9e2f5c71fc05ff8fb9fd273082c66aea61327e82f1aab84dbc929dfc7829bae",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "assert False"
+   },
+   "historical_fix_region_coverage": "PARTIALLY_COVERED",
+   "historical_fix_region_coverage_code_only": "COVERED",
+   "node_id": "tests/test_spinner.py::test_spinner_markup",
+   "repository": "rich",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "317a30f642d1f7f43283f9cc5e8db77fd26e6a98276402965beb578d1757a290",
+   "case_id": "isort-49bb9bab",
+   "context_files": [
+    "isort/__init__.py"
+   ],
+   "context_hash": "c1530fec6e39d8d8ef81fad7546021cf2d5fdcab0c3e6ed7a4bc6dec2c246b5e",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "assert False"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/unit/test_regressions.py::test_isort_shouldnt_split_skip_issue_1556",
+   "repository": "isort",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "34e0f22976acd22cd720a15fee152f7428006393ef24668c2dd8ff80ec6c2ba5",
+   "case_id": "charset-normalizer-2bc26076",
+   "context_files": [
+    "src/charset_normalizer/models.py",
+    "src/charset_normalizer/api.py",
+    "src/charset_normalizer/__init__.py",
+    "src/charset_normalizer/constant.py",
+    "src/charset_normalizer/utils.py",
+    "src/charset_normalizer/cd.py"
+   ],
+   "context_hash": "ba3abf50f43555ff239cbdbe07bc5f13c0e2f1a8be931ef15cd8db24f4a8abad",
+   "expected_signature": {
+    "exception_type": "UnicodeDecodeError",
+    "message": "'ascii' codec can't decode byte 0xc3 in position 571: ordinal not in range(128)"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_edge_case.py::test_regression_gh771_fallback_entry_on_undecodable_payload",
+   "repository": "charset-normalizer",
+   "src_layout": "src"
+  },
+  {
+   "baseline_tree_hash": "82805dc0b42bd92db84cf16b5ac9ed50dd533a6d0d39e50fc7b49916a8d41181",
+   "case_id": "tabulate-293ff59a",
+   "context_files": [
+    "test/common.py",
+    "tabulate.py"
+   ],
+   "context_hash": "3e66e4681c1414e039637f9034fe497db51a06cf3e7d1cfbccc10bdbf3e51549",
+   "expected_signature": {
+    "exception_type": "Failure",
+    "message": "AssertionError"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "test/test_input.py::test_blank_list_firstrow",
+   "repository": "tabulate",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "d16bb21861f534246c2233d0fcd74532fc3d00dd748669a63864144cec2c6703",
+   "case_id": "schema-15158c53",
+   "context_files": [
+    "schema/__init__.py"
+   ],
+   "context_hash": "f4b59599130f32a73a040bff25bbf172e9eb41b1e617879302a5580b0771cd63",
+   "expected_signature": {
+    "exception_type": "Failure",
+    "message": "assert \"Wrong key 'b...}, 'bar': {}}\" == 'Invalid profile name'"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "test_schema.py::test_wrong_key_reports_key_schema_error",
+   "repository": "schema",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "3966a14a589e046317db19de1d472afb097bcb7bf8e36fbc2a959aed504e8123",
+   "case_id": "lark-adad165e",
+   "context_files": [
+    "lark/__init__.py",
+    "lark/load_grammar.py",
+    "lark/utils.py",
+    "lark/lexer.py",
+    "lark/parse_tree_builder.py",
+    "lark/parser_frontends.py"
+   ],
+   "context_hash": "f086b760c829f51c1e06514ce2a4500f9b07a83d1f4bf4a14fbfa6f603fab194",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "GrammarError not raised by Lark"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_grammar.py::TestGrammar::test_inline_with_expand_single",
+   "repository": "lark",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "42bc6e1fb5a246741473b49c95d53ea31d86d140c21198dc0e6a2a24589a0dc7",
+   "case_id": "dnspython-246febc4",
+   "context_files": [
+    "dns/name.py",
+    "dns/resolver.py",
+    "dns/e164.py",
+    "dns/message.py",
+    "dns/rdataclass.py",
+    "dns/rdatatype.py"
+   ],
+   "context_hash": "ca9049124707b68ef4f8b7dfade2faa22d53c63b8f33eba5f9eb4aa9405792ec",
+   "expected_signature": {
+    "exception_type": "dns.name.EmptyLabel",
+    "message": "A DNS label is empty."
+   },
+   "historical_fix_region_coverage": "COVERED",
+   "historical_fix_region_coverage_code_only": "COVERED",
+   "node_id": "tests/test_resolver.py::ResolverMiscTestCase::test_configure_win32_domain",
+   "repository": "dnspython",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "d0c05daa5dd17f88fb288983bf0e0181a674bb3bdcfeb299c3c05edd55fa8cdc",
+   "case_id": "mistune-b0429966",
+   "context_files": [
+    "src/mistune/__init__.py",
+    "src/mistune/renderers/rst.py",
+    "src/mistune/renderers/markdown.py",
+    "tests/__init__.py",
+    "src/mistune/core.py",
+    "src/mistune/inline_parser.py"
+   ],
+   "context_hash": "464d932031ef16b7646e7149249337d02b838b1784de7d46a6e4d3aa428a2050",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "'<p><em>not emphasis</em></p>\\n' != '<p>*not emphasis*</p>\\n'"
+   },
+   "historical_fix_region_coverage": "PARTIALLY_COVERED",
+   "historical_fix_region_coverage_code_only": "COVERED",
+   "node_id": "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_escaped_emphasis_markers",
+   "repository": "mistune",
+   "src_layout": "src"
+  },
+  {
+   "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+   "case_id": "lark-96873d64",
+   "context_files": [
+    "lark/utils.py",
+    "lark/tree.py",
+    "lark/indenter.py",
+    "lark/lexer.py",
+    "lark/exceptions.py",
+    "examples/calc.py"
+   ],
+   "context_hash": "9d983d97f9fa72fd6cd2ae22cbe8cff85b3a6167c87c41f34232b561dfc690d0",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_tools.py::TestStandalone::test_transformer",
+   "repository": "lark",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "19242c9935395b0558e605e88d3634785b2cc8668918f8589543f94fd2e976d3",
+   "case_id": "mistune-f4237046",
+   "context_files": [
+    "src/mistune/__init__.py",
+    "src/mistune/plugins/url.py",
+    "src/mistune/core.py",
+    "src/mistune/inline_parser.py",
+    "src/mistune/markdown.py",
+    "src/mistune/plugins/__init__.py"
+   ],
+   "context_hash": "b0d4a61d04cf8dd43c269b4aa3c8f37a14add721d5a5f805148b12c7e101ca56",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_misc.py::TestMiscCases::test_ast_url",
+   "repository": "mistune",
+   "src_layout": "src"
+  },
+  {
+   "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+   "case_id": "dnspython-227eace4",
+   "context_files": [
+    "dns/btreezone.py",
+    "dns/exception.py",
+    "dns/message.py",
+    "dns/name.py",
+    "dns/node.py",
+    "dns/rdata.py"
+   ],
+   "context_hash": "963eb8ab73c608a890560213b6b768aa9aaece32ede69efc6bf36f285bcc1769",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "False is not true"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_zone.py::ZoneTestCase::testToCompressOrNotToCompressAndCanonicalization",
+   "repository": "dnspython",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+   "case_id": "click-a17b5447",
+   "context_files": [
+    "click/__init__.py",
+    "click/_compat.py",
+    "click/_winconsole.py"
+   ],
+   "context_hash": "e70176176feac3eab8f23e510a9139d1a21272f5544e2dffeef66d79706c5a42",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n --testoption TEXT you wont see me\\n --help Show this message and exit.\\n'"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_options.py::test_option_custom_class_reusable",
+   "repository": "click",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "c22ec5cf23f5d03ee95fe6a6fffada8d2fdd9a000716b2facb2715b42d5a2fe5",
+   "case_id": "packaging-553582d9",
+   "context_files": [
+    "src/packaging/__init__.py",
+    "src/packaging/errors.py",
+    "src/packaging/metadata.py",
+    "src/packaging/licenses/__init__.py",
+    "src/packaging/licenses/_spdx.py",
+    "src/packaging/specifiers.py"
+   ],
+   "context_hash": "0864f9531356d1af6945852201e2859145960cd397dc96d97d22c97fc3a93814",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "Regex pattern did not match."
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_metadata.py::TestMetadata::test_invalid_charset_error_message",
+   "repository": "packaging",
+   "src_layout": "src"
+  },
+  {
+   "baseline_tree_hash": "aa5354e29c42d258f4faeee1ac57f55be7649c7061d0fa71f0f541665fbd1ec6",
+   "case_id": "icalendar-9b72b0b1",
+   "context_files": [
+    "src/icalendar/prop.py",
+    "src/icalendar/parser.py",
+    "src/icalendar/windows_to_olson.py",
+    "src/icalendar/__init__.py",
+    "src/icalendar/caselessdict.py",
+    "src/icalendar/parser_tools.py"
+   ],
+   "context_hash": "287769feb6a6325265cabed3e7349c8bde0621ca963d5d32afb4226560b86f38",
+   "expected_signature": {
+    "exception_type": "TypeError",
+    "message": "a bytes-like object is required, not 'str'"
+   },
+   "historical_fix_region_coverage": "PARTIALLY_COVERED",
+   "historical_fix_region_coverage_code_only": "COVERED",
+   "node_id": "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vCategory",
+   "repository": "icalendar",
+   "src_layout": "src"
+  },
+  {
+   "baseline_tree_hash": "12710f9cff4ca7f0c98e2fc530bdb92cd314b876c9872dec157bd6f2e917cd97",
+   "case_id": "dnspython-c9f6c819",
+   "context_files": [
+    "dns/rdata.py",
+    "dns/rdataclass.py",
+    "dns/rdatatype.py",
+    "dns/rdtypes/ANY/TXT.py",
+    "dns/ttl.py",
+    "dns/__init__.py"
+   ],
+   "context_hash": "136df8411500a6aa0bedf282dde09dfd7127ce65a1437e5d5d1f7e296ac6da1a",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_bugs.py::BugsTestCase::test_lowercase_canonicals",
+   "repository": "dnspython",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "b1186a204333d272f2b9295de9e64795a7939a9afe28bdb441ff8914fe03d472",
+   "case_id": "mistune-1bef343a",
+   "context_files": [
+    "src/mistune/__init__.py",
+    "src/mistune/directives/__init__.py",
+    "src/mistune/core.py",
+    "src/mistune/inline_parser.py",
+    "src/mistune/markdown.py",
+    "src/mistune/plugins/__init__.py"
+   ],
+   "context_hash": "58b1aaa4923ffcaec295a6181f32dd8054e2e1d716a28942c3c1c0deeb036ad6",
+   "expected_signature": {
+    "exception_type": "AssertionError",
+    "message": "'Could not include outside source dir' not found in '<pre class=\"directive-include\">\\ntopsecret</pre>\\n<pre class=\"directive-include\">\\ntopsecret</pre>\\n'"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_security_include.py::TestIncludeSecurity::test_include_rejects_traversal_and_absolute_paths",
+   "repository": "mistune",
+   "src_layout": "src"
+  },
+  {
+   "baseline_tree_hash": "f53716f7c1a7bbf3e043d6d07ef94e4e18087fdb47ccdc56191cef828ec9a266",
+   "case_id": "sortedcontainers-2b037039",
+   "context_files": [
+    "sortedcontainers/__init__.py",
+    "sortedcontainers/sorteddict.py"
+   ],
+   "context_hash": "28a180863a7fd148ea178f8694034b4c2b59783e711c7ac326aa75635c9e5170",
+   "expected_signature": {
+    "exception_type": "Failure",
+    "message": "assert 31271 == 31297"
+   },
+   "historical_fix_region_coverage": "PARTIALLY_COVERED",
+   "historical_fix_region_coverage_code_only": "PARTIALLY_COVERED",
+   "node_id": "tests/test_coverage_sorteddict.py::test_ref_counts",
+   "repository": "sortedcontainers",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "239e3f589a9026947b3552f541e336612d70e6d47232eab3b75b03f24e442901",
+   "case_id": "sortedcontainers-7dc426c9",
+   "context_files": [
+    "sortedcontainers/__init__.py",
+    "sortedcontainers/sortedlist.py"
+   ],
+   "context_hash": "0572e6626deacf4e137ad7ef22456406f3a625c723e18e0bab5cee827730b78b",
+   "expected_signature": {
+    "exception_type": "Failure",
+    "message": "assert False"
+   },
+   "historical_fix_region_coverage": "NOT_COVERED",
+   "historical_fix_region_coverage_code_only": "NOT_COVERED",
+   "node_id": "tests/test_coverage_sortedkeylist_modulo.py::test_update_order_consistency",
+   "repository": "sortedcontainers",
+   "src_layout": "flat"
+  },
+  {
+   "baseline_tree_hash": "d0f8f0b0faf415018ad86194361d6801a61d08c3bb0c5c19208e1cff6a3500fa",
+   "case_id": "packaging-f8f16338",
+   "context_files": [
+    "src/packaging/_structures.py"
+   ],
+   "context_hash": "498122dec39dfaf4bc8fc0bccc9e9c2cb8759517ca811fe5e2d5e618f22fc84e",
+   "expected_signature": {
+    "exception_type": "Failure",
+    "message": "assert Infinity <= Infinity"
+   },
+   "historical_fix_region_coverage": "COVERED",
+   "historical_fix_region_coverage_code_only": "COVERED",
+   "node_id": "tests/test_structures.py::test_infinity_self_comparison",
+   "repository": "packaging",
+   "src_layout": "src"
+  }
+ ],
+ "compiler_authority_contract": {
+  "encoding": {
+   "binary": "binary files are unsupported; an edit naming one is UNSUPPORTED_OPERATION",
+   "decode": "model strings arrive JSON-decoded as Unicode and are encoded to UTF-8 exactly",
+   "final_newline": "a file's trailing newline is part of its bytes; it is neither added nor removed unless the declared search or replace text contains it",
+   "json_escaping": "standard JSON string escaping; the decoded value is authoritative",
+   "line_endings": "LF and CRLF are distinct byte sequences and are never converted; a search containing LF will not match a CRLF file region",
+   "normalization": "none \u2014 no whitespace, line-ending, casing or Unicode normalization before matching"
+  },
+  "forbidden": [
+   "fuzzy matching",
+   "whitespace normalization",
+   "case folding",
+   "regex interpretation",
+   "nearest-match choice",
+   "semantic relocation",
+   "AST guessing",
+   "did-you-mean suggestions",
+   "model calls"
+  ],
+  "new_files": "not supported; every path must already exist in the frozen baseline",
+  "permitted": [
+   "exact path lookup",
+   "exact byte lookup",
+   "unique-match verification",
+   "overlap detection",
+   "atomic application",
+   "before/after tree comparison",
+   "deterministic Git diff production",
+   "hashing and provenance"
+  ],
+  "version": 1
+ },
+ "compiler_authority_contract_hash": "8805566d1863dd471a9fb2fec7549a9ef32689f5204509b70ae5b5e73aca7af2",
+ "compiler_hash": "d6a2c39b51e9c2e286c2bd44b7132c5696269b8c78e86e04800e2dd81ed8ef5a",
+ "corpus_manifest_hash": "e6bdd3f116981bc58daf7f21eb4a5e0a524e9a067227cd2cc40fc994a19ad3f9",
+ "cost_field_authority": {
+  "authoritative": "actual_usd",
+  "non_authoritative": [
+   "estimated_usd",
+   "cost_usd",
+   "approx_usd"
+  ],
+  "reservation": "reserved_usd"
+ },
+ "coverage_audit_hash": "85a9b90830a046dc41778fd3f106287606435a5fd76632887b67080fcde40785",
+ "design_name": "repeated counterbalanced representation mechanism experiment",
+ "detectable_effect": {
+  "approx_standard_error": 0.0595,
+  "approximate_detectable_difference": 0.167,
+  "assumed_baseline_truth_rate": 0.15,
+  "cases": 24,
+  "design_can_distinguish_minimum_effect": false,
+  "minimum_effect_of_interest": 0.15,
+  "note": "Approximate. Reported so the limitation is visible before authorization rather than discovered afterwards. Repeat count is not changed automatically.",
+  "repeats": 3,
+  "verdict": "The design CANNOT reliably distinguish the minimum effect of interest; report as a repeated mechanism experiment, not a powered study."
+ },
+ "driver_hash": "0676ebe54b9dafd032b4005354cdd7f7676dfc32d837d061bebeb8160971eee5",
+ "exclusion_set_hash": "d4090113b0670321b1d5a9c48ebe3949adeb60f865e8b07bb414aea21f137e87",
+ "execution_environment": {
+  "container_image": "rift-reference-iso:3.12-slim",
+  "container_image_digest": "sha256:279f2c1816d32e452951eae861bb3bbb65aad5b3da0ff5035e27a17069a2f8f3",
+  "docker_security_flags": "--cap-add SYS_ADMIN --cap-add NET_ADMIN --security-opt seccomp=unconfined",
+  "harness_confinement": {
+   "executable": "/usr/bin/unshare",
+   "mechanism": "unshare --user --net --map-root-user",
+   "network_policy": "repository subprocess: no interfaces except empty loopback",
+   "version": "unshare from util-linux 2.41"
+  },
+  "network_policy": {
+   "provider_and_controller": "allowed",
+   "repository_controlled_execution": "denied"
+  },
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python_implementation": "CPython",
+  "python_version": "3.12.14",
+  "rift_repository_isolation": {
+   "bwrap": "/usr/bin/bwrap",
+   "bwrap_version": "bubblewrap 0.11.0",
+   "detail": "linux + bubblewrap: host read-only, worktree and tmp writable, network unshared",
+   "level": "full"
+  }
+ },
+ "execution_environment_hash": "9de6886df3d526affb979312048437580a6860ce5491abfd84371c36fed83de3",
+ "expected_samples": 144,
+ "label": "REPRESENTATION EXPERIMENT \u2014 FROZEN PREPARATION \u2014 NOT AUTHORIZED, NOT EXECUTED",
+ "model": {
+  "requested_model_id": "claude-sonnet-4-6",
+  "required_reported_model_identity": "must equal requested"
+ },
+ "oracle_hash": "25ac41827067f0de175b321ac800f6ddd3cadfefbef11da3e713dcc3d518cf91",
+ "order_balance": {
+  "S_first": 36,
+  "U_first": 36,
+  "pairs": 72
+ },
+ "powered": false,
+ "pricing": {
+  "currency": "USD",
+  "input_per_mtok": 3.0,
+  "output_per_mtok": 15.0
+ },
+ "repeats": 3,
+ "repository_population_hash_v5": "4645de61c549bf8ad06697e1b8279ddfee51d19af24379e1dd45880f350fe0bc",
+ "representation_experiment_manifest_hash": "76cf6dca742851d1dd9c12cf7b731e7ab92358b40c0baabdd7a85ebb5ec82ae8",
+ "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17",
+ "s_prompt_hash": "cb85ec45b15d368e0d2e195ebc0f879e4e01352ee7c7f3b517b34bc16aeeccd8",
+ "s_prompt_template": "You are fixing one failing test in a Python repository.\n\nFailing test:\n{node_id}\n\nObserved failure:\n{signature}\n\nSource context (exactly the files and line ranges available to the original\nattempt; nothing else in the repository is shown):\n\n{context}\n\nReturn ONLY a JSON object of exactly this shape:\n\n{{\"edits\": [{{\"path\": \"pkg/module.py\", \"search\": \"<exact source text>\", \"replace\": \"<replacement text>\"}}]}}\n\nRules:\n- `search` must be text copied verbatim from the source shown above, including\n  indentation and line breaks.\n- Each `search` must occur EXACTLY ONCE in the original file.\n- Every `search` is matched against the ORIGINAL file, not against the result of\n  any other edit in this list.\n- Search regions must not overlap.\n- `path` must be a file that already exists. Do not create new files.\n- Do not modify test files.\n- No line numbers, no wildcards, no regular expressions, no fuzzy matching.\n- Do not include line numbers, hunk headers, or diff context; those are computed\n  deterministically from your edits.\n- No prose, no explanation, no code fences.\n",
+ "s_schema": {
+  "additionalProperties": false,
+  "name": "exact_edit_response",
+  "properties": {
+   "edits": {
+    "items": {
+     "additionalProperties": false,
+     "properties": {
+      "path": {
+       "minLength": 1,
+       "type": "string"
+      },
+      "replace": {
+       "type": "string"
+      },
+      "search": {
+       "maxBytes": 20000,
+       "minLength": 1,
+       "type": "string"
+      }
+     },
+     "required": [
+      "path",
+      "search",
+      "replace"
+     ],
+     "type": "object"
+    },
+    "maxItems": 20,
+    "minItems": 1,
+    "type": "array"
+   }
+  },
+  "required": [
+   "edits"
+  ],
+  "type": "object",
+  "version": 1
+ },
+ "s_schema_hash": "251e926be08886f9ba7ae82cf6a4754332bcc38c922760473b9978a3f49b9fd5",
+ "samples": [
+  {
+   "case_id": "voluptuous-44593ce7",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "4d700d1a49b30289",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "f9cebdca436b7dff"
+  },
+  {
+   "case_id": "voluptuous-44593ce7",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "4d700d1a49b30289",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "931cc0a7179e0855"
+  },
+  {
+   "case_id": "voluptuous-44593ce7",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "62239ad41a8db45c",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "5864c669376e482d"
+  },
+  {
+   "case_id": "voluptuous-44593ce7",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "62239ad41a8db45c",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "4e1c6a2f370466fa"
+  },
+  {
+   "case_id": "voluptuous-44593ce7",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "3cb04beea9e99198",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "3588931e9af6a973"
+  },
+  {
+   "case_id": "voluptuous-44593ce7",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "3cb04beea9e99198",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "31f3ee876fa7f7e9"
+  },
+  {
+   "case_id": "parse-e9aa02bd",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "0c31cc3b6ff1dab5",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "c6e9680ab2b3914b"
+  },
+  {
+   "case_id": "parse-e9aa02bd",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "0c31cc3b6ff1dab5",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "03b0e2d2facd032a"
+  },
+  {
+   "case_id": "parse-e9aa02bd",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "03fd44869c224e8c",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "e8d62389016426fe"
+  },
+  {
+   "case_id": "parse-e9aa02bd",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "03fd44869c224e8c",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "b25d4de6087cb8ab"
+  },
+  {
+   "case_id": "parse-e9aa02bd",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "7f0b97c8e7604785",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "a55cfe1e99326f4b"
+  },
+  {
+   "case_id": "parse-e9aa02bd",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "7f0b97c8e7604785",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "863746befb51400d"
+  },
+  {
+   "case_id": "rich-260508bf",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "a70422f330af9b5a",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "3757a69a9598fb3f"
+  },
+  {
+   "case_id": "rich-260508bf",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "a70422f330af9b5a",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "3b52050f2a270a43"
+  },
+  {
+   "case_id": "rich-260508bf",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "228f57299173c948",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "3b314f40230bd4cf"
+  },
+  {
+   "case_id": "rich-260508bf",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "228f57299173c948",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "7ac5ce19c6827774"
+  },
+  {
+   "case_id": "rich-260508bf",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "1052795fbd430065",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "a52a57302e9d6a91"
+  },
+  {
+   "case_id": "rich-260508bf",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "1052795fbd430065",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "d0165703ead151e9"
+  },
+  {
+   "case_id": "rich-0138b189",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "f30786f1f518dd8f",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "1a19e0c8caf57759"
+  },
+  {
+   "case_id": "rich-0138b189",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "f30786f1f518dd8f",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "4d3aa2c49527b998"
+  },
+  {
+   "case_id": "rich-0138b189",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "f16deeab15ee7aa7",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "1cece37efb76861b"
+  },
+  {
+   "case_id": "rich-0138b189",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "f16deeab15ee7aa7",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "7259a51d1d4c7bd6"
+  },
+  {
+   "case_id": "rich-0138b189",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "7da9c31db2f7f9fb",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "20b3cba4d559d183"
+  },
+  {
+   "case_id": "rich-0138b189",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "7da9c31db2f7f9fb",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "43eedce0228711eb"
+  },
+  {
+   "case_id": "xmltodict-927a025a",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "9cf93f59dd5388d4",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "e38f10b3ce41c30f"
+  },
+  {
+   "case_id": "xmltodict-927a025a",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "9cf93f59dd5388d4",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "6935489b97fe0f98"
+  },
+  {
+   "case_id": "xmltodict-927a025a",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "7eaf071a8c9d1ec9",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "98d5a632526b10df"
+  },
+  {
+   "case_id": "xmltodict-927a025a",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "7eaf071a8c9d1ec9",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "6e62a60d4d293f55"
+  },
+  {
+   "case_id": "xmltodict-927a025a",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "0dd89a9bf0fb8fc6",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "76b6a283ecf5f85d"
+  },
+  {
+   "case_id": "xmltodict-927a025a",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "0dd89a9bf0fb8fc6",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "f598e75c0edb348d"
+  },
+  {
+   "case_id": "rich-a5eada7a",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "97468980ae48762f",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "cd9ca9212e342540"
+  },
+  {
+   "case_id": "rich-a5eada7a",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "97468980ae48762f",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "311cf414dd0d5d51"
+  },
+  {
+   "case_id": "rich-a5eada7a",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "8a8b0c9416668b4c",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "6e71081c8225779e"
+  },
+  {
+   "case_id": "rich-a5eada7a",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "8a8b0c9416668b4c",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "e2023d13c9e28731"
+  },
+  {
+   "case_id": "rich-a5eada7a",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "782ff225dc5031eb",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "31af6ee30f08abba"
+  },
+  {
+   "case_id": "rich-a5eada7a",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "782ff225dc5031eb",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "4617926e092ce5c5"
+  },
+  {
+   "case_id": "isort-49bb9bab",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "1037c6a462a470e4",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "b8101d8c791c66c3"
+  },
+  {
+   "case_id": "isort-49bb9bab",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "1037c6a462a470e4",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "12a7e1db8e67c1cb"
+  },
+  {
+   "case_id": "isort-49bb9bab",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "447cd6af501d75ba",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "10ec5fcff40f747b"
+  },
+  {
+   "case_id": "isort-49bb9bab",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "447cd6af501d75ba",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "44c3131506a7e03b"
+  },
+  {
+   "case_id": "isort-49bb9bab",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "d1e30a876d811a75",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "fc9cd19d39d50c4f"
+  },
+  {
+   "case_id": "isort-49bb9bab",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "d1e30a876d811a75",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "4b6f1d88bf2bb416"
+  },
+  {
+   "case_id": "charset-normalizer-2bc26076",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "3a981a60f1e375af",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "d0c67de1194009b2"
+  },
+  {
+   "case_id": "charset-normalizer-2bc26076",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "3a981a60f1e375af",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "872acd4f18d0fc86"
+  },
+  {
+   "case_id": "charset-normalizer-2bc26076",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "ef12679999cf031b",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "827c6934ebe2c8ce"
+  },
+  {
+   "case_id": "charset-normalizer-2bc26076",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "ef12679999cf031b",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "f2e62372f0b0b891"
+  },
+  {
+   "case_id": "charset-normalizer-2bc26076",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "b30a229302f1329b",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "d71522deaaf198f8"
+  },
+  {
+   "case_id": "charset-normalizer-2bc26076",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "b30a229302f1329b",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "bc18227b12c4ab6d"
+  },
+  {
+   "case_id": "tabulate-293ff59a",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "907739e250cd2663",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "45e5235d8db18de2"
+  },
+  {
+   "case_id": "tabulate-293ff59a",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "907739e250cd2663",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "f69a808b765ba257"
+  },
+  {
+   "case_id": "tabulate-293ff59a",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "71fa8f7c162f7cd2",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "0ea9316a9685ea26"
+  },
+  {
+   "case_id": "tabulate-293ff59a",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "71fa8f7c162f7cd2",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "756efdc24f6b3ade"
+  },
+  {
+   "case_id": "tabulate-293ff59a",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "46840821793f458f",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "946c3ddb35b80e71"
+  },
+  {
+   "case_id": "tabulate-293ff59a",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "46840821793f458f",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "d79e76ef1d90370e"
+  },
+  {
+   "case_id": "schema-15158c53",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "57ea45772ccb2bf2",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "30d1f88b67ed6789"
+  },
+  {
+   "case_id": "schema-15158c53",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "57ea45772ccb2bf2",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "930c4752b4781e0d"
+  },
+  {
+   "case_id": "schema-15158c53",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "986021fddad3fa07",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "355f22ef9afbc4f7"
+  },
+  {
+   "case_id": "schema-15158c53",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "986021fddad3fa07",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "0b58f7a05e03410e"
+  },
+  {
+   "case_id": "schema-15158c53",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "e5c212f677b13739",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "e0cc610ec6561408"
+  },
+  {
+   "case_id": "schema-15158c53",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "e5c212f677b13739",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "6d46ef46772b8e02"
+  },
+  {
+   "case_id": "lark-adad165e",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "611420bdd7fbc9c7",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "b690ca0aa6744a06"
+  },
+  {
+   "case_id": "lark-adad165e",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "611420bdd7fbc9c7",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "3f1ae59be22b8afc"
+  },
+  {
+   "case_id": "lark-adad165e",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "a394cc5c45c6f0ef",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "6914e4184eb91775"
+  },
+  {
+   "case_id": "lark-adad165e",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "a394cc5c45c6f0ef",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "e246c7292c61278d"
+  },
+  {
+   "case_id": "lark-adad165e",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "dcc39cca2a532c09",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "9cc3bb7b7c61ef22"
+  },
+  {
+   "case_id": "lark-adad165e",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "dcc39cca2a532c09",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "834e9a1b594a8d76"
+  },
+  {
+   "case_id": "dnspython-246febc4",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "91b6c2f83dc22152",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "1e4bf1ea91c5af31"
+  },
+  {
+   "case_id": "dnspython-246febc4",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "91b6c2f83dc22152",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "173a32e4c91d894a"
+  },
+  {
+   "case_id": "dnspython-246febc4",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "82165f0f897e7271",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "acb51cfa79ceba66"
+  },
+  {
+   "case_id": "dnspython-246febc4",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "82165f0f897e7271",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "76d163ab6d31a45f"
+  },
+  {
+   "case_id": "dnspython-246febc4",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "17b2964e4729fc72",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "2cfcc2262acb8624"
+  },
+  {
+   "case_id": "dnspython-246febc4",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "17b2964e4729fc72",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "5dc735f0e593a8da"
+  },
+  {
+   "case_id": "mistune-b0429966",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "7022ec4d267edb9e",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "8c9c985e339a545e"
+  },
+  {
+   "case_id": "mistune-b0429966",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "7022ec4d267edb9e",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "c800f0c6aac5746e"
+  },
+  {
+   "case_id": "mistune-b0429966",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "c74eed59e45d3df0",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "cf1160a16d4fbe5e"
+  },
+  {
+   "case_id": "mistune-b0429966",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "c74eed59e45d3df0",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "32e53d039da1ee24"
+  },
+  {
+   "case_id": "mistune-b0429966",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "e5f65dd77491995d",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "d39fea3c6bc3bef9"
+  },
+  {
+   "case_id": "mistune-b0429966",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "e5f65dd77491995d",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "765e506a5c87f9b1"
+  },
+  {
+   "case_id": "lark-96873d64",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "95e3ac623048b33a",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "f86bea8eddde82b3"
+  },
+  {
+   "case_id": "lark-96873d64",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "95e3ac623048b33a",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "0d5668f7b3f4adb6"
+  },
+  {
+   "case_id": "lark-96873d64",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "892e81eb196f9951",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "9e46904f7e380cc3"
+  },
+  {
+   "case_id": "lark-96873d64",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "892e81eb196f9951",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "c602e11acf3c86ef"
+  },
+  {
+   "case_id": "lark-96873d64",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "30173cb8b41a24d9",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "f13c2cc01826056f"
+  },
+  {
+   "case_id": "lark-96873d64",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "30173cb8b41a24d9",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "e79773a0ab31272f"
+  },
+  {
+   "case_id": "mistune-f4237046",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "6fffdaa3c3e68bba",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "0881f5b74c3e60cb"
+  },
+  {
+   "case_id": "mistune-f4237046",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "6fffdaa3c3e68bba",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "995819e30e8a42d4"
+  },
+  {
+   "case_id": "mistune-f4237046",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "f29a8ebadbfa344c",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "0fa0b080bec83468"
+  },
+  {
+   "case_id": "mistune-f4237046",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "f29a8ebadbfa344c",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "95f2da9a06fbf3c6"
+  },
+  {
+   "case_id": "mistune-f4237046",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "dc18e3be423f96ed",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "7a7e70e26965f6d2"
+  },
+  {
+   "case_id": "mistune-f4237046",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "dc18e3be423f96ed",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "0b5c42e99dfe4d9d"
+  },
+  {
+   "case_id": "dnspython-227eace4",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "ed95a04af89f71d3",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "05c8dce8d369c8aa"
+  },
+  {
+   "case_id": "dnspython-227eace4",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "ed95a04af89f71d3",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "3c137ac81c7b1e12"
+  },
+  {
+   "case_id": "dnspython-227eace4",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "febdee163260fc64",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "a26da161622071a3"
+  },
+  {
+   "case_id": "dnspython-227eace4",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "febdee163260fc64",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "b0292da4c269f878"
+  },
+  {
+   "case_id": "dnspython-227eace4",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "1b5b78057c1c44ec",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "e7aed7124c7f0c24"
+  },
+  {
+   "case_id": "dnspython-227eace4",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "1b5b78057c1c44ec",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "5a3186c128785804"
+  },
+  {
+   "case_id": "click-a17b5447",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "386596878594a49e",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "a78e71998196a925"
+  },
+  {
+   "case_id": "click-a17b5447",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "386596878594a49e",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "350ccd5c78f9b47f"
+  },
+  {
+   "case_id": "click-a17b5447",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "7f945a03459be21b",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "1efbb76de1da62a3"
+  },
+  {
+   "case_id": "click-a17b5447",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "7f945a03459be21b",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "91e7714ea9620c8c"
+  },
+  {
+   "case_id": "click-a17b5447",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "1ab680f86c1c8a70",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "ba815c60042b7133"
+  },
+  {
+   "case_id": "click-a17b5447",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "1ab680f86c1c8a70",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "bcebb13772eefca9"
+  },
+  {
+   "case_id": "packaging-553582d9",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "f9867a67ccc6de07",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "65cc8ff74a66fc2f"
+  },
+  {
+   "case_id": "packaging-553582d9",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "f9867a67ccc6de07",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "fad281920c11eea3"
+  },
+  {
+   "case_id": "packaging-553582d9",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "b098c7893e74108e",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "70654c17e8a14f76"
+  },
+  {
+   "case_id": "packaging-553582d9",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "b098c7893e74108e",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "9d461946a14759ce"
+  },
+  {
+   "case_id": "packaging-553582d9",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "79f7e454c779798b",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "15362738cca6d2a6"
+  },
+  {
+   "case_id": "packaging-553582d9",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "79f7e454c779798b",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "f4d1ed0bf676f13e"
+  },
+  {
+   "case_id": "icalendar-9b72b0b1",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "533108fc811400e8",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "485eb2d6de41b771"
+  },
+  {
+   "case_id": "icalendar-9b72b0b1",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "533108fc811400e8",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "78daf0c9ecbbc608"
+  },
+  {
+   "case_id": "icalendar-9b72b0b1",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "460116352ffa7f00",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "d0ac2b357cd9aa0f"
+  },
+  {
+   "case_id": "icalendar-9b72b0b1",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "460116352ffa7f00",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "287d97223d04edef"
+  },
+  {
+   "case_id": "icalendar-9b72b0b1",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "6c64a51a215693e0",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "083056926ac6e6ff"
+  },
+  {
+   "case_id": "icalendar-9b72b0b1",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "6c64a51a215693e0",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "2bb67beb69763059"
+  },
+  {
+   "case_id": "dnspython-c9f6c819",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "f09535317d787ccb",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "7446884385a6795d"
+  },
+  {
+   "case_id": "dnspython-c9f6c819",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "f09535317d787ccb",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "75d0d880e5ca7211"
+  },
+  {
+   "case_id": "dnspython-c9f6c819",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "74cf050a51fa0eac",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "4b70186ef50e6918"
+  },
+  {
+   "case_id": "dnspython-c9f6c819",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "74cf050a51fa0eac",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "2d63c3a3583bef46"
+  },
+  {
+   "case_id": "dnspython-c9f6c819",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "73199025a8c167f5",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "97a1742f8daa40c8"
+  },
+  {
+   "case_id": "dnspython-c9f6c819",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "73199025a8c167f5",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "9e9dd045d493e88e"
+  },
+  {
+   "case_id": "mistune-1bef343a",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "92cb0471f6f9fc33",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "42fbe3c1cdaff046"
+  },
+  {
+   "case_id": "mistune-1bef343a",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "92cb0471f6f9fc33",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "a8d937808ad5f328"
+  },
+  {
+   "case_id": "mistune-1bef343a",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "03b2ce4f5c561d54",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "d53ba96c8e20752f"
+  },
+  {
+   "case_id": "mistune-1bef343a",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "03b2ce4f5c561d54",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "b5f2da106c576428"
+  },
+  {
+   "case_id": "mistune-1bef343a",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "2e47b109e5b5f186",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "441598c23e4465e5"
+  },
+  {
+   "case_id": "mistune-1bef343a",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "2e47b109e5b5f186",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "e15696471bd343bf"
+  },
+  {
+   "case_id": "sortedcontainers-2b037039",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "ec17082bfb2274e4",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "6a105f5cfb5edf41"
+  },
+  {
+   "case_id": "sortedcontainers-2b037039",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "ec17082bfb2274e4",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "328b7c82e7527e71"
+  },
+  {
+   "case_id": "sortedcontainers-2b037039",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "301d224796baac4a",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "8f3b412c63ae5d41"
+  },
+  {
+   "case_id": "sortedcontainers-2b037039",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "301d224796baac4a",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "4fd3b55c8f6454e5"
+  },
+  {
+   "case_id": "sortedcontainers-2b037039",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "ff798d48f387b9fc",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "eefb16467381fae0"
+  },
+  {
+   "case_id": "sortedcontainers-2b037039",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "ff798d48f387b9fc",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "0654cc1a775a815e"
+  },
+  {
+   "case_id": "sortedcontainers-7dc426c9",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "baf91582c417e00e",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "5c7435b1e30e797e"
+  },
+  {
+   "case_id": "sortedcontainers-7dc426c9",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "baf91582c417e00e",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "e268d2b96cf3398d"
+  },
+  {
+   "case_id": "sortedcontainers-7dc426c9",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "030709ab405ed25a",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "2e42778f8eab351f"
+  },
+  {
+   "case_id": "sortedcontainers-7dc426c9",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "030709ab405ed25a",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "11016d6b809d525a"
+  },
+  {
+   "case_id": "sortedcontainers-7dc426c9",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "58085e37e4b90b4b",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "996dcd6fd982d2ae"
+  },
+  {
+   "case_id": "sortedcontainers-7dc426c9",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "58085e37e4b90b4b",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "7cbf741feae09d89"
+  },
+  {
+   "case_id": "packaging-f8f16338",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "869dd124a4a7ee8b",
+   "repeat": 1,
+   "request_position": 1,
+   "sample_id": "22b6d6ff691b254e"
+  },
+  {
+   "case_id": "packaging-f8f16338",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "869dd124a4a7ee8b",
+   "repeat": 1,
+   "request_position": 2,
+   "sample_id": "a08a13ceb55d4815"
+  },
+  {
+   "case_id": "packaging-f8f16338",
+   "condition": "S",
+   "order_label": "S->U",
+   "pair_id": "41c9e78176661722",
+   "repeat": 2,
+   "request_position": 1,
+   "sample_id": "9f2821f7484b0b06"
+  },
+  {
+   "case_id": "packaging-f8f16338",
+   "condition": "U",
+   "order_label": "S->U",
+   "pair_id": "41c9e78176661722",
+   "repeat": 2,
+   "request_position": 2,
+   "sample_id": "a8a2bdf1f45f0065"
+  },
+  {
+   "case_id": "packaging-f8f16338",
+   "condition": "U",
+   "order_label": "U->S",
+   "pair_id": "cafbf6de256c5654",
+   "repeat": 3,
+   "request_position": 1,
+   "sample_id": "609f76952cf5a0b1"
+  },
+  {
+   "case_id": "packaging-f8f16338",
+   "condition": "S",
+   "order_label": "U->S",
+   "pair_id": "cafbf6de256c5654",
+   "repeat": 3,
+   "request_position": 2,
+   "sample_id": "4ff1b00078634a03"
+  }
+ ],
+ "sampling": {
+  "note": "No sampling parameter is sent, matching BM-08's adapter. Repeats are stochastic by default sampling; the design measures that variation rather than suppressing it.",
+  "temperature": "provider default (not sent)",
+  "top_p": "provider default (not sent)"
+ },
+ "schema_repair_policy": "exactly one governed schema repair per sample, identical for U and S; no semantic retries; every request counted and retained",
+ "transaction_implementation_hash": "a2a3109085d2d267958c2f40c8ea51e22330052e54a563090e2b6049d38517eb",
+ "u_prompt_hash": "a1b817d86862b02bf2f9b6b2624186aab0d5c375de4e6f781528c30b1445f4d8",
+ "u_prompt_template": "You are fixing one failing test in a Python repository.\n\nFailing test:\n{node_id}\n\nObserved failure:\n{signature}\n\nSource context (exactly the files and line ranges available to the original\nattempt; nothing else in the repository is shown):\n\n{context}\n\nReturn ONLY a JSON object of exactly this shape:\n\n{{\"diff\": \"<a single unified diff>\"}}\n\nRules:\n- `diff` holds one unified diff with `--- a/<path>` and `+++ b/<path>` headers,\n  paths relative to the repository root.\n- Do not modify test files. Do not create new files.\n- The diff must apply cleanly to the source shown above.\n- No prose, no explanation, no code fences.\n",
+ "u_schema": {
+  "additionalProperties": false,
+  "name": "unified_diff_response",
+  "properties": {
+   "diff": {
+    "maxBytes": 100000,
+    "minLength": 1,
+    "type": "string"
+   }
+  },
+  "required": [
+   "diff"
+  ],
+  "type": "object",
+  "version": 1
+ },
+ "u_schema_hash": "bba2a0045515282cac381faa392a827395f87b7262e07fdb0ce2d0bd38ec6edb"
+}

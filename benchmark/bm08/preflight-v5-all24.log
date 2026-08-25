@@ -1,0 +1,14 @@
+=== ALL-24 PREFLIGHT: 24 cases, arms ('A', 'C') ===
+identity problems (excluding manifest_hash for the spot subset): none
+repository resolution: 15/15 unique  unresolved=none
+
+preflight failures: 0
+  24/24 baseline materialisation PASS
+  24/24 baseline_tree_hash MATCH
+  24/24 target baseline FAIL
+  24/24 fresh failure_identity MATCH
+  24/24 complete preservation set PASS
+  24/24 oracle readiness PASS (run_node + run_all executed)
+  24/24 verification readiness PASS (governed Check constructed)
+
+ALL-24 PREFLIGHT: ALL 24 CASES PASS

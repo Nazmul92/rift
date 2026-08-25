@@ -1,0 +1,7 @@
+BM-08 OFFICIAL PAID RUN (24 cases x arms A,C)
+start_utc: 2026-08-24T00:39:42Z
+identity         : runtime, driver, runner, oracle, manifest and configured model all match
+  FAIL  dnspython-246febc4: 2 preservation nodes fail on the reconstructed baseline
+six-case preflight failed (1); no provider call was made
+exit_code: 0
+end_utc: 2026-08-24T00:43:48Z

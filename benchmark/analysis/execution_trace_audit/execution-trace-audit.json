@@ -1,0 +1,1056 @@
+{
+ "additional_spend_usd": 0.0,
+ "cases": [
+  {
+   "all_fix_files_executed": true,
+   "all_fix_regions_executed": true,
+   "any_fix_file_executed": true,
+   "any_fix_region_executed": true,
+   "attribution_bucket": "TRACEBACK_DID_NOT_REACH_FIX_FILE",
+   "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+   "baseline_tree_hash_verified": true,
+   "case_id": "click-a17b5447",
+   "file_status": "STABLE_3_OF_3",
+   "fix_files": [
+    "click/decorators.py"
+   ],
+   "fix_regions": {
+    "click/decorators.py": [
+     [
+      167,
+      170
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n --testoption TEXT you wont see me\\n --help Show this message and exit.\\n'"
+   },
+   "governed_matches_frozen": true,
+   "governed_untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n --testoption TEXT you wont see me\\n --help Show this message and exit.\\n'"
+   },
+   "observations": [
+    {
+     "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+     "executed_file_count": 16,
+     "executed_line_receipt": {
+      "click/decorators.py": {
+       "executed_line_count": 53,
+       "executed_lines_hash": "32464b305a33ab0a045135f1106f5a9f50d34c8f5a57f5285af2b5400d12b1f7",
+       "max_line": 308,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n'\n +  where 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n' = <Result okay>.output"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n'\n +  where 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n' = <Result okay>.output"
+     },
+     "fix_file_executed": {
+      "click/decorators.py": true
+     },
+     "fix_region_executed": {
+      "click/decorators.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 1,
+     "trace_artifact_hash": "c3b7fc14c6e63a8e0f2cdf09b3166e36f0590733882707a721d85df3cf3fea4d",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+     "executed_file_count": 16,
+     "executed_line_receipt": {
+      "click/decorators.py": {
+       "executed_line_count": 53,
+       "executed_lines_hash": "32464b305a33ab0a045135f1106f5a9f50d34c8f5a57f5285af2b5400d12b1f7",
+       "max_line": 308,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n'\n +  where 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n' = <Result okay>.output"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n'\n +  where 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n' = <Result okay>.output"
+     },
+     "fix_file_executed": {
+      "click/decorators.py": true
+     },
+     "fix_region_executed": {
+      "click/decorators.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 2,
+     "trace_artifact_hash": "c3b7fc14c6e63a8e0f2cdf09b3166e36f0590733882707a721d85df3cf3fea4d",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+     "executed_file_count": 16,
+     "executed_line_receipt": {
+      "click/decorators.py": {
+       "executed_line_count": 53,
+       "executed_lines_hash": "32464b305a33ab0a045135f1106f5a9f50d34c8f5a57f5285af2b5400d12b1f7",
+       "max_line": 308,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n'\n +  where 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n' = <Result okay>.output"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n'\n +  where 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n' = <Result okay>.output"
+     },
+     "fix_file_executed": {
+      "click/decorators.py": true
+     },
+     "fix_region_executed": {
+      "click/decorators.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 3,
+     "trace_artifact_hash": "c3b7fc14c6e63a8e0f2cdf09b3166e36f0590733882707a721d85df3cf3fea4d",
+     "valid": true
+    }
+   ],
+   "per_file": {
+    "click/decorators.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_3_OF_3"
+    }
+   },
+   "region_status": "STABLE_3_OF_3",
+   "repository": "click",
+   "status": "MEASURED",
+   "target_node": "tests/test_options.py::test_option_custom_class_reusable",
+   "untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n'\n +  where 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n' = <Result okay>.output"
+   },
+   "valid_observations": 3
+  },
+  {
+   "all_fix_files_executed": false,
+   "all_fix_regions_executed": false,
+   "any_fix_file_executed": true,
+   "any_fix_region_executed": true,
+   "attribution_bucket": "GREP_DID_NOT_FIND_FIX_REGION",
+   "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+   "baseline_tree_hash_verified": true,
+   "case_id": "dnspython-227eace4",
+   "file_status": "STABLE_3_OF_3",
+   "fix_files": [
+    "dns/rdtypes/ANY/LP.py",
+    "dns/rdtypes/ANY/TKEY.py",
+    "dns/rdtypes/IN/NAPTR.py",
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "fix_regions": {
+    "dns/rdtypes/ANY/LP.py": [
+     [
+      36,
+      36
+     ]
+    ],
+    "dns/rdtypes/ANY/TKEY.py": [
+     [
+      90,
+      90
+     ]
+    ],
+    "dns/rdtypes/IN/NAPTR.py": [
+     [
+      83,
+      83
+     ]
+    ],
+    "dns/rdtypes/IN/SRV.py": [
+     [
+      59,
+      59
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "False is not true"
+   },
+   "governed_matches_frozen": true,
+   "governed_untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "False is not true"
+   },
+   "observations": [
+    {
+     "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+     "executed_file_count": 129,
+     "executed_line_receipt": {
+      "dns/rdtypes/ANY/LP.py": {
+       "executed_line_count": 25,
+       "executed_lines_hash": "4346df0538484d171b29d66856ca54b487b88215ad176ccbc8c2f6e6d72064b9",
+       "max_line": 39,
+       "min_line": 0
+      },
+      "dns/rdtypes/IN/NAPTR.py": {
+       "executed_line_count": 48,
+       "executed_lines_hash": "187013057d83597528626c03f4b60600e38b5de54984d1eb763c4d94432f18ec",
+       "max_line": 108,
+       "min_line": 0
+      },
+      "dns/rdtypes/IN/SRV.py": {
+       "executed_line_count": 36,
+       "executed_lines_hash": "67675f24a6d1bacee8d4bb271230ec227ec0e45d6050fd8dcb719d3df089467b",
+       "max_line": 74,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "False is not true"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "False is not true"
+     },
+     "fix_file_executed": {
+      "dns/rdtypes/ANY/LP.py": true,
+      "dns/rdtypes/ANY/TKEY.py": false,
+      "dns/rdtypes/IN/NAPTR.py": true,
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "fix_region_executed": {
+      "dns/rdtypes/ANY/LP.py": true,
+      "dns/rdtypes/ANY/TKEY.py": false,
+      "dns/rdtypes/IN/NAPTR.py": true,
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 1,
+     "trace_artifact_hash": "a4c7b8484fccfc1a7b13bdeabbb6a2bdad4fe9d383703a9cdc45bc1f1a71591c",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+     "executed_file_count": 129,
+     "executed_line_receipt": {
+      "dns/rdtypes/ANY/LP.py": {
+       "executed_line_count": 25,
+       "executed_lines_hash": "4346df0538484d171b29d66856ca54b487b88215ad176ccbc8c2f6e6d72064b9",
+       "max_line": 39,
+       "min_line": 0
+      },
+      "dns/rdtypes/IN/NAPTR.py": {
+       "executed_line_count": 48,
+       "executed_lines_hash": "187013057d83597528626c03f4b60600e38b5de54984d1eb763c4d94432f18ec",
+       "max_line": 108,
+       "min_line": 0
+      },
+      "dns/rdtypes/IN/SRV.py": {
+       "executed_line_count": 36,
+       "executed_lines_hash": "67675f24a6d1bacee8d4bb271230ec227ec0e45d6050fd8dcb719d3df089467b",
+       "max_line": 74,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "False is not true"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "False is not true"
+     },
+     "fix_file_executed": {
+      "dns/rdtypes/ANY/LP.py": true,
+      "dns/rdtypes/ANY/TKEY.py": false,
+      "dns/rdtypes/IN/NAPTR.py": true,
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "fix_region_executed": {
+      "dns/rdtypes/ANY/LP.py": true,
+      "dns/rdtypes/ANY/TKEY.py": false,
+      "dns/rdtypes/IN/NAPTR.py": true,
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 2,
+     "trace_artifact_hash": "a4c7b8484fccfc1a7b13bdeabbb6a2bdad4fe9d383703a9cdc45bc1f1a71591c",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+     "executed_file_count": 129,
+     "executed_line_receipt": {
+      "dns/rdtypes/ANY/LP.py": {
+       "executed_line_count": 25,
+       "executed_lines_hash": "4346df0538484d171b29d66856ca54b487b88215ad176ccbc8c2f6e6d72064b9",
+       "max_line": 39,
+       "min_line": 0
+      },
+      "dns/rdtypes/IN/NAPTR.py": {
+       "executed_line_count": 48,
+       "executed_lines_hash": "187013057d83597528626c03f4b60600e38b5de54984d1eb763c4d94432f18ec",
+       "max_line": 108,
+       "min_line": 0
+      },
+      "dns/rdtypes/IN/SRV.py": {
+       "executed_line_count": 36,
+       "executed_lines_hash": "67675f24a6d1bacee8d4bb271230ec227ec0e45d6050fd8dcb719d3df089467b",
+       "max_line": 74,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "False is not true"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "False is not true"
+     },
+     "fix_file_executed": {
+      "dns/rdtypes/ANY/LP.py": true,
+      "dns/rdtypes/ANY/TKEY.py": false,
+      "dns/rdtypes/IN/NAPTR.py": true,
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "fix_region_executed": {
+      "dns/rdtypes/ANY/LP.py": true,
+      "dns/rdtypes/ANY/TKEY.py": false,
+      "dns/rdtypes/IN/NAPTR.py": true,
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 3,
+     "trace_artifact_hash": "a4c7b8484fccfc1a7b13bdeabbb6a2bdad4fe9d383703a9cdc45bc1f1a71591c",
+     "valid": true
+    }
+   ],
+   "per_file": {
+    "dns/rdtypes/ANY/LP.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_3_OF_3"
+    },
+    "dns/rdtypes/ANY/TKEY.py": {
+     "file_status": "STABLE_0_OF_3",
+     "region_status": "STABLE_0_OF_3"
+    },
+    "dns/rdtypes/IN/NAPTR.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_3_OF_3"
+    },
+    "dns/rdtypes/IN/SRV.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_3_OF_3"
+    }
+   },
+   "region_status": "STABLE_3_OF_3",
+   "repository": "dnspython",
+   "status": "MEASURED",
+   "target_node": "tests/test_zone.py::ZoneTestCase::testToCompressOrNotToCompressAndCanonicalization",
+   "untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "False is not true"
+   },
+   "valid_observations": 3
+  },
+  {
+   "all_fix_files_executed": true,
+   "all_fix_regions_executed": true,
+   "any_fix_file_executed": true,
+   "any_fix_region_executed": true,
+   "attribution_bucket": "TRACEBACK_DID_NOT_REACH_FIX_FILE",
+   "baseline_tree_hash": "12710f9cff4ca7f0c98e2fc530bdb92cd314b876c9872dec157bd6f2e917cd97",
+   "baseline_tree_hash_verified": true,
+   "case_id": "dnspython-c9f6c819",
+   "file_status": "STABLE_3_OF_3",
+   "fix_files": [
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "fix_regions": {
+    "dns/rdtypes/IN/SRV.py": [
+     [
+      17,
+      18
+     ],
+     [
+      59,
+      60
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00"
+   },
+   "governed_matches_frozen": true,
+   "governed_untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00"
+   },
+   "observations": [
+    {
+     "baseline_tree_hash": "12710f9cff4ca7f0c98e2fc530bdb92cd314b876c9872dec157bd6f2e917cd97",
+     "executed_file_count": 19,
+     "executed_line_receipt": {
+      "dns/rdtypes/IN/SRV.py": {
+       "executed_line_count": 30,
+       "executed_lines_hash": "d582000d405a12c765c9f7cb8afc88110b66e1f8b10df79b84ccbefb35e96961",
+       "max_line": 61,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00'."
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00'."
+     },
+     "fix_file_executed": {
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "fix_region_executed": {
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 1,
+     "trace_artifact_hash": "197f3e3022693c8f4ffb68b4e68fd536bfa4c0bc7334e601b043d6882cec6cb1",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "12710f9cff4ca7f0c98e2fc530bdb92cd314b876c9872dec157bd6f2e917cd97",
+     "executed_file_count": 19,
+     "executed_line_receipt": {
+      "dns/rdtypes/IN/SRV.py": {
+       "executed_line_count": 30,
+       "executed_lines_hash": "d582000d405a12c765c9f7cb8afc88110b66e1f8b10df79b84ccbefb35e96961",
+       "max_line": 61,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00'."
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00'."
+     },
+     "fix_file_executed": {
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "fix_region_executed": {
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 2,
+     "trace_artifact_hash": "197f3e3022693c8f4ffb68b4e68fd536bfa4c0bc7334e601b043d6882cec6cb1",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "12710f9cff4ca7f0c98e2fc530bdb92cd314b876c9872dec157bd6f2e917cd97",
+     "executed_file_count": 19,
+     "executed_line_receipt": {
+      "dns/rdtypes/IN/SRV.py": {
+       "executed_line_count": 30,
+       "executed_lines_hash": "d582000d405a12c765c9f7cb8afc88110b66e1f8b10df79b84ccbefb35e96961",
+       "max_line": 61,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00'."
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00'."
+     },
+     "fix_file_executed": {
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "fix_region_executed": {
+      "dns/rdtypes/IN/SRV.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 3,
+     "trace_artifact_hash": "197f3e3022693c8f4ffb68b4e68fd536bfa4c0bc7334e601b043d6882cec6cb1",
+     "valid": true
+    }
+   ],
+   "per_file": {
+    "dns/rdtypes/IN/SRV.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_3_OF_3"
+    }
+   },
+   "region_status": "STABLE_3_OF_3",
+   "repository": "dnspython",
+   "status": "MEASURED",
+   "target_node": "tests/test_bugs.py::BugsTestCase::test_lowercase_canonicals",
+   "untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00'."
+   },
+   "valid_observations": 3
+  },
+  {
+   "all_fix_files_executed": false,
+   "all_fix_regions_executed": false,
+   "any_fix_file_executed": false,
+   "any_fix_region_executed": false,
+   "attribution_bucket": "TRACEBACK_DID_NOT_REACH_FIX_FILE",
+   "baseline_tree_hash": "317a30f642d1f7f43283f9cc5e8db77fd26e6a98276402965beb578d1757a290",
+   "baseline_tree_hash_verified": true,
+   "case_id": "isort-49bb9bab",
+   "file_status": "TRACE_INVALID",
+   "fix_files": [
+    "isort/parse.py"
+   ],
+   "fix_regions": {
+    "isort/parse.py": [
+     [
+      221,
+      222
+     ],
+     [
+      224,
+      226
+     ],
+     [
+      229,
+      231
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert False"
+   },
+   "governed_matches_frozen": true,
+   "governed_untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert False"
+   },
+   "observations": [
+    {
+     "baseline_tree_hash": "317a30f642d1f7f43283f9cc5e8db77fd26e6a98276402965beb578d1757a290",
+     "executed_file_count": 40,
+     "executed_line_receipt": {},
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "assert False\n +  where False = <function check_code_string at 0x75658fa15120>('\\nfrom tools.dependency_pruning.prune_dependencies import (  # isort:skip\\n    prune_dependencies,\\n)\\nfrom tools.developer_pruning.prune_developers import (  # isort:skip\\n    prune_developers,\\n)\\n', show_diff=True, profile='black', float_to_top=True)\n +    where <function check_code_string at 0x75658fa15120> = isort.check_code"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "assert False\n +  where False = <function check_code_string at 0x7c991812f7e0>('\\nfrom tools.dependency_pruning.prune_dependencies import (  # isort:skip\\n    prune_dependencies,\\n)\\nfrom tools.developer_pruning.prune_developers import (  # isort:skip\\n    prune_developers,\\n)\\n', show_diff=True, profile='black', float_to_top=True)\n +    where <function check_code_string at 0x7c991812f7e0> = isort.check_code"
+     },
+     "fix_file_executed": {},
+     "fix_region_executed": {},
+     "identity_invariant": false,
+     "invalid_reason": "INVALID_OBSERVER_PERTURBATION",
+     "repeat": 1,
+     "trace_artifact_hash": "22a682a10c48538fcea47b8e70cba88d68a862453edd48ee982e7d6337924868",
+     "valid": false
+    },
+    {
+     "baseline_tree_hash": "317a30f642d1f7f43283f9cc5e8db77fd26e6a98276402965beb578d1757a290",
+     "executed_file_count": 40,
+     "executed_line_receipt": {},
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "assert False\n +  where False = <function check_code_string at 0x76c0de7e9120>('\\nfrom tools.dependency_pruning.prune_dependencies import (  # isort:skip\\n    prune_dependencies,\\n)\\nfrom tools.developer_pruning.prune_developers import (  # isort:skip\\n    prune_developers,\\n)\\n', show_diff=True, profile='black', float_to_top=True)\n +    where <function check_code_string at 0x76c0de7e9120> = isort.check_code"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "assert False\n +  where False = <function check_code_string at 0x7c991812f7e0>('\\nfrom tools.dependency_pruning.prune_dependencies import (  # isort:skip\\n    prune_dependencies,\\n)\\nfrom tools.developer_pruning.prune_developers import (  # isort:skip\\n    prune_developers,\\n)\\n', show_diff=True, profile='black', float_to_top=True)\n +    where <function check_code_string at 0x7c991812f7e0> = isort.check_code"
+     },
+     "fix_file_executed": {},
+     "fix_region_executed": {},
+     "identity_invariant": false,
+     "invalid_reason": "INVALID_OBSERVER_PERTURBATION",
+     "repeat": 2,
+     "trace_artifact_hash": "77feaaaf882a6b5c649710cff43d7064433cf84789d9967036a6bd65f64b9638",
+     "valid": false
+    },
+    {
+     "baseline_tree_hash": "317a30f642d1f7f43283f9cc5e8db77fd26e6a98276402965beb578d1757a290",
+     "executed_file_count": 40,
+     "executed_line_receipt": {},
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "assert False\n +  where False = <function check_code_string at 0x74792af45120>('\\nfrom tools.dependency_pruning.prune_dependencies import (  # isort:skip\\n    prune_dependencies,\\n)\\nfrom tools.developer_pruning.prune_developers import (  # isort:skip\\n    prune_developers,\\n)\\n', show_diff=True, profile='black', float_to_top=True)\n +    where <function check_code_string at 0x74792af45120> = isort.check_code"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "assert False\n +  where False = <function check_code_string at 0x7c991812f7e0>('\\nfrom tools.dependency_pruning.prune_dependencies import (  # isort:skip\\n    prune_dependencies,\\n)\\nfrom tools.developer_pruning.prune_developers import (  # isort:skip\\n    prune_developers,\\n)\\n', show_diff=True, profile='black', float_to_top=True)\n +    where <function check_code_string at 0x7c991812f7e0> = isort.check_code"
+     },
+     "fix_file_executed": {},
+     "fix_region_executed": {},
+     "identity_invariant": false,
+     "invalid_reason": "INVALID_OBSERVER_PERTURBATION",
+     "repeat": 3,
+     "trace_artifact_hash": "86c40e79213de500d060c09a2d0694f7716dad985dc3c4194e8c4fb5cdf7d1dd",
+     "valid": false
+    }
+   ],
+   "per_file": {
+    "isort/parse.py": {
+     "file_status": "TRACE_INVALID",
+     "region_status": "TRACE_INVALID"
+    }
+   },
+   "region_status": "TRACE_INVALID",
+   "repository": "isort",
+   "status": "TRACE_INVALID",
+   "target_node": "tests/unit/test_regressions.py::test_isort_shouldnt_split_skip_issue_1556",
+   "untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert False\n +  where False = <function check_code_string at 0x7c991812f7e0>('\\nfrom tools.dependency_pruning.prune_dependencies import (  # isort:skip\\n    prune_dependencies,\\n)\\nfrom tools.developer_pruning.prune_developers import (  # isort:skip\\n    prune_developers,\\n)\\n', show_diff=True, profile='black', float_to_top=True)\n +    where <function check_code_string at 0x7c991812f7e0> = isort.check_code"
+   },
+   "valid_observations": 0
+  },
+  {
+   "all_fix_files_executed": true,
+   "all_fix_regions_executed": false,
+   "any_fix_file_executed": true,
+   "any_fix_region_executed": true,
+   "attribution_bucket": "GREP_DID_NOT_FIND_FIX_REGION",
+   "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+   "baseline_tree_hash_verified": true,
+   "case_id": "lark-96873d64",
+   "file_status": "STABLE_3_OF_3",
+   "fix_files": [
+    "lark/common.py",
+    "lark/lark.py",
+    "lark/parser_frontends.py"
+   ],
+   "fix_regions": {
+    "lark/common.py": [
+     [
+      20,
+      22
+     ]
+    ],
+    "lark/lark.py": [
+     [
+      347,
+      347
+     ]
+    ],
+    "lark/parser_frontends.py": [
+     [
+      3,
+      3
+     ],
+     [
+      60,
+      61
+     ],
+     [
+      76,
+      76
+     ],
+     [
+      79,
+      80
+     ],
+     [
+      232,
+      232
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+   },
+   "governed_matches_frozen": true,
+   "governed_untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+   },
+   "observations": [
+    {
+     "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+     "executed_file_count": 26,
+     "executed_line_receipt": {
+      "lark/common.py": {
+       "executed_line_count": 22,
+       "executed_lines_hash": "fce951fe0caec186fcf0ae8dbce87a638c2e5281cfb7d0b7237b6f9e5ac840c3",
+       "max_line": 30,
+       "min_line": 0
+      },
+      "lark/lark.py": {
+       "executed_line_count": 134,
+       "executed_lines_hash": "11693ad2b9ceacb86c3b6dea2a3038a0fcc7586adbf378727087376457e5116c",
+       "max_line": 390,
+       "min_line": 0
+      },
+      "lark/parser_frontends.py": {
+       "executed_line_count": 79,
+       "executed_lines_hash": "39fb31894e8d90f592ed0fd9f5f995e7f0f46b5eebbee477bed0b1fdd3a2e66d",
+       "max_line": 230,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+     },
+     "fix_file_executed": {
+      "lark/common.py": true,
+      "lark/lark.py": true,
+      "lark/parser_frontends.py": true
+     },
+     "fix_region_executed": {
+      "lark/common.py": true,
+      "lark/lark.py": false,
+      "lark/parser_frontends.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 1,
+     "trace_artifact_hash": "b6b75e7cc08558a904c66d8e5bf5b216091596bdf341c9c5da03a70e669a6bea",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+     "executed_file_count": 26,
+     "executed_line_receipt": {
+      "lark/common.py": {
+       "executed_line_count": 22,
+       "executed_lines_hash": "fce951fe0caec186fcf0ae8dbce87a638c2e5281cfb7d0b7237b6f9e5ac840c3",
+       "max_line": 30,
+       "min_line": 0
+      },
+      "lark/lark.py": {
+       "executed_line_count": 134,
+       "executed_lines_hash": "11693ad2b9ceacb86c3b6dea2a3038a0fcc7586adbf378727087376457e5116c",
+       "max_line": 390,
+       "min_line": 0
+      },
+      "lark/parser_frontends.py": {
+       "executed_line_count": 79,
+       "executed_lines_hash": "39fb31894e8d90f592ed0fd9f5f995e7f0f46b5eebbee477bed0b1fdd3a2e66d",
+       "max_line": 230,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+     },
+     "fix_file_executed": {
+      "lark/common.py": true,
+      "lark/lark.py": true,
+      "lark/parser_frontends.py": true
+     },
+     "fix_region_executed": {
+      "lark/common.py": true,
+      "lark/lark.py": false,
+      "lark/parser_frontends.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 2,
+     "trace_artifact_hash": "b6b75e7cc08558a904c66d8e5bf5b216091596bdf341c9c5da03a70e669a6bea",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+     "executed_file_count": 26,
+     "executed_line_receipt": {
+      "lark/common.py": {
+       "executed_line_count": 22,
+       "executed_lines_hash": "fce951fe0caec186fcf0ae8dbce87a638c2e5281cfb7d0b7237b6f9e5ac840c3",
+       "max_line": 30,
+       "min_line": 0
+      },
+      "lark/lark.py": {
+       "executed_line_count": 134,
+       "executed_lines_hash": "11693ad2b9ceacb86c3b6dea2a3038a0fcc7586adbf378727087376457e5116c",
+       "max_line": 390,
+       "min_line": 0
+      },
+      "lark/parser_frontends.py": {
+       "executed_line_count": 79,
+       "executed_lines_hash": "39fb31894e8d90f592ed0fd9f5f995e7f0f46b5eebbee477bed0b1fdd3a2e66d",
+       "max_line": 230,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+     },
+     "fix_file_executed": {
+      "lark/common.py": true,
+      "lark/lark.py": true,
+      "lark/parser_frontends.py": true
+     },
+     "fix_region_executed": {
+      "lark/common.py": true,
+      "lark/lark.py": false,
+      "lark/parser_frontends.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 3,
+     "trace_artifact_hash": "b6b75e7cc08558a904c66d8e5bf5b216091596bdf341c9c5da03a70e669a6bea",
+     "valid": true
+    }
+   ],
+   "per_file": {
+    "lark/common.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_3_OF_3"
+    },
+    "lark/lark.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_0_OF_3"
+    },
+    "lark/parser_frontends.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_3_OF_3"
+    }
+   },
+   "region_status": "STABLE_3_OF_3",
+   "repository": "lark",
+   "status": "MEASURED",
+   "target_node": "tests/test_tools.py::TestStandalone::test_transformer",
+   "untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+   },
+   "valid_observations": 3
+  },
+  {
+   "all_fix_files_executed": false,
+   "all_fix_regions_executed": false,
+   "any_fix_file_executed": true,
+   "any_fix_region_executed": true,
+   "attribution_bucket": "TRACEBACK_DID_NOT_REACH_FIX_FILE",
+   "baseline_tree_hash": "19242c9935395b0558e605e88d3634785b2cc8668918f8589543f94fd2e976d3",
+   "baseline_tree_hash_verified": true,
+   "case_id": "mistune-f4237046",
+   "file_status": "STABLE_3_OF_3",
+   "fix_files": [
+    "src/mistune/directives/image.py",
+    "src/mistune/renderers/html.py",
+    "src/mistune/util.py"
+   ],
+   "fix_regions": {
+    "src/mistune/directives/image.py": [
+     [
+      67,
+      67
+     ],
+     [
+      93,
+      93
+     ]
+    ],
+    "src/mistune/renderers/html.py": [
+     [
+      56,
+      56
+     ],
+     [
+      61,
+      61
+     ],
+     [
+      66,
+      66
+     ]
+    ],
+    "src/mistune/util.py": [
+     [
+      39,
+      39
+     ]
+    ]
+   },
+   "frozen_failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]"
+   },
+   "governed_matches_frozen": true,
+   "governed_untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]"
+   },
+   "observations": [
+    {
+     "baseline_tree_hash": "19242c9935395b0558e605e88d3634785b2cc8668918f8589543f94fd2e976d3",
+     "executed_file_count": 33,
+     "executed_line_receipt": {
+      "src/mistune/renderers/html.py": {
+       "executed_line_count": 39,
+       "executed_lines_hash": "f8b2cda38cb076bfaddd058ab168b9e4510345d17b6dfb8e32b87efaaa2af4f0",
+       "max_line": 156,
+       "min_line": 0
+      },
+      "src/mistune/util.py": {
+       "executed_line_count": 30,
+       "executed_lines_hash": "dcc6f940c04217082843f33ca3661d07778004ff1488db2fede67bac786686bf",
+       "max_line": 80,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]\n\nFirst differing element 0:\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}\n\n- [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'},\n?                                                               ----\n\n+ [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&b=2'},\n                  'children': [{'raw': 'hi &<>\"', 'type': 'text'}],\n                  'type': 'link'}],\n    'type': 'paragraph'}]"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]\n\nFirst differing element 0:\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}\n\n- [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'},\n?                                                               ----\n\n+ [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&b=2'},\n                  'children': [{'raw': 'hi &<>\"', 'type': 'text'}],\n                  'type': 'link'}],\n    'type': 'paragraph'}]"
+     },
+     "fix_file_executed": {
+      "src/mistune/directives/image.py": false,
+      "src/mistune/renderers/html.py": true,
+      "src/mistune/util.py": true
+     },
+     "fix_region_executed": {
+      "src/mistune/directives/image.py": false,
+      "src/mistune/renderers/html.py": false,
+      "src/mistune/util.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 1,
+     "trace_artifact_hash": "0b421d6a77a4e4f575c566d957f06162fd6bfaa7826f61fe9988e999e989377d",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "19242c9935395b0558e605e88d3634785b2cc8668918f8589543f94fd2e976d3",
+     "executed_file_count": 33,
+     "executed_line_receipt": {
+      "src/mistune/renderers/html.py": {
+       "executed_line_count": 39,
+       "executed_lines_hash": "f8b2cda38cb076bfaddd058ab168b9e4510345d17b6dfb8e32b87efaaa2af4f0",
+       "max_line": 156,
+       "min_line": 0
+      },
+      "src/mistune/util.py": {
+       "executed_line_count": 30,
+       "executed_lines_hash": "dcc6f940c04217082843f33ca3661d07778004ff1488db2fede67bac786686bf",
+       "max_line": 80,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]\n\nFirst differing element 0:\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}\n\n- [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'},\n?                                                               ----\n\n+ [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&b=2'},\n                  'children': [{'raw': 'hi &<>\"', 'type': 'text'}],\n                  'type': 'link'}],\n    'type': 'paragraph'}]"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]\n\nFirst differing element 0:\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}\n\n- [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'},\n?                                                               ----\n\n+ [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&b=2'},\n                  'children': [{'raw': 'hi &<>\"', 'type': 'text'}],\n                  'type': 'link'}],\n    'type': 'paragraph'}]"
+     },
+     "fix_file_executed": {
+      "src/mistune/directives/image.py": false,
+      "src/mistune/renderers/html.py": true,
+      "src/mistune/util.py": true
+     },
+     "fix_region_executed": {
+      "src/mistune/directives/image.py": false,
+      "src/mistune/renderers/html.py": false,
+      "src/mistune/util.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 2,
+     "trace_artifact_hash": "0b421d6a77a4e4f575c566d957f06162fd6bfaa7826f61fe9988e999e989377d",
+     "valid": true
+    },
+    {
+     "baseline_tree_hash": "19242c9935395b0558e605e88d3634785b2cc8668918f8589543f94fd2e976d3",
+     "executed_file_count": 33,
+     "executed_line_receipt": {
+      "src/mistune/renderers/html.py": {
+       "executed_line_count": 39,
+       "executed_lines_hash": "f8b2cda38cb076bfaddd058ab168b9e4510345d17b6dfb8e32b87efaaa2af4f0",
+       "max_line": 156,
+       "min_line": 0
+      },
+      "src/mistune/util.py": {
+       "executed_line_count": 30,
+       "executed_lines_hash": "dcc6f940c04217082843f33ca3661d07778004ff1488db2fede67bac786686bf",
+       "max_line": 80,
+       "min_line": 0
+      }
+     },
+     "failure_identity_traced": {
+      "exception_type": "AssertionError",
+      "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]\n\nFirst differing element 0:\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}\n\n- [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'},\n?                                                               ----\n\n+ [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&b=2'},\n                  'children': [{'raw': 'hi &<>\"', 'type': 'text'}],\n                  'type': 'link'}],\n    'type': 'paragraph'}]"
+     },
+     "failure_identity_untraced": {
+      "exception_type": "AssertionError",
+      "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]\n\nFirst differing element 0:\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}\n\n- [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'},\n?                                                               ----\n\n+ [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&b=2'},\n                  'children': [{'raw': 'hi &<>\"', 'type': 'text'}],\n                  'type': 'link'}],\n    'type': 'paragraph'}]"
+     },
+     "fix_file_executed": {
+      "src/mistune/directives/image.py": false,
+      "src/mistune/renderers/html.py": true,
+      "src/mistune/util.py": true
+     },
+     "fix_region_executed": {
+      "src/mistune/directives/image.py": false,
+      "src/mistune/renderers/html.py": false,
+      "src/mistune/util.py": true
+     },
+     "identity_invariant": true,
+     "repeat": 3,
+     "trace_artifact_hash": "0b421d6a77a4e4f575c566d957f06162fd6bfaa7826f61fe9988e999e989377d",
+     "valid": true
+    }
+   ],
+   "per_file": {
+    "src/mistune/directives/image.py": {
+     "file_status": "STABLE_0_OF_3",
+     "region_status": "STABLE_0_OF_3"
+    },
+    "src/mistune/renderers/html.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_0_OF_3"
+    },
+    "src/mistune/util.py": {
+     "file_status": "STABLE_3_OF_3",
+     "region_status": "STABLE_3_OF_3"
+    }
+   },
+   "region_status": "STABLE_3_OF_3",
+   "repository": "mistune",
+   "status": "MEASURED",
+   "target_node": "tests/test_misc.py::TestMiscCases::test_ast_url",
+   "untraced_identity": {
+    "exception_type": "AssertionError",
+    "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]\n\nFirst differing element 0:\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}\n{'typ[92 chars]'}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}\n\n- [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'},\n?                                                               ----\n\n+ [{'children': [{'attrs': {'url': 'https://example.com/foo?a=1&b=2'},\n                  'children': [{'raw': 'hi &<>\"', 'type': 'text'}],\n                  'type': 'link'}],\n    'type': 'paragraph'}]"
+   },
+   "valid_observations": 3
+  }
+ ],
+ "execution_trace_audit_manifest_hash": "669dc5bae7711c2cfe66a76dfb055a72cdcdacee0e2f10aca9a50398a92fef74",
+ "label": "EXECUTION-TRACE PREMISE AUDIT \u2014 ZERO COST \u2014 EVALUATOR-ONLY \u2014 NOT A SELECTOR CHANGE",
+ "provider_calls": 0,
+ "trace_implementation_hash": "78e8d3fde0f5dc8ae11deacc6d7691336c5b68357a032255eb3d3ce9c6b52816"
+}

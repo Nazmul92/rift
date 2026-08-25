@@ -1,0 +1,13 @@
+--- a/src/charset_normalizer/models.py
++++ b/src/charset_normalizer/models.py
+@@ -247,4 +247,8 @@ class CharsetMatch:
+     @property
+     def fingerprint(self) -> int:
+         """
+         Retrieve a hash fingerprint of the decoded payload, used for deduplication.
+         """
+-        return hash(str(self))
++        try:
++            return hash(str(self))
++        except (UnicodeDecodeError, LookupError):
++            return hash(bytes(self._payload))

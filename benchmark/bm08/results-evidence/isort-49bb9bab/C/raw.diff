@@ -1,0 +1,27 @@
+--- a/isort/main.py
++++ b/isort/main.py
+@@ -607,6 +607,7 @@ def process(self) -> None:
+                         self._in_top_comment = False
+                     above_c_src = above_comments_src
+                     above_comments_src = ""
++                    above_c_src_skip = False
+                     if self.config.float_to_top:
+                         if above_c_src:
+                             if not above_c_src.endswith("\n\n"):
+@@ -615,6 +616,7 @@ def process(self) -> None:
+                         if not in_top_comment and not above_c_src:
+                             if not at_start:
+                                 output += "\n"
++                                above_c_src_skip = True
+                     if skip:
+                         self._output.append(above_c_src)
+                         self._output.append(line)
+@@ -633,6 +635,8 @@ def process(self) -> None:
+                                     output += potential_line
+                                 else:
+                                     potential_line = ""
++                        if above_c_src_skip and skipped_line:
++                            output = output[:-1]
+                         if potential_line:
+                             self._output.append(output + potential_line)
+                             potential_line = ""

@@ -1,0 +1,120 @@
+=== EXCLUSION SET ===
+artifacts scanned : 21
+commits excluded  : 2707
+
+
+=== SELECTION ===
+raw mined candidates          : 1302 from 48 repositories
+frozen exclusion set          : 2707 previously-seen commits
+
+OVERLAP WITH PRIOR WORK (counted before filtering)
+  fix_commit already seen                    : 168
+  ...of which BM-07 official cases           : 6
+  ...of which BM-06 cases                    : 1
+  parent already seen                        : 10
+
+  BM-07 official commits surviving exclusion : 0  (must be 0)
+
+AUTHOR-DATE ELIGIBILITY (%aI, not %cI)
+  candidates before author-date floor        : 1124
+  excluded by author-date floor              : 473
+  candidates after author-date floor         : 651
+  eligible whose committer date differs      : 93 (author date governs)
+
+SELECTION RULE, STAGE BY STAGE
+  raw mined candidates                          1302
+  after prior-exposure exclusion                1124
+  after author date >= 2018-01-01                651
+  after near-duplicate collapse                  198
+  submitted to model-free validation             198
+
+queue repositories : 34
+queue by repo      : {'rich': 23, 'httpx': 20, 'urllib3': 15, 'cattrs': 14, 'isort': 11, 'faker': 11, 'tqdm': 8, 'deepdiff': 8, 'prompt-toolkit': 7, 'click': 7, 'icalendar': 7, 'flask': 7, 'typer': 6, 'tomlkit': 6, 'packaging': 6, 'werkzeug': 5, 'platformdirs': 5, 'cachetools': 4, 'tenacity': 4, 'pathspec': 3, 'asttokens': 3, 'requests': 3, 'tabulate': 2, 'jinja': 2, 'sortedcontainers': 2, 'voluptuous': 1, 'wcwidth': 1, 'inflect': 1, 'croniter': 1, 'bleach': 1, 'filelock': 1, 'pluggy': 1, 'jmespath': 1, 'humanize': 1}
+queue by category  : {'edge_case': 88, 'parsing': 52, 'config_interaction': 51, 'multi_file': 46, 'small': 43, 'api_misuse': 37, 'state_order': 28, 'data_transform': 24, 'uncategorised': 24, 'inheritance': 14}
+oldest eligible author date : 2018-01-15 (floor 2018-01-01)
+
+written: /s/bm08_queue.json
+
+=== CURATION ===
+queue      : 198
+curated    : 44 from 12 repositories
+dropped    : 154  {'direct_parent_invalid': 147, 'insufficient_untouched_preservation': 7}
+by category: {'edge_case': 19, 'parsing': 11, 'multi_file': 10, 'config_interaction': 10, 'uncategorised': 9, 'api_misuse': 9, 'state_order': 7, 'small': 6, 'data_transform': 4, 'inheritance': 2}
+by repo    : {'faker': 9, 'click': 7, 'packaging': 6, 'werkzeug': 5, 'icalendar': 5, 'cachetools': 4, 'tenacity': 2, 'jinja': 2, 'croniter': 1, 'bleach': 1, 'filelock': 1, 'pluggy': 1}
+preservation: min 3  max 103  median 25
+
+written: /s/bm08_cases.json
+
+=== MODEL-FREE VALIDATION ===
+  drop cachetools-4a061636    target unrunnable at parent+reproducer: exit 4: bleMapping):                          ^^^^
+  drop tenacity-42b70f90      target unrunnable at parent+reproducer: exit 4:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop werkzeug-1938f9d2      failure-identity mismatch: the governed observer captured no signature
+  drop click-2468b709         failure-identity mismatch: the governed observer captured no signature
+  drop cachetools-a2d34a0d    target does not fail at parent+reproducer: pass ()
+  drop click-b964c1e2         failure-identity mismatch: the governed observer captured no signature
+  drop icalendar-914b2045     failure-identity mismatch: the governed observer captured no signature
+  drop click-0d01686f         target does not fail at parent+reproducer: pass ()
+  drop packaging-23211929     target unrunnable at parent+reproducer: exit 4: kers import Marker packaging/markers.py:11
+  drop packaging-19fbc45b     target unrunnable at parent+reproducer: exit 4: , package, level)            ^^^^^^^^^^^^^
+  drop click-c326df95         target does not fail at parent+reproducer: pass ()
+  drop jinja-a524e77e         target unrunnable at parent+reproducer: exit 4: 
+  drop icalendar-8aaaff59     failure-identity mismatch: the governed observer captured no signature
+  drop faker-75545664         target unrunnable at parent+reproducer: exit 4: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ faker/prov
+  drop werkzeug-f075a41e      target unrunnable at parent+reproducer: exit 4: 
+  OK   faker-5128ae64         pres=23  
+  drop faker-0eca1e87         target unrunnable at parent+reproducer: exit 4: roviders/test_date_time.py:13: in <module>
+  drop faker-f6c38c10         target unrunnable at parent+reproducer: exit 4: 
+  drop werkzeug-4d72f8dd      target unrunnable at parent+reproducer: exit 4: 
+  drop faker-d6959627         target unrunnable at parent+reproducer: exit 4: 
+  drop faker-86896b87         target unrunnable at parent+reproducer: exit 4: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ faker/
+  OK   click-a17b5447         pres=20  
+  drop faker-79403fc9         target unrunnable at parent+reproducer: exit 4: ror: cannot import name 'add_ordereddicts'
+  drop click-b830139b         failure-identity mismatch: the governed observer captured no signature
+  drop icalendar-ad081098     failure-identity mismatch: the governed observer captured no signature
+  OK   packaging-553582d9     pres=72  
+  OK   icalendar-9b72b0b1     pres=24  
+  drop croniter-70a0f62c      target unrunnable at parent+reproducer: exit 4: src/croniter/__init__.py:3: in <module>   
+  drop werkzeug-ff9ee213      target does not fail at parent+reproducer: pass ()
+  drop packaging-69307a31     target unrunnable at parent+reproducer: exit 4: ^ tests/test_specifiers.py:17: in <module>
+  drop bleach-3f2270e4        target unrunnable at parent+reproducer: exit 4:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop icalendar-f993bd96     failure-identity mismatch: the governed observer captured no signature
+  drop filelock-9c44c112      target unrunnable at parent+reproducer: exit 4:    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop faker-62429275         failure-identity mismatch: the governed observer captured no signature
+  drop cachetools-d5b25b8e    target unrunnable at parent+reproducer: exit 4:  no tests ran in 0.18s 
+  drop werkzeug-2ceab584      target unrunnable at parent+reproducer: exit 4: cal/lib/python3.12/site-packages/_pytest/c
+  drop pluggy-72e4c259        failure-identity mismatch: the governed observer captured no signature
+  drop cachetools-57d2e481    preservation not green on the buggy baseline: 19 of 26 fail, e.g. ['tests/test_cachedmetho
+  drop click-1241abae         failure-identity mismatch: the governed observer captured no signature
+  drop jinja-1e71e315         target unrunnable at parent+reproducer: exit 4: 
+  OK   packaging-f8f16338     pres=10  
+  drop tenacity-841705cd      target unrunnable at parent+reproducer: exit 4:    @asyncio.coroutine      ^^^^^^^^^^^^^^^
+  drop packaging-00b7e758     target unrunnable at parent+reproducer: exit 4: evel:], package, level)            ^^^^^^^
+  drop faker-9f48a5c6         target unrunnable at parent+reproducer: exit 4: 3: in <module>     from text_unidecode imp
+
+attempted 198   validated 5
+unique validated repositories : 4
+primary corpus                : 5
+validated surplus             : 0
+
+REJECTION BREAKDOWN (every post-dedupe candidate accounted for)
+   147  direct-parent/provenance mismatch
+    23  collection/import/runtime incompatibility
+    11  other governed validation failure
+     7  insufficient untouched preservation
+     4  target already passes at baseline
+     1  baseline preservation fails
+  ----
+  post-dedupe 198 = rejected 193 + valid 5  -> True
+
+POST-VALIDATION REPOSITORY CAP (<=3 VALID cases/repository)
+  VALID before repo cap        : 5
+  per-repository VALID         : {'packaging': 2, 'faker': 1, 'click': 1, 'icalendar': 1}
+  removed by repo cap          : 0
+  VALID after repo cap         : 5
+
+final primary cases           : 5
+final distinct repositories   : 4
+aspirational target           : 20-30 cases across 10+ repositories
+frozen minimum                : >=12 cases AND >=10 repositories
+CORPUS_SHORTFALL: 5 cases, 4 repositories. Reported, not padded.
+preservation set size         : min 10  max 72  total 149

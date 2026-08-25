@@ -1,0 +1,25 @@
+=== SELECTION ===
+
+  BM-07 official commits surviving exclusion : 0  (must be 0)
+
+AUTHOR-DATE ELIGIBILITY (%aI, not %cI)
+  candidates before author-date floor        : 1727
+  excluded by author-date floor              : 581
+  candidates after author-date floor         : 1146
+  eligible whose committer date differs      : 123 (author date governs)
+
+SELECTION RULE, STAGE BY STAGE
+  raw mined candidates                          1905
+  after prior-exposure exclusion                1727
+  after author date >= 2018-01-01               1146
+  after near-duplicate collapse                  322
+  submitted to model-free validation             322
+
+queue repositories : 55
+queue by repo      : {'rich': 23, 'httpx': 20, 'anyio': 17, 'starlette': 17, 'urllib3': 15, 'dnspython': 15, 'cattrs': 14, 'isort': 11, 'faker': 11, 'mistune': 10, 'tqdm': 8, 'deepdiff': 8, 'markdown-it-py': 8, 'typeguard': 7, 'prompt-toolkit': 7, 'click': 7, 'charset-normalizer': 7, 'icalendar': 7, 'flask': 7, 'lark': 6, 'typer': 6, 'tomlkit': 6, 'dateparser': 6, 'packaging': 6, 'glom': 5, 'werkzeug': 5, 'fastjsonschema': 5, 'platformdirs': 5, 'httpcore': 5, 'cachetools': 4, 'tenacity': 4, 'funcy': 4, 'pathspec': 3, 'pathvalidate': 3, 'asttokens': 3, 'requests': 3, 'semver': 2, 'tabulate': 2, 'jinja': 2, 'dpath': 2, 'sortedcontainers': 2, 'voluptuous': 1, 'prettytable': 1, 'parse': 1, 'wcwidth': 1, 'xmltodict': 1, 'inflect': 1, 'schema': 1, 'croniter': 1, 'bleach': 1, 'filelock': 1, 'markupsafe': 1, 'pluggy': 1, 'jmespath': 1, 'humanize': 1}
+queue by category  : {'edge_case': 152, 'parsing': 100, 'config_interaction': 82, 'small': 74, 'multi_file': 74, 'api_misuse': 60, 'state_order': 51, 'data_transform': 45, 'uncategorised': 34, 'inheritance': 19}
+oldest eligible author date : 2018-01-15 (floor 2018-01-01)
+
+written: /s/bm08_queue.json
+
+=== CURATION ===

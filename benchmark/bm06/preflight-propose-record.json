@@ -1,0 +1,25 @@
+{
+ "case": "cachetools-c0fdf6ab-genuine_source_bug",
+ "checks": {
+  "finish_reason_not_length": false,
+  "json_extracts": false,
+  "response_chars_positive": false
+ },
+ "cost_usd": 0.085096,
+ "extract_error": "ModelResponseInvalid: no JSON object found in the response",
+ "finish_reason": "length",
+ "max_output_tokens": 8000,
+ "model": "claude-sonnet-5",
+ "purpose": "propose_change compatibility at an 8000-token output allowance",
+ "requests_made": 1,
+ "response_chars": 0,
+ "result": "FAIL",
+ "source_files_sent": [
+  "src/cachetools/__init__.py"
+ ],
+ "timestamp_utc": "2026-08-19T04:44:22+00:00",
+ "usage": {
+  "input_tokens": 2548,
+  "output_tokens": 8000
+ }
+}

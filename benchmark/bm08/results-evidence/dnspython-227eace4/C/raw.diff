@@ -1,0 +1,16 @@
+--- a/dns/rdtypes/ANY/NAPTR.py
++++ b/dns/rdtypes/ANY/NAPTR.py
+@@ -1,6 +1,6 @@
+ # Copyright (C) Dnspython Contributors, see LICENSE for text of ISC license
+ 
+-# Copyright (C) 2003-2007 Nominum, Inc.
++# Copyright (C) 2003-2007 Nominum, Inc.
+ #
+ # Permission to use, copy, modify, and distribute this software and its
+ # documentation for any purpose with or without fee is hereby granted,
+@@ -100,4 +100,4 @@ class NAPTR(dns.rdata.GenericRdata):
+ 
+     def _to_wire(self, file, compress=None, origin=None):
+         super()._to_wire(file, compress, origin)
+-        self.replacement.to_wire(file, compress=compress, origin=origin)
++        self.replacement.to_wire(file, compress=None, origin=origin)

@@ -1,0 +1,12 @@
+--- a/freezegun/api.py
++++ b/freezegun/api.py
+@@ -633,6 +633,9 @@ class _freeze_time:
+                     if attr.startswith('_') or attr in seen:
+                         continue
+                     seen.add(attr)
++
++                    if isinstance(attr_value, staticmethod):
++                        continue
+ 
+                     if not callable(attr_value) or inspect.isclass(attr_value):
+                         continue

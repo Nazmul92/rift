@@ -1,0 +1,151 @@
+{
+ "arms": {
+  "A": "model alone; weak target-pass acceptance",
+  "C": "model proposal with the full frozen RIFT protocol"
+ },
+ "benchmark_id": "BM-08",
+ "budget": {
+  "max_attempts": 1,
+  "max_input_tokens": 60000,
+  "max_output_tokens": 4000,
+  "per_case_arm_max_usd": 0.25,
+  "reservation_rule": "reserve the maximum possible cost of a request before sending it, settle on provider-reported usage, and refuse the call when remaining budget is below the reservation",
+  "total_usd_ceiling": 1.0
+ },
+ "cases": [
+  {
+   "additional_targets": [],
+   "author_date": "2018-05-14T15:17:48-04:00",
+   "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+   "case_id": "click-a17b5447",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "api_misuse",
+    "config_interaction"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "430b17e639af3be1fdde561d7f2edcad97309705b002cd542304ffb3e8260c7f",
+    "queue_position": 163,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "click/decorators.py",
+    "primary_test_file": "tests/test_options.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n --testoption TEXT you wont see me\\n --help Show this message and exit.\\n'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "a17b544788256d59baae0352a90bdb9af2b8ed34",
+   "parent": "9c456ec2679418442b71b2c1a5e4e62f0b41cbda",
+   "preservation_count": 20,
+   "preservation_nodes": [
+    "tests/test_options.py::test_prefixes",
+    "tests/test_options.py::test_invalid_option",
+    "tests/test_options.py::test_invalid_nargs",
+    "tests/test_options.py::test_nargs_tup_composite_mult",
+    "tests/test_options.py::test_counting",
+    "tests/test_options.py::test_unknown_options",
+    "tests/test_options.py::test_multiple_required",
+    "tests/test_options.py::test_multiple_envvar",
+    "tests/test_options.py::test_multiple_default_help",
+    "tests/test_options.py::test_multiple_default_type",
+    "tests/test_options.py::test_nargs_envvar",
+    "tests/test_options.py::test_custom_validation",
+    "tests/test_options.py::test_winstyle_options",
+    "tests/test_options.py::test_legacy_options",
+    "tests/test_options.py::test_missing_choice",
+    "tests/test_options.py::test_multiline_help",
+    "tests/test_options.py::test_argument_custom_class",
+    "tests/test_options.py::test_option_custom_class",
+    "tests/test_options.py::test_aliases_for_flags",
+    "tests/test_options.py::test_option_names"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "setup.cfg",
+    "tests/conftest.py",
+    "tests/test_options.py",
+    "tox.ini"
+   ],
+   "repository": "click",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tests/conftest.py",
+    "tox.ini"
+   ],
+   "source_files": [
+    "click/decorators.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "c556e2e91137d612abba81c70732cc3d989c44763a2dfecf53eba8b39af07daa",
+   "stability_observations": 3,
+   "target_node": "tests/test_options.py::test_option_custom_class_reusable",
+   "test_files": [
+    "tests/test_options.py"
+   ]
+  }
+ ],
+ "corpus_manifest_hash": "e6bdd3f116981bc58daf7f21eb4a5e0a524e9a067227cd2cc40fc994a19ad3f9",
+ "driver_hash": "0676ebe54b9dafd032b4005354cdd7f7676dfc32d837d061bebeb8160971eee5",
+ "exclusion_set_hash": "d4090113b0670321b1d5a9c48ebe3949adeb60f865e8b07bb414aea21f137e87",
+ "execution_environment": {
+  "container_image": "rift-reference-iso:3.12-slim",
+  "container_image_digest": "sha256:279f2c1816d32e452951eae861bb3bbb65aad5b3da0ff5035e27a17069a2f8f3",
+  "docker_security_flags": "--cap-add SYS_ADMIN --cap-add NET_ADMIN --security-opt seccomp=unconfined",
+  "harness_confinement": {
+   "executable": "/usr/bin/unshare",
+   "mechanism": "unshare --user --net --map-root-user",
+   "network_policy": "repository subprocess: no interfaces except empty loopback",
+   "version": "unshare from util-linux 2.41"
+  },
+  "network_policy": {
+   "provider_and_controller": "allowed",
+   "repository_controlled_execution": "denied"
+  },
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python_implementation": "CPython",
+  "python_version": "3.12.14",
+  "rift_repository_isolation": {
+   "bwrap": "/usr/bin/bwrap",
+   "bwrap_version": "bubblewrap 0.11.0",
+   "detail": "linux + bubblewrap: host read-only, worktree and tmp writable, network unshared",
+   "level": "full"
+  }
+ },
+ "execution_environment_hash": "9de6886df3d526affb979312048437580a6860ce5491abfd84371c36fed83de3",
+ "expected_official_records": 2,
+ "manifest_hash": "3793b9e5d64a2753c038dd42e435cf681931bcd9887a9ffb7f426dd101ad9fca",
+ "model": {
+  "requested_model_id": "claude-sonnet-4-6",
+  "required_reported_model_identity": "must equal requested"
+ },
+ "official_arms": [
+  "A",
+  "C"
+ ],
+ "oracle_hash": "25ac41827067f0de175b321ac800f6ddd3cadfefbef11da3e713dcc3d518cf91",
+ "pricing": {
+  "currency": "USD",
+  "input_per_mtok": 3.0,
+  "output_per_mtok": 15.0
+ },
+ "protocol_version": 1,
+ "repository_population_hash_v5": "4645de61c549bf8ad06697e1b8279ddfee51d19af24379e1dd45880f350fe0bc",
+ "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17",
+ "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26",
+ "stability_rule": {
+  "equality": "exact governed failure identity, no normalisation",
+  "independent_fresh_processes": true,
+  "observations": 3,
+  "rejection_reason": "unstable_failure_identity"
+ }
+}

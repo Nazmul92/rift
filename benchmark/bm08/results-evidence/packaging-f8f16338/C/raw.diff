@@ -1,0 +1,11 @@
+--- a/src/packaging/_structures.py
++++ b/src/packaging/_structures.py
+@@ -21,7 +21,7 @@ class InfinityType:
+         return False
+ 
+     def __le__(self, other: object) -> bool:
+-        return False
++        return isinstance(other, self.__class__)
+ 
+     def __eq__(self, other: object) -> bool:
+         return isinstance(other, self.__class__)

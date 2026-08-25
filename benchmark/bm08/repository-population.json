@@ -1,0 +1,586 @@
+{
+ "benchmark": "BM-08-v3",
+ "new_repository_count": 27,
+ "previous_repository_count": 30,
+ "repositories": [
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "e6b4f634d74bdffbbc360c29b88164ab36c6a8b7",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "arrow",
+   "resolved_source": "https://github.com/arrow-py/arrow",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "3cffdfa3dd6bbd51804fd7ab2888711cd2eea880",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "attrs",
+   "resolved_source": "https://github.com/python-attrs/attrs",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "f95a8b8342879ca94f2f2ad970eae4a05045bb76",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "babel",
+   "resolved_source": "https://github.com/python-babel/babel",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "f967428b30b415b114632831b062e7060fd2637f",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "bleach",
+   "resolved_source": "https://github.com/mozilla/bleach",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "a023e833a04c18c7ae97de9964ce12faaab0cdc7",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "boltons",
+   "resolved_source": "https://github.com/mahmoud/boltons",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "c0fdf6abab38040947d6fe2e38c507401d5e2350",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "cachetools",
+   "resolved_source": "https://github.com/tkem/cachetools",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "ded9085d5f8be98b46c9b3bf04908b28a6c8b6ed",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "cerberus",
+   "resolved_source": "https://github.com/pyeve/cerberus",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "7aa29ed1a2ab17fc6ed6509399247663792ccdbc",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "chardet",
+   "resolved_source": "https://github.com/chardet/chardet",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "e0d1678ebc10cc663f2bc1973e0399b31415f8db",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "click",
+   "resolved_source": "https://github.com/pallets/click",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "472a753841f1954d78028faa06f3589fd1455970",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "croniter",
+   "resolved_source": "https://github.com/kiorky/croniter",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "d6fee01b26c59efa4a415ea41d2549a6f88801d5",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "dateutil",
+   "resolved_source": "https://github.com/dateutil/dateutil",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "7cd3ac5113c9bde159b8131fd3ac213f146fe45e",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "faker",
+   "resolved_source": "https://github.com/joke2k/faker",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "9b2d0865b00292ac866efcb23fe961ee2732e58f",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "filelock",
+   "resolved_source": "https://github.com/tox-dev/filelock",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "55b9d27bff465e9a95b1511c969f67969c456e64",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "freezegun",
+   "resolved_source": "https://github.com/spulec/freezegun",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "a0602c70bb6e11322107b51114333bab7adab021",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "humanize",
+   "resolved_source": "https://github.com/python-humanize/humanize",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "1262dd76390fcf07b416d3bd19465d27f39bc606",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "icalendar",
+   "resolved_source": "https://github.com/collective/icalendar",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "746bb95780c17687b27b6d1bf4df1216f0da972c",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "jinja",
+   "resolved_source": "https://github.com/pallets/jinja",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "e169504250e709ae9e45a6afa1eb09af8f593011",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "jsonschema",
+   "resolved_source": "https://github.com/python-jsonschema/jsonschema",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "caef3e90d46830db37888a7f7f897c450cf4f1e7",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "markdown",
+   "resolved_source": "https://github.com/Python-Markdown/markdown",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "36be771e491d98c762fb02aa6fedfc84324f8830",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "marshmallow",
+   "resolved_source": "https://github.com/marshmallow-code/marshmallow",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "c69f4cac82e00887c2a8e2a7cb57838c706ff310",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "more-itertools",
+   "resolved_source": "https://github.com/more-itertools/more-itertools",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "af0026cff97a8f28d165d6ac4afb58b2cdc8ffc5",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "packaging",
+   "resolved_source": "https://github.com/pypa/packaging",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "e3875879865100e86cad88050e63f4f0df9671a7",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "pluggy",
+   "resolved_source": "https://github.com/pytest-dev/pluggy",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "e06be2d33cbd67bf0131a532d02cc8a5e174edf3",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "pygments",
+   "resolved_source": "https://github.com/pygments/pygments",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "69aea3980e2e3c848ae1c7b0ce7539bbdc8daf27",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "pyparsing",
+   "resolved_source": "https://github.com/pyparsing/pyparsing",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "31fc17664ff0efda7ed68a5e2a5ddde9083c0586",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "soupsieve",
+   "resolved_source": "https://github.com/facelessuser/soupsieve",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "ba9f29071a4011521cfe685ba1de30004b413ae6",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "sqlparse",
+   "resolved_source": "https://github.com/andialbrecht/sqlparse",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "7f6fb3cf395f978a5f8fb7c3d5b3ffa23f30fda9",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "structlog",
+   "resolved_source": "https://github.com/hynek/structlog",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "a49e9d6dd4e4611238dc277263d1975e1cada21e",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "tenacity",
+   "resolved_source": "https://github.com/jd/tenacity",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "",
+   "date_added": "pre-v3",
+   "head_commit": "9faf5e9deb3e4f66115f1e80b5c95ba2adc2cb61",
+   "mining_root": "/repos",
+   "reference_branch": "HEAD",
+   "repository": "werkzeug",
+   "resolved_source": "https://github.com/pallets/werkzeug",
+   "selection_provenance": "BM-06/BM-07/BM-08-v1 population, carried forward"
+  },
+  {
+   "canonical_origin": "https://github.com/gristlabs/asttokens.git",
+   "date_added": "2026-08-22",
+   "head_commit": "f97a6e1403d9f0e93940a11b507524550a5c3896",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "asttokens",
+   "resolved_source": "https://github.com/gristlabs/asttokens.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/python-attrs/cattrs.git",
+   "date_added": "2026-08-22",
+   "head_commit": "f2e42f3c69dabd48dd1a5b8fb1aad9c1d39c339a",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "cattrs",
+   "resolved_source": "https://github.com/python-attrs/cattrs.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/seperman/deepdiff.git",
+   "date_added": "2026-08-22",
+   "head_commit": "79e4379278b1cfdd8e9e3dccac364956908e8989",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "deepdiff",
+   "resolved_source": "https://github.com/seperman/deepdiff.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/pallets/flask.git",
+   "date_added": "2026-08-22",
+   "head_commit": "d318b683471101618febed18996405ad26462110",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "flask",
+   "resolved_source": "https://github.com/pallets/flask.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/encode/httpx.git",
+   "date_added": "2026-08-22",
+   "head_commit": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "httpx",
+   "resolved_source": "https://github.com/encode/httpx.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/jaraco/inflect.git",
+   "date_added": "2026-08-22",
+   "head_commit": "262a247d2d99a47a520cdb2d46adb90df88b4326",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "inflect",
+   "resolved_source": "https://github.com/jaraco/inflect.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/pytest-dev/iniconfig.git",
+   "date_added": "2026-08-22",
+   "head_commit": "00e7d87c7353b1ffecc4cd55f19acfffedd5233e",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "iniconfig",
+   "resolved_source": "https://github.com/pytest-dev/iniconfig.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/gweis/isodate.git",
+   "date_added": "2026-08-22",
+   "head_commit": "17cb25eb7bc3556a68f3f7b241313e9bb8b23760",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "isodate",
+   "resolved_source": "https://github.com/gweis/isodate.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/PyCQA/isort.git",
+   "date_added": "2026-08-22",
+   "head_commit": "0cba6f6111a07cc05b167008dda0727ecca907c5",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "isort",
+   "resolved_source": "https://github.com/PyCQA/isort.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/jmespath/jmespath.py.git",
+   "date_added": "2026-08-22",
+   "head_commit": "2812594e69d43098ef60f81f4efc404c071b0418",
+   "mining_root": "/repos-v3",
+   "reference_branch": "develop",
+   "repository": "jmespath",
+   "resolved_source": "https://github.com/jmespath/jmespath.py.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/stefankoegl/python-json-patch.git",
+   "date_added": "2026-08-22",
+   "head_commit": "d8e1a6e244728c04229d601bc9a384d9b034c603",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "jsonpatch",
+   "resolved_source": "https://github.com/stefankoegl/python-json-patch.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/SethMMorton/natsort.git",
+   "date_added": "2026-08-22",
+   "head_commit": "e90771d7c39157d079425b655763938c2709d486",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "natsort",
+   "resolved_source": "https://github.com/SethMMorton/natsort.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/cpburnz/python-pathspec.git",
+   "date_added": "2026-08-22",
+   "head_commit": "6568072c2703c72796cd02467feb924540157c92",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "pathspec",
+   "resolved_source": "https://github.com/cpburnz/python-pathspec.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/tox-dev/platformdirs.git",
+   "date_added": "2026-08-22",
+   "head_commit": "b2f29d8e8c17ac18299c2a3e1833620281bb57d2",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "platformdirs",
+   "resolved_source": "https://github.com/tox-dev/platformdirs.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/prompt-toolkit/python-prompt-toolkit.git",
+   "date_added": "2026-08-22",
+   "head_commit": "583b3412c792a5cc9f01adde603679f3824a88f3",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "prompt-toolkit",
+   "resolved_source": "https://github.com/prompt-toolkit/python-prompt-toolkit.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/PyCQA/pycodestyle.git",
+   "date_added": "2026-08-22",
+   "head_commit": "d6c38543a95c3adec7958fc659f4081972a3f1d1",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "pycodestyle",
+   "resolved_source": "https://github.com/PyCQA/pycodestyle.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/un33k/python-slugify.git",
+   "date_added": "2026-08-22",
+   "head_commit": "7b6d5d96c1995e6dccb39a19a13ba78d7d0a3ee4",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "python-slugify",
+   "resolved_source": "https://github.com/un33k/python-slugify.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/psf/requests.git",
+   "date_added": "2026-08-22",
+   "head_commit": "8f8b212de8c2129d7954c6cd373762880375620a",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "requests",
+   "resolved_source": "https://github.com/psf/requests.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/Textualize/rich.git",
+   "date_added": "2026-08-22",
+   "head_commit": "9d8f9a372cc5916fd4781fec207ced7ddac2f08f",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "rich",
+   "resolved_source": "https://github.com/Textualize/rich.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/grantjenks/python-sortedcontainers.git",
+   "date_added": "2026-08-22",
+   "head_commit": "3ac358631f58c1347f1d6d2d92784117db0f38ed",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "sortedcontainers",
+   "resolved_source": "https://github.com/grantjenks/python-sortedcontainers.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/astanin/python-tabulate.git",
+   "date_added": "2026-08-22",
+   "head_commit": "268615a5c27dc40e5c22454c07b44d5c50410da0",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "tabulate",
+   "resolved_source": "https://github.com/astanin/python-tabulate.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/sdispater/tomlkit.git",
+   "date_added": "2026-08-22",
+   "head_commit": "7ab7469addd60e03ca3bfbb1287642e8d771e1c0",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "tomlkit",
+   "resolved_source": "https://github.com/sdispater/tomlkit.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/tqdm/tqdm.git",
+   "date_added": "2026-08-22",
+   "head_commit": "96f2e60e4584cdab57a23602e27043d0465254ad",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "tqdm",
+   "resolved_source": "https://github.com/tqdm/tqdm.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/fastapi/typer.git",
+   "date_added": "2026-08-22",
+   "head_commit": "9a7b2e83f6b62c750d6026b0de9ebf2026a8b8fa",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "typer",
+   "resolved_source": "https://github.com/fastapi/typer.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/urllib3/urllib3.git",
+   "date_added": "2026-08-22",
+   "head_commit": "52dfb19e055baacc4ebc432a2e6012b6d489e4b6",
+   "mining_root": "/repos-v3",
+   "reference_branch": "main",
+   "repository": "urllib3",
+   "resolved_source": "https://github.com/urllib3/urllib3.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/alecthomas/voluptuous.git",
+   "date_added": "2026-08-22",
+   "head_commit": "44593ce7c330faf9418252c4b5448f4736144a7f",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "voluptuous",
+   "resolved_source": "https://github.com/alecthomas/voluptuous.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  },
+  {
+   "canonical_origin": "https://github.com/jquast/wcwidth.git",
+   "date_added": "2026-08-22",
+   "head_commit": "551710eabf316ed2d9e3782c1fe9cf80ff0f6ed9",
+   "mining_root": "/repos-v3",
+   "reference_branch": "master",
+   "repository": "wcwidth",
+   "resolved_source": "https://github.com/jquast/wcwidth.git",
+   "selection_provenance": "BM-08-v3 repository expansion, declared before mining"
+  }
+ ],
+ "repository_population_hash": "e9c410a683b46679dae92f7837149812b8d2a72d3256ab1551b9707d076a65ab",
+ "selection_criteria": [
+  "real public Python project with available Git history",
+  "pytest-compatible executable test suite analysable by the existing miner",
+  "ordinary source-plus-test change commits",
+  "meaningful commit history after 2018-01-01",
+  "not a major contributor to BM-06/BM-07/BM-08-v1/v2 corpora, where practical"
+ ],
+ "total_repository_count": 57
+}

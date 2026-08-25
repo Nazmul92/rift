@@ -1,0 +1,34 @@
+--- a/lark/tools.py
++++ b/lark/tools.py
+@@ -1,6 +1,7 @@
+ "Standalone"
+ import sys
+ from warnings import warn
++import os
+ 
+ from lark import Lark
+ 
+@@ -62,7 +63,7 @@ def main(fobj, start):
+ 
+ SINGLETONS = 'Lark_StandAlone', 'WithPackageResources', 'Serialize', 'Coercion'
+ 
+-template = """
++template = r"""
+ ###{standalone}
+ 
+ class Lark_StandAlone(object):
+@@ -74,7 +75,13 @@ class Lark_StandAlone(object):
+   def __init__(self, transformer=None, postlex=None):
+     d = {n: getattr(callback, n) for n in dir(callback) if not n.startswith('_')}
+     self.parser = _Parser(DATA, d)
+-    self.transformer = transformer
++    if transformer is not None:
++      for term in self.parser.terminals:
++        term_name = term if isinstance(term, str) else term.name
++        callback = getattr(transformer, term_name, None)
++        if callback is not None:
++          d[term_name] = callback
++    self.transformer = transformer
+     self.postlex = postlex
+ 
+   def parse(self, stream, **kw):

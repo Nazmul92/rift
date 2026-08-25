@@ -1,0 +1,16 @@
+--- a/lark/parse_tree_builder.py
++++ b/lark/parse_tree_builder.py
+@@ -265,6 +265,9 @@ class ParseTreeBuilder:
+     def _init_builders(self, rules):
+         propagate_positions = make_propagate_positions(self.propagate_positions)
+ 
+         for rule in rules:
+             options = rule.options
+             keep_all_tokens = options.keep_all_tokens
+             expand_single_child = options.expand1
++
++            if expand_single_child and rule.origin.name.startswith('_'):
++                raise GrammarError("Rule '%s' is marked as anonymous (inline) and also uses expand_single (?) modifier, which are conflicting options" % rule.origin.name)
+ 
+             wrapper_chain = list(filter(None, [
+                 (expand_single_child and not rule.alias) and ExpandSingleChild,

@@ -1,0 +1,42 @@
+{
+ "already_good": {
+  "applies_after": true,
+  "arm": "A",
+  "case": "cachetools-c0fdf6ab-genuine_source_bug",
+  "dar030_applies_after": true,
+  "dar030_status": "UNCHANGED",
+  "from": "cachetools-c0fdf6ab-genuine_source_bug-A.diff",
+  "originally_failed": false,
+  "product_status": "UNCHANGED"
+ },
+ "canonicalized_still_non_applicable": {
+  "applies_after": false,
+  "arm": "B",
+  "case": "icalendar-62cbf833-version_mismatch",
+  "dar030_applies_after": false,
+  "dar030_status": "CANONICALIZED",
+  "from": "icalendar-62cbf833-version_mismatch-B.diff",
+  "originally_failed": true,
+  "product_status": "CANONICALIZED"
+ },
+ "declined_not_a_count_defect": {
+  "applies_after": true,
+  "arm": "B",
+  "case": "cachetools-c0fdf6ab-genuine_source_bug",
+  "dar030_applies_after": false,
+  "dar030_status": "UNCHANGED",
+  "from": "cachetools-c0fdf6ab-genuine_source_bug-B.diff",
+  "originally_failed": true,
+  "product_status": "CANONICALIZED"
+ },
+ "recovered": {
+  "applies_after": true,
+  "arm": "A",
+  "case": "icalendar-60a10375-locale_timezone",
+  "dar030_applies_after": true,
+  "dar030_status": "CANONICALIZED",
+  "from": "icalendar-60a10375-locale_timezone-A.diff",
+  "originally_failed": true,
+  "product_status": "CANONICALIZED"
+ }
+}

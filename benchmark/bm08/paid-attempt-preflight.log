@@ -1,0 +1,16 @@
+BM-08 OFFICIAL PAID RUN
+start_utc: 2026-08-23T15:18:41Z
+identity         : runtime, driver, runner, oracle, manifest and configured model all match
+  FAIL  voluptuous-44593ce7: clone failed
+  FAIL  rich-260508bf: clone failed
+  FAIL  rich-0138b189: clone failed
+  FAIL  rich-a5eada7a: clone failed
+  FAIL  isort-49bb9bab: clone failed
+  FAIL  tabulate-293ff59a: clone failed
+  FAIL  faker-5128ae64: observed failure identity does not match the frozen signature
+  FAIL  sortedcontainers-2b037039: clone failed
+  FAIL  pathspec-b70e3fb4: clone failed
+  FAIL  sortedcontainers-7dc426c9: clone failed
+six-case preflight failed (10); no provider call was made
+exit_code: 0
+end_utc: 2026-08-23T15:19:13Z

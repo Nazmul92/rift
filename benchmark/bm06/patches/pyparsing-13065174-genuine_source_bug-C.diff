@@ -1,0 +1,11 @@
+--- a/pyparsing/util.py
++++ b/pyparsing/util.py
+@@ -240,7 +240,7 @@ def _flatten(ll: list) -> list:
+     ret = []
+     for i in ll:
+-        if isinstance(i, list):
++        if isinstance(i, list) or (hasattr(i, '__iter__') and not isinstance(i, str) and type(i).__name__ == 'ParseResults'):
+             ret.extend(_flatten(i))
+         else:
+             ret.append(i)
+     return ret

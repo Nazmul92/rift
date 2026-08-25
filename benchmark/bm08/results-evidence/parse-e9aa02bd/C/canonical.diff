@@ -1,0 +1,11 @@
+--- a/parse.py
++++ b/parse.py
+@@ -884,6 +884,8 @@ class Parser(object):
+         if type in self._extra_types:
+             type_converter = self._extra_types[type]
+             s = getattr(type_converter, 'pattern', r'.+?')
++            # count any capturing groups in the custom pattern
++            self._group_index += len(re.compile(s).groups)
+ 
+             def f(string, m):
+                 return type_converter(string)

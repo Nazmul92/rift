@@ -1,0 +1,25 @@
+--- a/src/icalendar/timezone/tzp.py
++++ b/src/icalendar/timezone/tzp.py
+@@ -143,7 +143,17 @@ class TZP:
+         tz_id = self.clean_timezone_id(tz_id)
+         tz = self.__provider.timezone(tz_id)
+         if tz is not None:
+             return tz
+         if tz_id in WINDOWS_TO_OLSON:
+             tz = self.__provider.timezone(WINDOWS_TO_OLSON[tz_id])
+-        return tz or self.__provider.timezone(_unclean_id) or self.__tz_cache.get(tz_id)
++        if tz is not None:
++            return tz
++        tz = self.__provider.timezone(_unclean_id)
++        if tz is not None:
++            return tz
++        # Try to resolve globally unique TZIDs (RFC 5545 section 3.2.19)
++        # These start with '/' and may contain a vendor prefix, e.g.
++        # '/vendor/Europe/Berlin' -> try 'Europe/Berlin'
++        parts = tz_id.split("/")
++        for i in range(1, len(parts)):
++            candidate = "/".join(parts[i:])
++            tz = self.__provider.timezone(candidate)
++            if tz is not None:
++                return tz
++        return self.__tz_cache.get(tz_id)

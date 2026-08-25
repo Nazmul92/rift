@@ -1,0 +1,24 @@
+--- a/src/mistune/renderers/markdown.py
++++ b/src/mistune/renderers/markdown.py
+@@ -13,8 +13,11 @@ fenced_re = re.compile(r"^[`~]+", re.M)
+ _backtick_run_re = re.compile(r"`+")
+ 
+ #: leading markers that would be parsed as a new block (list, heading, block
+ #: quote) if they appear unescaped at the start of a line.
+ _block_prefix_re = re.compile(r"^(\s*)(>|[-+*]|#{1,6}|\d{1,9}[.)])(\s|$)")
++
++#: emphasis/strong delimiters that must be backslash-escaped in plain text
++_emphasis_re = re.compile(r"[*_]")
+ 
+ 
+ class MarkdownRenderer(BaseRenderer):
+@@ -49,5 +52,8 @@ class MarkdownRenderer(BaseRenderer):
+ 
+     def text(self, token: Dict[str, Any], state: BlockState) -> str:
+         # a backtick always opens a code span, so it must stay escaped to
+         # survive a re-parse as literal text.
+-        return cast(str, token["raw"]).replace("`", "\\`")
++        raw = cast(str, token["raw"])
++        raw = raw.replace("`", "\\`")
++        raw = _emphasis_re.sub(lambda m: "\\" + m.group(0), raw)
++        return raw

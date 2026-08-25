@@ -1,0 +1,58 @@
+[
+ {
+  "case": "cachetools-c0fdf6ab-genuine_source_bug",
+  "patch_bytes": 1266,
+  "reason": "",
+  "requests": 0,
+  "verdict": "verified_against_approved_checks"
+ },
+ {
+  "case": "pygments-2f0d713b-genuine_source_bug",
+  "patch_bytes": 585,
+  "reason": "",
+  "requests": 0,
+  "verdict": "verified_against_approved_checks"
+ },
+ {
+  "case": "pyparsing-13065174-genuine_source_bug",
+  "patch_bytes": 2005,
+  "reason": "",
+  "requests": 0,
+  "verdict": "verified_against_approved_checks"
+ },
+ {
+  "case": "icalendar-60a10375-locale_timezone",
+  "patch_bytes": 698,
+  "reason": "",
+  "requests": 0,
+  "verdict": "verified_against_approved_checks"
+ },
+ {
+  "case": "icalendar-781eeda8-locale_timezone",
+  "patch_bytes": 1631,
+  "reason": "",
+  "requests": 0,
+  "verdict": "verified_against_approved_checks"
+ },
+ {
+  "case": "dateutil-f2293200-version_mismatch",
+  "patch_bytes": 372,
+  "reason": "",
+  "requests": 0,
+  "verdict": "verified_against_approved_checks"
+ },
+ {
+  "case": "freezegun-3d5d60b4-version_mismatch",
+  "patch_bytes": 501,
+  "reason": "",
+  "requests": 0,
+  "verdict": "verified_against_approved_checks"
+ },
+ {
+  "case": "icalendar-62cbf833-version_mismatch",
+  "patch_bytes": 2166,
+  "reason": "",
+  "requests": 0,
+  "verdict": "verified_against_approved_checks"
+ }
+]

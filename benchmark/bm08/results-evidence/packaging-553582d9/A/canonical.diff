@@ -1,0 +1,12 @@
+--- a/src/packaging/metadata.py
++++ b/src/packaging/metadata.py
+@@ -738,7 +738,7 @@
+             if charset := params.get("charset"):
+-                if list(charset.lower()) != ["u", "t", "f", "-", "8"]:
++                if charset.lower() != "utf-8":
+                     raise InvalidMetadata(
+                         "description-content-type",
+                         f"'description-content-type' can only specify the UTF-8 "
+-                        f"charset, not {list(charset)}",
++                        f"charset, not {charset!r}",
+                     )

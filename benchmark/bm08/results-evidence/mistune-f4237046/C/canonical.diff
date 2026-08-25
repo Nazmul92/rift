@@ -1,0 +1,19 @@
+--- a/src/mistune/helpers.py
++++ b/src/mistune/helpers.py
+@@ -1,6 +1,6 @@
+ import re
+ import string
+-from .util import escape_url
++from .util import escape, escape_url
+ 
+ PREVENT_BACKSLASH = r'(?<!\\)(?:\\\\)*'
+ HTML_TAGNAME = r'[A-Za-z][A-Za-z0-9-]*'
+@@ -96,7 +96,7 @@ def parse_link(src: str) -> Optional[Dict[str, Any]]:
+     if not m:
+         return None
+ 
+-    attrs: Dict[str, Any] = {'url': escape_url(m.group(1)), 'title': None}
++    attrs: Dict[str, Any] = {'url': m.group(1), 'title': None}
+     m = LINK_TITLE_RE.match(src[m.end():])
+     if m:
+         attrs['title'] = m.group(1)

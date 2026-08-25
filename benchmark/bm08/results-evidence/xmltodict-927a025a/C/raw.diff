@@ -1,0 +1,9 @@
+--- a/xmltodict.py
++++ b/xmltodict.py
+@@ -511,7 +511,9 @@ def _emit(key, value, content_handler,
+         if cdata is not None:
+-            content_handler.characters(cdata)
++            if not isinstance(cdata, str):
++                cdata = str(cdata)
++            content_handler.characters(cdata)
+         if pretty and children:

@@ -1,0 +1,343 @@
+=== MINING (85 repositories) ===
+by category: {'edge_case': 867, 'parsing': 622, 'config_interaction': 549, 'small': 454, 'api_misuse': 391, 'multi_file': 390, 'data_transform': 263, 'state_order': 225, 'uncategorised': 181, 'inheritance': 99}
+author != committer date      : 219 (rebased/cherry-picked; eligibility follows the author date)
+by repo    : {'anyio': 124, 'isort': 115, 'typeguard': 113, 'urllib3': 78, 'click': 76, 'tomlkit': 75, 'werkzeug': 70, 'requests': 64, 'rich': 56, 'flask': 53, 'httpx': 50, 'jinja': 50, 'marshmallow': 48, 'lark': 47, 'deepdiff': 44, 'faker': 43, 'tabulate': 41, 'dateparser': 40, 'cattrs': 38, 'icalendar': 34, 'starlette': 34, 'dnspython': 33, 'babel': 30, 'mistune': 26, 'bleach': 22, 'tenacity': 22, 'fastjsonschema': 22, 'sqlparse': 21, 'cachetools': 20, 'prompt-toolkit': 20, 'funcy': 20, 'croniter': 20, 'voluptuous': 19, 'pygments': 19, 'prettytable': 18, 'schema': 18, 'packaging': 18, 'typer': 17, 'attrs': 17, 'tqdm': 15, 'freezegun': 15, 'xmltodict': 15, 'glom': 12, 'parse': 12, 'asttokens': 12, 'pathspec': 11, 'pathvalidate': 11, 'charset-normalizer': 11, 'semver': 11, 'markdown-it-py': 11, 'platformdirs': 11, 'dpath': 8, 'httpcore': 8, 'arrow': 7, 'inflect': 7, 'filelock': 7, 'jmespath': 6, 'humanize': 5, 'sortedcontainers': 5, 'h11': 4, 'iniconfig': 4, 'pycodestyle': 4, 'structlog': 4, 'toolz': 3, 'wcwidth': 2, 'pluggy': 2, 'cerberus': 2, 'emoji': 1, 'natsort': 1, 'markupsafe': 1, 'isodate': 1, 'dateutil': 1}
+
+written: /s/bm08_pool.json
+
+=== EXCLUSION (pre-BM08 authority, unchanged) ===
+artifacts scanned : 21
+commits excluded  : 2707
+exclusion-set hash: d4090113b0670321b1d5a9c48ebe3949adeb60f865e8b07bb414aea21f137e87
+BM-08 sources harvested : none (correct: BM-08 evidence is not prior exposure)
+
+
+=== SELECTION ===
+
+  BM-07 official commits surviving exclusion : 0  (must be 0)
+
+AUTHOR-DATE ELIGIBILITY (%aI, not %cI)
+  candidates before author-date floor        : 1727
+  excluded by author-date floor              : 581
+  candidates after author-date floor         : 1146
+  eligible whose committer date differs      : 123 (author date governs)
+
+SELECTION RULE, STAGE BY STAGE
+  raw mined candidates                          1905
+  after prior-exposure exclusion                1727
+  after author date >= 2018-01-01               1146
+  after near-duplicate collapse                  322
+  submitted to model-free validation             322
+
+queue repositories : 55
+queue by repo      : {'rich': 23, 'httpx': 20, 'anyio': 17, 'starlette': 17, 'urllib3': 15, 'dnspython': 15, 'cattrs': 14, 'isort': 11, 'faker': 11, 'mistune': 10, 'tqdm': 8, 'deepdiff': 8, 'markdown-it-py': 8, 'typeguard': 7, 'prompt-toolkit': 7, 'click': 7, 'charset-normalizer': 7, 'icalendar': 7, 'flask': 7, 'lark': 6, 'typer': 6, 'tomlkit': 6, 'dateparser': 6, 'packaging': 6, 'glom': 5, 'werkzeug': 5, 'fastjsonschema': 5, 'platformdirs': 5, 'httpcore': 5, 'cachetools': 4, 'tenacity': 4, 'funcy': 4, 'pathspec': 3, 'pathvalidate': 3, 'asttokens': 3, 'requests': 3, 'semver': 2, 'tabulate': 2, 'jinja': 2, 'dpath': 2, 'sortedcontainers': 2, 'voluptuous': 1, 'prettytable': 1, 'parse': 1, 'wcwidth': 1, 'xmltodict': 1, 'inflect': 1, 'schema': 1, 'croniter': 1, 'bleach': 1, 'filelock': 1, 'markupsafe': 1, 'pluggy': 1, 'jmespath': 1, 'humanize': 1}
+queue by category  : {'edge_case': 152, 'parsing': 100, 'config_interaction': 82, 'small': 74, 'multi_file': 74, 'api_misuse': 60, 'state_order': 51, 'data_transform': 45, 'uncategorised': 34, 'inheritance': 19}
+oldest eligible author date : 2018-01-15 (floor 2018-01-01)
+
+written: /s/bm08_queue.json
+
+=== CURATION ===
+curated    : 262 from 54 repositories
+dropped    : 60  {'insufficient_untouched_preservation': 52, 'no_resolvable_target': 8}
+by category: {'edge_case': 121, 'parsing': 75, 'config_interaction': 64, 'small': 59, 'multi_file': 58, 'api_misuse': 53, 'data_transform': 37, 'state_order': 36, 'uncategorised': 30, 'inheritance': 15}
+by repo    : {'httpx': 20, 'rich': 19, 'anyio': 16, 'starlette': 16, 'urllib3': 15, 'dnspython': 15, 'cattrs': 11, 'isort': 10, 'faker': 9, 'deepdiff': 8, 'click': 7, 'typer': 6, 'typeguard': 6, 'packaging': 6, 'flask': 6, 'werkzeug': 5, 'dateparser': 5, 'icalendar': 5, 'charset-normalizer': 5, 'cachetools': 4, 'tqdm': 4, 'tomlkit': 4, 'prompt-toolkit': 4, 'mistune': 4, 'funcy': 4, 'pathvalidate': 3, 'platformdirs': 3, 'lark': 3, 'fastjsonschema': 3, 'httpcore': 3, 'tenacity': 2, 'pathspec': 2, 'tabulate': 2, 'glom': 2, 'jinja': 2, 'dpath': 2, 'markdown-it-py': 2, 'requests': 2, 'sortedcontainers': 2, 'voluptuous': 1, 'prettytable': 1, 'parse': 1, 'wcwidth': 1, 'xmltodict': 1, 'inflect': 1, 'semver': 1, 'asttokens': 1, 'schema': 1, 'croniter': 1, 'bleach': 1, 'filelock': 1, 'markupsafe': 1, 'pluggy': 1, 'jmespath': 1}
+preservation: min 3  max 217  median 18
+
+written: /s/bm08_cases.json
+
+=== VALIDATION + N=3 STABILITY ===
+repository preflight        : 54 of 54 repositories resolved uniquely
+  drop cattrs-b5962740        target unrunnable at parent+reproducer: exit 4: 
+  OK   voluptuous-44593ce7    pres=174  
+  drop typer-c0aeb6e1         preservation not green on the buggy baseline: 14 of 14 fail, e.g. ["tests/test_cli/test_do
+  drop cachetools-4a061636    target unrunnable at parent+reproducer: exit 4: bleMapping):                          ^^^^
+  drop isort-ec9dafe6         target unrunnable at parent+reproducer: exit 4: on3.12/importlib/metadata/__init__.py:399:
+  drop typeguard-2df6f4ad     failure-identity mismatch: the governed observer captured no signature
+  drop prettytable-248f95b7   target unrunnable at parent+reproducer: exit 4: c/prettytable/__init__.py:1: in <module>  
+  drop tenacity-42b70f90      target unrunnable at parent+reproducer: exit 4:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop httpx-94323f98         target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-573915b6        target unrunnable at parent+reproducer: exit 4: 
+  OK   parse-e9aa02bd         pres=62  
+  drop typeguard-5d59dffd     failure-identity mismatch: the governed observer captured no signature
+  drop anyio-264c10f1         failure-identity mismatch: the governed observer captured no signature
+  drop tqdm-964dee63          target unrunnable at parent+reproducer: exit 4: vel)            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop typeguard-6a5b8e2d     failure-identity mismatch: the governed observer captured no signature
+  drop httpx-99cba6ac         failure-identity mismatch: the governed observer captured no signature
+  drop anyio-f1b7301c         failure-identity mismatch: the governed observer captured no signature
+  drop pathspec-9eb2908b      target does not fail at parent+reproducer: pass ()
+  drop isort-44e4ff93         target unrunnable at parent+reproducer: exit 4: ocal/lib/python3.12/importlib/metadata/__i
+  drop urllib3-13f0bfd5       failure-identity mismatch: the governed observer captured no signature
+  drop anyio-785f697d         failure-identity mismatch: the governed observer captured no signature
+  drop httpx-fb174593         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-6fc17a34       target unrunnable at parent+reproducer: exit 4: 
+  drop rich-00181151          preservation not green on the buggy baseline: 1 of 92 fail, e.g. ["tests/test_console.py::
+  drop starlette-bcdf0ad0     target unrunnable at parent+reproducer: exit 4: 
+  drop starlette-51057d57     target unrunnable at parent+reproducer: exit 4: 
+  drop tomlkit-e6e95fe4       target unrunnable at parent+reproducer: exit 4: scape sequence '\-'     if re.match("^[+\-
+  drop pathvalidate-61cff988  failure-identity mismatch: the governed observer captured no signature
+  drop werkzeug-1938f9d2      failure-identity mismatch: the governed observer captured no signature
+  drop isort-e1773beb         target unrunnable at parent+reproducer: exit 4: ule>     from . import settings  # noqa: F
+  OK   rich-260508bf          pres=22  
+  drop wcwidth-79287df2       target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-e53f9959         target unrunnable at parent+reproducer: exit 4: 
+  OK   rich-0138b189          pres=13  
+  drop deepdiff-e7da467d      target unrunnable at parent+reproducer: exit 4:  as SetOrderedBase  # median: 1.0867 s for
+  drop deepdiff-a9bfc08d      target unrunnable at parent+reproducer: exit 4:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop rich-1e05d931          target unrunnable at parent+reproducer: exit 4: le import Console rich/console.py:38: in <
+  drop starlette-85b9c264     target unrunnable at parent+reproducer: exit 4: t_wsgi.py:6: in <module>     from starlett
+  drop prompt-toolkit-75786f6a target unrunnable at parent+reproducer: exit 4: 20: in <module>     from prompt_toolkit.ut
+  drop dateparser-9212bd81    target unrunnable at parent+reproducer: exit 4: ttings dateparser/__init__.py:4: in <modul
+  drop click-2468b709         failure-identity mismatch: the governed observer captured no signature
+  drop isort-31a31d0e         target unrunnable at parent+reproducer: exit 4: port settings  # noqa: F401     ^^^^^^^^^^
+  OK   xmltodict-927a025a     pres=46  
+  drop isort-62df020b         target unrunnable at parent+reproducer: exit 4: cal/lib/python3.12/importlib/metadata/__in
+  drop anyio-c8ee03cf         target unrunnable at parent+reproducer: exit 4: 
+  drop dateparser-ea5be905    target unrunnable at parent+reproducer: exit 2: g/en/stable/how-to/capture-warnings.html =
+  drop anyio-7b8e3e29         target unrunnable at parent+reproducer: exit 4: 
+  drop anyio-e7e53ab0         failure-identity mismatch: the governed observer captured no signature
+  drop cachetools-a2d34a0d    target does not fail at parent+reproducer: pass ()
+  drop dateparser-273eb23e    target unrunnable at parent+reproducer: exit 2: dfail) E   _pytest.main.Failed: stopping a
+  drop urllib3-b984f4fb       target unrunnable at parent+reproducer: exit 4: 
+  drop click-b964c1e2         failure-identity mismatch: the governed observer captured no signature
+  drop deepdiff-d9d67cac      target unrunnable at parent+reproducer: exit 4: diff/__init__.py:10: in <module>     from 
+  drop icalendar-914b2045     failure-identity mismatch: the governed observer captured no signature
+  drop inflect-b29edcf0       target unrunnable at parent+reproducer: exit 4:  missed a comma?     eq_(mod_PL_val, mod_P
+  drop click-0d01686f         target does not fail at parent+reproducer: pass ()
+  drop semver-2d0f8055        target unrunnable at parent+reproducer: exit 4: 
+  drop starlette-b5126b20     target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-4a1d4c42        target unrunnable at parent+reproducer: exit 4: 
+  OK   rich-a5eada7a          pres=4  
+  drop packaging-23211929     target unrunnable at parent+reproducer: exit 4: kers import Marker packaging/markers.py:11
+  drop tomlkit-5a61e5b5       target unrunnable at parent+reproducer: exit 4:      ^^^^^^^^^^^^^^^^^^^^ E   FileNotFound
+  drop urllib3-eee53a69       target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-fc76bcb9       failure-identity mismatch: the governed observer captured no signature
+  drop packaging-19fbc45b     target unrunnable at parent+reproducer: exit 4: , package, level)            ^^^^^^^^^^^^^
+  OK   rich-a6b33795          pres=7  
+  drop typer-dcb45b1a         target unrunnable at parent+reproducer: exit 4: me[level:], package, level)            ^^^
+  OK   isort-49bb9bab         pres=46  
+  drop tqdm-b557cb03          target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-49d74a2e         failure-identity mismatch: the governed observer captured no signature
+  drop click-c326df95         target does not fail at parent+reproducer: pass ()
+  drop tabulate-e52c5ba9      target does not fail at parent+reproducer: pass ()
+  drop dnspython-4ab8fdc0     preservation not green on the buggy baseline: 3 of 46 fail, e.g. ['tests/test_dnssec.py::D
+  drop flask-166a2a62         target unrunnable at parent+reproducer: exit 4: 
+  drop pathvalidate-9c0b77ef  target unrunnable at parent+reproducer: exit 4: own config option: md_report_verbose      
+  drop glom-5c89148a          target unrunnable at parent+reproducer: exit 4: _init__.py:2: in <module>     from glom.co
+  drop anyio-ede20291         failure-identity mismatch: the governed observer captured no signature
+  drop typeguard-2174d6b4     failure-identity mismatch: the governed observer captured no signature
+  OK   rich-16b38304          pres=11  
+  drop jinja-a524e77e         target unrunnable at parent+reproducer: exit 4: 
+  drop rich-06a7555c          target unrunnable at parent+reproducer: exit 4: arkdown.py:76: in <module>     from rich.m
+  drop tqdm-ee5f8d21          target does not fail at parent+reproducer: pass ()
+  drop starlette-5fcf4945     target unrunnable at parent+reproducer: exit 4: ormparsers.py:6: in <module>     from star
+  drop prompt-toolkit-5e04f58e target unrunnable at parent+reproducer: exit 4: efaults.py:2: in <module>     from prompt_
+  drop dateparser-748e48ae    target unrunnable at parent+reproducer: exit 2: E   _pytest.main.Failed: stopping after 1 
+  drop charset-normalizer-595514e5 test half did not apply: git apply failed: error: patch failed: tests/test_on_byte.py:27
+e
+  drop isort-9c0ff495         preservation not green on the buggy baseline: 18 of 18 fail, e.g. ['tests/integration/test
+  OK   charset-normalizer-2bc26076 pres=4  
+  drop typer-a2215ebd         target unrunnable at parent+reproducer: exit 4: ^^ tests/test_rich_utils.py:4: in <module>
+  drop httpx-e63b6594         failure-identity mismatch: the governed observer captured no signature
+  drop anyio-4a0c4370         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-e29f5049       target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-38505393        target unrunnable at parent+reproducer: exit 4: 
+  drop icalendar-8aaaff59     failure-identity mismatch: the governed observer captured no signature
+  drop tomlkit-53219e93       target unrunnable at parent+reproducer: exit 4: dule>     from tomlkit.exceptions import I
+  drop urllib3-0a375d19       target unrunnable at parent+reproducer: exit 4: 
+  OK   tabulate-293ff59a      pres=29  
+  drop asttokens-bb3c487d     preservation not green on the buggy baseline: 53 of 56 fail, e.g. ['tests/test_mark_tokens
+  drop typeguard-5ac9b96a     failure-identity mismatch: the governed observer captured no signature
+  drop urllib3-5eb604ff       target unrunnable at parent+reproducer: exit 4: 
+  drop typeguard-9024521b     failure-identity mismatch: the governed observer captured no signature
+  drop dnspython-a72125bc     preservation not green on the buggy baseline: 1 of 9 fail, e.g. ['tests/test_rdata.py::Rda
+  drop faker-75545664         target unrunnable at parent+reproducer: exit 4: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ faker/prov
+  OK   schema-15158c53        pres=105  
+  OK   rich-0c271d5b          pres=18  
+  drop werkzeug-f075a41e      target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-f5cf1223       failure-identity mismatch: the governed observer captured no signature
+  drop faker-5128ae64         unstable_failure_identity: 3 fresh processes disagreed: [{'exception_type': 'AssertionErro
+  drop anyio-326901ca         target unrunnable at parent+reproducer: exit 4: 
+  drop platformdirs-4fcbe17e  target unrunnable at parent+reproducer: exit 4: module>     from platformdirs.macos import
+  drop starlette-5cc4ddf1     target unrunnable at parent+reproducer: exit 4: 
+  drop deepdiff-eb789c68      target unrunnable at parent+reproducer: exit 4: eepdiff/__init__.py:10: in <module>     fr
+  drop anyio-c86975e2         failure-identity mismatch: the governed observer captured no signature
+  drop faker-0eca1e87         target unrunnable at parent+reproducer: exit 4: roviders/test_date_time.py:13: in <module>
+  drop flask-e1cc16f8         target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-6cb16724         target unrunnable at parent+reproducer: exit 4: 
+  OK   lark-adad165e          pres=22  
+  OK   dnspython-246febc4     pres=55  
+  OK   mistune-b0429966       pres=14  
+  drop starlette-6182d0a0     target unrunnable at parent+reproducer: exit 4: 
+  drop dpath-d14a4d7f         target unrunnable at parent+reproducer: exit 4: :], package, level)            ^^^^^^^^^^^
+  drop anyio-ea546ef7         failure-identity mismatch: the governed observer captured no signature
+  drop isort-6eba7099         preservation not green on the buggy baseline: 1 of 16 fail, e.g. ['tests/test_settings.py:
+  OK   lark-96873d64          pres=3  
+  drop fastjsonschema-10e952b4 failure-identity mismatch: the governed observer captured no signature
+  drop dnspython-a5bc3b32     target does not fail at parent+reproducer: pass ()
+  drop dpath-da568e30         target unrunnable at parent+reproducer: exit 4: el:], package, level)            ^^^^^^^^^
+  drop faker-f6c38c10         target unrunnable at parent+reproducer: exit 4: 
+  drop isort-0383c366         target does not fail at parent+reproducer: pass ()
+  drop werkzeug-4d72f8dd      target unrunnable at parent+reproducer: exit 4: 
+  drop faker-d6959627         target unrunnable at parent+reproducer: exit 4: 
+  OK   mistune-f4237046       pres=13  
+  drop cattrs-74afe152        target unrunnable at parent+reproducer: exit 4: 
+  OK   rich-a53b805c          pres=13  
+  OK   dnspython-227eace4     pres=17  
+  drop httpx-10b60d47         target unrunnable at parent+reproducer: exit 4: 
+  drop markdown-it-py-53ca3e9c target unrunnable at parent+reproducer: exit 4:  normalize_url, utils  # noqa F401     ^^^
+  drop faker-86896b87         target unrunnable at parent+reproducer: exit 4: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ faker/
+  OK   rich-30e5ed61          pres=6  
+  drop requests-47914226      target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-4f05fad6        target unrunnable at parent+reproducer: exit 4: 
+  drop funcy-6c111987         failure-identity mismatch: the governed observer captured no signature
+  OK   click-a17b5447         pres=20  
+  drop anyio-7a612271         failure-identity mismatch: the governed observer captured no signature
+  drop faker-79403fc9         target unrunnable at parent+reproducer: exit 4: ror: cannot import name 'add_ordereddicts'
+  drop mistune-2c128b7e       target does not fail at parent+reproducer: pass ()
+  drop click-b830139b         failure-identity mismatch: the governed observer captured no signature
+  drop requests-bd100472      target unrunnable at parent+reproducer: exit 4: 
+  drop httpcore-04842b09      target unrunnable at parent+reproducer: exit 4: al/lib/python3.12/importlib/__init__.py:90
+  drop cattrs-5c5876e0        target unrunnable at parent+reproducer: exit 4: 
+  drop typer-c5233c0c         target unrunnable at parent+reproducer: exit 4:  tests/test_exit_errors.py:3: in <module> 
+  drop httpcore-54567ac1      target unrunnable at parent+reproducer: exit 4: importlib/__init__.py:90: in import_module
+  drop cattrs-c3faf869        target unrunnable at parent+reproducer: exit 4: 
+  drop icalendar-ad081098     failure-identity mismatch: the governed observer captured no signature
+  drop cattrs-08bd8d93        target unrunnable at parent+reproducer: exit 4: 
+  drop flask-fc6a1d93         target unrunnable at parent+reproducer: exit 4: 
+  drop deepdiff-ec78c2e1      target unrunnable at parent+reproducer: exit 4:  level)            ^^^^^^^^^^^^^^^^^^^^^^^
+  drop urllib3-f4efcca5       target unrunnable at parent+reproducer: exit 4: ns import ( src/urllib3/exceptions.py:2: i
+  drop charset-normalizer-54a18944 target does not fail at parent+reproducer: pass ()
+  drop typer-4f04666d         target unrunnable at parent+reproducer: exit 4:  in <module>     import typer typer/__init
+  OK   packaging-553582d9     pres=72  
+  drop dnspython-4e306726     target does not fail at parent+reproducer: pass ()
+  drop flask-1af8f957         target unrunnable at parent+reproducer: exit 4: 
+  drop markdown-it-py-947d4c63 target unrunnable at parent+reproducer: exit 4: ^^^^^^^^^^^^^^^^^^^^^^ markdown_it/main.py
+  drop glom-9ff2f7b0          target unrunnable at parent+reproducer: exit 4: init__.py:2: in <module>     from glom.cor
+  OK   icalendar-9b72b0b1     pres=24  
+  drop croniter-70a0f62c      target unrunnable at parent+reproducer: exit 4: src/croniter/__init__.py:3: in <module>   
+  drop starlette-9ee95198     target unrunnable at parent+reproducer: exit 4: 
+  OK   dnspython-c9f6c819     pres=8  
+  drop urllib3-8c905b09       target unrunnable at parent+reproducer: exit 4: 
+  drop werkzeug-ff9ee213      target does not fail at parent+reproducer: pass ()
+  drop typer-d1a177c9         target unrunnable at parent+reproducer: exit 4: ^^^^ tests/test_annotated.py:1: in <module
+  drop funcy-3a687644         target does not fail at parent+reproducer: pass ()
+  drop dnspython-8a10f7b9     preservation not green on the buggy baseline: 1 of 89 fail, e.g. ['tests/test_rdata.py::Rd
+  drop isort-28ccbe23         preservation not green on the buggy baseline: 3 of 20 fail, e.g. ['tests/unit/test_tickete
+  drop packaging-69307a31     target unrunnable at parent+reproducer: exit 4: ^ tests/test_specifiers.py:17: in <module>
+  drop httpcore-8fae4aa8      target unrunnable at parent+reproducer: exit 4: 
+  drop anyio-586e3cf4         failure-identity mismatch: the governed observer captured no signature
+  drop starlette-99b69383     target unrunnable at parent+reproducer: exit 4: 
+  drop bleach-3f2270e4        target unrunnable at parent+reproducer: exit 4:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop urllib3-3ba47559       target unrunnable at parent+reproducer: exit 4: 
+  drop icalendar-f993bd96     failure-identity mismatch: the governed observer captured no signature
+  drop fastjsonschema-834c455f failure-identity mismatch: the governed observer captured no signature
+  drop dateparser-b903e69c    target unrunnable at parent+reproducer: exit 2: t.main.Failed: stopping after 1 failures =
+  drop funcy-79f6b5d9         target unrunnable at parent+reproducer: exit 4:  package, level)            ^^^^^^^^^^^^^^
+  OK   mistune-1bef343a       pres=7  
+  drop httpx-b7dc0c3d         target unrunnable at parent+reproducer: exit 4: 
+  drop dnspython-60396a72     target does not fail at parent+reproducer: pass ()
+  drop httpx-cadb9a4d         target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-5a63540e         target unrunnable at parent+reproducer: exit 4: 
+  drop starlette-400e240f     target unrunnable at parent+reproducer: exit 4: 
+  drop prompt-toolkit-75eca874 target unrunnable at parent+reproducer: exit 4: or.py:20: in <module>     from prompt_tool
+  drop rich-a25d286a          preservation not green on the buggy baseline: 6 of 15 fail, e.g. ['tests/test_syntax.py::t
+  drop lark-242c4a57          source half did not apply: git apply failed: error: patch failed: lark/tree_templates.py:9
+  drop dnspython-2ab3d162     target does not fail at parent+reproducer: pass ()
+  OK   sortedcontainers-2b037039 pres=53  
+  drop starlette-7e675a0b     target unrunnable at parent+reproducer: exit 4: 
+  drop starlette-2168e470     target unrunnable at parent+reproducer: exit 4: 
+  drop filelock-9c44c112      target unrunnable at parent+reproducer: exit 4:    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop fastjsonschema-f0c8a0bf target unrunnable at parent+reproducer: exit 4: 
+  OK   dnspython-1435fd47     pres=11  
+  OK   rich-95fe8ff5          pres=7  
+  drop flask-a71c1678         target unrunnable at parent+reproducer: exit 4: 
+  drop charset-normalizer-030039cf target unrunnable at parent+reproducer: exit 4: ches, CharsetNormalizerMatch, \ charset_no
+  drop deepdiff-89ab170c      target unrunnable at parent+reproducer: exit 4:  deepdiff/__init__.py:10: in <module>     
+  drop faker-62429275         failure-identity mismatch: the governed observer captured no signature
+  drop httpx-ab9cd0ea         target unrunnable at parent+reproducer: exit 4: 
+  drop starlette-9dc9d2e9     target unrunnable at parent+reproducer: exit 4: 
+  OK   dnspython-cb559f1e     pres=3  
+  drop rich-60f41610          target does not fail at parent+reproducer: pass ()
+  drop httpx-6b474230         target unrunnable at parent+reproducer: exit 4: 
+  drop markupsafe-3d809aed    failure-identity mismatch: the governed observer captured no signature
+  drop cachetools-d5b25b8e    target unrunnable at parent+reproducer: exit 4:  no tests ran in 0.16s 
+  drop httpx-00e4fdb0         target unrunnable at parent+reproducer: exit 4: 
+  drop werkzeug-2ceab584      target unrunnable at parent+reproducer: exit 4: cal/lib/python3.12/site-packages/_pytest/c
+  drop httpx-0ed03145         target unrunnable at parent+reproducer: exit 4: 
+  drop pluggy-72e4c259        failure-identity mismatch: the governed observer captured no signature
+  drop pathspec-b70e3fb4      unstable_failure_identity: 3 fresh processes disagreed: [{'exception_type': 'AssertionErro
+  drop prompt-toolkit-0b4f04e8 target unrunnable at parent+reproducer: exit 4: ssor.py:19: in <module>     from prompt_to
+  drop jmespath-c5017516      preservation not green on the buggy baseline: 2 of 41 fail, e.g. ["tests/test_parser.py::T
+  drop cachetools-57d2e481    preservation not green on the buggy baseline: 19 of 26 fail, e.g. ['tests/test_cachedmetho
+  OK   rich-73ee8232          pres=11  
+  drop cattrs-304e3700        target unrunnable at parent+reproducer: exit 4: 
+  OK   dnspython-2a0656a3     pres=16  
+  OK   dnspython-7cc53f6b     pres=9  
+  drop rich-9faafa0a          preservation not green on the buggy baseline: 1 of 73 fail, e.g. ["tests/test_text.py::tes
+  drop starlette-cefe8dca     target unrunnable at parent+reproducer: exit 4: s/test_routing.py:6: in <module>     from 
+  drop starlette-13c66c92     target unrunnable at parent+reproducer: exit 4: 
+  drop anyio-eb562e64         failure-identity mismatch: the governed observer captured no signature
+  OK   sortedcontainers-7dc426c9 pres=123  
+  drop funcy-1de0e198         target unrunnable at parent+reproducer: exit 4: ], package, level)            ^^^^^^^^^^^^
+  drop httpx-f06ca87f         target unrunnable at parent+reproducer: exit 4: 
+  drop starlette-37d9d006     target unrunnable at parent+reproducer: exit 4: n <module>     from starlette.response imp
+  drop pathvalidate-b42ed49b  target unrunnable at parent+reproducer: exit 4: nknown config option: md_report_verbose   
+  drop deepdiff-fdb08d40      target unrunnable at parent+reproducer: exit 4: diff/__init__.py:10: in <module>     from 
+  drop dnspython-33ac58f2     preservation not green on the buggy baseline: 9 of 10 fail, e.g. ["tests/test_generate.py:
+  drop httpx-430285f5         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-93ebfc12       failure-identity mismatch: the governed observer captured no signature
+  drop platformdirs-c69a5528  target unrunnable at parent+reproducer: exit 4: 11: in <module>     from platformdirs impo
+  drop click-1241abae         failure-identity mismatch: the governed observer captured no signature
+  drop flask-ed9775fb         target unrunnable at parent+reproducer: exit 4: 
+  drop jinja-1e71e315         target unrunnable at parent+reproducer: exit 4: 
+  drop rich-5097f440          target unrunnable at parent+reproducer: exit 4: mport Console rich/console.py:44: in <modu
+  drop httpx-1e110964         failure-identity mismatch: the governed observer captured no signature
+  OK   packaging-f8f16338     pres=10  
+  OK   rich-8411f002          pres=5  
+  drop rich-465a56f4          target unrunnable at parent+reproducer: exit 4: ch-465a56f4/rich/markup.py:50: SyntaxWarni
+  drop tenacity-841705cd      target unrunnable at parent+reproducer: exit 4:    @asyncio.coroutine      ^^^^^^^^^^^^^^^
+  drop charset-normalizer-e8d70d33 target unrunnable at parent+reproducer: exit 4: 
+  drop platformdirs-c8af984f  target unrunnable at parent+reproducer: exit 4: module>     from platformdirs.macos import
+  drop deepdiff-ed579575      target unrunnable at parent+reproducer: exit 4: bleSetEq as SetOrderedBase  # median: 1.08
+  drop tqdm-f83290ce          target unrunnable at parent+reproducer: exit 4: 
+  drop tomlkit-b73d1920       target unrunnable at parent+reproducer: exit 4:      ^^^^^^^^^^^^^^^^^^^^ E   FileNotFound
+  drop httpx-4ea4af66         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-0f85e05a       target unrunnable at parent+reproducer: exit 4:  <module>     from .exceptions import ( ur
+  drop anyio-30ef5528         failure-identity mismatch: the governed observer captured no signature
+  drop anyio-5ab0a57f         failure-identity mismatch: the governed observer captured no signature
+  drop httpx-d5900cd4         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-99728092       target unrunnable at parent+reproducer: exit 4: ons import ( urllib3/exceptions.py:2: in <
+  drop cattrs-6c269c13        target unrunnable at parent+reproducer: exit 4: 
+  drop packaging-00b7e758     target unrunnable at parent+reproducer: exit 4: evel:], package, level)            ^^^^^^^
+  drop faker-9f48a5c6         target unrunnable at parent+reproducer: exit 4: 3: in <module>     from text_unidecode imp
+
+attempted 322   validated 36
+unique validated repositories : 15
+primary corpus                : 24
+validated surplus             : 12
+
+REJECTION BREAKDOWN (every post-dedupe candidate accounted for)
+   150  collection/import/runtime incompatibility
+    52  insufficient untouched preservation
+    42  other governed validation failure
+    16  target already passes at baseline
+    14  baseline preservation fails
+     8  target-resolution failure
+     2  unstable failure identity
+     1  reproducer does not apply to parent
+     1  historical source fix does not apply
+  ----
+  post-dedupe 322 = rejected 286 + valid 36  -> True
+
+POST-VALIDATION REPOSITORY CAP (<=3 VALID cases/repository)
+  VALID before repo cap        : 36
+  per-repository VALID         : {'rich': 11, 'dnspython': 7, 'mistune': 3, 'lark': 2, 'packaging': 2, 'sortedcontainers': 2, 'voluptuous': 1, 'parse': 1, 'xmltodict': 1, 'isort': 1, 'charset-normalizer': 1, 'tabulate': 1, 'schema': 1, 'click': 1, 'icalendar': 1}
+  removed by repo cap          : 12
+  VALID after repo cap         : 24
+
+final primary cases           : 24
+final distinct repositories   : 15
+aspirational target           : 20-30 cases across 10+ repositories
+frozen minimum                : >=12 cases AND >=10 repositories
+THRESHOLD PASS: 24 cases across 15 repositories
+preservation set size         : min 3  max 174  total 1063

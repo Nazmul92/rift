@@ -1,0 +1,2447 @@
+{
+ "arms": {
+  "A": "model alone; weak target-pass acceptance",
+  "C": "model proposal with the full frozen RIFT protocol"
+ },
+ "benchmark_id": "BM-08",
+ "budget": {
+  "max_attempts": 1,
+  "max_input_tokens": 60000,
+  "max_output_tokens": 4000,
+  "per_case_arm_max_usd": 0.25,
+  "reservation_rule": "reserve the maximum possible cost of a request before sending it, settle on provider-reported usage, and refuse the call when remaining budget is below the reservation",
+  "total_usd_ceiling": 25.0
+ },
+ "cases": [
+  {
+   "additional_targets": [],
+   "author_date": "2026-07-10T18:16:47-07:00",
+   "baseline_tree_hash": "d35e4bfa663d587baf9e188030b5e47cc3c2ccd39d139c06583f9375063a1bed",
+   "case_id": "voluptuous-44593ce7",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "edge_case",
+    "small"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "0153c39bf2f0aa97c7be1637f2afd3a81433afdf1835ea4d16818c9a125f2d04",
+    "queue_position": 3,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "voluptuous/validators.py",
+    "primary_test_file": "voluptuous/tests/tests.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "TypeError",
+    "message": "infinity and NaN have no precision"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "44593ce7c330faf9418252c4b5448f4736144a7f",
+   "parent": "73237e9014f53da32fd6f90630976f5e8279b420",
+   "preservation_count": 174,
+   "preservation_nodes": [
+    "voluptuous/tests/tests.py::test_new_required_test",
+    "voluptuous/tests/tests.py::test_exact_sequence",
+    "voluptuous/tests/tests.py::test_required",
+    "voluptuous/tests/tests.py::test_extra_with_required",
+    "voluptuous/tests/tests.py::test_iterate_candidates",
+    "voluptuous/tests/tests.py::test_in",
+    "voluptuous/tests/tests.py::test_in_unsortable_container",
+    "voluptuous/tests/tests.py::test_not_in",
+    "voluptuous/tests/tests.py::test_not_in_unsortable_container",
+    "voluptuous/tests/tests.py::test_contains",
+    "voluptuous/tests/tests.py::test_remove",
+    "voluptuous/tests/tests.py::test_remove_with_error",
+    "voluptuous/tests/tests.py::test_extra_empty_errors",
+    "voluptuous/tests/tests.py::test_literal",
+    "voluptuous/tests/tests.py::test_class",
+    "voluptuous/tests/tests.py::test_email_validation",
+    "voluptuous/tests/tests.py::test_email_validation_with_none",
+    "voluptuous/tests/tests.py::test_email_validation_with_empty_string",
+    "voluptuous/tests/tests.py::test_email_validation_without_host",
+    "voluptuous/tests/tests.py::test_invalid_repr_includes_path_and_type",
+    "voluptuous/tests/tests.py::test_email_validation_with_bad_data",
+    "voluptuous/tests/tests.py::test_fqdn_url_validation",
+    "voluptuous/tests/tests.py::test_fqdn_url_validation_with_bad_data",
+    "voluptuous/tests/tests.py::test_url_validation",
+    "voluptuous/tests/tests.py::test_url_validation_with_bad_data",
+    "voluptuous/tests/tests.py::test_copy_dict_undefined",
+    "voluptuous/tests/tests.py::test_sorting",
+    "voluptuous/tests/tests.py::test_schema_extend",
+    "voluptuous/tests/tests.py::test_schema_extend_with_schema_instance",
+    "voluptuous/tests/tests.py::test_schema_extend_with_required_schema_instance",
+    "voluptuous/tests/tests.py::test_schema_extend_with_optional_schema_instance_required_base",
+    "voluptuous/tests/tests.py::test_schema_extend_with_schema_instance_preserves_markers",
+    "voluptuous/tests/tests.py::test_schema_extend_with_schema_instance_preserves_nested_required",
+    "voluptuous/tests/tests.py::test_schema_extend_with_schema_instance_preserves_nested_optional",
+    "voluptuous/tests/tests.py::test_schema_extend_with_schema_instance_rejects_extra_mismatch",
+    "voluptuous/tests/tests.py::test_schema_extend_with_non_dictionary_schema_instance_fails",
+    "voluptuous/tests/tests.py::test_schema_extend_overrides",
+    "voluptuous/tests/tests.py::test_schema_extend_key_swap",
+    "voluptuous/tests/tests.py::test_subschema_extension",
+    "voluptuous/tests/tests.py::test_schema_extend_handles_schema_subclass",
+    "voluptuous/tests/tests.py::test_schema_extend_with_schema_instance_handles_schema_subclass",
+    "voluptuous/tests/tests.py::test_equality",
+    "voluptuous/tests/tests.py::test_equality_negative",
+    "voluptuous/tests/tests.py::test_inequality",
+    "voluptuous/tests/tests.py::test_inequality_negative",
+    "voluptuous/tests/tests.py::test_repr",
+    "voluptuous/tests/tests.py::test_list_validation_messages",
+    "voluptuous/tests/tests.py::test_nested_multiple_validation_errors",
+    "voluptuous/tests/tests.py::test_humanize_error",
+    "voluptuous/tests/tests.py::test_fix_157",
+    "voluptuous/tests/tests.py::test_range_inside",
+    "voluptuous/tests/tests.py::test_range_outside",
+    "voluptuous/tests/tests.py::test_range_no_upper_limit",
+    "voluptuous/tests/tests.py::test_range_no_lower_limit",
+    "voluptuous/tests/tests.py::test_range_excludes_nan",
+    "voluptuous/tests/tests.py::test_range_excludes_none",
+    "voluptuous/tests/tests.py::test_range_excludes_string",
+    "voluptuous/tests/tests.py::test_range_excludes_unordered_object",
+    "voluptuous/tests/tests.py::test_clamp_inside",
+    "voluptuous/tests/tests.py::test_clamp_above",
+    "voluptuous/tests/tests.py::test_clamp_below",
+    "voluptuous/tests/tests.py::test_clamp_invalid",
+    "voluptuous/tests/tests.py::test_length_ok",
+    "voluptuous/tests/tests.py::test_length_too_short",
+    "voluptuous/tests/tests.py::test_length_too_long",
+    "voluptuous/tests/tests.py::test_length_invalid",
+    "voluptuous/tests/tests.py::test_equal",
+    "voluptuous/tests/tests.py::test_unordered",
+    "voluptuous/tests/tests.py::test_maybe",
+    "voluptuous/tests/tests.py::test_maybe_accepts_msg",
+    "voluptuous/tests/tests.py::test_maybe_returns_default_error",
+    "voluptuous/tests/tests.py::test_schema_empty_list",
+    "voluptuous/tests/tests.py::test_schema_empty_dict",
+    "voluptuous/tests/tests.py::test_schema_empty_dict_key",
+    "voluptuous/tests/tests.py::test_schema_decorator_match_with_args",
+    "voluptuous/tests/tests.py::test_schema_decorator_unmatch_with_args",
+    "voluptuous/tests/tests.py::test_schema_decorator_match_with_kwargs",
+    "voluptuous/tests/tests.py::test_schema_decorator_unmatch_with_kwargs",
+    "voluptuous/tests/tests.py::test_schema_decorator_match_return_with_args",
+    "voluptuous/tests/tests.py::test_schema_decorator_unmatch_return_with_args",
+    "voluptuous/tests/tests.py::test_schema_decorator_match_return_with_kwargs",
+    "voluptuous/tests/tests.py::test_schema_decorator_unmatch_return_with_kwargs",
+    "voluptuous/tests/tests.py::test_schema_decorator_return_only_match",
+    "voluptuous/tests/tests.py::test_schema_decorator_return_only_unmatch",
+    "voluptuous/tests/tests.py::test_schema_decorator_partial_match_called_with_args",
+    "voluptuous/tests/tests.py::test_schema_decorator_partial_unmatch_called_with_args",
+    "voluptuous/tests/tests.py::test_schema_decorator_partial_match_called_with_kwargs",
+    "voluptuous/tests/tests.py::test_schema_decorator_partial_unmatch_called_with_kwargs",
+    "voluptuous/tests/tests.py::test_number_validation_with_string",
+    "voluptuous/tests/tests.py::test_number_validation_with_non_numeric",
+    "voluptuous/tests/tests.py::test_number_validation_with_invalid_precision_invalid_scale",
+    "voluptuous/tests/tests.py::test_number_validation_with_valid_precision_scale_yield_decimal_true",
+    "voluptuous/tests/tests.py::test_number_when_precision_scale_none_yield_decimal_true",
+    "voluptuous/tests/tests.py::test_number_when_precision_none_n_valid_scale_case1_yield_decimal_true",
+    "voluptuous/tests/tests.py::test_number_when_precision_none_n_valid_scale_case2_yield_decimal_true",
+    "voluptuous/tests/tests.py::test_number_when_precision_none_n_invalid_scale_yield_decimal_true",
+    "voluptuous/tests/tests.py::test_number_when_valid_precision_n_scale_none_yield_decimal_true",
+    "voluptuous/tests/tests.py::test_number_when_invalid_precision_n_scale_none_yield_decimal_true",
+    "voluptuous/tests/tests.py::test_number_validation_with_valid_precision_scale_yield_decimal_false",
+    "voluptuous/tests/tests.py::test_named_tuples_validate_as_tuples",
+    "voluptuous/tests/tests.py::test_datetime",
+    "voluptuous/tests/tests.py::test_date",
+    "voluptuous/tests/tests.py::test_date_custom_format",
+    "voluptuous/tests/tests.py::test_ordered_dict",
+    "voluptuous/tests/tests.py::test_marker_hashable",
+    "voluptuous/tests/tests.py::test_schema_infer",
+    "voluptuous/tests/tests.py::test_schema_infer_dict",
+    "voluptuous/tests/tests.py::test_schema_infer_list",
+    "voluptuous/tests/tests.py::test_schema_infer_scalar",
+    "voluptuous/tests/tests.py::test_schema_infer_accepts_kwargs",
+    "voluptuous/tests/tests.py::test_validation_performance",
+    "voluptuous/tests/tests.py::test_IsDir",
+    "voluptuous/tests/tests.py::test_IsFile",
+    "voluptuous/tests/tests.py::test_PathExists",
+    "voluptuous/tests/tests.py::test_description",
+    "voluptuous/tests/tests.py::test_SomeOf_min_validation",
+    "voluptuous/tests/tests.py::test_SomeOf_max_validation",
+    "voluptuous/tests/tests.py::test_self_validation",
+    "voluptuous/tests/tests.py::test_any_error_has_path",
+    "voluptuous/tests/tests.py::test_all_error_has_path",
+    "voluptuous/tests/tests.py::test_match_error_has_path",
+    "voluptuous/tests/tests.py::test_path_with_string",
+    "voluptuous/tests/tests.py::test_path_with_list_index",
+    "voluptuous/tests/tests.py::test_path_with_tuple_index",
+    "voluptuous/tests/tests.py::test_path_with_integer_dict_key",
+    "voluptuous/tests/tests.py::test_path_with_float_dict_key",
+    "voluptuous/tests/tests.py::test_path_with_tuple_dict_key",
+    "voluptuous/tests/tests.py::test_path_with_arbitrary_hashable_dict_key",
+    "voluptuous/tests/tests.py::test_self_any",
+    "voluptuous/tests/tests.py::test_self_all",
+    "voluptuous/tests/tests.py::test_SomeOf_on_bounds_assertion",
+    "voluptuous/tests/tests.py::test_comparing_voluptuous_object_to_str",
+    "voluptuous/tests/tests.py::test_set_of_integers",
+    "voluptuous/tests/tests.py::test_frozenset_of_integers",
+    "voluptuous/tests/tests.py::test_set_of_integers_and_strings",
+    "voluptuous/tests/tests.py::test_frozenset_of_integers_and_strings",
+    "voluptuous/tests/tests.py::test_coerce_in_set_is_applied",
+    "voluptuous/tests/tests.py::test_lower_util_handles_various_inputs",
+    "voluptuous/tests/tests.py::test_upper_util_handles_various_inputs",
+    "voluptuous/tests/tests.py::test_capitalize_util_handles_various_inputs",
+    "voluptuous/tests/tests.py::test_title_util_handles_various_inputs",
+    "voluptuous/tests/tests.py::test_strip_util_handles_various_inputs",
+    "voluptuous/tests/tests.py::test_any_required",
+    "voluptuous/tests/tests.py::test_any_required_with_subschema",
+    "voluptuous/tests/tests.py::test_inclusive",
+    "voluptuous/tests/tests.py::test_inclusive_defaults",
+    "voluptuous/tests/tests.py::test_exclusive",
+    "voluptuous/tests/tests.py::test_any_with_discriminant",
+    "voluptuous/tests/tests.py::test_key1",
+    "voluptuous/tests/tests.py::test_key2",
+    "voluptuous/tests/tests.py::test_any_with_extra_allow",
+    "voluptuous/tests/tests.py::test_any_with_extra_remove",
+    "voluptuous/tests/tests.py::test_any_with_extra_prevent",
+    "voluptuous/tests/tests.py::test_any_with_extra_none",
+    "voluptuous/tests/tests.py::test_coerce_enum",
+    "voluptuous/tests/tests.py::test_enum_as_schema",
+    "voluptuous/tests/tests.py::test_object",
+    "voluptuous/tests/tests.py::test_exception",
+    "voluptuous/tests/tests.py::test_humanize_error_with_nested_getitem_keyerror",
+    "voluptuous/tests/tests.py::test_humanize_error_with_nested_getitem_indexerror",
+    "voluptuous/tests/tests.py::test_humanize_error_with_nested_getitem_typeerror",
+    "voluptuous/tests/tests.py::test_humanize_error_with_long_error_message",
+    "voluptuous/tests/tests.py::test_validate_with_humanized_errors_success",
+    "voluptuous/tests/tests.py::test_validate_with_humanized_errors_failure",
+    "voluptuous/tests/tests.py::test_validate_with_humanized_errors_custom_max_length",
+    "voluptuous/tests/tests.py::test_humanize_error_with_multiple_invalid",
+    "voluptuous/tests/tests.py::test_humanize_error_with_single_invalid",
+    "voluptuous/tests/tests.py::test_humanize_error_with_none_data",
+    "voluptuous/tests/tests.py::test_required_complex_key_any",
+    "voluptuous/tests/tests.py::test_required_complex_key_custom_message",
+    "voluptuous/tests/tests.py::test_required_complex_key_mixed_types",
+    "voluptuous/tests/tests.py::test_required_complex_key_multiple_complex_requirements",
+    "voluptuous/tests/tests.py::test_required_complex_key_value_validation",
+    "voluptuous/tests/tests.py::test_complex_required_keys_with_specific_value_validation"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tox.ini",
+    "voluptuous/tests/tests.py"
+   ],
+   "repository": "voluptuous",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "tox.ini"
+   ],
+   "source_files": [
+    "voluptuous/validators.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "e1155d274c37ffc2087deb79d7b757dc7d0995deef3db251b44cd55caeb86b44",
+   "stability_observations": 3,
+   "target_node": "voluptuous/tests/tests.py::test_number_validation_with_infinity_and_nan",
+   "test_files": [
+    "voluptuous/tests/tests.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2018-03-18T12:31:23+01:00",
+   "baseline_tree_hash": "da2c8412a6d8fbdb73d558fee97ab564fef900100e2b25b805dce406962b178e",
+   "case_id": "parse-e9aa02bd",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "data_transform",
+    "parsing"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "0435bb06f71a364b8b515b3beabca40a6b70d9e5b94c0b5850879dfee974f0c3",
+    "queue_position": 14,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "parse.py",
+    "primary_test_file": "test_parse.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "ValueError",
+    "message": "invalid literal for int() with base 10: 'Alice'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "e9aa02bd2aa49694313e13c9eb2159ddb6717698",
+   "parent": "5e7dfa8428997acaf48fb362044e811dc1a9b6d5",
+   "preservation_count": 62,
+   "preservation_nodes": [
+    "test_parse.py::TestPattern::test_braces",
+    "test_parse.py::TestPattern::test_fixed",
+    "test_parse.py::TestPattern::test_named",
+    "test_parse.py::TestPattern::test_named_typed",
+    "test_parse.py::TestPattern::test_beaker",
+    "test_parse.py::TestPattern::test_left_fill",
+    "test_parse.py::TestPattern::test_bird",
+    "test_parse.py::TestPattern::test_center",
+    "test_parse.py::TestPattern::test_format_variety",
+    "test_parse.py::TestPattern::test_dot_separated_fields",
+    "test_parse.py::TestPattern::test_dict_style_fields",
+    "test_parse.py::TestPattern::test_dot_separated_fields_name_collisions",
+    "test_parse.py::TestPattern::test_invalid_groupnames_are_handled_gracefully",
+    "test_parse.py::TestResult::test_fixed_access",
+    "test_parse.py::TestResult::test_named_access",
+    "test_parse.py::TestParse::test_no_match",
+    "test_parse.py::TestParse::test_nothing",
+    "test_parse.py::TestParse::test_no_evaluate_result",
+    "test_parse.py::TestParse::test_regular_expression",
+    "test_parse.py::TestParse::test_question_mark",
+    "test_parse.py::TestParse::test_pipe",
+    "test_parse.py::TestParse::test_unicode",
+    "test_parse.py::TestParse::test_hexadecimal",
+    "test_parse.py::TestParse::test_fixed",
+    "test_parse.py::TestParse::test_left",
+    "test_parse.py::TestParse::test_right",
+    "test_parse.py::TestParse::test_center",
+    "test_parse.py::TestParse::test_typed",
+    "test_parse.py::TestParse::test_precision",
+    "test_parse.py::TestParse::test_precision_fail",
+    "test_parse.py::TestParse::test_custom_type",
+    "test_parse.py::TestParse::test_typed_fail",
+    "test_parse.py::TestParse::test_named",
+    "test_parse.py::TestParse::test_named_repeated",
+    "test_parse.py::TestParse::test_named_repeated_type",
+    "test_parse.py::TestParse::test_named_repeated_fail_value",
+    "test_parse.py::TestParse::test_named_repeated_type_fail_value",
+    "test_parse.py::TestParse::test_named_repeated_type_mismatch",
+    "test_parse.py::TestParse::test_mixed",
+    "test_parse.py::TestParse::test_named_typed",
+    "test_parse.py::TestParse::test_named_aligned_typed",
+    "test_parse.py::TestParse::test_multiline",
+    "test_parse.py::TestParse::test_spans",
+    "test_parse.py::TestParse::test_numbers",
+    "test_parse.py::TestParse::test_two_datetimes",
+    "test_parse.py::TestParse::test_datetimes",
+    "test_parse.py::TestParse::test_datetime_group_count",
+    "test_parse.py::TestParse::test_mixed_types",
+    "test_parse.py::TestParse::test_mixed_type_variant",
+    "test_parse.py::TestParse::test_too_many_fields",
+    "test_parse.py::TestSearch::test_basic",
+    "test_parse.py::TestSearch::test_multiline",
+    "test_parse.py::TestSearch::test_pos",
+    "test_parse.py::TestSearch::test_no_evaluate_result",
+    "test_parse.py::TestFindall::test_findall",
+    "test_parse.py::TestFindall::test_no_evaluate_result",
+    "test_parse.py::TestBugs::test_named_date_issue7",
+    "test_parse.py::TestBugs::test_dotted_type_conversion_pull_8",
+    "test_parse.py::TestBugs::test_pm_overflow_issue16",
+    "test_parse.py::TestParseType::test_pattern_should_be_used",
+    "test_parse.py::TestParseType::test_pattern_should_be_used2",
+    "test_parse.py::TestParseType::test_with_pattern"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "test_parse.py",
+    "tox.ini"
+   ],
+   "repository": "parse",
+   "runner_config_paths": [
+    "tox.ini"
+   ],
+   "source_files": [
+    "parse.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "8a958012473eccf11feb065bc2b52d1a9105ce9d0be5dfa0fc6053ae17cb7462",
+   "stability_observations": 3,
+   "target_node": "test_parse.py::TestBugs::test_user_type_with_group_count_issue60",
+   "test_files": [
+    "test_parse.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2021-12-14T17:57:11Z",
+   "baseline_tree_hash": "62bbf4b68f29f7191f219fd2579083afa2d99b0eda2bcff7d93125dccdc14dbd",
+   "case_id": "rich-260508bf",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "state_order"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "08a5dac09401a11194e7604fbb3c3eb5793494192b2501eae386ef3897195aba",
+    "queue_position": 35,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "rich/text.py",
+    "primary_test_file": "tests/test_segment.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert '\\x1b[48;5;94... \\x1b[0m\\n\\n' == '\\x1b[48;5;94... \\x1b[0m\\n\\n'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "260508bfa058d9d7e7f782482e91adf7ddf06342",
+   "parent": "c57e1f508af1f042d2777e876f816ea157d7a61b",
+   "preservation_count": 22,
+   "preservation_nodes": [
+    "tests/test_segment.py::test_repr",
+    "tests/test_segment.py::test_line",
+    "tests/test_segment.py::test_apply_style",
+    "tests/test_segment.py::test_split_lines",
+    "tests/test_segment.py::test_split_and_crop_lines",
+    "tests/test_segment.py::test_adjust_line_length",
+    "tests/test_segment.py::test_get_line_length",
+    "tests/test_segment.py::test_get_shape",
+    "tests/test_segment.py::test_set_shape",
+    "tests/test_segment.py::test_simplify",
+    "tests/test_segment.py::test_filter_control",
+    "tests/test_segment.py::test_strip_styles",
+    "tests/test_segment.py::test_strip_links",
+    "tests/test_segment.py::test_remove_color",
+    "tests/test_segment.py::test_is_control",
+    "tests/test_segment.py::test_segments_renderable",
+    "tests/test_segment.py::test_divide",
+    "tests/test_segment.py::test_divide_emoji",
+    "tests/test_segment.py::test_divide_edge",
+    "tests/test_segment.py::test_divide_edge_2",
+    "tests/test_segment.py::test_split_cells_emoji",
+    "tests/test_segment.py::test_segment_lines_renderable"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/pytest.ini",
+    "tests/test_segment.py",
+    "tox.ini"
+   ],
+   "repository": "rich",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "tests/pytest.ini",
+    "tox.ini"
+   ],
+   "source_files": [
+    "rich/text.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "5b726b67d972df6f2ca2b7a791d6b3392b3569acf5ceb7ff72860aba5fb668f4",
+   "stability_observations": 3,
+   "target_node": "tests/test_segment.py::test_divide_complex",
+   "test_files": [
+    "tests/test_segment.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2020-11-27T20:04:53Z",
+   "baseline_tree_hash": "761870102420feaa220c2a7e96f564ef7821c98af6719eba7a7b39617d910d15",
+   "case_id": "rich-0138b189",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "093c3214443d009b2a867b4842cb289ce23808f5f9d6913aca5adad49d6cef80",
+    "queue_position": 38,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "rich/pretty.py",
+    "primary_test_file": "tests/test_pretty.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert '(1,)\\n(\\n\u2502 ...1\\n\u2502 )\\n)\\n' == '(1,)\\n(\\n\u2502 ...\\n\u2502 ),\\n)\\n'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "0138b18950b3d21f6fdb52b1e2e2ab3ef459d256",
+   "parent": "15870cee965ccd75a4f9b1854bb92753620d0fdb",
+   "preservation_count": 13,
+   "preservation_nodes": [
+    "tests/test_pretty.py::test_install",
+    "tests/test_pretty.py::test_small_width",
+    "tests/test_pretty.py::test_broken_repr",
+    "tests/test_pretty.py::test_recursive",
+    "tests/test_pretty.py::test_defaultdict",
+    "tests/test_pretty.py::test_array",
+    "tests/test_pretty.py::test_tuple_of_one",
+    "tests/test_pretty.py::test_node",
+    "tests/test_pretty.py::test_indent_lines",
+    "tests/test_pretty.py::test_pprint",
+    "tests/test_pretty.py::test_pprint_max_values",
+    "tests/test_pretty.py::test_pprint_max_items",
+    "tests/test_pretty.py::test_pprint_max_string"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/pytest.ini",
+    "tests/test_pretty.py",
+    "tox.ini"
+   ],
+   "repository": "rich",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "tests/pytest.ini",
+    "tox.ini"
+   ],
+   "source_files": [
+    "rich/pretty.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "59993931a3141673af1c60167216633843258cb3e1f756cbdbc949e6b6050b73",
+   "stability_observations": 3,
+   "target_node": "tests/test_pretty.py::test_tuples",
+   "test_files": [
+    "tests/test_pretty.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2025-09-11T14:24:54-07:00",
+   "baseline_tree_hash": "17eda88cad55260b06d3098c091f2b8fb8409dab5ef249efe4072fa7a89922ba",
+   "case_id": "xmltodict-927a025a",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "data_transform",
+    "edge_case",
+    "parsing"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "0efb81c26bfa960ccb82606b28378d5463cba056b82f5104ee109633633d4c14",
+    "queue_position": 48,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "xmltodict.py",
+    "primary_test_file": "tests/test_dicttoxml.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "TypeError",
+    "message": "decoding to str: need a bytes-like object, int found"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "927a025ae8a62cbb542d5caff38b29161a2096fa",
+   "parent": "ab4c86fed24dc8ef0e932a524edfb01c6453ecf6",
+   "preservation_count": 46,
+   "preservation_nodes": [
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_root",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_simple_cdata",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_cdata",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_attrib",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_attrib_and_cdata",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_list",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_list_expand_iter",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_generator",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_no_root",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_multiple_roots",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_no_root_nofulldoc",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_multiple_roots_nofulldoc",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_nested",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_semistructured",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_preprocessor",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_preprocessor_skipkey",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_pretty_print",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_pretty_print_with_int_indent",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_encoding",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_fulldoc",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_non_string_value",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_non_string_attr",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_short_empty_elements",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_namespace_support",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_boolean_unparse",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_tag_name_with_angle_brackets",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_attribute_name_with_angle_brackets",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_malicious_xmlns_prefix",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_attribute_values_with_angle_brackets_are_escaped",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_tag_name_starting_with_question",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_tag_name_starting_with_bang",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_attribute_name_starting_with_question",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_attribute_name_starting_with_bang",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_xmlns_prefix_starting_with_question_or_bang",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_non_string_names",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_tag_name_with_slash",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_tag_name_with_whitespace",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_attribute_name_with_slash",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_attribute_name_with_whitespace",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_xmlns_prefix_with_slash_or_whitespace",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_rejects_names_with_quotes_and_equals",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_pretty_print_and_short_empty_elements_consistency",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_empty_list_filtering",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_empty_list_filtering_with_short_empty_elements_false",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_non_empty_lists_are_not_filtered",
+    "tests/test_dicttoxml.py::DictToXMLTestCase::test_empty_dict_vs_empty_list_behavior"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "setup.cfg",
+    "tests/test_dicttoxml.py",
+    "tox.ini"
+   ],
+   "repository": "xmltodict",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "source_files": [
+    "xmltodict.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "dada374cf7fcc08c65f92374cc75f5436b3ac8d204dee5134d55383da7dab4bb",
+   "stability_observations": 3,
+   "target_node": "tests/test_dicttoxml.py::DictToXMLTestCase::test_non_string_text_with_attributes",
+   "test_files": [
+    "tests/test_dicttoxml.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2021-05-19T16:50:09+01:00",
+   "baseline_tree_hash": "46353710f0033d57d3f409c46fca10afbc9e4b295745be1c364b0917fb51f582",
+   "case_id": "rich-a5eada7a",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "small"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "15403baf5932b21c2fa2c8f2175fb1aadb492c736f81ea7ae7dd42a7504a06a0",
+    "queue_position": 71,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "rich/spinner.py",
+    "primary_test_file": "tests/test_spinner.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert False"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "a5eada7ac4c00a64920f6bec4ecb6e87a506f8c4",
+   "parent": "fd4f1bc5d02097adf3a15bc2bb27509712b4f515",
+   "preservation_count": 4,
+   "preservation_nodes": [
+    "tests/test_spinner.py::test_spinner_create",
+    "tests/test_spinner.py::test_spinner_render",
+    "tests/test_spinner.py::test_spinner_update",
+    "tests/test_spinner.py::test_rich_measure"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/pytest.ini",
+    "tests/test_spinner.py",
+    "tox.ini"
+   ],
+   "repository": "rich",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "tests/pytest.ini",
+    "tox.ini"
+   ],
+   "source_files": [
+    "rich/spinner.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "b9bce3b547f0fa8d8754cf1192d67f08ed86d93423edee8caf68f21751e76dae",
+   "stability_observations": 3,
+   "target_node": "tests/test_spinner.py::test_spinner_markup",
+   "test_files": [
+    "tests/test_spinner.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2020-10-12T21:35:06-07:00",
+   "baseline_tree_hash": "317a30f642d1f7f43283f9cc5e8db77fd26e6a98276402965beb578d1757a290",
+   "case_id": "isort-49bb9bab",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction",
+    "edge_case",
+    "parsing"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "183b2a3d2952d29ee5ea57b9db7cee2338883baffbb2cbb073d96ad40934f0f8",
+    "queue_position": 79,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "isort/parse.py",
+    "primary_test_file": "tests/unit/test_regressions.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert False"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "49bb9babe3d2fb268b95d4170d5fc1dc267c213d",
+   "parent": "c2412345aa9b75ec732aca57ba60ef4fe4b6c0aa",
+   "preservation_count": 46,
+   "preservation_nodes": [
+    "tests/unit/test_regressions.py::test_isort_duplicating_comments_issue_1264",
+    "tests/unit/test_regressions.py::test_moving_comments_issue_726",
+    "tests/unit/test_regressions.py::test_blank_lined_removed_issue_1275",
+    "tests/unit/test_regressions.py::test_blank_lined_removed_issue_1283",
+    "tests/unit/test_regressions.py::test_extra_blank_line_added_nested_imports_issue_1290",
+    "tests/unit/test_regressions.py::test_add_imports_shouldnt_make_isort_unusable_issue_1297",
+    "tests/unit/test_regressions.py::test_no_extra_lines_for_imports_in_functions_issue_1277",
+    "tests/unit/test_regressions.py::test_no_extra_blank_lines_in_methods_issue_1293",
+    "tests/unit/test_regressions.py::test_force_single_line_shouldnt_remove_preceding_comment_lines_issue_1296",
+    "tests/unit/test_regressions.py::test_ensure_new_line_before_comments_mixed_with_ensure_newline_before_comments_1295",
+    "tests/unit/test_regressions.py::test_trailing_comma_doesnt_introduce_broken_code_with_comment_and_wrap_issue_1302",
+    "tests/unit/test_regressions.py::test_ensure_sre_parse_is_identified_as_stdlib_issue_1304",
+    "tests/unit/test_regressions.py::test_add_imports_shouldnt_move_lower_comments_issue_1300",
+    "tests/unit/test_regressions.py::test_windows_newline_issue_1277",
+    "tests/unit/test_regressions.py::test_windows_newline_issue_1278",
+    "tests/unit/test_regressions.py::test_check_never_passes_with_indented_headings_issue_1301",
+    "tests/unit/test_regressions.py::test_isort_shouldnt_fail_on_long_from_with_dot_issue_1190",
+    "tests/unit/test_regressions.py::test_isort_shouldnt_add_extra_new_line_when_fass_and_n_issue_1315",
+    "tests/unit/test_regressions.py::test_isort_doesnt_rewrite_import_with_dot_to_from_import_issue_1280",
+    "tests/unit/test_regressions.py::test_isort_shouldnt_introduce_extra_lines_with_fass_issue_1322",
+    "tests/unit/test_regressions.py::test_comments_should_cause_wrapping_on_long_lines_black_mode_issue_1219",
+    "tests/unit/test_regressions.py::test_comment_blocks_should_stay_associated_without_extra_lines_issue_1156",
+    "tests/unit/test_regressions.py::test_comment_shouldnt_be_duplicated_with_fass_enabled_issue_1329",
+    "tests/unit/test_regressions.py::test_wrap_mode_equal_to_line_length_with_indendet_imports_issue_1333",
+    "tests/unit/test_regressions.py::test_isort_skipped_nested_imports_issue_1339",
+    "tests/unit/test_regressions.py::test_windows_diff_too_large_misrepresentative_issue_1348",
+    "tests/unit/test_regressions.py::test_combine_as_does_not_lose_comments_issue_1321",
+    "tests/unit/test_regressions.py::test_combine_as_does_not_lose_comments_issue_1381",
+    "tests/unit/test_regressions.py::test_incorrect_grouping_when_comments_issue_1396",
+    "tests/unit/test_regressions.py::test_reverse_relative_combined_with_force_sort_within_sections_issue_1395",
+    "tests/unit/test_regressions.py::test_isort_should_be_able_to_add_independent_of_doc_string_placement_issue_1420",
+    "tests/unit/test_regressions.py::test_comments_should_never_be_moved_between_imports_issue_1427",
+    "tests/unit/test_regressions.py::test_isort_doesnt_misplace_comments_issue_1431",
+    "tests/unit/test_regressions.py::test_isort_doesnt_misplace_add_import_issue_1445",
+    "tests/unit/test_regressions.py::test_isort_doesnt_mangle_code_when_adding_imports_issue_1444",
+    "tests/unit/test_regressions.py::test_isort_float_to_top_with_sort_on_off_tests",
+    "tests/unit/test_regressions.py::test_isort_doesnt_float_to_top_correctly_when_imports_not_at_top_issue_1382",
+    "tests/unit/test_regressions.py::test_empty_float_to_top_shouldnt_error_issue_1453",
+    "tests/unit/test_regressions.py::test_import_sorting_shouldnt_be_endless_with_headers_issue_1454",
+    "tests/unit/test_regressions.py::test_isort_should_leave_non_import_from_lines_alone_issue_1488",
+    "tests/unit/test_regressions.py::test_isort_float_to_top_correctly_identifies_single_line_comments_1499",
+    "tests/unit/test_regressions.py::test_isort_shouldnt_mangle_from_multi_line_string_issue_1507",
+    "tests/unit/test_regressions.py::test_isort_should_keep_all_as_and_non_as_imports_issue_1523",
+    "tests/unit/test_regressions.py::test_isort_shouldnt_introduce_syntax_error_issue_1539",
+    "tests/unit/test_regressions.py::test_isort_shouldnt_split_skip_issue_1548",
+    "tests/unit/test_regressions.py::test_isort_losing_imports_vertical_prefix_from_module_import_wrap_mode_issue_1542"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "example_isort_formatting_plugin/pyproject.toml",
+    "example_shared_isort_profile/pyproject.toml",
+    "pyproject.toml",
+    "setup.cfg",
+    "tests/unit/conftest.py",
+    "tests/unit/test_regressions.py"
+   ],
+   "repository": "isort",
+   "runner_config_paths": [
+    "example_isort_formatting_plugin/pyproject.toml",
+    "example_shared_isort_profile/pyproject.toml",
+    "pyproject.toml",
+    "setup.cfg",
+    "tests/unit/conftest.py"
+   ],
+   "source_files": [
+    "isort/parse.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "b9bce3b547f0fa8d8754cf1192d67f08ed86d93423edee8caf68f21751e76dae",
+   "stability_observations": 3,
+   "target_node": "tests/unit/test_regressions.py::test_isort_shouldnt_split_skip_issue_1556",
+   "test_files": [
+    "tests/unit/test_regressions.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2026-07-07T13:45:11+01:00",
+   "baseline_tree_hash": "34e0f22976acd22cd720a15fee152f7428006393ef24668c2dd8ff80ec6c2ba5",
+   "case_id": "charset-normalizer-2bc26076",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "api_misuse",
+    "edge_case",
+    "parsing",
+    "state_order"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "1f4a9177e09fc06df3db36a7a465b4e160432d8bf80210901018995934d16658",
+    "queue_position": 102,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "src/charset_normalizer/api.py",
+    "primary_test_file": "tests/test_edge_case.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "UnicodeDecodeError",
+    "message": "'ascii' codec can't decode byte 0xc3 in position 571: ordinal not in range(128)"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "2bc26076a86704fc19bc2ae811615b169373dea6",
+   "parent": "be252d70c9f45846f0e851cc4d1829328540c825",
+   "preservation_count": 4,
+   "preservation_nodes": [
+    "tests/test_edge_case.py::test_unicode_edge_case",
+    "tests/test_edge_case.py::test_issue_gh520",
+    "tests/test_edge_case.py::test_issue_gh509",
+    "tests/test_edge_case.py::test_issue_gh498"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/test_edge_case.py"
+   ],
+   "repository": "charset-normalizer",
+   "runner_config_paths": [
+    "pyproject.toml"
+   ],
+   "source_files": [
+    "src/charset_normalizer/api.py"
+   ],
+   "src_layout": "src",
+   "stability_evidence_hash": "fede066e69e7328a732b236356cdf5ff72115ab3acb110fe682b9b9615791142",
+   "stability_observations": 3,
+   "target_node": "tests/test_edge_case.py::test_regression_gh771_fallback_entry_on_undecodable_payload",
+   "test_files": [
+    "tests/test_edge_case.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2021-08-19T20:04:08+05:30",
+   "baseline_tree_hash": "82805dc0b42bd92db84cf16b5ac9ed50dd533a6d0d39e50fc7b49916a8d41181",
+   "case_id": "tabulate-293ff59a",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction",
+    "edge_case",
+    "small"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "23a275b21c05ad88dc53a28c76694c368b6c34f240b17f6236e89fed893687fc",
+    "queue_position": 111,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "tabulate.py",
+    "primary_test_file": "test/test_input.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "Failure",
+    "message": "AssertionError"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "293ff59a4ed816db31423eeadb5135e9fcda3cac",
+   "parent": "b2c26bcb70e497f674b38aa7e29de12c0123708a",
+   "preservation_count": 29,
+   "preservation_nodes": [
+    "test/test_input.py::test_iterable_of_iterables",
+    "test/test_input.py::test_iterable_of_iterables_headers",
+    "test/test_input.py::test_iterable_of_iterables_firstrow",
+    "test/test_input.py::test_list_of_lists",
+    "test/test_input.py::test_list_of_lists_firstrow",
+    "test/test_input.py::test_list_of_lists_keys",
+    "test/test_input.py::test_dict_like",
+    "test/test_input.py::test_numpy_2d",
+    "test/test_input.py::test_numpy_2d_firstrow",
+    "test/test_input.py::test_numpy_2d_keys",
+    "test/test_input.py::test_numpy_record_array",
+    "test/test_input.py::test_numpy_record_array_keys",
+    "test/test_input.py::test_numpy_record_array_headers",
+    "test/test_input.py::test_pandas",
+    "test/test_input.py::test_pandas_firstrow",
+    "test/test_input.py::test_pandas_keys",
+    "test/test_input.py::test_sqlite3",
+    "test/test_input.py::test_sqlite3_keys",
+    "test/test_input.py::test_list_of_namedtuples",
+    "test/test_input.py::test_list_of_namedtuples_keys",
+    "test/test_input.py::test_list_of_dicts",
+    "test/test_input.py::test_list_of_userdicts",
+    "test/test_input.py::test_list_of_dicts_keys",
+    "test/test_input.py::test_list_of_userdicts_keys",
+    "test/test_input.py::test_list_of_dicts_with_missing_keys",
+    "test/test_input.py::test_list_of_dicts_firstrow",
+    "test/test_input.py::test_list_of_dicts_with_dict_of_headers",
+    "test/test_input.py::test_list_of_dicts_with_list_of_headers",
+    "test/test_input.py::test_py27orlater_list_of_ordereddicts"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "test/test_input.py",
+    "tox.ini"
+   ],
+   "repository": "tabulate",
+   "runner_config_paths": [
+    "tox.ini"
+   ],
+   "source_files": [
+    "tabulate.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "ab74d3abb67e328b59cdb8a571422733f877f3d86c2abd3a5376b1eff47fcb67",
+   "stability_observations": 3,
+   "target_node": "test/test_input.py::test_blank_list_firstrow",
+   "test_files": [
+    "test/test_input.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2026-06-15T04:06:47-04:00",
+   "baseline_tree_hash": "d16bb21861f534246c2233d0fcd74532fc3d00dd748669a63864144cec2c6703",
+   "case_id": "schema-15158c53",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction",
+    "edge_case",
+    "parsing"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "27e14b45ae20fa474a292a177913e5508715ea40e40d804b8a93661e0773375c",
+    "queue_position": 119,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "schema/__init__.py",
+    "primary_test_file": "test_schema.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "Failure",
+    "message": "assert \"Wrong key 'b...}, 'bar': {}}\" == 'Invalid profile name'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "15158c5391eaacbc1e4813b3529ea035fd2cf03e",
+   "parent": "27e268d4fc36a169b9a3296fe03d3b897fc0bf2f",
+   "preservation_count": 105,
+   "preservation_nodes": [
+    "test_schema.py::test_schema",
+    "test_schema.py::test_validate_file",
+    "test_schema.py::test_and",
+    "test_schema.py::test_or",
+    "test_schema.py::test_or_only_one",
+    "test_schema.py::test_test",
+    "test_schema.py::test_regex",
+    "test_schema.py::test_validate_list",
+    "test_schema.py::test_list_tuple_set_frozenset",
+    "test_schema.py::test_strictly",
+    "test_schema.py::test_dict",
+    "test_schema.py::test_dict_keys",
+    "test_schema.py::test_ignore_extra_keys",
+    "test_schema.py::test_ignore_extra_keys_validation_and_return_keys",
+    "test_schema.py::test_dict_forbidden_keys",
+    "test_schema.py::test_dict_hook",
+    "test_schema.py::test_dict_optional_keys",
+    "test_schema.py::test_dict_optional_defaults",
+    "test_schema.py::test_dict_subtypes",
+    "test_schema.py::test_dict_key_error",
+    "test_schema.py::test_complex",
+    "test_schema.py::test_nice_errors",
+    "test_schema.py::test_use_error_handling",
+    "test_schema.py::test_or_error_handling",
+    "test_schema.py::test_and_error_handling",
+    "test_schema.py::test_schema_error_handling",
+    "test_schema.py::test_use_json",
+    "test_schema.py::test_error_reporting",
+    "test_schema.py::test_schema_repr",
+    "test_schema.py::test_validate_object",
+    "test_schema.py::test_issue_9_prioritized_key_comparison",
+    "test_schema.py::test_issue_9_prioritized_key_comparison_in_dicts",
+    "test_schema.py::test_missing_keys_exception_with_non_str_dict_keys",
+    "test_schema.py::test_issue_56_cant_rely_on_callables_to_have_name",
+    "test_schema.py::test_exception_handling_with_bad_validators",
+    "test_schema.py::test_issue_83_iterable_validation_return_type",
+    "test_schema.py::test_optional_key_convert_failed_randomly_while_with_another_optional_object",
+    "test_schema.py::test_copy",
+    "test_schema.py::test_inheritance",
+    "test_schema.py::test_inheritance_validate_kwargs",
+    "test_schema.py::test_inheritance_validate_kwargs_passed_to_nested_schema",
+    "test_schema.py::test_optional_callable_default_get_inherited_schema_validate_kwargs",
+    "test_schema.py::test_optional_callable_default_ignore_inherited_schema_validate_kwargs",
+    "test_schema.py::test_inheritance_optional",
+    "test_schema.py::test_literal_repr",
+    "test_schema.py::test_json_schema",
+    "test_schema.py::test_json_schema_with_title",
+    "test_schema.py::test_json_schema_types",
+    "test_schema.py::test_json_schema_other_types",
+    "test_schema.py::test_json_schema_nested",
+    "test_schema.py::test_json_schema_nested_schema",
+    "test_schema.py::test_json_schema_optional_key",
+    "test_schema.py::test_json_schema_optional_key_nested",
+    "test_schema.py::test_json_schema_or_key",
+    "test_schema.py::test_json_schema_or_values",
+    "test_schema.py::test_json_schema_or_values_nested",
+    "test_schema.py::test_json_schema_or_values_with_optional",
+    "test_schema.py::test_json_schema_regex",
+    "test_schema.py::test_json_schema_ecma_compliant_regex",
+    "test_schema.py::test_json_schema_or_types",
+    "test_schema.py::test_json_schema_or_only_one",
+    "test_schema.py::test_json_schema_and_types",
+    "test_schema.py::test_json_schema_or_one_value",
+    "test_schema.py::test_json_schema_const_is_none",
+    "test_schema.py::test_json_schema_const_is_callable",
+    "test_schema.py::test_json_schema_const_is_custom_type",
+    "test_schema.py::test_json_schema_default_is_custom_type",
+    "test_schema.py::test_json_schema_default_is_callable",
+    "test_schema.py::test_json_schema_default_is_callable_with_args_passed_from_json_schema",
+    "test_schema.py::test_json_schema_object_or_array_of_object",
+    "test_schema.py::test_json_schema_and_simple",
+    "test_schema.py::test_json_schema_and_list",
+    "test_schema.py::test_json_schema_forbidden_key_ignored",
+    "test_schema.py::test_json_schema_additional_properties",
+    "test_schema.py::test_json_schema_additional_properties_multiple",
+    "test_schema.py::test_json_schema_root_not_dict",
+    "test_schema.py::test_json_schema_array",
+    "test_schema.py::test_json_schema_regex_root",
+    "test_schema.py::test_json_schema_dict_type",
+    "test_schema.py::test_json_schema_title_and_description",
+    "test_schema.py::test_json_schema_title_in_or",
+    "test_schema.py::test_json_schema_description_nested",
+    "test_schema.py::test_json_schema_description_or_nested",
+    "test_schema.py::test_json_schema_literal_with_enum",
+    "test_schema.py::test_json_schema_description_and_nested",
+    "test_schema.py::test_description",
+    "test_schema.py::test_description_with_default",
+    "test_schema.py::test_json_schema_ref_in_list",
+    "test_schema.py::test_json_schema_refs",
+    "test_schema.py::test_json_schema_refs_is_smaller",
+    "test_schema.py::test_json_schema_refs_no_missing",
+    "test_schema.py::test_json_schema_definitions",
+    "test_schema.py::test_json_schema_definitions_and_literals",
+    "test_schema.py::test_json_schema_definitions_nested",
+    "test_schema.py::test_json_schema_definitions_recursive",
+    "test_schema.py::test_json_schema_definitions_invalid",
+    "test_schema.py::test_json_schema_default_value",
+    "test_schema.py::test_json_schema_default_value_with_literal",
+    "test_schema.py::test_json_schema_default_is_none",
+    "test_schema.py::test_json_schema_default_is_tuple",
+    "test_schema.py::test_json_schema_default_is_literal",
+    "test_schema.py::test_prepend_schema_name",
+    "test_schema.py::test_dict_literal_error_string",
+    "test_schema.py::test_callable_error",
+    "test_schema.py::test_tuple_key_error_message_does_not_crash"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "setup.cfg",
+    "test_schema.py",
+    "tox.ini"
+   ],
+   "repository": "schema",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "source_files": [
+    "schema/__init__.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "8c7e9446a794f71b12bbb56055b87fe3e9009c2d87bd6eb46036148f1d778e14",
+   "stability_observations": 3,
+   "target_node": "test_schema.py::test_wrong_key_reports_key_schema_error",
+   "test_files": [
+    "test_schema.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2022-10-07T21:04:43+03:00",
+   "baseline_tree_hash": "3966a14a589e046317db19de1d472afb097bcb7bf8e36fbc2a959aed504e8123",
+   "case_id": "lark-adad165e",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "api_misuse",
+    "small"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "305f6a32cd43a8f48661b0500f0edc4ad60912cad41dca1284a42d069561fd7f",
+    "queue_position": 133,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "lark/load_grammar.py",
+    "primary_test_file": "tests/test_grammar.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "GrammarError not raised by Lark"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "adad165e097db9598df82585769cab45d04ca646",
+   "parent": "b07d6ffe093dec15472f7b0ee8cbe2425efe8cfd",
+   "preservation_count": 22,
+   "preservation_nodes": [
+    "tests/test_grammar.py::TestGrammar::test_errors",
+    "tests/test_grammar.py::TestGrammar::test_empty_literal",
+    "tests/test_grammar.py::TestGrammar::test_ignore_name",
+    "tests/test_grammar.py::TestGrammar::test_override_rule",
+    "tests/test_grammar.py::TestGrammar::test_override_terminal",
+    "tests/test_grammar.py::TestGrammar::test_extend_rule",
+    "tests/test_grammar.py::TestGrammar::test_extend_term",
+    "tests/test_grammar.py::TestGrammar::test_extend_twice",
+    "tests/test_grammar.py::TestGrammar::test_undefined_ignore",
+    "tests/test_grammar.py::TestGrammar::test_alias_in_terminal",
+    "tests/test_grammar.py::TestGrammar::test_undefined_rule",
+    "tests/test_grammar.py::TestGrammar::test_undefined_term",
+    "tests/test_grammar.py::TestGrammar::test_token_multiline_only_works_with_x_flag",
+    "tests/test_grammar.py::TestGrammar::test_import_custom_sources",
+    "tests/test_grammar.py::TestGrammar::test_import_custom_sources2",
+    "tests/test_grammar.py::TestGrammar::test_import_custom_sources3",
+    "tests/test_grammar.py::TestGrammar::test_find_grammar_errors",
+    "tests/test_grammar.py::TestGrammar::test_ranged_repeat_terms",
+    "tests/test_grammar.py::TestGrammar::test_ranged_repeat_large",
+    "tests/test_grammar.py::TestGrammar::test_large_terminal",
+    "tests/test_grammar.py::TestGrammar::test_list_grammar_imports",
+    "tests/test_grammar.py::TestGrammar::test_line_breaks"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "pytest.ini",
+    "setup.cfg",
+    "tests/test_grammar.py",
+    "tox.ini"
+   ],
+   "repository": "lark",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "pytest.ini",
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "source_files": [
+    "lark/load_grammar.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "f37383abc2d3b6a8be5f6afdf57dc15ea4020e5918136099408369076c057551",
+   "stability_observations": 3,
+   "target_node": "tests/test_grammar.py::TestGrammar::test_inline_with_expand_single",
+   "test_files": [
+    "tests/test_grammar.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2021-11-07T10:41:54-08:00",
+   "baseline_tree_hash": "42bc6e1fb5a246741473b49c95d53ea31d86d140c21198dc0e6a2a24589a0dc7",
+   "case_id": "dnspython-246febc4",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction",
+    "small"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "308683762077a8ec2da89763883c137913fb3c98594df33db0633956879cc12c",
+    "queue_position": 134,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "dns/resolver.py",
+    "primary_test_file": "tests/test_resolver.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "dns.name.EmptyLabel",
+    "message": "A DNS label is empty."
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "246febc405089c8551cdba3e636d174e7446ca13",
+   "parent": "03b94513d17119dfcb708886197c81293cce7be0",
+   "preservation_count": 55,
+   "preservation_nodes": [
+    "tests/test_resolver.py::BaseResolverTests::testRead",
+    "tests/test_resolver.py::BaseResolverTests::testReadOptions",
+    "tests/test_resolver.py::BaseResolverTests::testReadOptionsBadTimeouts",
+    "tests/test_resolver.py::BaseResolverTests::testReadOptionsBadNdots",
+    "tests/test_resolver.py::BaseResolverTests::testReadNoNameservers",
+    "tests/test_resolver.py::BaseResolverTests::testReadUnknownDirective",
+    "tests/test_resolver.py::BaseResolverTests::testReadUnknownOption",
+    "tests/test_resolver.py::BaseResolverTests::testCacheExpiration",
+    "tests/test_resolver.py::BaseResolverTests::testCacheCleaning",
+    "tests/test_resolver.py::BaseResolverTests::testCacheNonCleaning",
+    "tests/test_resolver.py::BaseResolverTests::testIndexErrorOnEmptyRRsetAccess",
+    "tests/test_resolver.py::BaseResolverTests::testIndexErrorOnEmptyRRsetDelete",
+    "tests/test_resolver.py::BaseResolverTests::testRRsetDelete",
+    "tests/test_resolver.py::BaseResolverTests::testLRUReplace",
+    "tests/test_resolver.py::BaseResolverTests::testLRUDoesLRU",
+    "tests/test_resolver.py::BaseResolverTests::testLRUExpiration",
+    "tests/test_resolver.py::BaseResolverTests::test_cache_flush",
+    "tests/test_resolver.py::BaseResolverTests::test_LRUCache_set_max_size",
+    "tests/test_resolver.py::BaseResolverTests::test_LRUCache_overwrite",
+    "tests/test_resolver.py::BaseResolverTests::test_cache_stats",
+    "tests/test_resolver.py::BaseResolverTests::testEmptyAnswerSection",
+    "tests/test_resolver.py::BaseResolverTests::testSearchListsRelative",
+    "tests/test_resolver.py::BaseResolverTests::testSearchListsAbsolute",
+    "tests/test_resolver.py::BaseResolverTests::testUseEDNS",
+    "tests/test_resolver.py::BaseResolverTests::testSetFlags",
+    "tests/test_resolver.py::BaseResolverTests::testUseTSIG",
+    "tests/test_resolver.py::LiveResolverTests::testZoneForName1",
+    "tests/test_resolver.py::LiveResolverTests::testZoneForName2",
+    "tests/test_resolver.py::LiveResolverTests::testZoneForName3",
+    "tests/test_resolver.py::LiveResolverTests::testZoneForName4",
+    "tests/test_resolver.py::LiveResolverTests::testResolve",
+    "tests/test_resolver.py::LiveResolverTests::testResolveTCP",
+    "tests/test_resolver.py::LiveResolverTests::testResolveAddress",
+    "tests/test_resolver.py::LiveResolverTests::testResolveNodataException",
+    "tests/test_resolver.py::LiveResolverTests::testResolveNodataAnswer",
+    "tests/test_resolver.py::LiveResolverTests::testResolveNXDOMAIN",
+    "tests/test_resolver.py::LiveResolverTests::testResolveCacheHit",
+    "tests/test_resolver.py::LiveResolverTests::testCanonicalNameNoCNAME",
+    "tests/test_resolver.py::LiveResolverTests::testCanonicalNameCNAME",
+    "tests/test_resolver.py::LiveResolverTests::testCanonicalNameDangling",
+    "tests/test_resolver.py::LiveResolverTests::testNameserverSetting",
+    "tests/test_resolver.py::NXDOMAINExceptionTestCase::test_nxdomain_compatible",
+    "tests/test_resolver.py::NXDOMAINExceptionTestCase::test_nxdomain_merge",
+    "tests/test_resolver.py::NXDOMAINExceptionTestCase::test_nxdomain_canonical_name",
+    "tests/test_resolver.py::ResolverMiscTestCase::test_compute_timeout",
+    "tests/test_resolver.py::ResolverNameserverValidTypeTestCase::test_set_nameservers_to_list",
+    "tests/test_resolver.py::ResolverNameserverValidTypeTestCase::test_set_namservers_to_empty_list",
+    "tests/test_resolver.py::ResolverNameserverValidTypeTestCase::test_set_nameservers_invalid_type",
+    "tests/test_resolver.py::NanoTests::testE164Query",
+    "tests/test_resolver.py::ZoneForNameTests::testNoRootSOA",
+    "tests/test_resolver.py::ZoneForNameTests::testHelpfulNXDOMAIN",
+    "tests/test_resolver.py::ZoneForNameTests::testHelpfulNoErrorNoData",
+    "tests/test_resolver.py::testResolverTimeout",
+    "tests/test_resolver.py::testResolverNoNameservers",
+    "tests/test_resolver.py::testZoneForNameLifetimeTimeout"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "pytest.ini",
+    "setup.cfg",
+    "tests/test_resolver.py"
+   ],
+   "repository": "dnspython",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "pytest.ini",
+    "setup.cfg"
+   ],
+   "source_files": [
+    "dns/resolver.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "33dbc09172127efaa95a78c78c01b3a4bab9c3c3f502a2592661d8b5e8d4e7b4",
+   "stability_observations": 3,
+   "target_node": "tests/test_resolver.py::ResolverMiscTestCase::test_configure_win32_domain",
+   "test_files": [
+    "tests/test_resolver.py"
+   ]
+  },
+  {
+   "additional_targets": [
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_real_emphasis_not_over_escaped"
+   ],
+   "author_date": "2026-07-03T01:09:04-07:00",
+   "baseline_tree_hash": "d0c05daa5dd17f88fb288983bf0e0181a674bb3bdcfeb299c3c05edd55fa8cdc",
+   "case_id": "mistune-b0429966",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction",
+    "data_transform",
+    "parsing"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "30ea040734f2e07ba37e8d4415db056f41eb980af1a4156bfe8254a7de5dcfd1",
+    "queue_position": 135,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "src/mistune/renderers/markdown.py",
+    "primary_test_file": "tests/test_renderers.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "'<p><em>not emphasis</em></p>\\n' != '<p>*not emphasis*</p>\\n'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "b042996659275aa9719d6efa37163bea62b34cd5",
+   "parent": "fe02f40faf091f86da9ed62c865f31e11da111d7",
+   "preservation_count": 14,
+   "preservation_nodes": [
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_escaped_block_markers",
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_escaped_marker_on_continuation_line",
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_escaped_marker_inside_list_item",
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_escaped_backtick",
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_codespan_containing_backticks",
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_link_title_containing_quote",
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_block_quote_content_ending_in_gt",
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_real_markers_preserved",
+    "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_prose_not_over_escaped",
+    "tests/test_renderers.py::TestRendererMethodRegistration::test_registered_renderer_method",
+    "tests/test_renderers.py::TestMarkdownRendererPlugins::test_task_list_item_can_be_overridden",
+    "tests/test_renderers.py::TestMarkdownRendererPlugins::test_task_list_item_default_markdown",
+    "tests/test_renderers.py::TestMarkdownRendererPlugins::test_table_markdown",
+    "tests/test_renderers.py::TestMarkdownRendererPlugins::test_standalone_list_item"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/test_renderers.py"
+   ],
+   "repository": "mistune",
+   "runner_config_paths": [
+    "pyproject.toml"
+   ],
+   "source_files": [
+    "src/mistune/renderers/markdown.py"
+   ],
+   "src_layout": "src",
+   "stability_evidence_hash": "80a51d033d876f7875c39745d37229c8ae5edf72182b9adb4d87e65f6e7f5438",
+   "stability_observations": 3,
+   "target_node": "tests/test_renderers.py::TestMarkdownRendererRoundTrip::test_escaped_emphasis_markers",
+   "test_files": [
+    "tests/test_renderers.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2020-08-13T18:09:05+02:00",
+   "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+   "case_id": "lark-96873d64",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction",
+    "data_transform",
+    "edge_case",
+    "multi_file",
+    "parsing"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "3290deffe2873bee3196b7019d5532c808a8b61bb13ed5a1c569ed459e0a217f",
+    "queue_position": 140,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "lark/common.py",
+    "primary_test_file": "tests/test_tools.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "96873d64ba8ef85fcad1daa2dd2e9bf931eb06ba",
+   "parent": "c9ca287e9e2ae2a3f5ad7cf028fdabf408f053a1",
+   "preservation_count": 3,
+   "preservation_nodes": [
+    "tests/test_tools.py::TestStandalone::test_simple",
+    "tests/test_tools.py::TestStandalone::test_contextual",
+    "tests/test_tools.py::TestStandalone::test_postlex"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "setup.cfg",
+    "tests/test_tools.py",
+    "tox.ini"
+   ],
+   "repository": "lark",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "source_files": [
+    "lark/common.py",
+    "lark/lark.py",
+    "lark/parser_frontends.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "c4b9c09e3c5adcb5ee25d97eb1f4806aad7f1ae8f482f7bb5e686680a5f83422",
+   "stability_observations": 3,
+   "target_node": "tests/test_tools.py::TestStandalone::test_transformer",
+   "test_files": [
+    "tests/test_tools.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2024-11-01T18:51:25Z",
+   "baseline_tree_hash": "19242c9935395b0558e605e88d3634785b2cc8668918f8589543f94fd2e976d3",
+   "case_id": "mistune-f4237046",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "multi_file",
+    "parsing"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "3795309fbff894bf184f4fcd3e8ae86fdb3d084ebc55f5d1afe7580b4a3a4315",
+    "queue_position": 149,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "src/mistune/directives/image.py",
+    "primary_test_file": "tests/test_misc.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "Lists differ: [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&amp;b=2'}}]}] != [{'ty[94 chars]}], 'attrs': {'url': 'https://example.com/foo?a=1&b=2'}}]}]"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "f4237046816a05999792f292ea1212144d48519e",
+   "parent": "0772c78bc0a62771768278263ef740345f58c0f0",
+   "preservation_count": 13,
+   "preservation_nodes": [
+    "tests/test_misc.py::TestMiscCases::test_none",
+    "tests/test_misc.py::TestMiscCases::test_before_parse_hooks",
+    "tests/test_misc.py::TestMiscCases::test_hard_wrap",
+    "tests/test_misc.py::TestMiscCases::test_escape_html",
+    "tests/test_misc.py::TestMiscCases::test_harmful_links",
+    "tests/test_misc.py::TestMiscCases::test_ref_link",
+    "tests/test_misc.py::TestMiscCases::test_allow_harmful_protocols",
+    "tests/test_misc.py::TestMiscCases::test_allow_data_protocols",
+    "tests/test_misc.py::TestMiscCases::test_use_plugin",
+    "tests/test_misc.py::TestMiscCases::test_markdown_func",
+    "tests/test_misc.py::TestMiscCases::test_ast_output",
+    "tests/test_misc.py::TestMiscCases::test_emsp",
+    "tests/test_misc.py::TestMiscCases::test_html_tag_text_following_list"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/test_misc.py"
+   ],
+   "repository": "mistune",
+   "runner_config_paths": [
+    "pyproject.toml"
+   ],
+   "source_files": [
+    "src/mistune/directives/image.py",
+    "src/mistune/renderers/html.py",
+    "src/mistune/util.py"
+   ],
+   "src_layout": "src",
+   "stability_evidence_hash": "ae20872b273e143e69dfb622e9039d3ff871a7dd97983635afc38735564cea3b",
+   "stability_observations": 3,
+   "target_node": "tests/test_misc.py::TestMiscCases::test_ast_url",
+   "test_files": [
+    "tests/test_misc.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2026-08-15T09:30:14-07:00",
+   "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+   "case_id": "dnspython-227eace4",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "edge_case",
+    "multi_file"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "3c907eb51b5e25b69a075a02f3ec8f142a13356f42ad169ecb1b54579440bb40",
+    "queue_position": 152,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "dns/rdtypes/ANY/LP.py",
+    "primary_test_file": "tests/test_zone.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "False is not true"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "227eace43e1926726c29e0f20b23f4f04c1095e1",
+   "parent": "fdbbf4b429472242531d4121ff668c63c81d3a1a",
+   "preservation_count": 17,
+   "preservation_nodes": [
+    "tests/test_zone.py::VersionedZoneTestCase::testUseTransaction",
+    "tests/test_zone.py::VersionedZoneTestCase::testImmutableNodes",
+    "tests/test_zone.py::VersionedZoneTestCase::testSelectDefaultPruningPolicy",
+    "tests/test_zone.py::VersionedZoneTestCase::testSetAlternatePruningPolicyInConstructor",
+    "tests/test_zone.py::VersionedZoneTestCase::testCannotSpecifyBothSerialAndVersionIdToReader",
+    "tests/test_zone.py::VersionedZoneTestCase::testUnknownVersion",
+    "tests/test_zone.py::VersionedZoneTestCase::testUnknownSerial",
+    "tests/test_zone.py::VersionedZoneTestCase::testNoRelativizeReader",
+    "tests/test_zone.py::VersionedZoneTestCase::testNoRelativizeReaderOriginInText",
+    "tests/test_zone.py::VersionedZoneTestCase::testNoRelativizeReaderAbsoluteGet",
+    "tests/test_zone.py::VersionedZoneTestCase::testCnameAndOtherDataAddOther",
+    "tests/test_zone.py::VersionedZoneTestCase::testCnameAndOtherDataAddCname",
+    "tests/test_zone.py::VersionedZoneTestCase::testGetSoa",
+    "tests/test_zone.py::VersionedZoneTestCase::testGetSoaTxn",
+    "tests/test_zone.py::VersionedZoneTestCase::testGetSoaEmptyZone",
+    "tests/test_zone.py::VersionedZoneTestCase::testGetRdataset1",
+    "tests/test_zone.py::VersionedZoneTestCase::testGetRdataset2"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/test_zone.py"
+   ],
+   "repository": "dnspython",
+   "runner_config_paths": [
+    "pyproject.toml"
+   ],
+   "source_files": [
+    "dns/rdtypes/ANY/LP.py",
+    "dns/rdtypes/ANY/TKEY.py",
+    "dns/rdtypes/IN/NAPTR.py",
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "132aaa9c7aeb5841003e460c30280d263488dfdddae060e5d5c1fef9e679bf32",
+   "stability_observations": 3,
+   "target_node": "tests/test_zone.py::ZoneTestCase::testToCompressOrNotToCompressAndCanonicalization",
+   "test_files": [
+    "tests/test_zone.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2018-05-14T15:17:48-04:00",
+   "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+   "case_id": "click-a17b5447",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "api_misuse",
+    "config_interaction"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "430b17e639af3be1fdde561d7f2edcad97309705b002cd542304ffb3e8260c7f",
+    "queue_position": 163,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "click/decorators.py",
+    "primary_test_file": "tests/test_options.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n --testoption TEXT you wont see me\\n --help Show this message and exit.\\n'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "a17b544788256d59baae0352a90bdb9af2b8ed34",
+   "parent": "9c456ec2679418442b71b2c1a5e4e62f0b41cbda",
+   "preservation_count": 20,
+   "preservation_nodes": [
+    "tests/test_options.py::test_prefixes",
+    "tests/test_options.py::test_invalid_option",
+    "tests/test_options.py::test_invalid_nargs",
+    "tests/test_options.py::test_nargs_tup_composite_mult",
+    "tests/test_options.py::test_counting",
+    "tests/test_options.py::test_unknown_options",
+    "tests/test_options.py::test_multiple_required",
+    "tests/test_options.py::test_multiple_envvar",
+    "tests/test_options.py::test_multiple_default_help",
+    "tests/test_options.py::test_multiple_default_type",
+    "tests/test_options.py::test_nargs_envvar",
+    "tests/test_options.py::test_custom_validation",
+    "tests/test_options.py::test_winstyle_options",
+    "tests/test_options.py::test_legacy_options",
+    "tests/test_options.py::test_missing_choice",
+    "tests/test_options.py::test_multiline_help",
+    "tests/test_options.py::test_argument_custom_class",
+    "tests/test_options.py::test_option_custom_class",
+    "tests/test_options.py::test_aliases_for_flags",
+    "tests/test_options.py::test_option_names"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "setup.cfg",
+    "tests/conftest.py",
+    "tests/test_options.py",
+    "tox.ini"
+   ],
+   "repository": "click",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tests/conftest.py",
+    "tox.ini"
+   ],
+   "source_files": [
+    "click/decorators.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "c556e2e91137d612abba81c70732cc3d989c44763a2dfecf53eba8b39af07daa",
+   "stability_observations": 3,
+   "target_node": "tests/test_options.py::test_option_custom_class_reusable",
+   "test_files": [
+    "tests/test_options.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2026-03-18T09:26:43-04:00",
+   "baseline_tree_hash": "c22ec5cf23f5d03ee95fe6a6fffada8d2fdd9a000716b2facb2715b42d5a2fe5",
+   "case_id": "packaging-553582d9",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "parsing",
+    "small"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "4cdae29b45818fd44e8bc164a0566326f2c03607e1f7d863a906e9400b667749",
+    "queue_position": 185,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "src/packaging/metadata.py",
+    "primary_test_file": "tests/test_metadata.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "Regex pattern did not match."
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "553582d9162c761e4ab97ccc6cea43ac14ff2a8b",
+   "parent": "00b7e7585715c808687ca2be0cd5fffefc38408f",
+   "preservation_count": 72,
+   "preservation_nodes": [
+    "tests/test_metadata.py::TestRawMetadata::test_non_repeating_fields_only_once",
+    "tests/test_metadata.py::TestRawMetadata::test_non_repeating_fields_repeated",
+    "tests/test_metadata.py::TestRawMetadata::test_repeating_fields_only_once",
+    "tests/test_metadata.py::TestRawMetadata::test_repeating_fields_repeated",
+    "tests/test_metadata.py::TestRawMetadata::test_keywords",
+    "tests/test_metadata.py::TestRawMetadata::test_project_urls_parsing",
+    "tests/test_metadata.py::TestRawMetadata::test_duplicate_project_urls",
+    "tests/test_metadata.py::TestRawMetadata::test_str_input",
+    "tests/test_metadata.py::TestRawMetadata::test_bytes_input",
+    "tests/test_metadata.py::TestRawMetadata::test_header_mojibake",
+    "tests/test_metadata.py::TestRawMetadata::test_description",
+    "tests/test_metadata.py::TestRawMetadata::test_description_non_utf8",
+    "tests/test_metadata.py::TestRawMetadata::test_description_multiple",
+    "tests/test_metadata.py::TestRawMetadata::test_lowercase_keys",
+    "tests/test_metadata.py::TestRawMetadata::test_complete",
+    "tests/test_metadata.py::TestExceptionGroup::test_attributes",
+    "tests/test_metadata.py::TestExceptionGroup::test_repr",
+    "tests/test_metadata.py::TestMetadata::test_from_email",
+    "tests/test_metadata.py::TestMetadata::test_from_email_empty_import_name",
+    "tests/test_metadata.py::TestMetadata::test_from_email_unparsed",
+    "tests/test_metadata.py::TestMetadata::test_from_email_validate",
+    "tests/test_metadata.py::TestMetadata::test_from_email_unparsed_valid_field_name",
+    "tests/test_metadata.py::TestMetadata::test_required_fields",
+    "tests/test_metadata.py::TestMetadata::test_required_fields_missing",
+    "tests/test_metadata.py::TestMetadata::test_raw_validate_unrecognized_field",
+    "tests/test_metadata.py::TestMetadata::test_raw_data_not_mutated",
+    "tests/test_metadata.py::TestMetadata::test_caching",
+    "tests/test_metadata.py::TestMetadata::test_from_raw_validate",
+    "tests/test_metadata.py::TestMetadata::test_metadata_version_field_introduction",
+    "tests/test_metadata.py::TestMetadata::test_metadata_version_field_introduction_mismatch",
+    "tests/test_metadata.py::TestMetadata::test_single_value_unvalidated_attribute",
+    "tests/test_metadata.py::TestMetadata::test_multi_value_unvalidated_attribute",
+    "tests/test_metadata.py::TestMetadata::test_valid_metadata_version",
+    "tests/test_metadata.py::TestMetadata::test_invalid_metadata_version",
+    "tests/test_metadata.py::TestMetadata::test_valid_version",
+    "tests/test_metadata.py::TestMetadata::test_missing_version",
+    "tests/test_metadata.py::TestMetadata::test_invalid_version",
+    "tests/test_metadata.py::TestMetadata::test_valid_summary",
+    "tests/test_metadata.py::TestMetadata::test_invalid_summary",
+    "tests/test_metadata.py::TestMetadata::test_valid_name",
+    "tests/test_metadata.py::TestMetadata::test_invalid_name",
+    "tests/test_metadata.py::TestMetadata::test_valid_description_content_type",
+    "tests/test_metadata.py::TestMetadata::test_invalid_description_content_type",
+    "tests/test_metadata.py::TestMetadata::test_keywords",
+    "tests/test_metadata.py::TestMetadata::test_valid_project_urls",
+    "tests/test_metadata.py::TestMetadata::test_valid_requires_python",
+    "tests/test_metadata.py::TestMetadata::test_invalid_requires_python",
+    "tests/test_metadata.py::TestMetadata::test_requires_external",
+    "tests/test_metadata.py::TestMetadata::test_valid_provides_extra",
+    "tests/test_metadata.py::TestMetadata::test_invalid_provides_extra",
+    "tests/test_metadata.py::TestMetadata::test_valid_requires_dist",
+    "tests/test_metadata.py::TestMetadata::test_invalid_requires_dist",
+    "tests/test_metadata.py::TestMetadata::test_valid_dynamic",
+    "tests/test_metadata.py::TestMetadata::test_invalid_dynamic_value",
+    "tests/test_metadata.py::TestMetadata::test_disallowed_dynamic",
+    "tests/test_metadata.py::TestMetadata::test_optional_defaults_to_none",
+    "tests/test_metadata.py::TestMetadata::test_valid_license_expression",
+    "tests/test_metadata.py::TestMetadata::test_invalid_license_expression",
+    "tests/test_metadata.py::TestMetadata::test_valid_license_files",
+    "tests/test_metadata.py::TestMetadata::test_invalid_license_files",
+    "tests/test_metadata.py::TestMetadata::test_valid_import_names",
+    "tests/test_metadata.py::TestMetadata::test_invalid_import_names_identifier",
+    "tests/test_metadata.py::TestMetadata::test_invalid_import_names_keyword",
+    "tests/test_metadata.py::TestMetadataWriting::test_write_metadata",
+    "tests/test_metadata.py::TestMetadataWriting::test_write_metadata_with_description",
+    "tests/test_metadata.py::TestMetadataWriting::test_multiline_license",
+    "tests/test_metadata.py::TestMetadataWriting::test_large",
+    "tests/test_metadata.py::TestMetadataWriting::test_modern_license",
+    "tests/test_metadata.py::TestMetadataWriting::test__import_names",
+    "tests/test_metadata.py::TestMetadataWriting::test_empty_import_names",
+    "tests/test_metadata.py::TestMetadataWriting::test_headers",
+    "tests/test_metadata.py::TestMetadataWriting::test_body"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/conftest.py",
+    "tests/test_metadata.py"
+   ],
+   "repository": "packaging",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "tests/conftest.py"
+   ],
+   "source_files": [
+    "src/packaging/metadata.py"
+   ],
+   "src_layout": "src",
+   "stability_evidence_hash": "b62f4a3547c868383f978a2be9fa013406e8e483853065bc80e990c620651894",
+   "stability_observations": 3,
+   "target_node": "tests/test_metadata.py::TestMetadata::test_invalid_charset_error_message",
+   "test_files": [
+    "tests/test_metadata.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2021-10-15T14:04:14+02:00",
+   "baseline_tree_hash": "aa5354e29c42d258f4faeee1ac57f55be7649c7061d0fa71f0f541665fbd1ec6",
+   "case_id": "icalendar-9b72b0b1",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction",
+    "edge_case",
+    "small"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "50c9b8d1d60b4d30e1b30c87fb670b56628b1647f5c68f8cac3777f061a03507",
+    "queue_position": 191,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "src/icalendar/prop.py",
+    "primary_test_file": "src/icalendar/tests/test_unit_prop.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "TypeError",
+    "message": "a bytes-like object is required, not 'str'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "9b72b0b1d6acf66a44439c73145d0dda42dc663e",
+   "parent": "c54000617e9c1f4413336af377f48363588c4441",
+   "preservation_count": 24,
+   "preservation_nodes": [
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vBinary",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vBoolean",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vCalAddress",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vFloat",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vInt",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vDDDLists",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vDDDTypes",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vDate",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vDatetime",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vDuration",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vPeriod",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vWeekday",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vFrequency",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vRecur",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vText",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vTime",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vUri",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vGeo",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vUTCOffset",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vInline",
+    "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_TypesFactory",
+    "src/icalendar/tests/test_unit_prop.py::TestPropertyValues::test_vDDDLists_timezone",
+    "src/icalendar/tests/test_unit_prop.py::TestWindowsOlsonMapping::test_windows_timezone",
+    "src/icalendar/tests/test_unit_prop.py::TestWindowsOlsonMapping::test_all"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "setup.cfg",
+    "src/icalendar/tests/test_unit_prop.py",
+    "tox.ini"
+   ],
+   "repository": "icalendar",
+   "runner_config_paths": [
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "source_files": [
+    "src/icalendar/prop.py"
+   ],
+   "src_layout": "src",
+   "stability_evidence_hash": "b23619180d50d2c04ee2e20270e01c4ea0e380ec3bce5e12213231529e1298d3",
+   "stability_observations": 3,
+   "target_node": "src/icalendar/tests/test_unit_prop.py::TestProp::test_prop_vCategory",
+   "test_files": [
+    "src/icalendar/tests/test_unit_prop.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2020-06-01T16:12:28+02:00",
+   "baseline_tree_hash": "12710f9cff4ca7f0c98e2fc530bdb92cd314b876c9872dec157bd6f2e917cd97",
+   "case_id": "dnspython-c9f6c819",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "edge_case"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "5358c3a03e003616fd2812ee3cb983a2043c35f8f956295ab8559efb09e700e8",
+    "queue_position": 194,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "dns/rdtypes/IN/SRV.py",
+    "primary_test_file": "tests/test_bugs.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "b'example' not found in b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00' : Expected canonical format of SRV record type to have lowercase DNS names, but saw b'\\x00d\\x00\\x01\\x13\\xc5\\x07EXAMPLE\\x03com\\x00"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "c9f6c8193f4812878ca971a0622d038ddb05cf44",
+   "parent": "8cc4963a1a7323ec320f7cd4b02a70b8b9df04f6",
+   "preservation_count": 8,
+   "preservation_nodes": [
+    "tests/test_bugs.py::BugsTestCase::test_float_LOC",
+    "tests/test_bugs.py::BugsTestCase::test_SOA_BIND8_TTL",
+    "tests/test_bugs.py::BugsTestCase::test_TTL_bounds_check",
+    "tests/test_bugs.py::BugsTestCase::test_empty_NSEC3_window",
+    "tests/test_bugs.py::BugsTestCase::test_zero_size_APL",
+    "tests/test_bugs.py::BugsTestCase::test_CAA_from_wire",
+    "tests/test_bugs.py::BugsTestCase::test_trailing_zero_APL",
+    "tests/test_bugs.py::BugsTestCase::test_TXT_conversions"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "setup.cfg",
+    "tests/test_bugs.py",
+    "tox.ini"
+   ],
+   "repository": "dnspython",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "setup.cfg",
+    "tox.ini"
+   ],
+   "source_files": [
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "681cc8033425e9d10e0449056da35f78f6a6553884d5407bc9d013a6cfaaf408",
+   "stability_observations": 3,
+   "target_node": "tests/test_bugs.py::BugsTestCase::test_lowercase_canonicals",
+   "test_files": [
+    "tests/test_bugs.py"
+   ]
+  },
+  {
+   "additional_targets": [
+    "tests/test_security_include.py::TestIncludeSecurity::test_include_text_escapes_with_html_escape_enabled",
+    "tests/test_security_include.py::TestIncludeSecurity::test_include_html_escapes_with_html_escape_enabled",
+    "tests/test_security_include.py::TestIncludeSecurity::test_include_rejects_circular_references"
+   ],
+   "author_date": "2026-06-21T21:12:12+09:00",
+   "baseline_tree_hash": "b1186a204333d272f2b9295de9e64795a7939a9afe28bdb441ff8914fe03d472",
+   "case_id": "mistune-1bef343a",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "config_interaction",
+    "edge_case",
+    "parsing",
+    "state_order"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "6fe3e2a8ec6becbc71694b7c48ff025fd86373a0b1bd274052857141eaafd4ec",
+    "queue_position": 216,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "src/mistune/directives/include.py",
+    "primary_test_file": "tests/test_directives.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "AssertionError",
+    "message": "'Could not include outside source dir' not found in '<pre class=\"directive-include\">\\ntopsecret</pre>\\n<pre class=\"directive-include\">\\ntopsecret</pre>\\n'"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "1bef343ade163fc3bb95572b15be720084cdb993",
+   "parent": "c7101fcbb6e8790e8e39157c5ca2238fc6dd6cbc",
+   "preservation_count": 7,
+   "preservation_nodes": [
+    "tests/test_directives.py::TestCustomizeToc::test_rst_toc",
+    "tests/test_directives.py::TestCustomizeToc::test_fenced_toc",
+    "tests/test_directives.py::TestCustomizeToc::test_colon_fenced_toc",
+    "tests/test_directives.py::TestDirectiveInclude::test_include_missing_source",
+    "tests/test_directives.py::TestImageDirectiveSrc::test_harmful_src_blocked",
+    "tests/test_directives.py::TestImageDirectiveSrc::test_safe_src_preserved",
+    "tests/test_directives.py::TestImageDirectiveSrc::test_target_still_filtered"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/test_directives.py",
+    "tests/test_security_include.py"
+   ],
+   "repository": "mistune",
+   "runner_config_paths": [
+    "pyproject.toml"
+   ],
+   "source_files": [
+    "src/mistune/directives/include.py"
+   ],
+   "src_layout": "src",
+   "stability_evidence_hash": "d1ffbc32787f595134ea9184eef99d8bbb8564952a80d06a29183c9f1621ad0a",
+   "stability_observations": 3,
+   "target_node": "tests/test_security_include.py::TestIncludeSecurity::test_include_rejects_traversal_and_absolute_paths",
+   "test_files": [
+    "tests/test_directives.py",
+    "tests/test_security_include.py"
+   ]
+  },
+  {
+   "additional_targets": [],
+   "author_date": "2020-06-03T22:34:17-07:00",
+   "baseline_tree_hash": "f53716f7c1a7bbf3e043d6d07ef94e4e18087fdb47ccdc56191cef828ec9a266",
+   "case_id": "sortedcontainers-2b037039",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "api_misuse",
+    "config_interaction",
+    "inheritance",
+    "state_order"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "802dc878ba70e6e74b41c2ce2f480352007ab24e511089e47b63c6728ebb55b9",
+    "queue_position": 230,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "sortedcontainers/sorteddict.py",
+    "primary_test_file": "tests/issue_147.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "Failure",
+    "message": "assert 31271 == 31297"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "2b037039bb16c81ddc1ee94e88c44aa85eed2810",
+   "parent": "22dec805ce6ef7657efaa9e6f846938bc90825f5",
+   "preservation_count": 53,
+   "preservation_nodes": [
+    "tests/test_coverage_sorteddict.py::test_init",
+    "tests/test_coverage_sorteddict.py::test_init_key",
+    "tests/test_coverage_sorteddict.py::test_init_args",
+    "tests/test_coverage_sorteddict.py::test_init_kwargs",
+    "tests/test_coverage_sorteddict.py::test_clear",
+    "tests/test_coverage_sorteddict.py::test_contains",
+    "tests/test_coverage_sorteddict.py::test_delitem",
+    "tests/test_coverage_sorteddict.py::test_getitem",
+    "tests/test_coverage_sorteddict.py::test_eq",
+    "tests/test_coverage_sorteddict.py::test_iter",
+    "tests/test_coverage_sorteddict.py::test_iter_key",
+    "tests/test_coverage_sorteddict.py::test_reversed",
+    "tests/test_coverage_sorteddict.py::test_reversed_key",
+    "tests/test_coverage_sorteddict.py::test_islice",
+    "tests/test_coverage_sorteddict.py::test_irange",
+    "tests/test_coverage_sorteddict.py::test_irange_key",
+    "tests/test_coverage_sorteddict.py::test_len",
+    "tests/test_coverage_sorteddict.py::test_setitem",
+    "tests/test_coverage_sorteddict.py::test_copy",
+    "tests/test_coverage_sorteddict.py::test_copy_copy",
+    "tests/test_coverage_sorteddict.py::test_fromkeys",
+    "tests/test_coverage_sorteddict.py::test_get",
+    "tests/test_coverage_sorteddict.py::test_has_key",
+    "tests/test_coverage_sorteddict.py::test_items",
+    "tests/test_coverage_sorteddict.py::test_keys",
+    "tests/test_coverage_sorteddict.py::test_values",
+    "tests/test_coverage_sorteddict.py::test_iterkeys",
+    "tests/test_coverage_sorteddict.py::test_notgiven",
+    "tests/test_coverage_sorteddict.py::test_pop",
+    "tests/test_coverage_sorteddict.py::test_pop2",
+    "tests/test_coverage_sorteddict.py::test_popitem",
+    "tests/test_coverage_sorteddict.py::test_popitem2",
+    "tests/test_coverage_sorteddict.py::test_popitem3",
+    "tests/test_coverage_sorteddict.py::test_peekitem",
+    "tests/test_coverage_sorteddict.py::test_peekitem2",
+    "tests/test_coverage_sorteddict.py::test_setdefault",
+    "tests/test_coverage_sorteddict.py::test_update",
+    "tests/test_coverage_sorteddict.py::test_update2",
+    "tests/test_coverage_sorteddict.py::test_repr",
+    "tests/test_coverage_sorteddict.py::test_repr_recursion",
+    "tests/test_coverage_sorteddict.py::test_repr_subclass",
+    "tests/test_coverage_sorteddict.py::test_index",
+    "tests/test_coverage_sorteddict.py::test_iloc",
+    "tests/test_coverage_sorteddict.py::test_index_key",
+    "tests/test_coverage_sorteddict.py::test_bisect",
+    "tests/test_coverage_sorteddict.py::test_bisect_key",
+    "tests/test_coverage_sorteddict.py::test_bisect_key2",
+    "tests/test_coverage_sorteddict.py::test_keysview",
+    "tests/test_coverage_sorteddict.py::test_valuesview",
+    "tests/test_coverage_sorteddict.py::test_values_view_index",
+    "tests/test_coverage_sorteddict.py::test_itemsview",
+    "tests/test_coverage_sorteddict.py::test_items_view_index",
+    "tests/test_coverage_sorteddict.py::test_pickle"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "tests/issue_147.py",
+    "tests/test_coverage_sorteddict.py",
+    "tox.ini"
+   ],
+   "repository": "sortedcontainers",
+   "runner_config_paths": [
+    "tox.ini"
+   ],
+   "source_files": [
+    "sortedcontainers/sorteddict.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "7d266bc86125f27b17e5a81d6b6afc970bcd2d944b45fd339d358ae9d0f01ea9",
+   "stability_observations": 3,
+   "target_node": "tests/test_coverage_sorteddict.py::test_ref_counts",
+   "test_files": [
+    "tests/issue_147.py",
+    "tests/test_coverage_sorteddict.py"
+   ]
+  },
+  {
+   "additional_targets": [
+    "tests/test_coverage_sortedkeylist_negate.py::test_update_order_consistency"
+   ],
+   "author_date": "2020-11-04T00:37:30-06:00",
+   "baseline_tree_hash": "239e3f589a9026947b3552f541e336612d70e6d47232eab3b75b03f24e442901",
+   "case_id": "sortedcontainers-7dc426c9",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "state_order"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "b5adcaa8502be231b9b1693e207979e8e3d60d6b9c0baf902515c5d84ace72df",
+    "queue_position": 276,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "sortedcontainers/sortedlist.py",
+    "primary_test_file": "tests/test_coverage_sortedkeylist_modulo.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "Failure",
+    "message": "assert False"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "7dc426c95a0c329d5514e6198d92080f1ffc1e5e",
+   "parent": "13d30bc654eb9e6be092282ca502967fcb7f0113",
+   "preservation_count": 123,
+   "preservation_nodes": [
+    "tests/test_coverage_sortedkeylist_modulo.py::test_init",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_new",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_new_error",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_key",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_key2",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_add",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_update",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_contains",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_discard",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_remove",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_remove_valueerror1",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_remove_valueerror2",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_remove_valueerror3",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_remove_valueerror4",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_remove_valueerror5",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_delete",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_getitem",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_getitem_slice",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_getitem_slice_big",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_getitem_slicezero",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_getitem_indexerror1",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_getitem_indexerror2",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_getitem_indexerror3",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_delitem",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_delitem_slice",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_iter",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_reversed",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_reverse",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_islice",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_irange",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_irange_key",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_len",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_bisect_left",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_bisect",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_bisect_right",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_bisect_key_left",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_bisect_key_right",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_bisect_key",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_copy",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_copy_copy",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_count",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_pop",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_pop_indexerror1",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_pop_indexerror2",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror1",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror2",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror3",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror4",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror5",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror6",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror7",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror8",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror9",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_index_valueerror10",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_mul",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_imul",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_op_add",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_eq",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_ne",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_lt",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_le",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_gt",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_ge",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_repr",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_repr_recursion",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_repr_subclass",
+    "tests/test_coverage_sortedkeylist_modulo.py::test_check",
+    "tests/test_coverage_sortedkeylist_negate.py::test_alias",
+    "tests/test_coverage_sortedkeylist_negate.py::test_identity",
+    "tests/test_coverage_sortedkeylist_negate.py::test_init",
+    "tests/test_coverage_sortedkeylist_negate.py::test_key",
+    "tests/test_coverage_sortedkeylist_negate.py::test_add",
+    "tests/test_coverage_sortedkeylist_negate.py::test_update",
+    "tests/test_coverage_sortedkeylist_negate.py::test_contains",
+    "tests/test_coverage_sortedkeylist_negate.py::test_discard",
+    "tests/test_coverage_sortedkeylist_negate.py::test_remove",
+    "tests/test_coverage_sortedkeylist_negate.py::test_remove_valueerror1",
+    "tests/test_coverage_sortedkeylist_negate.py::test_remove_valueerror2",
+    "tests/test_coverage_sortedkeylist_negate.py::test_remove_valueerror3",
+    "tests/test_coverage_sortedkeylist_negate.py::test_delete",
+    "tests/test_coverage_sortedkeylist_negate.py::test_getitem",
+    "tests/test_coverage_sortedkeylist_negate.py::test_getitem_slice",
+    "tests/test_coverage_sortedkeylist_negate.py::test_getitem_slice_big",
+    "tests/test_coverage_sortedkeylist_negate.py::test_getitem_slicezero",
+    "tests/test_coverage_sortedkeylist_negate.py::test_getitem_indexerror1",
+    "tests/test_coverage_sortedkeylist_negate.py::test_getitem_indexerror2",
+    "tests/test_coverage_sortedkeylist_negate.py::test_getitem_indexerror3",
+    "tests/test_coverage_sortedkeylist_negate.py::test_delitem",
+    "tests/test_coverage_sortedkeylist_negate.py::test_delitem_slice",
+    "tests/test_coverage_sortedkeylist_negate.py::test_iter",
+    "tests/test_coverage_sortedkeylist_negate.py::test_reversed",
+    "tests/test_coverage_sortedkeylist_negate.py::test_reverse",
+    "tests/test_coverage_sortedkeylist_negate.py::test_islice",
+    "tests/test_coverage_sortedkeylist_negate.py::test_irange",
+    "tests/test_coverage_sortedkeylist_negate.py::test_len",
+    "tests/test_coverage_sortedkeylist_negate.py::test_bisect_left",
+    "tests/test_coverage_sortedkeylist_negate.py::test_bisect",
+    "tests/test_coverage_sortedkeylist_negate.py::test_bisect_right",
+    "tests/test_coverage_sortedkeylist_negate.py::test_copy",
+    "tests/test_coverage_sortedkeylist_negate.py::test_copy_copy",
+    "tests/test_coverage_sortedkeylist_negate.py::test_count",
+    "tests/test_coverage_sortedkeylist_negate.py::test_pop",
+    "tests/test_coverage_sortedkeylist_negate.py::test_pop_indexerror1",
+    "tests/test_coverage_sortedkeylist_negate.py::test_pop_indexerror2",
+    "tests/test_coverage_sortedkeylist_negate.py::test_index",
+    "tests/test_coverage_sortedkeylist_negate.py::test_index_valueerror1",
+    "tests/test_coverage_sortedkeylist_negate.py::test_index_valueerror2",
+    "tests/test_coverage_sortedkeylist_negate.py::test_index_valueerror3",
+    "tests/test_coverage_sortedkeylist_negate.py::test_index_valueerror4",
+    "tests/test_coverage_sortedkeylist_negate.py::test_index_valueerror5",
+    "tests/test_coverage_sortedkeylist_negate.py::test_index_valueerror6",
+    "tests/test_coverage_sortedkeylist_negate.py::test_mul",
+    "tests/test_coverage_sortedkeylist_negate.py::test_imul",
+    "tests/test_coverage_sortedkeylist_negate.py::test_op_add",
+    "tests/test_coverage_sortedkeylist_negate.py::test_eq",
+    "tests/test_coverage_sortedkeylist_negate.py::test_lt",
+    "tests/test_coverage_sortedkeylist_negate.py::test_lte",
+    "tests/test_coverage_sortedkeylist_negate.py::test_gt",
+    "tests/test_coverage_sortedkeylist_negate.py::test_gte",
+    "tests/test_coverage_sortedkeylist_negate.py::test_repr",
+    "tests/test_coverage_sortedkeylist_negate.py::test_pickle",
+    "tests/test_coverage_sortedkeylist_negate.py::test_check"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "tests/test_coverage_sortedkeylist_modulo.py",
+    "tests/test_coverage_sortedkeylist_negate.py",
+    "tox.ini"
+   ],
+   "repository": "sortedcontainers",
+   "runner_config_paths": [
+    "tox.ini"
+   ],
+   "source_files": [
+    "sortedcontainers/sortedlist.py"
+   ],
+   "src_layout": "flat",
+   "stability_evidence_hash": "8012e8a78bfa1de9dd2cdb8a466f713cd9d5d300073b2755c174f7f8b60c6ae9",
+   "stability_observations": 3,
+   "target_node": "tests/test_coverage_sortedkeylist_modulo.py::test_update_order_consistency",
+   "test_files": [
+    "tests/test_coverage_sortedkeylist_modulo.py",
+    "tests/test_coverage_sortedkeylist_negate.py"
+   ]
+  },
+  {
+   "additional_targets": [
+    "tests/test_structures.py::test_negative_infinity_self_comparison"
+   ],
+   "author_date": "2026-03-08T21:36:22+03:00",
+   "baseline_tree_hash": "d0f8f0b0faf415018ad86194361d6801a61d08c3bb0c5c19208e1cff6a3500fa",
+   "case_id": "packaging-f8f16338",
+   "case_oracle": {
+    "correct_iff": [
+     "the target node passes",
+     "every preservation node still passes",
+     "no protected path is modified"
+    ]
+   },
+   "categories": [
+    "edge_case"
+   ],
+   "deterministic_order_provenance": {
+    "order_key": "c5e1d0ad78cfba40cd7e0f442cdd54ba6ede5ebcb37fe6c64f1cb94ed5360bc2",
+    "queue_position": 295,
+    "rule": "SHA-256(fix_commit), fixed before validation began"
+   },
+   "duplicate_family_provenance": {
+    "primary_source_file": "src/packaging/_structures.py",
+    "primary_test_file": "tests/test_structures.py",
+    "rule": "one case per (repository, primary source file) and (repository, primary test file)"
+   },
+   "failure_identity": {
+    "exception_type": "Failure",
+    "message": "assert Infinity <= Infinity"
+   },
+   "failure_identity_stable": true,
+   "fix_commit": "f8f16338e10d5d509ea2a29e0f0cf56baf4be565",
+   "parent": "4339d3a0028348e21863664e6022e3cff20c3411",
+   "preservation_count": 10,
+   "preservation_nodes": [
+    "tests/test_structures.py::test_infinity_repr",
+    "tests/test_structures.py::test_negative_infinity_repr",
+    "tests/test_structures.py::test_infinity_hash",
+    "tests/test_structures.py::test_negative_infinity_hash",
+    "tests/test_structures.py::test_infinity_comparison",
+    "tests/test_structures.py::test_negative_infinity_lesser",
+    "tests/test_structures.py::test_infinity_equal",
+    "tests/test_structures.py::test_negative_infinity_equal",
+    "tests/test_structures.py::test_negate_infinity",
+    "tests/test_structures.py::test_negate_negative_infinity"
+   ],
+   "prior_exposure_status": "unseen: excluded set applied to fix_commit and parent",
+   "protected_paths": [
+    "pyproject.toml",
+    "tests/conftest.py",
+    "tests/test_structures.py"
+   ],
+   "repository": "packaging",
+   "runner_config_paths": [
+    "pyproject.toml",
+    "tests/conftest.py"
+   ],
+   "source_files": [
+    "src/packaging/_structures.py"
+   ],
+   "src_layout": "src",
+   "stability_evidence_hash": "14a50d02e3560ca4f680426702838c89c7f73e2724d5849793c08bd7e02a7c90",
+   "stability_observations": 3,
+   "target_node": "tests/test_structures.py::test_infinity_self_comparison",
+   "test_files": [
+    "tests/test_structures.py"
+   ]
+  }
+ ],
+ "corpus_manifest_hash": "e6bdd3f116981bc58daf7f21eb4a5e0a524e9a067227cd2cc40fc994a19ad3f9",
+ "driver_hash": "0676ebe54b9dafd032b4005354cdd7f7676dfc32d837d061bebeb8160971eee5",
+ "exclusion_set_hash": "d4090113b0670321b1d5a9c48ebe3949adeb60f865e8b07bb414aea21f137e87",
+ "execution_environment": {
+  "container_image": "rift-reference-iso:3.12-slim",
+  "container_image_digest": "sha256:279f2c1816d32e452951eae861bb3bbb65aad5b3da0ff5035e27a17069a2f8f3",
+  "docker_security_flags": "--cap-add SYS_ADMIN --cap-add NET_ADMIN --security-opt seccomp=unconfined",
+  "harness_confinement": {
+   "executable": "/usr/bin/unshare",
+   "mechanism": "unshare --user --net --map-root-user",
+   "network_policy": "repository subprocess: no interfaces except empty loopback",
+   "version": "unshare from util-linux 2.41"
+  },
+  "network_policy": {
+   "provider_and_controller": "allowed",
+   "repository_controlled_execution": "denied"
+  },
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python_implementation": "CPython",
+  "python_version": "3.12.14",
+  "rift_repository_isolation": {
+   "bwrap": "/usr/bin/bwrap",
+   "bwrap_version": "bubblewrap 0.11.0",
+   "detail": "linux + bubblewrap: host read-only, worktree and tmp writable, network unshared",
+   "level": "full"
+  }
+ },
+ "execution_environment_hash": "9de6886df3d526affb979312048437580a6860ce5491abfd84371c36fed83de3",
+ "expected_official_records": 48,
+ "manifest_hash": "b0ea08dc9ae7fb6c9317260fdc606d3772168570477b3055b0525a759ff7e26b",
+ "model": {
+  "requested_model_id": "claude-sonnet-4-6",
+  "required_reported_model_identity": "must equal requested"
+ },
+ "official_arms": [
+  "A",
+  "C"
+ ],
+ "oracle_hash": "25ac41827067f0de175b321ac800f6ddd3cadfefbef11da3e713dcc3d518cf91",
+ "pricing": {
+  "currency": "USD",
+  "input_per_mtok": 3.0,
+  "output_per_mtok": 15.0
+ },
+ "protocol_version": 1,
+ "repository_population_hash_v5": "4645de61c549bf8ad06697e1b8279ddfee51d19af24379e1dd45880f350fe0bc",
+ "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17",
+ "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26",
+ "stability_rule": {
+  "equality": "exact governed failure identity, no normalisation",
+  "independent_fresh_processes": true,
+  "observations": 3,
+  "rejection_reason": "unstable_failure_identity"
+ }
+}

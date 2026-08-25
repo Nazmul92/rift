@@ -1,0 +1,49 @@
+{
+ "additional_spend_usd": 0.0,
+ "analysis_path": {
+  "interval": {
+   "cases": 24,
+   "high": 0.041666666666666664,
+   "iterations": 2000,
+   "low": 0.0,
+   "point": 0.013888888888888888
+  },
+  "sign_flip_p": 1.0
+ },
+ "compile_status_s": {
+  "-": 4,
+  "APPLIED": 52,
+  "PATH_NOT_FOUND": 4,
+  "SEARCH_AMBIGUOUS": 4,
+  "SEARCH_NOT_FOUND": 4,
+  "SEARCH_OVERLAP": 4
+ },
+ "completeness_problems": [],
+ "cost_field_problems": [],
+ "fault_plans": {
+  "S:invalid_twice": 4,
+  "S:path_not_found": 4,
+  "S:repair_then_valid": 24,
+  "S:search_ambiguous": 4,
+  "S:search_not_found": 4,
+  "S:search_overlap": 4,
+  "S:valid": 28,
+  "U:invalid_twice": 24,
+  "U:repair_then_valid": 24,
+  "U:valid": 24
+ },
+ "label": "144-SAMPLE MODEL-FREE DRY RUN \u2014 NO PROVIDER \u2014 $0.00",
+ "outcome_classes": {
+  "NO_CANDIDATE": 28,
+  "PATH_NOT_FOUND": 4,
+  "SEARCH_AMBIGUOUS": 4,
+  "SEARCH_NOT_FOUND": 4,
+  "SEARCH_OVERLAP": 4,
+  "TRUTH_CORRECT": 33,
+  "TRUTH_WRONG": 67
+ },
+ "provider_calls": 0,
+ "representation_experiment_manifest_hash": "76cf6dca742851d1dd9c12cf7b731e7ab92358b40c0baabdd7a85ebb5ec82ae8",
+ "samples": 144,
+ "unreconciled_requests": 0
+}

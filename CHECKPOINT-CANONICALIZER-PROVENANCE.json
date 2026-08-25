@@ -1,0 +1,97 @@
+{
+ "additional_provider_spend_usd": 0.0,
+ "checkpoint": "canonicalizer-provenance",
+ "deferred": {
+  "application_repair_loop": "DEFERRED",
+  "fuzzy_patch_application": "NOT IMPLEMENTED",
+  "llm_hunk_repair": "NOT IMPLEMENTED",
+  "repository_based_patch_rewriting": "NOT IMPLEMENTED",
+  "semantic_repair_loop": "DEFERRED (0 observed applied-but-verification-failed cases)"
+ },
+ "diagnosis_ontology": "UNCHANGED",
+ "frozen_product_facts": {
+  "candidate_pipeline": [
+   "exact model diff -> raw",
+   "raw -> normalized (canonical_diff: CRLF, bare CR, final newline)",
+   "normalized -> canonical (git-conditioned hunk-count canonicalization)",
+   "canonical -> content-addressed ChangeSet"
+  ],
+  "canonicalizer_authority": "recompute @@ -a,b +c,d @@ counts from the hunk body; nothing else",
+  "canonicalizer_historical_recovery": "9/9",
+  "multi_attempt_provenance": "durable; attempt-addressed and immutable",
+  "originally_working_candidates_modified": 0,
+  "stage_provenance": "fail closed; stage-exact paths, task-directory confinement, symlinks refused"
+ },
+ "identity": {
+  "bm06_manifest_hash": "7275dbfe3fe97c820ed3c74db0b0572c1b57887b80f493549c1a57159dd92dac",
+  "driver_hash": "d54e7658be4c5d0f0fe4c5eb253314ef67f58f7061192abd3726ae18e1f1b85b",
+  "frozen_verify_manifest_hash": "3ad13690d474c42c9b302841c1ab50ed830eaaeea74e05a5bea77a6525fd362e",
+  "runtime_files": [
+   "src/riftagent/__init__.py",
+   "src/riftagent/__main__.py",
+   "src/riftagent/app.py",
+   "src/riftagent/checks.py",
+   "src/riftagent/kernel.py",
+   "src/riftagent/llm.py",
+   "src/riftagent/records.py",
+   "src/riftagent/sandbox.py"
+  ],
+  "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26",
+  "runtime_loc_by_file": {
+   "src/riftagent/__init__.py": 9,
+   "src/riftagent/__main__.py": 4,
+   "src/riftagent/app.py": 4584,
+   "src/riftagent/checks.py": 630,
+   "src/riftagent/kernel.py": 1292,
+   "src/riftagent/llm.py": 713,
+   "src/riftagent/records.py": 2421,
+   "src/riftagent/sandbox.py": 732
+  },
+  "runtime_loc_ceiling": 10400,
+  "runtime_loc_total": 10385
+ },
+ "measured_bm06_preliminary": {
+  "A": "3/8",
+  "B": "3/8",
+  "C": "3/8",
+  "spend_usd": 0.824
+ },
+ "post_hoc_representation_diagnostic": {
+  "A": "6/8",
+  "B": "6/8",
+  "C": "6/8",
+  "note": "counterfactual, computed model-free on frozen artifacts; NOT the benchmark result"
+ },
+ "reference_environment": {
+  "base_image": "python:3.12-slim",
+  "debian": "13.6 (trixie)",
+  "gate": "REFERENCE_ENVIRONMENT_GREEN",
+  "git": "2.47.3",
+  "platform": "linux/amd64",
+  "provisioning_note": "container egress was unavailable; git was copied from a locally built image that installed it from apt on the same python:3.12-slim base, and pip resolved from a host-fetched wheelhouse of the pinned versions. No bubblewrap and no global git configuration, so the image observes what plain python:3.12-slim + git observes.",
+  "python": "3.12.14",
+  "toolchain": {
+   "mypy": "2.3.1",
+   "pytest": "9.1.1",
+   "ruff": "0.16.3"
+  }
+ },
+ "sequence": [
+  "DAR-030",
+  "DAR-031",
+  "DAR-032",
+  "DAR-033",
+  "DAR-034",
+  "DAR-035"
+ ],
+ "status": "CLOSED",
+ "tests": {
+  "full_suite_failed": 0,
+  "full_suite_passed": 899,
+  "full_suite_skipped": 5,
+  "mypy": "8 source files clean",
+  "provenance_suites_passed": 128,
+  "ruff_check": "clean",
+  "ruff_format_check": "53 files clean"
+ }
+}

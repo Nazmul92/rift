@@ -1,0 +1,2379 @@
+{
+ "additional_spend_usd": 0.0,
+ "audit_manifest_hash": "85a9b90830a046dc41778fd3f106287606435a5fd76632887b67080fcde40785",
+ "cases": [
+  {
+   "baseline_tree_hash": "d35e4bfa663d587baf9e188030b5e47cc3c2ccd39d139c06583f9375063a1bed",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "voluptuous-44593ce7",
+   "code_only_coverage_reason": "all 1 fix-touched region(s) fall inside the selected spans",
+   "code_only_coverage_status": "COVERED",
+   "code_only_fix_files": [
+    "voluptuous/validators.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "0b2b1a345b85fa89de54bc8083b103a7a61dce8679b51c4a30597733bc7a9160",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "1 of 2 fix-touched region(s) inside the selected spans; file(s) absent: CHANGELOG.md",
+   "coverage_status": "PARTIALLY_COVERED",
+   "fix_touched_files": [
+    "CHANGELOG.md",
+    "voluptuous/validators.py"
+   ],
+   "fix_touched_regions": {
+    "CHANGELOG.md": [
+     [
+      7,
+      8
+     ]
+    ],
+    "voluptuous/validators.py": [
+     [
+      1189,
+      1191
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "voluptuous",
+   "selected_chars": 47190,
+   "selected_files": [
+    "voluptuous/validators.py",
+    "voluptuous/schema_builder.py",
+    "voluptuous/__init__.py",
+    "voluptuous/humanize.py",
+    "voluptuous/util.py",
+    "voluptuous/error.py"
+   ],
+   "selected_line_ranges": {
+    "voluptuous/__init__.py": [
+     [
+      1,
+      95
+     ]
+    ],
+    "voluptuous/error.py": [
+     [
+      1,
+      222
+     ]
+    ],
+    "voluptuous/humanize.py": [
+     [
+      1,
+      57
+     ]
+    ],
+    "voluptuous/schema_builder.py": [
+     [
+      40,
+      41
+     ],
+     [
+      53,
+      65
+     ],
+     [
+      68,
+      70
+     ],
+     [
+      809,
+      857
+     ],
+     [
+      905,
+      910
+     ],
+     [
+      994,
+      999
+     ],
+     [
+      1010,
+      1054
+     ],
+     [
+      1057,
+      1088
+     ],
+     [
+      1091,
+      1135
+     ],
+     [
+      1138,
+      1191
+     ],
+     [
+      1194,
+      1253
+     ],
+     [
+      1256,
+      1285
+     ],
+     [
+      1364,
+      1411
+     ]
+    ],
+    "voluptuous/util.py": [
+     [
+      1,
+      149
+     ]
+    ],
+    "voluptuous/validators.py": [
+     [
+      113,
+      153
+     ],
+     [
+      290,
+      329
+     ],
+     [
+      336,
+      371
+     ],
+     [
+      378,
+      400
+     ],
+     [
+      407,
+      447
+     ],
+     [
+      450,
+      479
+     ],
+     [
+      489,
+      512
+     ],
+     [
+      515,
+      531
+     ],
+     [
+      534,
+      548
+     ],
+     [
+      551,
+      570
+     ],
+     [
+      573,
+      590
+     ],
+     [
+      593,
+      612
+     ],
+     [
+      615,
+      628
+     ],
+     [
+      631,
+      704
+     ],
+     [
+      707,
+      746
+     ],
+     [
+      749,
+      779
+     ],
+     [
+      782,
+      803
+     ],
+     [
+      806,
+      821
+     ],
+     [
+      886,
+      910
+     ],
+     [
+      1109,
+      1191
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "da2c8412a6d8fbdb73d558fee97ab564fef900100e2b25b805dce406962b178e",
+   "canonical_applied_A": true,
+   "canonical_applied_C": true,
+   "canonical_class_A": "",
+   "canonical_class_C": "",
+   "case_id": "parse-e9aa02bd",
+   "code_only_coverage_reason": "1 of 4 fix-touched region(s) inside the selected spans",
+   "code_only_coverage_status": "PARTIALLY_COVERED",
+   "code_only_fix_files": [
+    "parse.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "fe4aca94464bb99831f054b5dab090cff48e80b8dbb8ce29dcc7f1cb65284f23",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "1 of 4 fix-touched region(s) inside the selected spans",
+   "coverage_status": "PARTIALLY_COVERED",
+   "fix_touched_files": [
+    "parse.py"
+   ],
+   "fix_touched_regions": {
+    "parse.py": [
+     [
+      0,
+      1
+     ],
+     [
+      344,
+      345
+     ],
+     [
+      881,
+      882
+     ],
+     [
+      1084,
+      1084
+     ]
+    ]
+   },
+   "official_A_truth": "correct",
+   "official_C_truth": "wrong",
+   "repository": "parse",
+   "selected_chars": 19366,
+   "selected_files": [
+    "parse.py"
+   ],
+   "selected_line_ranges": {
+    "parse.py": [
+     [
+      359,
+      383
+     ],
+     [
+      472,
+      581
+     ],
+     [
+      622,
+      1027
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "62bbf4b68f29f7191f219fd2579083afa2d99b0eda2bcff7d93125dccdc14dbd",
+   "canonical_applied_A": false,
+   "canonical_applied_C": true,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "",
+   "case_id": "rich-260508bf",
+   "code_only_coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "rich/text.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "18bfff1c24da88b1aa031020fadaedfd9488bbcfcd972b24e083a56eb26afb9c",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) absent from the context: CHANGELOG.md, pyproject.toml",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "CHANGELOG.md",
+    "pyproject.toml",
+    "rich/text.py"
+   ],
+   "fix_touched_regions": {
+    "CHANGELOG.md": [
+     [
+      7,
+      8
+     ]
+    ],
+    "pyproject.toml": [
+     [
+      5,
+      5
+     ]
+    ],
+    "rich/text.py": [
+     [
+      1035,
+      1036
+     ],
+     [
+      1059,
+      1060
+     ],
+     [
+      1062,
+      1063
+     ],
+     [
+      1065,
+      1085
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "rich",
+   "selected_chars": 28736,
+   "selected_files": [
+    "rich/segment.py",
+    "rich/style.py",
+    "rich/text.py",
+    "rich/console.py",
+    "rich/cells.py",
+    "rich/repr.py"
+   ],
+   "selected_line_ranges": {
+    "rich/cells.py": [
+     [
+      1,
+      147
+     ]
+    ],
+    "rich/console.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "rich/repr.py": [
+     [
+      1,
+      151
+     ]
+    ],
+    "rich/segment.py": [
+     [
+      33,
+      50
+     ],
+     [
+      58,
+      548
+     ],
+     [
+      551,
+      573
+     ],
+     [
+      576,
+      598
+     ]
+    ],
+    "rich/style.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "rich/text.py": [
+     [
+      1,
+      13
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "761870102420feaa220c2a7e96f564ef7821c98af6719eba7a7b39617d910d15",
+   "canonical_applied_A": true,
+   "canonical_applied_C": true,
+   "canonical_class_A": "",
+   "canonical_class_C": "",
+   "case_id": "rich-0138b189",
+   "code_only_coverage_reason": "all 12 fix-touched region(s) fall inside the selected spans",
+   "code_only_coverage_status": "COVERED",
+   "code_only_fix_files": [
+    "rich/pretty.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "95a1dbc29552316ccc918e08460aad450871e1d27a713ec07c3de420fd72b2b2",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "12 of 14 fix-touched region(s) inside the selected spans; file(s) absent: CHANGELOG.md",
+   "coverage_status": "PARTIALLY_COVERED",
+   "fix_touched_files": [
+    "CHANGELOG.md",
+    "rich/pretty.py"
+   ],
+   "fix_touched_regions": {
+    "CHANGELOG.md": [
+     [
+      14,
+      15
+     ],
+     [
+      18,
+      19
+     ]
+    ],
+    "rich/pretty.py": [
+     [
+      21,
+      22
+     ],
+     [
+      45,
+      46
+     ],
+     [
+      55,
+      56
+     ],
+     [
+      68,
+      68
+     ],
+     [
+      73,
+      74
+     ],
+     [
+      197,
+      198
+     ],
+     [
+      254,
+      254
+     ],
+     [
+      270,
+      271
+     ],
+     [
+      302,
+      303
+     ],
+     [
+      303,
+      304
+     ],
+     [
+      307,
+      307
+     ],
+     [
+      314,
+      314
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "rich",
+   "selected_chars": 28928,
+   "selected_files": [
+    "rich/console.py",
+    "rich/pretty.py",
+    "rich/__init__.py",
+    "rich/_emoji_replace.py",
+    "rich/_log_render.py",
+    "rich/align.py"
+   ],
+   "selected_line_ranges": {
+    "rich/__init__.py": [
+     [
+      1,
+      90
+     ]
+    ],
+    "rich/_emoji_replace.py": [
+     [
+      1,
+      17
+     ]
+    ],
+    "rich/_log_render.py": [
+     [
+      1,
+      74
+     ]
+    ],
+    "rich/align.py": [
+     [
+      1,
+      152
+     ]
+    ],
+    "rich/console.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "rich/pretty.py": [
+     [
+      1,
+      518
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "17eda88cad55260b06d3098c091f2b8fb8409dab5ef249efe4072fa7a89922ba",
+   "canonical_applied_A": false,
+   "canonical_applied_C": true,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "",
+   "case_id": "xmltodict-927a025a",
+   "code_only_coverage_reason": "3 of 4 fix-touched region(s) inside the selected spans",
+   "code_only_coverage_status": "PARTIALLY_COVERED",
+   "code_only_fix_files": [
+    "xmltodict.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "b53dd5e6852f5552b4da114d2b1bc2313e09db12af596f3478969657aa0b719f",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "3 of 4 fix-touched region(s) inside the selected spans",
+   "coverage_status": "PARTIALLY_COVERED",
+   "fix_touched_files": [
+    "xmltodict.py"
+   ],
+   "fix_touched_regions": {
+    "xmltodict.py": [
+     [
+      376,
+      377
+     ],
+     [
+      466,
+      467
+     ],
+     [
+      472,
+      472
+     ],
+     [
+      480,
+      480
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "xmltodict",
+   "selected_chars": 11624,
+   "selected_files": [
+    "xmltodict.py"
+   ],
+   "selected_line_ranges": {
+    "xmltodict.py": [
+     [
+      198,
+      374
+     ],
+     [
+      439,
+      519
+     ],
+     [
+      522,
+      562
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "46353710f0033d57d3f409c46fca10afbc9e4b295745be1c364b0917fb51f582",
+   "canonical_applied_A": true,
+   "canonical_applied_C": true,
+   "canonical_class_A": "",
+   "canonical_class_C": "",
+   "case_id": "rich-a5eada7a",
+   "code_only_coverage_reason": "all 1 fix-touched region(s) fall inside the selected spans",
+   "code_only_coverage_status": "COVERED",
+   "code_only_fix_files": [
+    "rich/spinner.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "d9e2f5c71fc05ff8fb9fd273082c66aea61327e82f1aab84dbc929dfc7829bae",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "1 of 4 fix-touched region(s) inside the selected spans; file(s) absent: .github/workflows/pythonpackage.yml, CHANGELOG.md, pyproject.toml",
+   "coverage_status": "PARTIALLY_COVERED",
+   "fix_touched_files": [
+    ".github/workflows/pythonpackage.yml",
+    "CHANGELOG.md",
+    "pyproject.toml",
+    "rich/spinner.py"
+   ],
+   "fix_touched_regions": {
+    ".github/workflows/pythonpackage.yml": [
+     [
+      11,
+      11
+     ]
+    ],
+    "CHANGELOG.md": [
+     [
+      7,
+      8
+     ]
+    ],
+    "pyproject.toml": [
+     [
+      5,
+      5
+     ]
+    ],
+    "rich/spinner.py": [
+     [
+      37,
+      37
+     ]
+    ]
+   },
+   "official_A_truth": "correct",
+   "official_C_truth": "correct",
+   "repository": "rich",
+   "selected_chars": 18542,
+   "selected_files": [
+    "rich/console.py",
+    "rich/measure.py",
+    "rich/rule.py",
+    "rich/spinner.py",
+    "rich/text.py",
+    "rich/__init__.py"
+   ],
+   "selected_line_ranges": {
+    "rich/__init__.py": [
+     [
+      1,
+      126
+     ]
+    ],
+    "rich/console.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "rich/measure.py": [
+     [
+      1,
+      150
+     ]
+    ],
+    "rich/rule.py": [
+     [
+      1,
+      115
+     ]
+    ],
+    "rich/spinner.py": [
+     [
+      1,
+      134
+     ]
+    ],
+    "rich/text.py": [
+     [
+      1,
+      13
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "317a30f642d1f7f43283f9cc5e8db77fd26e6a98276402965beb578d1757a290",
+   "canonical_applied_A": null,
+   "canonical_applied_C": false,
+   "canonical_class_A": "",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "isort-49bb9bab",
+   "code_only_coverage_reason": "fix-touched file(s) absent from the context: isort/parse.py",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "isort/parse.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "c1530fec6e39d8d8ef81fad7546021cf2d5fdcab0c3e6ed7a4bc6dec2c246b5e",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) absent from the context: CHANGELOG.md, isort/parse.py",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "CHANGELOG.md",
+    "isort/parse.py"
+   ],
+   "fix_touched_regions": {
+    "CHANGELOG.md": [
+     [
+      6,
+      7
+     ]
+    ],
+    "isort/parse.py": [
+     [
+      221,
+      222
+     ],
+     [
+      224,
+      226
+     ],
+     [
+      229,
+      231
+     ]
+    ]
+   },
+   "official_A_truth": "absent",
+   "official_C_truth": "wrong",
+   "repository": "isort",
+   "selected_chars": 412,
+   "selected_files": [
+    "isort/__init__.py"
+   ],
+   "selected_line_ranges": {
+    "isort/__init__.py": [
+     [
+      1,
+      9
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "34e0f22976acd22cd720a15fee152f7428006393ef24668c2dd8ff80ec6c2ba5",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "charset-normalizer-2bc26076",
+   "code_only_coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "src/charset_normalizer/api.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "ba3abf50f43555ff239cbdbe07bc5f13c0e2f1a8be931ef15cd8db24f4a8abad",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "src/charset_normalizer/api.py"
+   ],
+   "fix_touched_regions": {
+    "src/charset_normalizer/api.py": [
+     [
+      531,
+      532
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "charset-normalizer",
+   "selected_chars": 45572,
+   "selected_files": [
+    "src/charset_normalizer/models.py",
+    "src/charset_normalizer/api.py",
+    "src/charset_normalizer/__init__.py",
+    "src/charset_normalizer/constant.py",
+    "src/charset_normalizer/utils.py",
+    "src/charset_normalizer/cd.py"
+   ],
+   "selected_line_ranges": {
+    "src/charset_normalizer/__init__.py": [
+     [
+      1,
+      48
+     ]
+    ],
+    "src/charset_normalizer/api.py": [
+     [
+      878,
+      902
+     ]
+    ],
+    "src/charset_normalizer/cd.py": [
+     [
+      1,
+      467
+     ]
+    ],
+    "src/charset_normalizer/constant.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "src/charset_normalizer/models.py": [
+     [
+      1,
+      370
+     ]
+    ],
+    "src/charset_normalizer/utils.py": [
+     [
+      1,
+      455
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "82805dc0b42bd92db84cf16b5ac9ed50dd533a6d0d39e50fc7b49916a8d41181",
+   "canonical_applied_A": false,
+   "canonical_applied_C": true,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "",
+   "case_id": "tabulate-293ff59a",
+   "code_only_coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "tabulate.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "3e66e4681c1414e039637f9034fe497db51a06cf3e7d1cfbccc10bdbf3e51549",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "tabulate.py"
+   ],
+   "fix_touched_regions": {
+    "tabulate.py": [
+     [
+      1191,
+      1192
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "tabulate",
+   "selected_chars": 17047,
+   "selected_files": [
+    "test/common.py",
+    "tabulate.py"
+   ],
+   "selected_line_ranges": {
+    "tabulate.py": [
+     [
+      1242,
+      1694
+     ]
+    ],
+    "test/common.py": [
+     [
+      1,
+      16
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "d16bb21861f534246c2233d0fcd74532fc3d00dd748669a63864144cec2c6703",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "schema-15158c53",
+   "code_only_coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "schema/__init__.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "f4b59599130f32a73a040bff25bbf172e9eb41b1e617879302a5580b0771cd63",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "schema/__init__.py"
+   ],
+   "fix_touched_regions": {
+    "schema/__init__.py": [
+     [
+      461,
+      462
+     ],
+     [
+      472,
+      473
+     ],
+     [
+      528,
+      528
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "schema",
+   "selected_chars": 12024,
+   "selected_files": [
+    "schema/__init__.py"
+   ],
+   "selected_line_ranges": {
+    "schema/__init__.py": [
+     [
+      57,
+      86
+     ],
+     [
+      89,
+      93
+     ],
+     [
+      96,
+      100
+     ],
+     [
+      109,
+      113
+     ],
+     [
+      116,
+      120
+     ],
+     [
+      127,
+      171
+     ],
+     [
+      174,
+      223
+     ],
+     [
+      226,
+      286
+     ],
+     [
+      289,
+      328
+     ],
+     [
+      874,
+      905
+     ],
+     [
+      908,
+      912
+     ],
+     [
+      915,
+      924
+     ],
+     [
+      927,
+      954
+     ],
+     [
+      957,
+      960
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "3966a14a589e046317db19de1d472afb097bcb7bf8e36fbc2a959aed504e8123",
+   "canonical_applied_A": true,
+   "canonical_applied_C": true,
+   "canonical_class_A": "",
+   "canonical_class_C": "",
+   "case_id": "lark-adad165e",
+   "code_only_coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "lark/load_grammar.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "f086b760c829f51c1e06514ce2a4500f9b07a83d1f4bf4a14fbfa6f603fab194",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "lark/load_grammar.py"
+   ],
+   "fix_touched_regions": {
+    "lark/load_grammar.py": [
+     [
+      1052,
+      1053
+     ]
+    ]
+   },
+   "official_A_truth": "correct",
+   "official_C_truth": "correct",
+   "repository": "lark",
+   "selected_chars": 56955,
+   "selected_files": [
+    "lark/__init__.py",
+    "lark/load_grammar.py",
+    "lark/utils.py",
+    "lark/lexer.py",
+    "lark/parse_tree_builder.py",
+    "lark/parser_frontends.py"
+   ],
+   "selected_line_ranges": {
+    "lark/__init__.py": [
+     [
+      1,
+      9
+     ]
+    ],
+    "lark/lexer.py": [
+     [
+      1,
+      541
+     ]
+    ],
+    "lark/load_grammar.py": [
+     [
+      814,
+      856
+     ],
+     [
+      1002,
+      1021
+     ],
+     [
+      1400,
+      1404
+     ]
+    ],
+    "lark/parse_tree_builder.py": [
+     [
+      1,
+      385
+     ]
+    ],
+    "lark/parser_frontends.py": [
+     [
+      1,
+      245
+     ]
+    ],
+    "lark/utils.py": [
+     [
+      1,
+      339
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "42bc6e1fb5a246741473b49c95d53ea31d86d140c21198dc0e6a2a24589a0dc7",
+   "canonical_applied_A": true,
+   "canonical_applied_C": false,
+   "canonical_class_A": "",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "dnspython-246febc4",
+   "code_only_coverage_reason": "all 1 fix-touched region(s) fall inside the selected spans",
+   "code_only_coverage_status": "COVERED",
+   "code_only_fix_files": [
+    "dns/resolver.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "ca9049124707b68ef4f8b7dfade2faa22d53c63b8f33eba5f9eb4aa9405792ec",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "all 1 fix-touched region(s) fall inside the selected spans",
+   "coverage_status": "COVERED",
+   "fix_touched_files": [
+    "dns/resolver.py"
+   ],
+   "fix_touched_regions": {
+    "dns/resolver.py": [
+     [
+      877,
+      878
+     ]
+    ]
+   },
+   "official_A_truth": "correct",
+   "official_C_truth": "wrong",
+   "repository": "dnspython",
+   "selected_chars": 32664,
+   "selected_files": [
+    "dns/name.py",
+    "dns/resolver.py",
+    "dns/e164.py",
+    "dns/message.py",
+    "dns/rdataclass.py",
+    "dns/rdatatype.py"
+   ],
+   "selected_line_ranges": {
+    "dns/e164.py": [
+     [
+      1,
+      104
+     ]
+    ],
+    "dns/message.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "dns/name.py": [
+     [
+      879,
+      959
+     ]
+    ],
+    "dns/rdataclass.py": [
+     [
+      1,
+      115
+     ]
+    ],
+    "dns/rdatatype.py": [
+     [
+      1,
+      313
+     ]
+    ],
+    "dns/resolver.py": [
+     [
+      735,
+      1134
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "d0c05daa5dd17f88fb288983bf0e0181a674bb3bdcfeb299c3c05edd55fa8cdc",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "mistune-b0429966",
+   "code_only_coverage_reason": "all 2 fix-touched region(s) fall inside the selected spans",
+   "code_only_coverage_status": "COVERED",
+   "code_only_fix_files": [
+    "src/mistune/renderers/markdown.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "464d932031ef16b7646e7149249337d02b838b1784de7d46a6e4d3aa428a2050",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "2 of 3 fix-touched region(s) inside the selected spans; file(s) absent: docs/changes.rst",
+   "coverage_status": "PARTIALLY_COVERED",
+   "fix_touched_files": [
+    "docs/changes.rst",
+    "src/mistune/renderers/markdown.py"
+   ],
+   "fix_touched_regions": {
+    "docs/changes.rst": [
+     [
+      5,
+      6
+     ]
+    ],
+    "src/mistune/renderers/markdown.py": [
+     [
+      42,
+      43
+     ],
+     [
+      45,
+      45
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "mistune",
+   "selected_chars": 28592,
+   "selected_files": [
+    "src/mistune/__init__.py",
+    "src/mistune/renderers/rst.py",
+    "src/mistune/renderers/markdown.py",
+    "tests/__init__.py",
+    "src/mistune/core.py",
+    "src/mistune/inline_parser.py"
+   ],
+   "selected_line_ranges": {
+    "src/mistune/__init__.py": [
+     [
+      1,
+      101
+     ]
+    ],
+    "src/mistune/core.py": [
+     [
+      1,
+      270
+     ]
+    ],
+    "src/mistune/inline_parser.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "src/mistune/renderers/markdown.py": [
+     [
+      1,
+      263
+     ]
+    ],
+    "src/mistune/renderers/rst.py": [
+     [
+      1,
+      158
+     ]
+    ],
+    "tests/__init__.py": [
+     [
+      1,
+      40
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "file_not_found_or_wrong_path",
+   "case_id": "lark-96873d64",
+   "code_only_coverage_reason": "fix-touched file(s) absent from the context: lark/common.py, lark/lark.py, lark/parser_frontends.py",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "lark/common.py",
+    "lark/lark.py",
+    "lark/parser_frontends.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "9d983d97f9fa72fd6cd2ae22cbe8cff85b3a6167c87c41f34232b561dfc690d0",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) absent from the context: lark/common.py, lark/lark.py, lark/parser_frontends.py",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "lark/common.py",
+    "lark/lark.py",
+    "lark/parser_frontends.py"
+   ],
+   "fix_touched_regions": {
+    "lark/common.py": [
+     [
+      20,
+      22
+     ]
+    ],
+    "lark/lark.py": [
+     [
+      347,
+      347
+     ]
+    ],
+    "lark/parser_frontends.py": [
+     [
+      3,
+      3
+     ],
+     [
+      60,
+      61
+     ],
+     [
+      76,
+      76
+     ],
+     [
+      79,
+      80
+     ],
+     [
+      232,
+      232
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "lark",
+   "selected_chars": 37085,
+   "selected_files": [
+    "lark/utils.py",
+    "lark/tree.py",
+    "lark/indenter.py",
+    "lark/lexer.py",
+    "lark/exceptions.py",
+    "examples/calc.py"
+   ],
+   "selected_line_ranges": {
+    "examples/calc.py": [
+     [
+      1,
+      75
+     ]
+    ],
+    "lark/exceptions.py": [
+     [
+      1,
+      148
+     ]
+    ],
+    "lark/indenter.py": [
+     [
+      1,
+      61
+     ]
+    ],
+    "lark/lexer.py": [
+     [
+      1,
+      415
+     ]
+    ],
+    "lark/tree.py": [
+     [
+      1,
+      175
+     ]
+    ],
+    "lark/utils.py": [
+     [
+      1,
+      321
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "19242c9935395b0558e605e88d3634785b2cc8668918f8589543f94fd2e976d3",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "mistune-f4237046",
+   "code_only_coverage_reason": "fix-touched file(s) absent from the context: src/mistune/directives/image.py, src/mistune/renderers/html.py, src/mistune/util.py",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "src/mistune/directives/image.py",
+    "src/mistune/renderers/html.py",
+    "src/mistune/util.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "b0d4a61d04cf8dd43c269b4aa3c8f37a14add721d5a5f805148b12c7e101ca56",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) absent from the context: src/mistune/directives/image.py, src/mistune/renderers/html.py, src/mistune/util.py, tests/fixtures/fenced_image.txt",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "src/mistune/directives/image.py",
+    "src/mistune/renderers/html.py",
+    "src/mistune/util.py",
+    "tests/fixtures/fenced_image.txt"
+   ],
+   "fix_touched_regions": {
+    "src/mistune/directives/image.py": [
+     [
+      67,
+      67
+     ],
+     [
+      93,
+      93
+     ]
+    ],
+    "src/mistune/renderers/html.py": [
+     [
+      56,
+      56
+     ],
+     [
+      61,
+      61
+     ],
+     [
+      66,
+      66
+     ]
+    ],
+    "src/mistune/util.py": [
+     [
+      39,
+      39
+     ]
+    ],
+    "tests/fixtures/fenced_image.txt": [
+     [
+      83,
+      84
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "mistune",
+   "selected_chars": 29832,
+   "selected_files": [
+    "src/mistune/__init__.py",
+    "src/mistune/plugins/url.py",
+    "src/mistune/core.py",
+    "src/mistune/inline_parser.py",
+    "src/mistune/markdown.py",
+    "src/mistune/plugins/__init__.py"
+   ],
+   "selected_line_ranges": {
+    "src/mistune/__init__.py": [
+     [
+      1,
+      96
+     ]
+    ],
+    "src/mistune/core.py": [
+     [
+      1,
+      255
+     ]
+    ],
+    "src/mistune/inline_parser.py": [
+     [
+      1,
+      414
+     ]
+    ],
+    "src/mistune/markdown.py": [
+     [
+      1,
+      124
+     ]
+    ],
+    "src/mistune/plugins/__init__.py": [
+     [
+      1,
+      49
+     ]
+    ],
+    "src/mistune/plugins/url.py": [
+     [
+      1,
+      30
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "file_not_found_or_wrong_path",
+   "canonical_class_C": "file_not_found_or_wrong_path",
+   "case_id": "dnspython-227eace4",
+   "code_only_coverage_reason": "fix-touched file(s) absent from the context: dns/rdtypes/ANY/LP.py, dns/rdtypes/ANY/TKEY.py, dns/rdtypes/IN/NAPTR.py, dns/rdtypes/IN/SRV.py",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "dns/rdtypes/ANY/LP.py",
+    "dns/rdtypes/ANY/TKEY.py",
+    "dns/rdtypes/IN/NAPTR.py",
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "963eb8ab73c608a890560213b6b768aa9aaece32ede69efc6bf36f285bcc1769",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) absent from the context: dns/rdtypes/ANY/LP.py, dns/rdtypes/ANY/TKEY.py, dns/rdtypes/IN/NAPTR.py, dns/rdtypes/IN/SRV.py",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "dns/rdtypes/ANY/LP.py",
+    "dns/rdtypes/ANY/TKEY.py",
+    "dns/rdtypes/IN/NAPTR.py",
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "fix_touched_regions": {
+    "dns/rdtypes/ANY/LP.py": [
+     [
+      36,
+      36
+     ]
+    ],
+    "dns/rdtypes/ANY/TKEY.py": [
+     [
+      90,
+      90
+     ]
+    ],
+    "dns/rdtypes/IN/NAPTR.py": [
+     [
+      83,
+      83
+     ]
+    ],
+    "dns/rdtypes/IN/SRV.py": [
+     [
+      59,
+      59
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "dnspython",
+   "selected_chars": 41225,
+   "selected_files": [
+    "dns/btreezone.py",
+    "dns/exception.py",
+    "dns/message.py",
+    "dns/name.py",
+    "dns/node.py",
+    "dns/rdata.py"
+   ],
+   "selected_line_ranges": {
+    "dns/btreezone.py": [
+     [
+      1,
+      552
+     ]
+    ],
+    "dns/exception.py": [
+     [
+      1,
+      166
+     ]
+    ],
+    "dns/message.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "dns/name.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "dns/node.py": [
+     [
+      1,
+      383
+     ]
+    ],
+    "dns/rdata.py": [
+     [
+      1,
+      13
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "40ad9f9b837373c85d4ed43c8a66b12f2eb26544533b29450fe452bbd363610c",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "click-a17b5447",
+   "code_only_coverage_reason": "fix-touched file(s) absent from the context: click/decorators.py",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "click/decorators.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "e70176176feac3eab8f23e510a9139d1a21272f5544e2dffeef66d79706c5a42",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) absent from the context: click/decorators.py",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "click/decorators.py"
+   ],
+   "fix_touched_regions": {
+    "click/decorators.py": [
+     [
+      167,
+      170
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "click",
+   "selected_chars": 11033,
+   "selected_files": [
+    "click/__init__.py",
+    "click/_compat.py",
+    "click/_winconsole.py"
+   ],
+   "selected_line_ranges": {
+    "click/__init__.py": [
+     [
+      1,
+      98
+     ]
+    ],
+    "click/_compat.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "click/_winconsole.py": [
+     [
+      1,
+      273
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "c22ec5cf23f5d03ee95fe6a6fffada8d2fdd9a000716b2facb2715b42d5a2fe5",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "packaging-553582d9",
+   "code_only_coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "src/packaging/metadata.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "0864f9531356d1af6945852201e2859145960cd397dc96d97d22c97fc3a93814",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "src/packaging/metadata.py"
+   ],
+   "fix_touched_regions": {
+    "src/packaging/metadata.py": [
+     [
+      635,
+      635
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "packaging",
+   "selected_chars": 12090,
+   "selected_files": [
+    "src/packaging/__init__.py",
+    "src/packaging/errors.py",
+    "src/packaging/metadata.py",
+    "src/packaging/licenses/__init__.py",
+    "src/packaging/licenses/_spdx.py",
+    "src/packaging/specifiers.py"
+   ],
+   "selected_line_ranges": {
+    "src/packaging/__init__.py": [
+     [
+      1,
+      15
+     ]
+    ],
+    "src/packaging/errors.py": [
+     [
+      1,
+      94
+     ]
+    ],
+    "src/packaging/licenses/__init__.py": [
+     [
+      1,
+      153
+     ]
+    ],
+    "src/packaging/licenses/_spdx.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "src/packaging/metadata.py": [
+     [
+      58,
+      131
+     ]
+    ],
+    "src/packaging/specifiers.py": [
+     [
+      377,
+      384
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "aa5354e29c42d258f4faeee1ac57f55be7649c7061d0fa71f0f541665fbd1ec6",
+   "canonical_applied_A": true,
+   "canonical_applied_C": true,
+   "canonical_class_A": "",
+   "canonical_class_C": "",
+   "case_id": "icalendar-9b72b0b1",
+   "code_only_coverage_reason": "all 1 fix-touched region(s) fall inside the selected spans",
+   "code_only_coverage_status": "COVERED",
+   "code_only_fix_files": [
+    "src/icalendar/prop.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "287769feb6a6325265cabed3e7349c8bde0621ca963d5d32afb4226560b86f38",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "1 of 2 fix-touched region(s) inside the selected spans; file(s) absent: CHANGES.rst",
+   "coverage_status": "PARTIALLY_COVERED",
+   "fix_touched_files": [
+    "CHANGES.rst",
+    "src/icalendar/prop.py"
+   ],
+   "fix_touched_regions": {
+    "CHANGES.rst": [
+     [
+      18,
+      18
+     ]
+    ],
+    "src/icalendar/prop.py": [
+     [
+      281,
+      282
+     ]
+    ]
+   },
+   "official_A_truth": "correct",
+   "official_C_truth": "correct",
+   "repository": "icalendar",
+   "selected_chars": 45115,
+   "selected_files": [
+    "src/icalendar/prop.py",
+    "src/icalendar/parser.py",
+    "src/icalendar/windows_to_olson.py",
+    "src/icalendar/__init__.py",
+    "src/icalendar/caselessdict.py",
+    "src/icalendar/parser_tools.py"
+   ],
+   "selected_line_ranges": {
+    "src/icalendar/__init__.py": [
+     [
+      1,
+      49
+     ]
+    ],
+    "src/icalendar/caselessdict.py": [
+     [
+      1,
+      107
+     ]
+    ],
+    "src/icalendar/parser.py": [
+     [
+      1,
+      399
+     ]
+    ],
+    "src/icalendar/parser_tools.py": [
+     [
+      1,
+      34
+     ]
+    ],
+    "src/icalendar/prop.py": [
+     [
+      136,
+      155
+     ],
+     [
+      158,
+      178
+     ],
+     [
+      181,
+      198
+     ],
+     [
+      201,
+      217
+     ],
+     [
+      220,
+      236
+     ],
+     [
+      239,
+      268
+     ],
+     [
+      270,
+      283
+     ],
+     [
+      286,
+      349
+     ],
+     [
+      352,
+      375
+     ],
+     [
+      378,
+      441
+     ],
+     [
+      444,
+      496
+     ],
+     [
+      499,
+      568
+     ],
+     [
+      571,
+      602
+     ],
+     [
+      605,
+      635
+     ],
+     [
+      638,
+      709
+     ],
+     [
+      712,
+      732
+     ],
+     [
+      735,
+      758
+     ]
+    ],
+    "src/icalendar/windows_to_olson.py": [
+     [
+      1,
+      119
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "12710f9cff4ca7f0c98e2fc530bdb92cd314b876c9872dec157bd6f2e917cd97",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "dnspython-c9f6c819",
+   "code_only_coverage_reason": "fix-touched file(s) absent from the context: dns/rdtypes/IN/SRV.py",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "136df8411500a6aa0bedf282dde09dfd7127ce65a1437e5d5d1f7e296ac6da1a",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) absent from the context: dns/rdtypes/IN/SRV.py",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "dns/rdtypes/IN/SRV.py"
+   ],
+   "fix_touched_regions": {
+    "dns/rdtypes/IN/SRV.py": [
+     [
+      17,
+      18
+     ],
+     [
+      59,
+      60
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "dnspython",
+   "selected_chars": 30406,
+   "selected_files": [
+    "dns/rdata.py",
+    "dns/rdataclass.py",
+    "dns/rdatatype.py",
+    "dns/rdtypes/ANY/TXT.py",
+    "dns/ttl.py",
+    "dns/__init__.py"
+   ],
+   "selected_line_ranges": {
+    "dns/__init__.py": [
+     [
+      1,
+      57
+     ]
+    ],
+    "dns/rdata.py": [
+     [
+      1,
+      535
+     ]
+    ],
+    "dns/rdataclass.py": [
+     [
+      1,
+      102
+     ]
+    ],
+    "dns/rdatatype.py": [
+     [
+      1,
+      220
+     ]
+    ],
+    "dns/rdtypes/ANY/TXT.py": [
+     [
+      1,
+      23
+     ]
+    ],
+    "dns/ttl.py": [
+     [
+      1,
+      69
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "b1186a204333d272f2b9295de9e64795a7939a9afe28bdb441ff8914fe03d472",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "mistune-1bef343a",
+   "code_only_coverage_reason": "fix-touched file(s) absent from the context: src/mistune/directives/include.py",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "src/mistune/directives/include.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "58b1aaa4923ffcaec295a6181f32dd8054e2e1d716a28942c3c1c0deeb036ad6",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) absent from the context: src/mistune/directives/include.py",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "src/mistune/directives/include.py"
+   ],
+   "fix_touched_regions": {
+    "src/mistune/directives/include.py": [
+     [
+      3,
+      4
+     ],
+     [
+      30,
+      31
+     ],
+     [
+      33,
+      33
+     ],
+     [
+      38,
+      39
+     ],
+     [
+      39,
+      40
+     ],
+     [
+      45,
+      46
+     ],
+     [
+      48,
+      54
+     ],
+     [
+      56,
+      57
+     ],
+     [
+      59,
+      64
+     ],
+     [
+      72,
+      73
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "mistune",
+   "selected_chars": 17928,
+   "selected_files": [
+    "src/mistune/__init__.py",
+    "src/mistune/directives/__init__.py",
+    "src/mistune/core.py",
+    "src/mistune/inline_parser.py",
+    "src/mistune/markdown.py",
+    "src/mistune/plugins/__init__.py"
+   ],
+   "selected_line_ranges": {
+    "src/mistune/__init__.py": [
+     [
+      1,
+      101
+     ]
+    ],
+    "src/mistune/core.py": [
+     [
+      1,
+      268
+     ]
+    ],
+    "src/mistune/directives/__init__.py": [
+     [
+      1,
+      35
+     ]
+    ],
+    "src/mistune/inline_parser.py": [
+     [
+      1,
+      13
+     ]
+    ],
+    "src/mistune/markdown.py": [
+     [
+      1,
+      120
+     ]
+    ],
+    "src/mistune/plugins/__init__.py": [
+     [
+      1,
+      50
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "f53716f7c1a7bbf3e043d6d07ef94e4e18087fdb47ccdc56191cef828ec9a266",
+   "canonical_applied_A": true,
+   "canonical_applied_C": true,
+   "canonical_class_A": "",
+   "canonical_class_C": "",
+   "case_id": "sortedcontainers-2b037039",
+   "code_only_coverage_reason": "10 of 13 fix-touched region(s) inside the selected spans",
+   "code_only_coverage_status": "PARTIALLY_COVERED",
+   "code_only_fix_files": [
+    "sortedcontainers/sorteddict.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "28a180863a7fd148ea178f8694034b4c2b59783e711c7ac326aa75635c9e5170",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "10 of 13 fix-touched region(s) inside the selected spans",
+   "coverage_status": "PARTIALLY_COVERED",
+   "fix_touched_files": [
+    "sortedcontainers/sorteddict.py"
+   ],
+   "fix_touched_regions": {
+    "sortedcontainers/sorteddict.py": [
+     [
+      154,
+      164
+     ],
+     [
+      235,
+      235
+     ],
+     [
+      259,
+      259
+     ],
+     [
+      307,
+      307
+     ],
+     [
+      428,
+      428
+     ],
+     [
+      467,
+      467
+     ],
+     [
+      528,
+      528
+     ],
+     [
+      547,
+      548
+     ],
+     [
+      557,
+      557
+     ],
+     [
+      559,
+      559
+     ],
+     [
+      634,
+      634
+     ],
+     [
+      639,
+      639
+     ],
+     [
+      642,
+      642
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "sortedcontainers",
+   "selected_chars": 18931,
+   "selected_files": [
+    "sortedcontainers/__init__.py",
+    "sortedcontainers/sorteddict.py"
+   ],
+   "selected_line_ranges": {
+    "sortedcontainers/__init__.py": [
+     [
+      1,
+      74
+     ]
+    ],
+    "sortedcontainers/sorteddict.py": [
+     [
+      39,
+      604
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "239e3f589a9026947b3552f541e336612d70e6d47232eab3b75b03f24e442901",
+   "canonical_applied_A": false,
+   "canonical_applied_C": false,
+   "canonical_class_A": "context_mismatch",
+   "canonical_class_C": "context_mismatch",
+   "case_id": "sortedcontainers-7dc426c9",
+   "code_only_coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "code_only_coverage_status": "NOT_COVERED",
+   "code_only_fix_files": [
+    "sortedcontainers/sortedlist.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "0572e6626deacf4e137ad7ef22456406f3a625c723e18e0bab5cee827730b78b",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "fix-touched file(s) selected, but no fix region falls inside the selected line ranges",
+   "coverage_status": "NOT_COVERED",
+   "fix_touched_files": [
+    "sortedcontainers/sortedlist.py"
+   ],
+   "fix_touched_regions": {
+    "sortedcontainers/sortedlist.py": [
+     [
+      342,
+      342
+     ],
+     [
+      1881,
+      1881
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "sortedcontainers",
+   "selected_chars": 2590,
+   "selected_files": [
+    "sortedcontainers/__init__.py",
+    "sortedcontainers/sortedlist.py"
+   ],
+   "selected_line_ranges": {
+    "sortedcontainers/__init__.py": [
+     [
+      1,
+      74
+     ]
+    ],
+    "sortedcontainers/sortedlist.py": [
+     [
+      1,
+      13
+     ]
+    ]
+   }
+  },
+  {
+   "baseline_tree_hash": "d0f8f0b0faf415018ad86194361d6801a61d08c3bb0c5c19208e1cff6a3500fa",
+   "canonical_applied_A": true,
+   "canonical_applied_C": true,
+   "canonical_class_A": "",
+   "canonical_class_C": "",
+   "case_id": "packaging-f8f16338",
+   "code_only_coverage_reason": "all 6 fix-touched region(s) fall inside the selected spans",
+   "code_only_coverage_status": "COVERED",
+   "code_only_fix_files": [
+    "src/packaging/_structures.py"
+   ],
+   "context_arm": "C",
+   "context_hash": "498122dec39dfaf4bc8fc0bccc9e9c2cb8759517ca811fe5e2d5e618f22fc84e",
+   "context_limits": {
+    "cap_chars": 60000,
+    "cap_file_chars": 20000,
+    "cap_files": 6
+   },
+   "coverage_reason": "all 6 fix-touched region(s) fall inside the selected spans",
+   "coverage_status": "COVERED",
+   "fix_touched_files": [
+    "src/packaging/_structures.py"
+   ],
+   "fix_touched_regions": {
+    "src/packaging/_structures.py": [
+     [
+      22,
+      22
+     ],
+     [
+      25,
+      25
+     ],
+     [
+      28,
+      28
+     ],
+     [
+      51,
+      51
+     ],
+     [
+      57,
+      57
+     ],
+     [
+      63,
+      63
+     ]
+    ]
+   },
+   "official_A_truth": "wrong",
+   "official_C_truth": "wrong",
+   "repository": "packaging",
+   "selected_chars": 1564,
+   "selected_files": [
+    "src/packaging/_structures.py"
+   ],
+   "selected_line_ranges": {
+    "src/packaging/_structures.py": [
+     [
+      1,
+      69
+     ]
+    ]
+   }
+  }
+ ],
+ "corpus_manifest_hash": "e6bdd3f116981bc58daf7f21eb4a5e0a524e9a067227cd2cc40fc994a19ad3f9",
+ "evaluator_only": true,
+ "label": "HISTORICAL-FIX-REGION COVERAGE AUDIT \u2014 EVALUATOR-ONLY \u2014 NOT A SOLVABILITY CLAIM",
+ "not_a_solvability_claim": "The upstream historical fix is one valid solution, not necessarily the only valid repair location. NOT_COVERED means the model was not shown this known fix region; it does not prove no alternative correct repair was possible from the available context.",
+ "provider_calls": 0,
+ "secondary_view_disclosure": "code_only_coverage_status was defined after the primary counts were computed (2 COVERED / 8 PARTIALLY_COVERED / 14 NOT_COVERED). It excludes changelogs, packaging and docs files, which cannot change a test outcome. The primary classification is unchanged and is the one the stratification uses unless a reviewer directs otherwise.",
+ "stop_rule": "The audit blocks only for an infrastructure defect: context that cannot be reconstructed, wrong context identity, historical-fix leakage into model-facing artifacts, or a systematic reconstruction defect. It does not block because some historical regions are NOT_COVERED, and no numerical coverage threshold is defined.",
+ "treatment": "preregistered stratification / explanatory variable for the representation analysis"
+}

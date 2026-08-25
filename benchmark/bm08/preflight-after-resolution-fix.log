@@ -1,0 +1,4 @@
+identity         : runtime, driver, runner, oracle, manifest and configured model all match
+  FAIL  faker-5128ae64: observed failure identity does not match the frozen signature
+  FAIL  pathspec-b70e3fb4: observed failure identity does not match the frozen signature
+six-case preflight failed (2); no provider call was made

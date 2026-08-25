@@ -1,0 +1,34 @@
+--- a/schema/__init__.py
++++ b/schema/__init__.py
+@@ -491,9 +491,11 @@ class Schema:
+                 for key, value in data_items:
+                     for skey in sorted_skeys:
+                         svalue = s[skey]
++                        key_schema_error = None
+                         try:
+                             nkey = Schema(skey, error=e).validate(key, **kwargs)
+                         except SchemaError:
++                            key_schema_error = sys.exc_info()[1]
+                             pass
+                         else:
+                             if isinstance(skey, Hook):
+@@ -526,5 +528,18 @@ class Schema:
+                     s_wrong_keys,
+                     data,
+                 )
+                 message = self._prepend_schema_name(message)
+-                raise SchemaWrongKeyError(message, e.format(data) if e else None)
++                # If any schema key had a custom error, surface it
++                wrong_keys_list = sorted(wrong_keys, key=repr)
++                key_errors_for_wrong = []
++                for wk in wrong_keys_list:
++                    for skey in sorted_skeys:
++                        try:
++                            Schema(skey, error=e).validate(wk, **kwargs)
++                        except SchemaError as x:
++                            key_errors_for_wrong.append(x)
++                            break
++                if key_errors_for_wrong and any(x.errors and any(err is not None for err in x.errors) for x in key_errors_for_wrong):
++                    combined = key_errors_for_wrong[0]
++                    raise SchemaWrongKeyError([message] + combined.autos, [e.format(data) if e else None] + combined.errors)
++                raise SchemaWrongKeyError(message, e.format(data) if e else None)

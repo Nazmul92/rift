@@ -1,0 +1,208 @@
+error: Failed to read benchmark/bm08/SIGNATURE-STABILITY-FINDING.md: stream did not contain valid UTF-8
+All checks passed!
+RUFF-CLEAN
+=== CURATION ===
+dropped    : 31  {'insufficient_untouched_preservation': 27, 'no_resolvable_target': 4}
+by category: {'edge_case': 73, 'config_interaction': 42, 'parsing': 42, 'multi_file': 39, 'small': 35, 'api_misuse': 32, 'state_order': 26, 'uncategorised': 22, 'data_transform': 20, 'inheritance': 11}
+by repo    : {'httpx': 20, 'rich': 19, 'urllib3': 15, 'cattrs': 11, 'isort': 10, 'faker': 9, 'deepdiff': 8, 'click': 7, 'typer': 6, 'packaging': 6, 'flask': 6, 'werkzeug': 5, 'icalendar': 5, 'cachetools': 4, 'tqdm': 4, 'tomlkit': 4, 'prompt-toolkit': 4, 'platformdirs': 3, 'tenacity': 2, 'pathspec': 2, 'tabulate': 2, 'jinja': 2, 'requests': 2, 'sortedcontainers': 2, 'voluptuous': 1, 'wcwidth': 1, 'inflect': 1, 'asttokens': 1, 'croniter': 1, 'bleach': 1, 'filelock': 1, 'pluggy': 1, 'jmespath': 1}
+preservation: min 3  max 217  median 21
+
+written: /s/bm08_cases.json
+
+=== V4 VALIDATION (existing checks + 3 fresh-process stability) ===
+repository preflight        : 33 of 33 repositories resolved uniquely
+  drop cattrs-b5962740        target unrunnable at parent+reproducer: exit 4: 
+  drop voluptuous-44593ce7    unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop typer-c0aeb6e1         preservation not green on the buggy baseline: 14 of 14 fail, e.g. ["tests/test_cli/test_do
+  drop cachetools-4a061636    target unrunnable at parent+reproducer: exit 4: bleMapping):                          ^^^^
+  drop isort-ec9dafe6         target unrunnable at parent+reproducer: exit 4: on3.12/importlib/metadata/__init__.py:399:
+  drop tenacity-42b70f90      target unrunnable at parent+reproducer: exit 4:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop httpx-94323f98         target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-573915b6        target unrunnable at parent+reproducer: exit 4: 
+  drop tqdm-964dee63          target unrunnable at parent+reproducer: exit 4: vel)            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop httpx-99cba6ac         failure-identity mismatch: the governed observer captured no signature
+  drop pathspec-9eb2908b      target does not fail at parent+reproducer: pass ()
+  drop isort-44e4ff93         target unrunnable at parent+reproducer: exit 4: ocal/lib/python3.12/importlib/metadata/__i
+  drop urllib3-13f0bfd5       failure-identity mismatch: the governed observer captured no signature
+  drop httpx-fb174593         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-6fc17a34       target unrunnable at parent+reproducer: exit 4: 
+  drop rich-00181151          preservation not green on the buggy baseline: 1 of 92 fail, e.g. ["tests/test_console.py::
+  drop tomlkit-e6e95fe4       target unrunnable at parent+reproducer: exit 4: scape sequence '\-'     if re.match("^[+\-
+  drop werkzeug-1938f9d2      failure-identity mismatch: the governed observer captured no signature
+  drop isort-e1773beb         target unrunnable at parent+reproducer: exit 4: ule>     from . import settings  # noqa: F
+  drop rich-260508bf          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop wcwidth-79287df2       target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-e53f9959         target unrunnable at parent+reproducer: exit 4: 
+  drop rich-0138b189          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop deepdiff-e7da467d      target unrunnable at parent+reproducer: exit 4:  as SetOrderedBase  # median: 1.0867 s for
+  drop deepdiff-a9bfc08d      target unrunnable at parent+reproducer: exit 4:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop rich-1e05d931          target unrunnable at parent+reproducer: exit 4: le import Console rich/console.py:38: in <
+  drop prompt-toolkit-75786f6a target unrunnable at parent+reproducer: exit 4: 20: in <module>     from prompt_toolkit.ut
+  drop click-2468b709         failure-identity mismatch: the governed observer captured no signature
+  drop isort-31a31d0e         target unrunnable at parent+reproducer: exit 4: port settings  # noqa: F401     ^^^^^^^^^^
+  drop isort-62df020b         target unrunnable at parent+reproducer: exit 4: cal/lib/python3.12/importlib/metadata/__in
+  drop cachetools-a2d34a0d    target does not fail at parent+reproducer: pass ()
+  drop urllib3-b984f4fb       target unrunnable at parent+reproducer: exit 4: 
+  drop click-b964c1e2         failure-identity mismatch: the governed observer captured no signature
+  drop deepdiff-d9d67cac      target unrunnable at parent+reproducer: exit 4: diff/__init__.py:10: in <module>     from 
+  drop icalendar-914b2045     failure-identity mismatch: the governed observer captured no signature
+  drop inflect-b29edcf0       target unrunnable at parent+reproducer: exit 4:  missed a comma?     eq_(mod_PL_val, mod_P
+  drop click-0d01686f         target does not fail at parent+reproducer: pass ()
+  drop cattrs-4a1d4c42        target unrunnable at parent+reproducer: exit 4: 
+  drop rich-a5eada7a          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop packaging-23211929     target unrunnable at parent+reproducer: exit 4: kers import Marker packaging/markers.py:11
+  drop tomlkit-5a61e5b5       target unrunnable at parent+reproducer: exit 4:      ^^^^^^^^^^^^^^^^^^^^ E   FileNotFound
+  drop urllib3-eee53a69       target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-fc76bcb9       failure-identity mismatch: the governed observer captured no signature
+  drop packaging-19fbc45b     target unrunnable at parent+reproducer: exit 4: , package, level)            ^^^^^^^^^^^^^
+  drop rich-a6b33795          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop typer-dcb45b1a         target unrunnable at parent+reproducer: exit 4: me[level:], package, level)            ^^^
+  drop isort-49bb9bab         unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop tqdm-b557cb03          target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-49d74a2e         failure-identity mismatch: the governed observer captured no signature
+  drop click-c326df95         target does not fail at parent+reproducer: pass ()
+  drop tabulate-e52c5ba9      target does not fail at parent+reproducer: pass ()
+  drop flask-166a2a62         target unrunnable at parent+reproducer: exit 4: 
+  drop rich-16b38304          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop jinja-a524e77e         target unrunnable at parent+reproducer: exit 4: 
+  drop rich-06a7555c          target unrunnable at parent+reproducer: exit 4: arkdown.py:76: in <module>     from rich.m
+  drop tqdm-ee5f8d21          target does not fail at parent+reproducer: pass ()
+  drop prompt-toolkit-5e04f58e target unrunnable at parent+reproducer: exit 4: efaults.py:2: in <module>     from prompt_
+  drop isort-9c0ff495         preservation not green on the buggy baseline: 18 of 18 fail, e.g. ['tests/integration/test
+  drop typer-a2215ebd         target unrunnable at parent+reproducer: exit 4: ^^ tests/test_rich_utils.py:4: in <module>
+  drop httpx-e63b6594         failure-identity mismatch: the governed observer captured no signature
+  drop urllib3-e29f5049       target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-38505393        target unrunnable at parent+reproducer: exit 4: 
+  drop icalendar-8aaaff59     failure-identity mismatch: the governed observer captured no signature
+  drop tomlkit-53219e93       target unrunnable at parent+reproducer: exit 4: dule>     from tomlkit.exceptions import I
+  drop urllib3-0a375d19       target unrunnable at parent+reproducer: exit 4: 
+  drop tabulate-293ff59a      unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop asttokens-bb3c487d     preservation not green on the buggy baseline: 53 of 56 fail, e.g. ['tests/test_mark_tokens
+  drop urllib3-5eb604ff       target unrunnable at parent+reproducer: exit 4: 
+  drop faker-75545664         target unrunnable at parent+reproducer: exit 4: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ faker/prov
+  drop rich-0c271d5b          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop werkzeug-f075a41e      target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-f5cf1223       failure-identity mismatch: the governed observer captured no signature
+  drop faker-5128ae64         unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop platformdirs-4fcbe17e  target unrunnable at parent+reproducer: exit 4: module>     from platformdirs.macos import
+  drop deepdiff-eb789c68      target unrunnable at parent+reproducer: exit 4: eepdiff/__init__.py:10: in <module>     fr
+  drop faker-0eca1e87         target unrunnable at parent+reproducer: exit 4: roviders/test_date_time.py:13: in <module>
+  drop flask-e1cc16f8         target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-6cb16724         target unrunnable at parent+reproducer: exit 4: 
+  drop isort-6eba7099         preservation not green on the buggy baseline: 1 of 16 fail, e.g. ['tests/test_settings.py:
+  drop faker-f6c38c10         target unrunnable at parent+reproducer: exit 4: 
+  drop isort-0383c366         target does not fail at parent+reproducer: pass ()
+  drop werkzeug-4d72f8dd      target unrunnable at parent+reproducer: exit 4: 
+  drop faker-d6959627         target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-74afe152        target unrunnable at parent+reproducer: exit 4: 
+  drop rich-a53b805c          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop httpx-10b60d47         target unrunnable at parent+reproducer: exit 4: 
+  drop faker-86896b87         target unrunnable at parent+reproducer: exit 4: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ faker/
+  drop rich-30e5ed61          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop requests-47914226      target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-4f05fad6        target unrunnable at parent+reproducer: exit 4: 
+  drop click-a17b5447         unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop faker-79403fc9         target unrunnable at parent+reproducer: exit 4: ror: cannot import name 'add_ordereddicts'
+  drop click-b830139b         failure-identity mismatch: the governed observer captured no signature
+  drop requests-bd100472      target unrunnable at parent+reproducer: exit 4: 
+  drop cattrs-5c5876e0        target unrunnable at parent+reproducer: exit 4: 
+  drop typer-c5233c0c         target unrunnable at parent+reproducer: exit 4:  tests/test_exit_errors.py:3: in <module> 
+  drop cattrs-c3faf869        target unrunnable at parent+reproducer: exit 4: 
+  drop icalendar-ad081098     failure-identity mismatch: the governed observer captured no signature
+  drop cattrs-08bd8d93        target unrunnable at parent+reproducer: exit 4: 
+  drop flask-fc6a1d93         target unrunnable at parent+reproducer: exit 4: 
+  drop deepdiff-ec78c2e1      target unrunnable at parent+reproducer: exit 4:  level)            ^^^^^^^^^^^^^^^^^^^^^^^
+  drop urllib3-f4efcca5       target unrunnable at parent+reproducer: exit 4: ns import ( src/urllib3/exceptions.py:2: i
+  drop typer-4f04666d         target unrunnable at parent+reproducer: exit 4:  in <module>     import typer typer/__init
+  drop packaging-553582d9     unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop flask-1af8f957         target unrunnable at parent+reproducer: exit 4: 
+  drop icalendar-9b72b0b1     unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop croniter-70a0f62c      target unrunnable at parent+reproducer: exit 4: src/croniter/__init__.py:3: in <module>   
+  drop urllib3-8c905b09       target unrunnable at parent+reproducer: exit 4: 
+  drop werkzeug-ff9ee213      target does not fail at parent+reproducer: pass ()
+  drop typer-d1a177c9         target unrunnable at parent+reproducer: exit 4: ^^^^ tests/test_annotated.py:1: in <module
+  drop isort-28ccbe23         preservation not green on the buggy baseline: 3 of 20 fail, e.g. ['tests/unit/test_tickete
+  drop packaging-69307a31     target unrunnable at parent+reproducer: exit 4: ^ tests/test_specifiers.py:17: in <module>
+  drop bleach-3f2270e4        target unrunnable at parent+reproducer: exit 4:           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop urllib3-3ba47559       target unrunnable at parent+reproducer: exit 4: 
+  drop icalendar-f993bd96     failure-identity mismatch: the governed observer captured no signature
+  drop httpx-b7dc0c3d         target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-cadb9a4d         target unrunnable at parent+reproducer: exit 4: 
+  drop httpx-5a63540e         target unrunnable at parent+reproducer: exit 4: 
+  drop prompt-toolkit-75eca874 target unrunnable at parent+reproducer: exit 4: or.py:20: in <module>     from prompt_tool
+  drop rich-a25d286a          preservation not green on the buggy baseline: 6 of 15 fail, e.g. ['tests/test_syntax.py::t
+  drop sortedcontainers-2b037039 unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop filelock-9c44c112      target unrunnable at parent+reproducer: exit 4:    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  drop rich-95fe8ff5          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop flask-a71c1678         target unrunnable at parent+reproducer: exit 4: 
+  drop deepdiff-89ab170c      target unrunnable at parent+reproducer: exit 4:  deepdiff/__init__.py:10: in <module>     
+  drop faker-62429275         failure-identity mismatch: the governed observer captured no signature
+  drop httpx-ab9cd0ea         target unrunnable at parent+reproducer: exit 4: 
+  drop rich-60f41610          target does not fail at parent+reproducer: pass ()
+  drop httpx-6b474230         target unrunnable at parent+reproducer: exit 4: 
+  drop cachetools-d5b25b8e    target unrunnable at parent+reproducer: exit 4:  no tests ran in 0.15s 
+  drop httpx-00e4fdb0         target unrunnable at parent+reproducer: exit 4: 
+  drop werkzeug-2ceab584      target unrunnable at parent+reproducer: exit 4: cal/lib/python3.12/site-packages/_pytest/c
+  drop httpx-0ed03145         target unrunnable at parent+reproducer: exit 4: 
+  drop pluggy-72e4c259        failure-identity mismatch: the governed observer captured no signature
+  drop pathspec-b70e3fb4      unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop prompt-toolkit-0b4f04e8 target unrunnable at parent+reproducer: exit 4: ssor.py:19: in <module>     from prompt_to
+  drop jmespath-c5017516      preservation not green on the buggy baseline: 2 of 41 fail, e.g. ["tests/test_parser.py::T
+  drop cachetools-57d2e481    preservation not green on the buggy baseline: 19 of 26 fail, e.g. ['tests/test_cachedmetho
+  drop rich-73ee8232          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop cattrs-304e3700        target unrunnable at parent+reproducer: exit 4: 
+  drop rich-9faafa0a          preservation not green on the buggy baseline: 1 of 73 fail, e.g. ["tests/test_text.py::tes
+  drop sortedcontainers-7dc426c9 unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop httpx-f06ca87f         target unrunnable at parent+reproducer: exit 4: 
+  drop deepdiff-fdb08d40      target unrunnable at parent+reproducer: exit 4: diff/__init__.py:10: in <module>     from 
+  drop httpx-430285f5         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-93ebfc12       failure-identity mismatch: the governed observer captured no signature
+  drop platformdirs-c69a5528  target unrunnable at parent+reproducer: exit 4: 11: in <module>     from platformdirs impo
+  drop click-1241abae         failure-identity mismatch: the governed observer captured no signature
+  drop flask-ed9775fb         target unrunnable at parent+reproducer: exit 4: 
+  drop jinja-1e71e315         target unrunnable at parent+reproducer: exit 4: 
+  drop rich-5097f440          target unrunnable at parent+reproducer: exit 4: mport Console rich/console.py:44: in <modu
+  drop httpx-1e110964         failure-identity mismatch: the governed observer captured no signature
+  drop packaging-f8f16338     unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop rich-8411f002          unstable_failure_identity: 3 fresh processes disagreed: [{'error': 'the governed observer 
+  drop rich-465a56f4          target unrunnable at parent+reproducer: exit 4: ch-465a56f4/rich/markup.py:50: SyntaxWarni
+  drop tenacity-841705cd      target unrunnable at parent+reproducer: exit 4:    @asyncio.coroutine      ^^^^^^^^^^^^^^^
+  drop platformdirs-c8af984f  target unrunnable at parent+reproducer: exit 4: module>     from platformdirs.macos import
+  drop deepdiff-ed579575      target unrunnable at parent+reproducer: exit 4: bleSetEq as SetOrderedBase  # median: 1.08
+  drop tqdm-f83290ce          target unrunnable at parent+reproducer: exit 4: 
+  drop tomlkit-b73d1920       target unrunnable at parent+reproducer: exit 4:      ^^^^^^^^^^^^^^^^^^^^ E   FileNotFound
+  drop httpx-4ea4af66         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-0f85e05a       target unrunnable at parent+reproducer: exit 4:  <module>     from .exceptions import ( ur
+  drop httpx-d5900cd4         target unrunnable at parent+reproducer: exit 4: 
+  drop urllib3-99728092       target unrunnable at parent+reproducer: exit 4: ons import ( urllib3/exceptions.py:2: in <
+  drop cattrs-6c269c13        target unrunnable at parent+reproducer: exit 4: 
+  drop packaging-00b7e758     target unrunnable at parent+reproducer: exit 4: evel:], package, level)            ^^^^^^^
+  drop faker-9f48a5c6         target unrunnable at parent+reproducer: exit 4: 3: in <module>     from text_unidecode imp
+
+attempted 198   validated 0
+unique validated repositories : 0
+primary corpus                : 0
+validated surplus             : 0
+
+REJECTION BREAKDOWN (every post-dedupe candidate accounted for)
+   107  collection/import/runtime incompatibility
+    27  insufficient untouched preservation
+    22  unstable failure identity
+    19  other governed validation failure
+    10  baseline preservation fails
+     9  target already passes at baseline
+     4  target-resolution failure
+  ----
+  post-dedupe 198 = rejected 198 + valid 0  -> True
+
+POST-VALIDATION REPOSITORY CAP (<=3 VALID cases/repository)
+  VALID before repo cap        : 0
+  per-repository VALID         : {}
+  removed by repo cap          : 0
+  VALID after repo cap         : 0
+
+final primary cases           : 0
+final distinct repositories   : 0
+aspirational target           : 20-30 cases across 10+ repositories
+frozen minimum                : >=12 cases AND >=10 repositories
+CORPUS_SHORTFALL: 0 cases, 0 repositories. Reported, not padded.

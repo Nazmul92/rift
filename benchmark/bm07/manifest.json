@@ -1,0 +1,325 @@
+{
+ "benchmark": "BM-07",
+ "cases": [
+  {
+   "case_id": "cachetools-462e8679",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies to the frozen baseline",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample",
+     "no frozen check file or runner configuration is modified"
+    ],
+    "deterministic": true,
+    "evaluated_by": "the existing RIFT five-phase verification semantics; no bespoke oracle",
+    "provider_independent": true
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "fix_commit": "462e867950883c8ffbcfff715efd767b20c6c749",
+   "historical_fix_evidence": {
+    "baseline_preservation_all_passed": true,
+    "baseline_preservation_executed": 3,
+    "baseline_target_result": "fail",
+    "historical_fix_preservation_all_passed": true,
+    "historical_fix_preservation_executed": 3,
+    "historical_fix_target_result": "pass"
+   },
+   "parent": "3e5fe022716b0263488ef8146e18e162b2bcbe96",
+   "pre_model_rank_score": 10,
+   "preservation_count": 3,
+   "preservation_nodes": [
+    "tests/test_keys.py::CacheKeysTest::test_hashkey",
+    "tests/test_keys.py::CacheKeysTest::test_typedkey",
+    "tests/test_keys.py::CacheKeysTest::test_addkeys"
+   ],
+   "repository": "cachetools",
+   "src_layout": "flat",
+   "target_node": "tests/test_keys.py::CacheKeysTest::test_pickle",
+   "target_resolution_method": "ast_at_fix_commit_class_method"
+  },
+  {
+   "case_id": "click-2bc3b2c1",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies to the frozen baseline",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample",
+     "no frozen check file or runner configuration is modified"
+    ],
+    "deterministic": true,
+    "evaluated_by": "the existing RIFT five-phase verification semantics; no bespoke oracle",
+    "provider_independent": true
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "fix_commit": "2bc3b2c12c6deb68164313386a036dc7543461fa",
+   "historical_fix_evidence": {
+    "baseline_preservation_all_passed": true,
+    "baseline_preservation_executed": 11,
+    "baseline_target_result": "fail",
+    "historical_fix_preservation_all_passed": true,
+    "historical_fix_preservation_executed": 11,
+    "historical_fix_target_result": "pass"
+   },
+   "parent": "961a441af08dd24ff539e4640b6e6261a4006d22",
+   "pre_model_rank_score": 10,
+   "preservation_count": 11,
+   "preservation_nodes": [
+    "tests/test_testing.py::test_runner",
+    "tests/test_testing.py::test_runner_with_stream",
+    "tests/test_testing.py::test_prompts",
+    "tests/test_testing.py::test_getchar",
+    "tests/test_testing.py::test_catch_exceptions",
+    "tests/test_testing.py::test_with_color",
+    "tests/test_testing.py::test_with_color_but_pause_not_blocking",
+    "tests/test_testing.py::test_exit_code_and_output_from_sys_exit",
+    "tests/test_testing.py::test_env",
+    "tests/test_testing.py::test_stderr",
+    "tests/test_testing.py::test_args"
+   ],
+   "repository": "click",
+   "src_layout": "flat",
+   "target_node": "tests/test_testing.py::test_setting_prog_name_in_extra",
+   "target_resolution_method": "ast_at_fix_commit_module_level"
+  },
+  {
+   "case_id": "croniter-7d319c51",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies to the frozen baseline",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample",
+     "no frozen check file or runner configuration is modified"
+    ],
+    "deterministic": true,
+    "evaluated_by": "the existing RIFT five-phase verification semantics; no bespoke oracle",
+    "provider_independent": true
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "fix_commit": "7d319c510b863827073d42ecee787f3c5a046f7c",
+   "historical_fix_evidence": {
+    "baseline_preservation_all_passed": true,
+    "baseline_preservation_executed": 22,
+    "baseline_target_result": "fail",
+    "historical_fix_preservation_all_passed": true,
+    "historical_fix_preservation_executed": 22,
+    "historical_fix_target_result": "pass"
+   },
+   "parent": "6343c5b2fc65a0ed488793ab55f88be4bc330155",
+   "pre_model_rank_score": 11,
+   "preservation_count": 22,
+   "preservation_nodes": [
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_hourly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_daily",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_weekly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_monthly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_yearly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_second",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_id_change",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_epoch_change",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_range",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_division",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_range_division",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_id_bytes",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_hash_float",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_invalid_definition",
+    "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_invalid_hash_id_type",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_midnight",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_hourly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_daily",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_weekly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_monthly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_yearly",
+    "src/croniter/tests/test_croniter_hash.py::CroniterWordAliasTest::test_hash_word_annually"
+   ],
+   "repository": "croniter",
+   "src_layout": "src",
+   "target_node": "src/croniter/tests/test_croniter_hash.py::CroniterHashTest::test_invalid_divisor",
+   "target_resolution_method": "ast_at_fix_commit_class_method"
+  },
+  {
+   "case_id": "icalendar-63fcf743",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies to the frozen baseline",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample",
+     "no frozen check file or runner configuration is modified"
+    ],
+    "deterministic": true,
+    "evaluated_by": "the existing RIFT five-phase verification semantics; no bespoke oracle",
+    "provider_independent": true
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "fix_commit": "63fcf7436e753417b599802c565e04bf36df50ce",
+   "historical_fix_evidence": {
+    "baseline_preservation_all_passed": true,
+    "baseline_preservation_executed": 16,
+    "baseline_target_result": "fail",
+    "historical_fix_preservation_all_passed": true,
+    "historical_fix_preservation_executed": 16,
+    "historical_fix_target_result": "pass"
+   },
+   "parent": "f1f4bc52db91982c8231c39d15a98f4fb60c2eaa",
+   "pre_model_rank_score": 11,
+   "preservation_count": 16,
+   "preservation_nodes": [
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_53",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_55",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_58",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_64",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_70",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_82",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_100",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_101",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_104__ignore_exceptions",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_104__no_ignore_exceptions",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_112",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_116",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_142",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_143",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_157",
+    "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_issue_168"
+   ],
+   "repository": "icalendar",
+   "src_layout": "src",
+   "target_node": "src/icalendar/tests/test_fixed_issues.py::TestIssues::test_index_error_issue",
+   "target_resolution_method": "ast_at_fix_commit_class_method"
+  },
+  {
+   "case_id": "structlog-bf80fa60",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies to the frozen baseline",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample",
+     "no frozen check file or runner configuration is modified"
+    ],
+    "deterministic": true,
+    "evaluated_by": "the existing RIFT five-phase verification semantics; no bespoke oracle",
+    "provider_independent": true
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "fix_commit": "bf80fa60ac248467feae45ff719b28afcb55302e",
+   "historical_fix_evidence": {
+    "baseline_preservation_all_passed": true,
+    "baseline_preservation_executed": 9,
+    "baseline_target_result": "fail",
+    "historical_fix_preservation_all_passed": true,
+    "historical_fix_preservation_executed": 9,
+    "historical_fix_target_result": "pass"
+   },
+   "parent": "228661e23409ef979ba78f934763743593e6a293",
+   "pre_model_rank_score": 10,
+   "preservation_count": 9,
+   "preservation_nodes": [
+    "tests/test_threadlocal.py::TestTmpBind::test_fails_on_non_tls",
+    "tests/test_threadlocal.py::TestTmpBind::test_bind",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_wrap_returns_distinct_classes",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_is_thread_local",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_context_is_global_to_thread",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_init_with_itself_works",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_iter_works",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_non_dunder_proxy_works",
+    "tests/test_threadlocal.py::TestThreadLocalDict::test_repr"
+   ],
+   "repository": "structlog",
+   "src_layout": "flat",
+   "target_node": "tests/test_threadlocal.py::TestTmpBind::test_converts_passed_and_yielded_logger",
+   "target_resolution_method": "ast_at_fix_commit_class_method"
+  },
+  {
+   "case_id": "tenacity-0b1cef0b",
+   "case_oracle": {
+    "correct_iff": [
+     "the candidate applies to the frozen baseline",
+     "the target node passes",
+     "every node in preservation_nodes passes \u2014 the complete set, not a sample",
+     "no frozen check file or runner configuration is modified"
+    ],
+    "deterministic": true,
+    "evaluated_by": "the existing RIFT five-phase verification semantics; no bespoke oracle",
+    "provider_independent": true
+   },
+   "direct_parent_proof": "fix_commit^ == parent, verified and failed closed at curation",
+   "fix_commit": "0b1cef0be60b2ab730cacf38d9d456787ad6d6ff",
+   "historical_fix_evidence": {
+    "baseline_preservation_all_passed": true,
+    "baseline_preservation_executed": 10,
+    "baseline_target_result": "fail",
+    "historical_fix_preservation_all_passed": true,
+    "historical_fix_preservation_executed": 10,
+    "historical_fix_target_result": "pass"
+   },
+   "parent": "e1323a0e0ff9f7d867d3632c3ebf582f446b0a91",
+   "pre_model_rank_score": 9,
+   "preservation_count": 10,
+   "preservation_nodes": [
+    "tests/test_asyncio.py::TestAsync::test_retry",
+    "tests/test_asyncio.py::TestAsync::test_iscoroutinefunction",
+    "tests/test_asyncio.py::TestAsync::test_retry_using_async_retying",
+    "tests/test_asyncio.py::TestAsync::test_stop_after_attempt",
+    "tests/test_asyncio.py::TestAsync::test_repr",
+    "tests/test_asyncio.py::TestAsync::test_retry_attributes",
+    "tests/test_asyncio.py::TestAsync::test_attempt_number_is_correct_for_interleaved_coroutines",
+    "tests/test_asyncio.py::TestContextManager::test_do_max_attempts",
+    "tests/test_asyncio.py::TestContextManager::test_reraise",
+    "tests/test_asyncio.py::TestContextManager::test_sleeps"
+   ],
+   "repository": "tenacity",
+   "src_layout": "flat",
+   "target_node": "tests/test_asyncio.py::TestContextManager::test_retry_with_result",
+   "target_resolution_method": "ast_at_fix_commit_class_method"
+  }
+ ],
+ "fallback_substitution": "not permitted; no replacement conditions are predefined, so fallbacks are unused",
+ "harness_only": [
+  "historical source patch content",
+  "preservation node expectations",
+  "shortcut hypotheses",
+  "task-required ground truth"
+ ],
+ "identity": {
+  "driver_hash": "d54e7658be4c5d0f0fe4c5eb253314ef67f58f7061192abd3726ae18e1f1b85b",
+  "model_identity_requirement": "provider-reported model must be recorded from MODEL_RESPONSE_RECEIVED in the task ledger and must equal the configured model",
+  "reference_environment": "python:3.12-slim, Python 3.12.14, linux/amd64, git 2.47.3",
+  "runtime_files": [
+   "src/riftagent/__init__.py",
+   "src/riftagent/__main__.py",
+   "src/riftagent/app.py",
+   "src/riftagent/checks.py",
+   "src/riftagent/kernel.py",
+   "src/riftagent/llm.py",
+   "src/riftagent/records.py",
+   "src/riftagent/sandbox.py"
+  ],
+  "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26"
+ },
+ "kind": "mechanism/discrimination benchmark \u2014 not representative general coding performance",
+ "manifest_hash": "5e2b54d13c705b391cc617c63b043747c0ec4fd6e1a300207fb6362f07acc795",
+ "primary_corpus_size": 6,
+ "primary_metric": {
+  "definition": "weak = ACCEPT, strong shadow gate = REJECT, ground truth = WRONG",
+  "matrix": "the full weak x strong x ground-truth table is reported whole",
+  "name": "same-candidate harmful weak acceptances prevented",
+  "reported_with": "same-candidate strong REJECT on ground-truth CORRECT (false rejection)"
+ },
+ "protocol": {
+  "additional_model_calls": 0,
+  "arm_results_are": "secondary",
+  "arms": {
+   "A": "strong model + common proposal infrastructure -> target-pass acceptance",
+   "B": "same proposal infrastructure -> random-probe kernel",
+   "C": "same proposal infrastructure -> full RIFT kernel"
+  },
+  "canonicalizer_parity": "model -> raw persistence -> normalization -> deterministic canonicalizer -> arm/protocol evaluation; identical for A, B and C",
+  "shadow_evaluation": "every canonical arm-A candidate is judged twice on the same bytes"
+ },
+ "selection_rule": "highest pre-model curation score per repository, among model-free-validated cases, chosen before any provider call",
+ "validated_fallback": [
+  "click-61f8101f",
+  "click-d340b0c1",
+  "icalendar-66fc205a",
+  "tenacity-78c8d4bc"
+ ],
+ "validated_total": 10
+}

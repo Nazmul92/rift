@@ -1,0 +1,32 @@
+{
+ "case": "cachetools-c0fdf6ab-genuine_source_bug",
+ "checks": {
+  "finish_reason_not_length": true,
+  "json_extracts": false,
+  "model_reported_matches": true,
+  "response_chars_positive": true
+ },
+ "cost_usd": 0.016002,
+ "env_model_agrees": true,
+ "extract_error": "ModelResponseInvalid: malformed JSON object: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+ "finish_reason": "stop",
+ "manifest_sha256": "64aa5f7777d27fadc178fa3e93b3fb68d97bb0c5442e5252b347ab199b584f19",
+ "max_output_tokens": 4000,
+ "model_reported": "claude-sonnet-4-6",
+ "model_requested": "claude-sonnet-4-6",
+ "output_exhausted": false,
+ "purpose": "propose_change contract under the reissued manifest, at the frozen output cap",
+ "repair_note": "one request only; a repair would be a second charged request and is not authorized here",
+ "repair_request_made": false,
+ "requests_made": 1,
+ "response_chars": 2304,
+ "result": "FAIL",
+ "source_files_sent": [
+  "src/cachetools/__init__.py"
+ ],
+ "timestamp_utc": "2026-08-19T13:26:53+00:00",
+ "usage": {
+  "input_tokens": 2024,
+  "output_tokens": 662
+ }
+}

@@ -24,6 +24,7 @@ import re
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -33,7 +34,6 @@ from riftagent.records import (
     ModelUsage,
     Primitive,
     ValidationError,
-    canonical_diff,
     require,
     strict_fields,
     validate_hypothesis,
@@ -273,28 +273,14 @@ def _parse_reply(data: Any) -> ModelReply:
 # --------------------------------------------------------------------------
 
 
-def extract_json(text: str) -> dict[str, Any]:
-    """Pull one JSON object out of a model reply.
+MAX_JSON_CANDIDATES = 64
 
-    The surrounding prose is discarded, never executed and never interpreted.
-    Only a top-level object is accepted; a bare array or scalar is not a
-    proposal shape this runtime understands.
-    """
-    stripped = text.strip()
-    if stripped.startswith("```"):
-        body = stripped.split("```")
-        for chunk in body:
-            chunk = chunk.strip()
-            if chunk.startswith("json"):
-                chunk = chunk[4:].strip()
-            if chunk.startswith("{"):
-                stripped = chunk
-                break
-    start = stripped.find("{")
-    if start < 0:
-        raise ModelResponseInvalid("no JSON object found in the response")
+
+def _balanced_end(text: str, start: int) -> int:
+    """Index of the `}` closing the `{` at `start`, or -1 if it never closes."""
     depth, in_str, esc = 0, False, False
-    for i, ch in enumerate(stripped[start:], start=start):
+    for i in range(start, len(text)):
+        ch = text[i]
         if in_str:
             if esc:
                 esc = False
@@ -310,14 +296,94 @@ def extract_json(text: str) -> dict[str, Any]:
         elif ch == "}":
             depth -= 1
             if depth == 0:
-                try:
-                    parsed = json.loads(stripped[start : i + 1])
-                except json.JSONDecodeError as exc:
-                    raise ModelResponseInvalid(f"malformed JSON object: {exc}") from None
-                if not isinstance(parsed, dict):
-                    raise ModelResponseInvalid("top-level JSON value was not an object")
-                return parsed
-    raise ModelResponseInvalid("unterminated JSON object in the response")
+                return i
+    return -1
+
+
+def json_candidates(text: str, limit: int = MAX_JSON_CANDIDATES) -> list[dict[str, Any]]:
+    """Every JSON object in a reply, in the order they appear.
+
+    Surrounding prose is discarded, never executed and never interpreted. Only
+    objects are returned; a bare array or scalar is not a proposal shape this
+    runtime understands.
+
+    Returning a *list* is the point. The previous implementation parsed the
+    first balanced span and raised if it failed, which made the first `{`
+    anywhere in the reply decide whether a proposal could be found at all. A
+    model that echoed a pytest message containing `TLRUCache({1: 5}, ...)` and
+    then emitted a perfectly good proposal had the proposal thrown away
+    (DAR-021, observed live). Prose is meant to be discarded; a brace inside it
+    was making the whole reply unusable instead.
+
+    A span that does not parse is stepped over rather than treated as the
+    answer. A span that does parse is skipped past, so objects nested inside an
+    accepted one are not offered as rival candidates.
+    """
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        for chunk in stripped.split("```"):
+            chunk = chunk.strip()
+            if chunk.startswith("json"):
+                chunk = chunk[4:].strip()
+            if chunk.startswith("{"):
+                stripped = chunk
+                break
+    found: list[dict[str, Any]] = []
+    i, seen = stripped.find("{"), 0
+    while i >= 0 and len(found) < limit and seen < limit:
+        seen += 1
+        end = _balanced_end(stripped, i)
+        if end < 0:
+            break
+        try:
+            parsed = json.loads(stripped[i : end + 1])
+        except json.JSONDecodeError:
+            # Not JSON. Resume *inside* it, so an object nested in an
+            # unparseable span is still reachable.
+            i = stripped.find("{", i + 1)
+            continue
+        if isinstance(parsed, dict):
+            found.append(parsed)
+        i = stripped.find("{", end + 1)
+    return found
+
+
+def extract_validated[T](text: str, validate: Callable[[dict[str, Any]], T]) -> T:
+    """The one object in a reply that satisfies the operation's frozen contract.
+
+    Parsing is not the acceptance test — the operation's own validator is. That
+    matters because valid JSON is not the same thing as a valid proposal: a
+    reply saying "the previous state was {}" before its real answer offers a
+    `{}` that parses perfectly and is not a proposal. Deciding on parseability
+    alone would take it, the validator would reject it, and a repair would be
+    bought for a reply that was already correct (DAR-021).
+
+    Fails closed on ambiguity. If two *different* objects both satisfy the
+    contract there is no principled way to choose, and picking by position
+    would be guessing at which one the model meant. Byte-equal duplicates are
+    not ambiguous — a reply that states its proposal twice, in prose and again
+    in a fenced block, has said one thing — so they are collapsed first.
+    """
+    candidates = json_candidates(text)
+    if not candidates:
+        raise ModelResponseInvalid("no JSON object found in the response")
+
+    accepted: list[tuple[dict[str, Any], T]] = []
+    last_rejection = ""
+    for raw in candidates:
+        try:
+            accepted.append((raw, validate(raw)))
+        except (ModelResponseInvalid, ValidationError) as exc:
+            last_rejection = str(exc)
+
+    if not accepted:
+        detail = f" ({len(candidates)} objects examined)" if len(candidates) > 1 else ""
+        raise ModelResponseInvalid(f"{last_rejection}{detail}")
+
+    distinct = [pair for n, pair in enumerate(accepted) if all(pair[0] != prior[0] for prior in accepted[:n])]
+    if len(distinct) > 1:
+        raise ModelResponseInvalid(f"ambiguous response: {len(distinct)} different objects satisfied the schema")
+    return distinct[0][1]
 
 
 # --------------------------------------------------------------------------
@@ -456,6 +522,47 @@ _CHANGE_SYSTEM = (
 )
 
 
+def output_exhausted(reply: ModelReply) -> bool:
+    """Did the response run out of room before saying anything usable?
+
+    A completed-but-malformed reply can be repaired: the model said something,
+    and asking it to re-serialise that something is a bounded, meaningful
+    request. A truncated one cannot. `finish_reason == "length"` with no visible
+    text means the allowance was consumed before any answer existed, and asking
+    again under the same allowance buys the identical failure twice.
+
+    Kept as a predicate rather than a branch inside the caller so the two
+    conditions are named, and so a test can assert on the distinction itself.
+    """
+    return reply.finish_reason == "length" or not reply.text.strip()
+
+
+def repair_prompt(messages: list[dict[str, str]], bad_text: str, reason: str) -> list[dict[str, str]]:
+    """Ask for the *same* proposal, correctly serialised. Nothing else.
+
+    The repair request deliberately does not restate the task, invite a fresh
+    diagnosis, or offer a second attempt at the fix. It carries the model's own
+    previous output back and asks for its serialisation to be corrected. A
+    repair that re-opens the problem would be a second proposal attempt wearing
+    a repair's name, and `max_attempts` exists to say how many of those are
+    allowed.
+    """
+    return [
+        messages[0],
+        {
+            "role": "user",
+            "content": (
+                f"Your previous reply could not be parsed: {reason}\n\n"
+                "Re-send the SAME proposal as a single valid JSON object matching the schema you were "
+                "given. Do not change the fix, do not reconsider the problem, and do not add commentary "
+                "outside the JSON.\n\n"
+                "--- your previous reply ---\n"
+                f"{bad_text[:4000]}"
+            ),
+        },
+    ]
+
+
 def change_prompt(
     node_id: str,
     failure_text: str,
@@ -557,12 +664,20 @@ def validate_handles(raw: dict[str, Any], existing: list[Handle]) -> list[Handle
 
 
 def validate_change(raw: dict[str, Any]) -> tuple[str, str]:
-    """`propose_change` → one canonical unified diff plus a non-authoritative summary.
+    """`propose_change` → the model's **exact** unified diff plus a summary.
 
     The summary is returned so it can be shown to a human, and is never
     consulted by the gate. Acceptance is decided by the counterfactual and the
     frozen judge; a persuasive summary attached to a patch that fails the gate
     changes nothing.
+
+    The diff is returned byte-exact. This function used to hand back
+    `canonical_diff(diff)`, which meant the first artifact the product persisted
+    as "raw" had already had its line endings rewritten — the model's actual
+    output existed nowhere on disk. Validation decides whether a response is
+    acceptable; transforming it is a separate, separately recorded stage
+    (DAR-032). `records.normalize_candidate` performs it, after the exact bytes
+    are stored.
     """
     strict_fields(raw, ("diff", "summary"), "propose_change")
     diff = raw.get("diff")
@@ -574,7 +689,7 @@ def validate_change(raw: dict[str, Any]) -> tuple[str, str]:
     require(len(summary) <= 2000, "summary is too long")
     for banned in ("confidence", "certainty"):
         require(banned not in raw, f"response carries {banned!r}; model confidence is not accepted")
-    return canonical_diff(diff), summary[:2000]
+    return diff, summary[:2000]
 
 
 __all__ = [
@@ -587,7 +702,8 @@ __all__ = [
     "ModelUnavailable",
     "ProviderConfig",
     "change_prompt",
-    "extract_json",
+    "extract_validated",
+    "json_candidates",
     "handles_prompt",
     "hypotheses_prompt",
     "post_chat",

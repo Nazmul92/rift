@@ -620,6 +620,38 @@ def _running(pid: int) -> bool:
         return False
 
 
+def _descendants(root: int) -> list[int]:
+    """Every running descendant of `root`, read from the host's own `/proc`.
+
+    Under `IsolationLevel.FULL` the command runs inside `bwrap --unshare-pid`,
+    so the pids the child can see for itself are namespace-local: it reports
+    pgid 1 and a grandchild of 3, and looking those up in this process's `/proc`
+    answers a question about entirely unrelated processes. Walking the parent
+    chain from the pid we spawned works at both isolation levels and, unlike the
+    single recorded grandchild it replaces, asserts that the *whole* tree died
+    rather than one nominated member of it.
+    """
+    children: dict[int, list[int]] = {}
+    for entry in Path("/proc").iterdir():
+        if not entry.name.isdigit():
+            continue
+        try:
+            stat = (entry / "stat").read_text(encoding="utf-8")
+            ppid = int(stat.rsplit(")", 1)[1].split()[1])
+        except (OSError, IndexError, ValueError):
+            continue
+        children.setdefault(ppid, []).append(int(entry.name))
+    found: list[int] = []
+    queue = list(children.get(root, ()))
+    while queue:
+        pid = queue.pop()
+        if pid in found:
+            continue
+        found.append(pid)
+        queue.extend(children.get(pid, ()))
+    return [pid for pid in found if _running(pid)]
+
+
 @pytest.mark.skipif(
     IS_WINDOWS or not Path("/proc").is_dir(),
     reason="NOT_RUN_PROCFS_UNAVAILABLE: liveness is read from /proc; Windows uses a tested Job Object (M1-X05)",
@@ -638,7 +670,23 @@ def test_r07_an_interrupt_kills_the_child_process_tree(tmp_path, monkeypatch):
     from riftagent import sandbox
     from riftagent.sandbox import Worktree, build_env, probe_isolation
 
-    pidfile = tmp_path / "pgid.txt"
+    repo = build_repo(tmp_path / "tree", {"tests/test_a.py": "def test_a():\n    pass\n"})
+    wt = Worktree(repo, "interrupt")
+    # Probed before `Popen` is patched. `monkeypatch.setattr(sandbox.subprocess,
+    # "Popen", ...)` replaces the attribute on the shared `subprocess` module, so
+    # everything routed through `subprocess.run` gets the interrupting class too —
+    # including `probe_isolation`'s own `bwrap ... /bin/true` liveness check.
+    # Evaluated inside the patched region it consumed the single interrupt and the
+    # test failed with "the child never started". Invisible until the image
+    # supplied bwrap, because without it the probe returns before running anything.
+    probe = probe_isolation()
+    # The handshake file lives inside the worktree, the only place a repository
+    # command may write. It was under `tmp_path`, which worked only because the
+    # reference image had no bubblewrap and RIFT fell back to `PARTIAL` — "no
+    # filesystem or network confinement". Under `FULL` that write is correctly
+    # denied. The row under test is process-tree termination, not filesystem
+    # reach, so the fix is to stop reaching.
+    pidfile = wt.path / "pgid.txt"
     state: dict[str, Any] = {}
 
     class Interrupting(sp.Popen):
@@ -653,18 +701,24 @@ def test_r07_an_interrupt_kills_the_child_process_tree(tmp_path, monkeypatch):
             while time.monotonic() < deadline and not pidfile.exists():
                 time.sleep(0.05)
             assert pidfile.exists(), "the child never started"
-            pgid, grandchild = (int(x) for x in pidfile.read_text(encoding="utf-8").split())
-            state["pgid"] = pgid
-            state["grandchild"] = grandchild
-            # The control: the child and its descendant are both running here.
-            # Without it the assertions after the interrupt would pass against
-            # pids that never ran.
-            assert _running(self.pid) and _running(grandchild), "the tree was not running before the interrupt"
+            # The pids inside the file are namespace-local under `FULL` and are
+            # read only as proof the child reached the point of spawning one.
+            # Liveness comes from this process's own view of the tree.
+            tree = _descendants(self.pid)
+            state["tree"] = tree
+            # The control: the spawned command and at least one descendant of it
+            # are running here. Without it the assertions after the interrupt
+            # would pass against pids that never ran.
+            assert _running(self.pid), "the command was not running before the interrupt"
+            # One descendant is the point of the row: `self.pid` is the command
+            # itself, and killing only that would leave the descendant orphaned and
+            # still running. The depth differs by isolation level — under `FULL`
+            # `self.pid` is bwrap and the tree carries an extra layer — so the
+            # assertion is on the property, not on a level-specific count.
+            assert tree, "no descendant was running before the interrupt"
             state["alive_before"] = True
             raise KeyboardInterrupt("simulated Ctrl-C while the child was running")
 
-    repo = build_repo(tmp_path / "tree", {"tests/test_a.py": "def test_a():\n    pass\n"})
-    wt = Worktree(repo, "interrupt")
     try:
         argv = [sys.executable, "-c", CHILD, str(pidfile)]
         env = build_env(wt.path, wt.tmpdir, {})
@@ -673,21 +727,23 @@ def test_r07_an_interrupt_kills_the_child_process_tree(tmp_path, monkeypatch):
         # rather than the process under test.
         monkeypatch.setattr(sandbox.subprocess, "Popen", Interrupting)
         with pytest.raises(KeyboardInterrupt):
-            sandbox.run_argv(argv, wt.path, env, 120.0, probe_isolation(), False)
+            sandbox.run_argv(argv, wt.path, env, 120.0, probe, False)
     finally:
         wt.dispose()
 
     assert state.get("alive_before"), "the control never observed a running process tree"
-    grandchild = state["grandchild"]
+    tree = state["tree"]
     deadline = time.monotonic() + 20
     while time.monotonic() < deadline:
-        if not _running(grandchild):
-            # The descendant is what the row is about: killing the child alone
-            # would leave the grandchild orphaned and still running.
+        survivors = [pid for pid in tree if _running(pid)]
+        if not survivors:
+            # The descendants are what the row is about: killing the command
+            # alone would leave them orphaned and still running.
             return
         time.sleep(0.1)
-    try:
-        os.killpg(state["pgid"], 9)
-    except OSError:
-        pass
-    raise AssertionError("a descendant of the interrupted command survived")
+    for pid in tree:
+        try:
+            os.kill(pid, 9)
+        except OSError:
+            pass
+    raise AssertionError(f"descendants of the interrupted command survived: {survivors}")

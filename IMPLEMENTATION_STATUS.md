@@ -5576,3 +5576,2041 @@ before any execution.
   know whether it is worth building.
 
 **READY_FOR_DRIVER_REVIEW.**
+
+## Provider preflight, DAR-019, and the corrected preliminary manifest
+
+Append-only. One live provider request has now been made; charged spend is
+**$0.068157 historical + $0.000072 preflight**. The 27-arm run has not started.
+
+### Provider preflight: PASS
+
+One request, through `riftagent.llm.post_chat` — the adapter the benchmark uses,
+not a hand-rolled call. HTTP 200 against the OpenAI-compatible endpoint;
+`claude-sonnet-5` requested and reported back; response parsed; provider usage
+present (16 input, 4 output); cost **$0.000072**. Evidence in
+`benchmark/bm06/preflight-record.json`, with no key, header or credential
+material.
+
+`temperature=0.0` was **not sent and cannot be**: DAR-014 made the adapter's
+default `None` and the field is omitted entirely when it is. The `BLOCKING —
+UNRESOLVED` record in `model-and-pricing.json` describes the pre-DAR-014 adapter
+and its predicted failure mode — all 27 runs rejected on 400s — cannot occur.
+
+`.env` named `claude-haiku-4-5-20251001` while the manifest requires
+`claude-sonnet-5`; the preflight was run against the manifest's model and `.env`
+has been corrected. Left as configured, every arm-run would have executed against
+the wrong model at different prices.
+
+### DAR-019: arms B and C did not consume the declared identity
+
+`freeze_declared_reproducer` was called only inside the `--model-alone` branch.
+Arm A enforced the manifest's declared failure identity; arms B and C parsed
+`--precondition` and `--expect-signature` and derived their own reproducer from
+whatever they observed. The driver tests proved the arguments reached every arm's
+argv — a different claim from the product consuming them.
+
+Corrected: the freeze is hoisted above the branch, and `reproduces_as_declared`
+runs the declared experiment once **before diagnosis**, therefore before any
+model request. Seven tests in `tests/test_declared_identity_consumption.py`,
+including one that replaces the model adapter with a function that fails on call
+and proves a mismatch stops at zero requests, plus a mutation showing the tests
+go dead if the freeze is withheld from the normal path.
+
+Runtime **9,150 / 9,156** (DAR-019, +48 measured).
+
+### Three signatures were not in RIFT's canonical form
+
+Frozen as raw pytest `E ` lines. Where assertion rewriting emits a bare
+`assert ...`, RIFT records the exception type as `Failure`, so the declared type
+never matched and all three cases stopped at baseline in every arm. Re-encoded to
+the observed canonical form:
+
+| case | now |
+|---|---|
+| pyparsing-13065174 | `Failure: assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]` |
+| icalendar-781eeda8 | `Failure: assert None is not None` |
+| icalendar-62cbf833 | `Failure: assert 2 == 0` |
+
+The third was wrong in both type and message, not only encoding. No failure,
+target, commit, patch, preservation check or label changed.
+
+### Pricing provenance, with a recorded disagreement
+
+The pricing page fetched 2026-08-19 states verbatim that the $2/$10 rate "is now
+the standard price" and that the 2026-09-01 increase to $3/$15 "will not occur".
+A reviewer reported the opposite — that the documentation still describes $2/$10
+as introductory through 2026-08-31.
+
+The manifest now records **both**, quotes the observed note with its source and
+date, and asserts neither as permanent. Both readings agree on today's rate, so
+the **$3.43** ceiling is correct for a run on or before 2026-08-31; at $3/$15 the
+worst case would be $5.14 and the ceiling would need reissuing. Reconfirmation
+immediately before execution is required either way.
+
+### Model-free readiness
+
+**9 of 9 cases verified against approved checks, 0 model requests.** Each runs
+through the full five-phase gate inside rift's own sandbox under its own declared
+signature and preservation set. Recorded in `benchmark/bm06/prerun-check.json`;
+the per-case signature comparison is in `signature-observation.json`.
+
+Frozen manifest SHA-256: **bf77869aec94477c8cd9347629a97c9f664e1ad2a9813fbf2edb3eefad3c46c0**
+
+> **Superseded 2026-08-19.** The manifest was reissued for `claude-sonnet-4-6`;
+> the current frozen SHA-256 is
+> `64aa5f7777d27fadc178fa3e93b3fb68d97bb0c5442e5252b347ab199b584f19`.
+
+### Statuses
+
+- **M1 product:** approved; DAR-019 is a narrow contract-consumption correction.
+- **Provider preflight:** PASS. No repeat smoke needed — the record shows model
+  requested and reported both `claude-sonnet-5`.
+- **Preliminary corpus:** 9 cases, 3 classes, 6 repositories, all verified
+  model-free.
+- **Original BM-06:** `NOT_RUN_PROTOCOL_INFEASIBLE`, unchanged.
+- **Paid preliminary run:** not started, not authorized.
+- **Repair-loop thesis:** unmeasured.
+
+---
+
+## Model switch to `claude-sonnet-4-6` and the schema-repair implementation
+
+No provider request was made in this pass. Cumulative spend is unchanged at
+**$0.265526**, all of it classified as adapter and preflight expenditure, not
+benchmark observation.
+
+### 1. Model
+
+`.env` and the frozen configuration now name **`claude-sonnet-4-6`** at the
+published list rate of **$3.00 / $15.00 per MTok**, re-verified 2026-08-19
+against `https://platform.claude.com/docs/en/about-claude/pricing` and quoted
+verbatim in the manifest. No introductory or promotional rate applies to this
+model; the introductory note on that page concerns Sonnet 5 only, which makes
+the previously recorded pricing disagreement moot for this benchmark.
+
+The reason is in `benchmark/bm06/RUN-ABORTED-FINDING.md`: under the
+OpenAI-compatible endpoint, extended thinking is on by default for Claude 5
+models, its tokens are charged and counted against `max_tokens`, and the layer
+does not return them. `reasoning_effort` and `response_format` are both ignored
+there, so no OpenAI-shaped parameter reaches the behaviour, and the only field
+that does is Anthropic-specific — which adapter neutrality (M1-S03) forbids and
+DAR-014 already decided against for `temperature`. Changing the model required
+no adapter change.
+
+Three files had to agree and now do: `.env`,
+`benchmark/bm06/manifest-preliminary.json`, and
+`benchmark/bm06/model-and-pricing.json`. The last is read by `curate_cases.py`
+to build the manifest's model and budget blocks, so leaving it at Sonnet 5 would
+have let a re-curation silently regenerate a manifest contradicting the frozen
+one. The curator's hard-coded `$0.1269` per-task figure is likewise now derived
+from the frozen per-operation reservations.
+
+### 2. Schema repair
+
+`CLAUDE.md` has always required "allow one schema-repair request; abstain
+explicitly if validation still fails." No caller implemented it. It is
+implemented now, with the exhaustion distinction DAR-020 derives: a **completed**
+unparseable reply gets exactly one repair asking for the same proposal
+re-serialised; a reply with `finish_reason: length` or no visible text gets
+**none**, because there is no completed response to repair and the aborted run
+demonstrated that retrying it buys the identical failure twice.
+
+`MODEL_RESPONSE_INVALID` now carries `finish_reason`, `response_chars` and
+`output_exhausted`, so the two failures are distinguishable in a ledger after
+the fact. They were not before.
+
+### 3. Gates
+
+| gate | command | result |
+|---|---|---|
+| lint | `ruff check src tests benchmark` | pass |
+| format | `ruff format --check src tests benchmark` | 58 files already formatted |
+| types | `mypy src/riftagent` | no issues, 8 source files |
+| tests | `pytest -q` | **623 passed, 5 skipped** in 571s |
+| repair regressions | `pytest tests/test_json_repair_retry.py` | **9 passed** |
+
+All in the pinned `python:3.12-slim` container.
+
+### 4. Ceiling
+
+| | before | after |
+|---|---|---|
+| model | `claude-sonnet-5` | `claude-sonnet-4-6` |
+| rates | $2.00 / $10.00 | $3.00 / $15.00 |
+| manifest SHA-256 | `bf77869a…3c46c0` | `64aa5f77…b584f19` |
+| 27-arm ceiling | $3.43 | **$6.54** |
+
+$6.54 assumes every one of the 27 arm-runs needs its schema repair. Roughly
+$1.18 of the increase is the rate change and roughly $1.93 the repair allowance.
+
+### 5. Runtime line count — over ceiling
+
+**9,281 measured against the 9,156 ceiling of DAR-019.** The repair
+implementation is +131 lines. DAR-020 records the measurement per module and
+puts two options to the reviewer rather than taking either: raise to 9,287, or
+authorize removing the four-way duplication of the reserve/request/settle
+sequence across the model operations, which would recover an estimated 70–90
+lines and still not reach 9,156. `CLAUDE.md` is **not** amended; the tree is
+knowingly over its stated ceiling and that is disclosed rather than absorbed.
+
+### 6. Statuses
+
+- **M1 product:** approved. DAR-020 is proposed, not applied.
+- **Provider preflight under Sonnet 4.6:** `NOT_RUN_NOT_AUTHORIZED`. Whether
+  this model returns a parseable proposal is reasoned from documentation, not
+  observed.
+- **Preliminary corpus:** 9 cases, 3 classes, 6 repositories.
+- **Original BM-06:** `NOT_RUN_PROTOCOL_INFEASIBLE`, unchanged.
+- **Paid preliminary run:** not started, not authorized.
+- **Repair-loop thesis:** unmeasured.
+
+### 7. Model-free re-verification under the reissued manifest
+
+**9 of 9 cases verified against approved checks, 0 model requests.** Re-run
+after the reissue, through the full five-phase gate inside rift's own sandbox
+under each case's declared signature and preservation set.
+`benchmark/bm06/prerun-check.json` regenerated.
+
+Frozen manifest SHA-256:
+**`64aa5f7777d27fadc178fa3e93b3fb68d97bb0c5442e5252b347ab199b584f19`**
+
+### 8. A launcher defect found while switching the model
+
+`run_preliminary.py` set `RIFT_LLM_MODEL` from a literal — `claude-sonnet-5` —
+after loading `.env`, under a comment saying "the manifest is the authority on
+which model the arms share." It was not reading the manifest. Because that
+assignment overrides `.env`, the reissued manifest alone would not have changed
+what ran: all 27 arm-runs would have used Sonnet 5 while the manifest, the
+receipts and the results file said Sonnet 4.6.
+
+It now reads `model.id` from the manifest it is about to run, and prints the
+manifest SHA-256 and the ceiling before starting. This is the same class of
+defect as the four found in DAR-015 and the one in DAR-019: an argument proven
+to exist, never proven to be consumed.
+
+---
+
+## DAR-020 approved; live diagnostic passes; DAR-021 proposed
+
+### DAR-020 — approved at 9,287
+
+Option 1. Measured **9,281**, ceiling **9,287**, `CLAUDE.md` amended. The
+reserve/request/settle duplication across the four model operations is recorded
+as **cleanup debt**, not a benchmark-readiness blocker.
+
+### Live end-to-end diagnostic — PASS
+
+Two provider calls, hard-capped in a wrapper that raises before a third rather
+than trusting the call path to stop. Drives the real `_request_change`, not a
+bare `post_chat`. Harness validated against canned replies at $0 first.
+
+| call | operation | finish | out tokens | chars | outcome |
+|---|---|---|---|---|---|
+| 1 | `propose_change` | `stop` | 618 | 2,243 | invalid |
+| 2 | `propose_change_repair` | `stop` | 273 | 901 | **valid** |
+
+Result **PASS**: 709-character diff touching `src/cachetools/__init__.py`.
+Ledger: `spend_reserved`, `model_request_started`, `model_response_received`,
+`spend_settled`, `model_response_invalid`, `spend_reserved`,
+`model_repair_requested`, `model_response_received`, `spend_settled`. Exactly
+one repair, reserved before it was sent. **$0.022119.**
+
+**The production proposal contract works against the live provider**, including
+the DAR-020 repair path. That was the question and it is answered.
+
+### DAR-021 — proposed, not applied
+
+The raw first reply was captured this time, and it was **not malformed**. It
+contains a brace at offset 243 inside the echoed pytest message
+(`TLRUCache({1: 5}, …)`) and a complete, valid proposal at offset 1,342 that
+passes `validate_change`. `extract_json` parsed the first balanced span, failed,
+and raised — discarding the proposal 1,100 characters later.
+
+The repair then recovered the identical fix; its summary is word for word the
+summary in the discarded object.
+
+`extract_json` is approved runtime and the standing instruction was not to
+modify it until the cause was established from a captured reply. DAR-021
+records the evidence and the proposed correction: continue scanning past a
+balanced span that fails to parse, and abstain only when no span parses.
+
+**Recommendation: hold the 27-arm authorization.** Every case's frozen signature
+appears in the prompt and several contain braces, so each occurrence would write
+a first-attempt failure that did not happen and a repair success that was not
+needed — biasing the arm comparison in the direction that flatters the product.
+
+### Spend, corrected
+
+`model-and-pricing.json` previously recorded 0 requests and $0.265526 under
+`claude-sonnet-4-6` while `preflight-propose-46.json` already evidenced one paid
+call. Corrected, with a per-source breakdown that is asserted to sum:
+
+| source | requests | USD |
+|---|---|---|
+| aborted 27-arm run (Sonnet 5) | 5 | 0.180358 |
+| transport smoke (Sonnet 5) | 1 | 0.000072 |
+| 8K propose preflight (Sonnet 5) | 1 | 0.085096 |
+| propose preflight (Sonnet 4.6) | 1 | 0.016002 |
+| live repair diagnostic (Sonnet 4.6) | 2 | 0.022119 |
+| **total** | **10** | **0.303647** |
+
+Of which 3 requests and $0.038121 under `claude-sonnet-4-6`. All classified as
+adapter and preflight expenditure; no arm-run is retained as a result.
+
+### Statuses
+
+- **M1 product:** approved. DAR-020 approved and applied; DAR-021 proposed.
+- **Model↔adapter contract:** **PROVEN** end to end, live, including the repair.
+- **`extract_json`:** defect established from a captured reply, not inferred.
+- **Preliminary corpus:** 9 cases, 9/9 model-free.
+- **Original BM-06:** `NOT_RUN_PROTOCOL_INFEASIBLE`, unchanged.
+- **Paid preliminary run:** not started; authorization recommended to be held.
+- **Repair-loop thesis:** unmeasured.
+
+---
+
+## DAR-021 approved and applied — extraction is validator-aware, repair is universal
+
+No provider request was made in this pass. Spend unchanged at **$0.303647**.
+
+### 1. Extraction
+
+`extract_json` **removed**. Its contract was the defect stated as a rule, and
+leaving it callable would leave the trap set. Replaced by `json_candidates`
+(every object in a reply, bounded at 64) and `extract_validated`, which applies
+the operation's own validator and enforces: exactly one valid → accept, zero →
+repair, several different → fail closed as ambiguous.
+
+Parsing is not the acceptance test. `{}` parses and is not a proposal; deciding
+on parseability alone would have moved the defect one layer along rather than
+fixing it.
+
+Two judgements are flagged in DAR-021 for review: byte-equal duplicate
+proposals are collapsed before the ambiguity check, and a proposal wrapped in a
+single-element array is now accepted.
+
+### 2. The repair entitlement, for all three operations
+
+`CLAUDE.md` grants every model operation one schema repair. DAR-020 had
+implemented it for `propose_change` only, so a diagnosis that reasoned well and
+serialised badly was discarded in silence — arms B and C would have scored worse
+for an adapter defect while `propose_change` got its promised retry.
+
+`_repair_change` is generalised into `_accept_or_repair` + `_repair_request`,
+parameterised by operation and validator. Each repair reserves and settles under
+its own `<operation>_repair` key.
+
+### 3. Gates
+
+| gate | result |
+|---|---|
+| `ruff check src tests benchmark` | pass |
+| `ruff format --check` | 59 files already formatted |
+| `mypy src/riftagent` | no issues, 8 source files |
+| full suite | **652 passed, 5 skipped** in 609s |
+| `test_dar021_extraction.py` | 20 passed |
+| `test_json_repair_retry.py` | 38 passed |
+| model-free verification | **9/9**, 0 model requests |
+
+### 4. Runtime
+
+**9,391 measured; ceiling 9,397** (DAR-021, governed from the actual result).
+`llm.py` +68, `app.py` +42. The app delta granted the entitlement to two more
+operations *and* removed a duplication; copying `_repair_change` twice would
+have cost roughly +120.
+
+### 5. Budget
+
+Every operation's repair is reservable, so all three are priced. Repair input
+ceilings measured, not assumed.
+
+| | per arm-run | ×9 |
+|---|---|---|
+| arm A | $0.20259 | $1.823 |
+| arms B and C | $0.321819 | $5.793 |
+| **27 arm-runs** | | **$7.616052 → $7.62** |
+
+Was $6.54, which priced only `propose_change_repair`. Arm A is unchanged: it
+does not diagnose.
+
+Manifest reissued: `64aa5f77…b584f19` → **`e48e4fc5b0804e4c65a218379d529cabca5077e44c734473dcd58c53f51408d3`**.
+Only `budget` changed; asserted byte-identical elsewhere.
+
+### 6. Statuses
+
+- **M1 product:** approved. DAR-020 and DAR-021 approved and applied.
+- **Model↔adapter contract:** proven end to end, live, including the repair.
+- **`extract_json` defect:** fixed, with the captured reply as the regression.
+- **Per-operation repair contract:** complete for all three operations.
+- **Preliminary corpus:** 9 cases, 9/9 model-free.
+- **Original BM-06:** `NOT_RUN_PROTOCOL_INFEASIBLE`, unchanged.
+- **Paid preliminary run:** not started. Ceiling $7.62, awaiting authorization.
+- **Repair-loop thesis:** unmeasured.
+
+---
+
+## 27-arm run authorized, started, and stopped after 9 arm-runs
+
+**Charged $0.053946** of the $7.62 ceiling. Full detail in
+`benchmark/bm06/RUN-STOPPED-CONTEXT-FINDING.md`.
+
+### What the run confirmed
+
+Every defect closed in the previous two passes stayed closed. Across five
+`propose_change` responses: **zero** empty, **zero** truncated, **zero**
+extraction failures, **zero** repairs needed — against four of five empty under
+`claude-sonnet-5`. Output used 433–777 tokens of the 4,000 cap. The full
+pipeline ran: frozen reproduction, 7 handles, 291 hypotheses, probe elimination,
+reservation and settlement against the reissued ceiling.
+
+### Why it was stopped
+
+Every completed arm-run returned `unverifiable` — *"the patch does not apply to
+the baseline tree: `git apply --check` failed at every strip level."*
+
+The cause is upstream of the model. For `cachetools-c0fdf6ab` the model was
+shown lines 575–599 and returned a hunk at line 620 whose context lines are
+fabricated (`self.timer()` where the file says `time`), because that region was
+never in its window. `context_selected` shows the selector spent **770 of 60,000
+permitted characters** on a 776-line file that would have fitted whole.
+
+Finishing would have cost ~$7 and produced a null result in which all three arms
+fail identically for the same upstream reason — a measurement of context
+starvation presented as a comparison of acceptance authority.
+
+### Not diagnosed further
+
+The context selector is approved runtime and was not touched. Arm A shows the
+same starvation with no diagnosis at all, which points at the line-range picker
+rather than at the diagnosis — but one case is not a ruling, and the last pass
+established the cost of proposing a fix before capturing the cause.
+
+### Statuses
+
+- **M1 product:** approved. DAR-020 and DAR-021 applied.
+- **Model↔adapter contract:** proven, and re-confirmed under real run conditions.
+- **Context selection:** **defect observed, cause not established.** Blocks a
+  meaningful benchmark.
+- **Preliminary corpus:** 9 cases, 9/9 model-free. Not implicated.
+- **Paid preliminary run:** stopped, no result. Ceiling $7.62 still open.
+- **Repair-loop thesis:** unmeasured.
+
+---
+
+## DAR-022 implemented — context selection fixed; benchmark readiness BLOCKED at 5/9
+
+No provider request was made. Spend increased by **$0.00** and stands at
+$0.357593.
+
+### Root cause, confirmed from the stopped run's ledgers before any edit
+
+`src/cachetools/__init__.py` is 23,272 characters. `_anchor_lines` matched
+`class TLRUCache` by regex on line 587 and drew a ±12 line window: **770
+characters, 1.3% of the 60,000 permitted**. The class occupies 587–713, so
+`TLRUCache.__setitem__` was never sent, and the model invented the hunk context
+for a region it had not seen. `git apply --check` rejected it at every strip
+level. A regex can find where a class is written; it cannot find where it ends.
+
+Arm A separately held **zero** baseline failure excerpts against B and C's one,
+because the excerpt was recorded only inside `run_diagnosis`, which arm A skips.
+
+### After DAR-022
+
+Selection order: traceback → imports → one re-export hop → bounded grep → cap.
+Per file: whole file if it fits the per-file budget; otherwise complete AST
+definitions; otherwise bounded windows with truncation disclosed.
+`MAX_FILE_CHARS` was defined and never referenced — it is now the enforced
+per-file policy and `MAX_EXCERPT_CHARS` is removed. `Flow.check_payload` is the
+single definition of what a `CHECK_RESULT` carries, so all three of
+`run_episode`'s paths record the baseline excerpt.
+
+### Gates
+
+`ruff check`, `ruff format --check` (61 files), `mypy` — clean.
+**671 passed, 5 skipped.** Runtime **9,617 / 9,623** (DAR-022, governed).
+
+### Context audit — 5/9, so readiness is BLOCKED
+
+The cachetools case that stopped the run is COVERED, at 29,439 characters
+instead of 770. Four are not, for three causes none of which is the defect
+DAR-022 fixed: `MAX_CONTEXT_FILES = 6` binding before the char budget, one
+re-export hop being insufficient, and one class exceeding `MAX_FILE_CHARS` while
+40,000 characters of global budget go unused. A fifth case,
+`icalendar-30ec6eef`, has a pinned commit touching 40+ files — an audit-criterion
+and curation question, not a selection defect.
+
+Each remedy is a governed change to a frozen constant. Per instruction, they are
+reported and not taken.
+
+### Statuses
+
+- **M1 product:** approved. DAR-020, DAR-021 applied; DAR-022 implemented.
+- **Context selection:** defect fixed and proven by regression; three further
+  bounds identified.
+- **Benchmark readiness:** **BLOCKED** — 5/9 COVERED, 9/9 required.
+- **Genuine model failures:** preserved. Arm B on `pygments-2f0d713b` already
+  had the correct implementation file and still produced an unappliable diff.
+- **Paid preliminary run:** stopped, no result. Ceiling $7.62 unchanged.
+
+---
+
+## DAR-023 — invalid case quarantined, run identity bound, audit corrected
+
+No provider request was made. **Additional spend $0.00**; cumulative $0.357593.
+
+### Corpus
+
+`icalendar-30ec6eef-locale_timezone` **quarantined**: its pinned parent is 71
+commits behind the fix commit's direct parent, and the fix does not touch the
+frozen target. It reproduced perfectly, which is why reproduction was never a
+sufficient invariant. The record is preserved under `manifest.quarantined`; no
+replacement was invented.
+
+**Valid denominator: 8.** Arm-runs 24. Ceiling rescoped $7.62 → **$6.77**.
+
+### Invariants and provenance
+
+- `parent == git rev-parse <commit>^`, enforced at validation, failing closed on
+  mismatch, unresolvable commit, merge, root commit and missing repository, and
+  reporting `NOT_CHECKED` rather than passing when no repository root is given.
+- `results.json` now carries `manifest_hash`, `runtime_hash` and `driver_hash`,
+  all read once at startup and stamped from that snapshot. `--report-only` fails
+  closed on any of the three, tested independently.
+- The context audit is a governed artifact under test and takes its protected
+  paths from `app.build_checkset` — the product's own function — rather than
+  reconstructing them.
+- Coverage is scored against a **task-required ground truth**: upstream source
+  hunks minimized against the frozen target and preservation checks, failing
+  closed as `AMBIGUOUS` when no single minimal subset exists. Never shown to a
+  model.
+
+### Gates
+
+`ruff`, `ruff format --check` (63 files), `mypy` — clean.
+**689 passed, 5 skipped.** Model-free verification **8/8**, 0 requests.
+Runtime **9,627 / 9,633** (DAR-023, governed).
+
+### Identities
+
+| | |
+|---|---|
+| manifest | `36bcca7af273ef06bc156cf825700e21fe821f947fd40495dc50646e981a1745` |
+| runtime | `96c1b59ba9b9973970f95304dd7fa9c6996fcc07d4918fb7662b75d71cd43d26` |
+| driver | `869d2940f85884611985e4be17e773a54e8b1d37f136be2ac3a7392436b0bdb2` |
+
+### Context audit — 6/8
+
+Two genuine selector findings remain: `timezone/tzp.py` unreachable at one
+re-export hop, and `tz/tz.py:34-40` outside the selected ranges. No context
+constant was changed.
+
+### Statuses
+
+- **M1 product:** approved. DAR-020…023 applied.
+- **Corpus:** 8 valid, 1 quarantined.
+- **Benchmark readiness:** **BLOCKED** — 6/8 COVERED.
+- **Paid preliminary run:** not started.
+
+---
+
+## DAR-024 — context 8/8; runtime and baseline bound to what executes
+
+No provider request was made. **Additional spend $0.00**; cumulative $0.357593.
+
+### The two selector misses, fixed
+
+**dateutil-f2293200.** The required region is `EPOCH = ...` at *module level*;
+`enclosing_unit` returns None there and the old code contributed nothing, so
+imported class definitions consumed the whole per-file budget. Traceback-cited
+source now has highest priority: enclosing definition if there is one, bounded
+window if the line is at module level, both chosen before imported definitions
+may spend anything. 15,603 → **42,712** characters, COVERED.
+
+**icalendar-781eeda8.** `timezone/__init__.py` imports and constructs `TZP`;
+nothing followed the edge. `used_dependencies` follows local imports whose names
+the selected code actually references, bounded by the file cap rather than a hop
+count. 9,935 → **20,091** characters, COVERED.
+
+No constant was raised and none was added.
+
+### Binding identity to execution
+
+- `runtime_env` pins `PYTHONPATH`; `resolves_to` asks where `riftagent` lands;
+  `assert_runtime` requires the frozen hash **and** the intended resolution, at
+  startup, before every arm, and after every arm. Drift during an arm
+  invalidates the run.
+- `baseline_tree_hash` covers the constructed worktree — a case is not merely
+  its parent commit, since several lay the fix commit's test half over the
+  parent's source. HEAD must equal the pinned parent and the tree must match
+  before each arm; after each arm the tree is restored and must match exactly.
+  Each result row carries it.
+
+### Context audit — 8/8
+
+| case | verdict | chars | % of 60,000 |
+|---|---|---|---|
+| cachetools-c0fdf6ab | COVERED | 39,033 | 65.1% |
+| pygments-2f0d713b | COVERED | 31,463 | 52.4% |
+| pyparsing-13065174 | COVERED | 43,217 | 72.0% |
+| icalendar-60a10375 | COVERED | 19,094 | 31.8% |
+| icalendar-781eeda8 | COVERED | 20,091 | 33.5% |
+| dateutil-f2293200 | COVERED | 42,712 | 71.2% |
+| freezegun-3d5d60b4 | COVERED | 16,153 | 26.9% |
+| icalendar-62cbf833 | COVERED | 27,839 | 46.4% |
+
+The stopped run spent 1.3% of budget. Selection now spends 26.9%–72.0% with
+every case covered, so **nothing here shows a capacity limit** — the constants
+stay as they are.
+
+### Gates
+
+ruff, format (64 files), mypy — clean. **714 passed, 5 skipped.**
+Model-free verification **8/8**, 0 requests. Parent pin **8/8**.
+Runtime **9,736 / 9,742** (DAR-024, governed).
+
+### Identities
+
+| | |
+|---|---|
+| manifest | `36bcca7af273ef06bc156cf825700e21fe821f947fd40495dc50646e981a1745` |
+| runtime | `ef9fb4eeb3581f1b1550afbc8557ca0537e870ea411e88c6d7f72414abd00983` |
+| driver | `ff9b73d5795373982b1363632efb928b7f04d1d8ff24abed1db127c136dc1e6d` |
+
+### Accounting
+
+`model-and-pricing.json` has one authoritative `CURRENT` block — 8 valid cases,
+24 arm-runs, $6.77 ceiling, 15 requests, $0.357593 charged — and one
+`historical` block marked SUPERSEDED. The top-level `authorization` key, which
+read as current, is removed.
+
+### What this does not explain away
+
+`pygments-2f0d713b` arm B had the correct implementation file and still produced
+an unappliable diff. That is a **benchmark observation**, not an infrastructure
+failure, and DAR-022/023/024 may not later be cited to dismiss it. Patch parsing
+and application rules are unchanged.
+
+### Statuses
+
+- **M1 product:** approved. DAR-020…024 applied.
+- **Corpus:** 8 valid, 1 quarantined.
+- **Context adequacy:** **8/8 COVERED**.
+- **Provenance:** manifest, runtime and driver bound; baseline trees bound.
+- **Paid preliminary run:** not started. Ceiling $6.77, awaiting authorization.
+
+---
+
+## DAR-025 — provenance pass complete
+
+No provider request. **Additional spend $0.00**; cumulative $0.357593.
+
+- **Eight frozen baselines** persisted in the manifest and validated — tree and
+  `HEAD == parent` — before any spend, and re-checked after a full verification
+  pass to confirm execution leaves them intact.
+- **One `Bound` wrapper** for every RIFT subprocess. Ground truth and shadow now
+  run under the same pinned runtime as the arms they score; previously they did
+  not, because `rift` gained an `env` argument and that call site was missed.
+- **Resolution asked from the invocation directory**, since the cwd is on
+  `sys.path` and case worktrees may shadow the package.
+- **Stale 90-task scope** marked SUPERSEDED; the manifest no longer mentions it.
+
+Gates: ruff, format (64 files), mypy clean; **721 passed, 5 skipped**;
+model-free **8/8**; parent pin **8/8**; baselines **8/8**; context **8/8**.
+Runtime **9,736 / 9,742**, unchanged.
+
+**Status: READY_FOR_BENCHMARK_AUTHORIZATION.** 24 arm-runs, 8 valid cases,
+frozen $6.77 ceiling. Not started.
+
+---
+
+## DAR-026 — enforcement made structural; model bound
+
+No provider request. **Additional spend $0.00**; cumulative $0.357593.
+
+### `Bound.run` enforces the invariant
+
+It previously forwarded to `rift`, leaving `Bound.check` as something callers
+had to remember — remembered for the arms, forgotten for ground-truth scoring,
+which pre-checked and then called `rift` with no check afterwards. Both checks
+now live inside `Bound.run`: check(cwd) → execute → check(cwd), same directory
+for all three. `Bound.supports` wraps the capability probe the same way.
+
+`rift` is now `_rift`, private. Arms A/B/C, ground truth, Arm-A shadow and every
+`--help` probe route through `Bound.run`. An AST test over the driver fails if
+any function other than the documented unbound probe calls `_rift`.
+
+### Model binding
+
+`model_binding_failures` runs inside `validate_manifest`, before the first paid
+arm. Verified end to end at $0:
+
+| configured | outcome |
+|---|---|
+| `claude-sonnet-4-6` | `manifest valid` |
+| `claude-sonnet-5` | INVALID — "priced as 'claude-sonnet-4-6' and executed as 'claude-sonnet-5'" |
+| unset | INVALID — "RIFT_LLM_MODEL is unset or empty" |
+
+`results.json` stamps `manifest_model` and `configured_model`. Provider-reported
+models are read from the durable spend ledger; a material mismatch aborts the
+run, and absent identity is recorded as `unavailable` rather than assumed to
+agree.
+
+### Readiness
+
+| check | result |
+|---|---|
+| corpus validation (parent pin + baselines) | **manifest valid**, 8/8 |
+| baselines after a full verification pass | **8/8**, unchanged |
+| context audit | **8/8 COVERED**, 26.9–72.0% of budget |
+| model-free verification | **8/8**, 0 requests |
+| ruff / format / mypy | pass / 65 files / clean |
+| runtime | **9,736 / 9,742**, unchanged |
+
+### Preserved
+
+Selector, corpus, baselines, pins, pricing, $6.77 ceiling, Sonnet 4.6, patch
+handling and benchmark semantics are untouched. `pygments-2f0d713b` arm B's
+unappliable diff with adequate context remains a legitimate future benchmark
+observation.
+
+---
+
+## DAR-027 — provider identity read from the provider, not from our config
+
+No provider request. **Additional spend $0.00**; cumulative $0.357593.
+
+### The defect
+
+DAR-026 read `spend.jsonl` → `pricing.model` as the provider-reported model.
+`_pricing_from_args` builds that field as
+`os.environ.get(llm.ENV_MODEL, "unset")` — it is `RIFT_LLM_MODEL` written back
+out by the runtime. Checking it asked our own configuration whether our own
+configuration was used, and it always agrees. A run configured for 4.6 whose
+provider answered with 5 was invisible.
+
+### The correction
+
+`provider_reported_models(repo, task_id)` reads `model_reported` from **every**
+`MODEL_RESPONSE_RECEIVED` in `.rift/tasks/<task_id>/ledger.jsonl` — the value the
+adapter copies off the provider's response. Bound to the arm's own task id from
+its receipt; a global scan would attribute one arm's identity to another. A
+schema repair served by a different model fails the arm even when the first
+response matched. No task id, no ledger, or an unreadable ledger raises
+`ModelIdentityUnresolved` and aborts — `unavailable` is only for a valid response
+that carries no identity.
+
+`reported_models`/`reported_model_failure` are gone; `priced_models` is the
+renamed configured-identity reader. Four identities stay distinct in the result:
+`manifest_model`, `configured_model`, `priced_models`,
+`provider_reported_models`.
+
+### Verification
+
+| check | result |
+|---|---|
+| DAR-027 regressions | 15 passed, all six required scenarios |
+| corpus validation (model bound) | **manifest valid** |
+| corpus validation (model unset) | correctly **INVALID** |
+| context audit | **8/8 COVERED** |
+| model-free verification | **8/8**, 0 requests |
+| runtime | **9,736**, unchanged |
+
+The critical test builds a spend ledger priced at `claude-sonnet-4-6` and a task
+ledger reporting `claude-sonnet-5`, asserts `priced_models` still returns 4.6 —
+so the two sources are shown to differ rather than assumed to — and requires the
+check to fail.
+
+---
+
+## Preliminary benchmark: RUN COMPLETE — 24/24 arm-runs, $0.824
+
+Full finding in `benchmark/bm06/PRELIMINARY-RESULT.md`.
+
+**Not BM-06.** 8 cases across 3 cause classes; BM-06's denominator is 30 across
+eight. Nothing here supports the eight-class thesis.
+
+### Result
+
+| arm | accepted | correct | verified fix yield | false-fix acceptance | cost/fix |
+|---|---|---|---|---|---|
+| A model alone | 3/8 | 3 | 0.375 | **0.0** | $0.075 |
+| B kernel, random | 3/8 | 3 | 0.375 | **0.0** | $0.085 |
+| C full kernel | 3/8 | 3 | 0.375 | **0.0** | $0.115 |
+
+**The kernel did not beat the model alone, and cost 53% more per correct fix.**
+Reported first because it is the finding that does not flatter the product.
+
+**Acceptance authority held:** 0 false-fix acceptances across all 24 arm-runs;
+every accepted patch independently confirmed correct. Arm A's patches re-scored
+under C's gate agreed on all 8 cases. That is not evidence the gate is
+unnecessary — it is evidence the failure mode it defends against did not arise
+often enough here to separate the arms.
+
+**Underpowered:** 5 of 8 cases produced no accepted patch from any arm, so they
+distinguish nothing. The arms separated on 3 cases — A won one, B/C won one, two
+ties.
+
+**Dominant failure was diff formatting:** 15 of 24 arms failed at the candidate
+phase, almost all because `git apply --check` rejected the patch. Context was
+audited 8/8 COVERED at 26.9–72.0% of budget beforehand, so this is a measurement
+of the model, not an infrastructure defect — the distinction DAR-022 through
+DAR-028 exist to preserve.
+
+### Health and provenance
+
+Zero empty responses, zero truncations across 30 responses (the Sonnet 5 failure
+that killed the first attempt did not recur). One schema repair. Provider
+reported `claude-sonnet-4-6` on every response; manifest, configured and
+reported models all agree. All 8 baseline trees and parent pins verified before
+and after every arm.
+
+### Statuses
+
+- **M1 product:** approved; DAR-020…028 applied.
+- **Acceptance-authority thesis:** supported on this corpus (0 false fixes).
+- **Kernel-advantage thesis:** **not supported** by this run.
+- **Repair-loop thesis:** unmeasured — one candidate attempt per arm by design.
+- **Original BM-06:** `NOT_RUN_PROTOCOL_INFEASIBLE`, unchanged.
+- **Cumulative spend:** $1.10 across all provider work in this project.
+
+---
+
+## DAR-029 — post-hoc patch replay (POST-HOC DIAGNOSTIC, NOT BM-06)
+
+$0.00 spend, no provider call, no product change. The frozen benchmark result is
+untouched; all output is under `benchmark/bm06/patch_replay/`.
+
+**15 candidate failures → 13 structurally invalid, 2 parseable-non-applicable**
+(classified by git's own error taxonomy, not a regex).
+
+**9 recovered by metadata normalisation alone, all 9 verified under the full
+gate.** Counterfactual yield 3/8 → 6/8 per arm; arms remain tied. Zero patches
+applied then failed the gate.
+
+**Recommendation: `DETERMINISTIC PATCH CANONICALIZER JUSTIFIED`.** No evidence
+for the semantic repair loop — it requires patches that apply and then fail
+verification, and there were none.
+
+Not implemented. Awaiting a ruling.
+
+---
+
+## DAR-030 — deterministic diff canonicaliser shipped
+
+$0.00 spend, no provider call. Frozen benchmark result untouched.
+
+`records.canonicalize_patch` recomputes hunk counts only, with
+`semantic_lines` identity enforced as a runtime invariant. Placed in
+`_request_change`, the one path all three arms take, so it can never become a
+C-arm advantage. Every candidate gets a `CANDIDATE_CANONICALIZED` ledger event
+carrying both hashes, the status and the operations.
+
+**A defect found by the historical fixtures:** the first rule rewrote
+`cachetools-c0fdf6ab` arm A — a patch that had applied and verified — because
+git reads only the declared line counts and ignores trailing extras. The shipped
+rule recomputes only when the body is *short* of its header. Validated over all
+24 frozen candidates: **0 working candidates modified, 6 of 9 replay recoveries
+retained.** The 3 lost are recorded as a known gap, not bought with an unsafe
+rule.
+
+| | |
+|---|---|
+| **MEASURED** | A = 3/8, B = 3/8, C = 3/8 |
+| **POST-HOC COUNTERFACTUAL** | A = 6/8, B = 6/8, C = 6/8 |
+
+Semantic repair loop: **DEFERRED** (0 observed cases). Application repair:
+**DEFERRED** (6 non-applicable cases for separate study).
+
+Gates: ruff, format (77 files), mypy clean; **792 passed, 5 skipped**.
+Runtime **9,959 / 9,965**.
+
+---
+
+## DAR-031 — canonicaliser v2: raw bytes, byte-mask invariant, git-conditioned eligibility
+
+$0.00 spend, no provider call, BM-06 not rerun. Frozen benchmark result untouched.
+
+Three defects in the DAR-030 canonicaliser, all found in review, all closed:
+
+1. **The raw candidate was hashed but not stored.** `raw-candidate.diff` and
+   `canonical-candidate.diff` are now both persisted per task, the raw one never
+   overwritten, and both recorded hashes are computed over exactly those bytes.
+
+2. **The safety invariant could fail open.** `semantic_lines()` mistook a
+   deleted line beginning `-- ` for a file header — measured returning 1 of 3
+   content lines. Replaced by `records.authorized_change_only`, which proves the
+   narrower true statement: *only the count fields inside valid `@@ ... @@`
+   headers may differ; every other byte must be identical.* Enforced inside
+   `canonicalize_patch` at runtime. `semantic_lines()` was removed from the
+   runtime entirely and kept in the DAR-030 test file as history.
+
+3. **Eligibility was a heuristic.** `sandbox.structural_parse` now asks git —
+   `git apply --numstat`, with and without `--recount`, in a fresh
+   `TemporaryDirectory` so no worktree can influence the answer. Structural
+   validity (a property of the bytes) and applicability (a property of the tree)
+   are now separate questions, and only the first decides canonicalisation.
+   Without a git verdict the DAR-030 rule still applies.
+
+**24-candidate regression matrix**, every recovery through the full gate
+(baseline-fail, candidate-pass, withdrawal-fail, reapply, preservation):
+
+| | |
+|---|---|
+| working candidates modified | **0** |
+| working candidates that stopped applying | **0** |
+| byte-mask invariant held | **24 of 24** |
+| **recovered through the full gate** | **9 of 9** — A 3, B 3, C 3 |
+
+The ship condition stated before the run held on all four counts, so v2 ships at
+9/9. Had any failed, 6/9 would have stood. The 3/3/3 symmetry follows from all
+three arms sharing one proposal boundary; there is no arm-specific
+canonicalisation. Rows in `benchmark/bm06/patch_replay/v2_matrix.json`.
+
+DAR-030's 6/9 is not hidden: `declined_not_a_count_defect` is retained under its
+original name and asserts both behaviours — the DAR-030 rule still declines it,
+git conditioning recovers it.
+
+| | |
+|---|---|
+| **MEASURED** | A = 3/8, B = 3/8, C = 3/8 |
+| **POST-HOC COUNTERFACTUAL** | A = 6/8, B = 6/8, C = 6/8 |
+
+Semantic repair: **DEFERRED** (0 observed cases). Application repair:
+**DEFERRED** (6 non-applicable cases for separate study).
+
+### Gates
+
+`ruff check`, `ruff format --check` (50 files), `mypy` (8 source files) — clean.
+**828 passed, 5 skipped** (13:00), of which 57 are the two canonicaliser suites.
+Runtime **10,090 / 10,100**, `runtime_hash 57170d59446b56a43fb492588ad551c04dfb639b7102de86d8ac1cebee25ec11`.
+No provider call; BM-06 not rerun; additional spend **$0.00**.
+
+---
+
+## DAR-032 — exact model candidate, normalisation, and canonicalisation as three stages
+
+$0.00 spend, no provider call, BM-06 not rerun. Frozen benchmark result untouched.
+Auditability correction only.
+
+**The defect.** `llm.validate_change` returned `canonical_diff(diff)`, so the
+value reaching `_canonicalize_proposal` — and written to `raw-candidate.diff` —
+had already had CRLF rewritten and a missing final newline appended. The file
+was accurate about the candidate that entered canonicalisation and inaccurate
+about its own name; the model's actual output existed nowhere on disk.
+
+**The pipeline now.**
+
+```
+exact model diff -> raw-candidate.diff         raw_candidate_hash
+      | transport normalisation (canonical_diff only)
+normalized       -> normalized-candidate.diff  normalized_candidate_hash
+      | git-conditioned hunk-count canonicalisation (DAR-031, unchanged)
+canonical        -> canonical-candidate.diff   canonical_candidate_hash
+      -> ChangeSet -> apply -> withdraw -> reapply -> preservation
+```
+
+`validate_change` returns the diff byte-exact; validation decides only whether a
+response is acceptable. `records.persist_candidate` writes each stage with
+`newline=""` and hashes the bytes it reads back, so every digest describes the
+file a reviewer would open. That also fixed the hashing convention — DAR-031
+hashed the decoded string, which could never have equalled `ChangeSet.patch_hash`
+— and `ChangeSet.patch_hash == canonical_candidate_hash` is now an asserted
+regression.
+
+`records.candidate_record_mismatches` re-hashes all three artifacts from disk and
+names every disagreement, separating a corrupted file from an absent one.
+
+**Canonicaliser v2 unchanged.** `canonicalize_patch` and `authorized_change_only`
+were not touched. The byte mask still refuses any difference outside a hunk-header
+count field; normalisation runs strictly before it, never inside it.
+`semantic_lines()` stays removed — a test asserts its absence from every runtime
+module, and the historical fail-open regression is retained.
+
+**24-candidate matrix, re-proven under the new ordering** (every recovery through
+the full gate against its frozen baseline):
+
+| | |
+|---|---|
+| normalisation changed anything | **0** — the frozen candidates were already LF |
+| originally working candidates modified | **0** |
+| originally working candidates that stopped applying | **0** |
+| byte-mask invariant held | **24 of 24** |
+| **recovered through the full gate** | **9** — A 3, B 3, C 3 |
+| recovery set identical to DAR-031's | **yes, candidate for candidate** |
+
+Because none of the 24 needed normalisation, the canonicaliser received
+byte-identical input to DAR-031 — the boundary moved without moving anything else.
+Rows in `benchmark/bm06/patch_replay/dar032_matrix.json`; `v2_matrix.json` retained.
+
+| | |
+|---|---|
+| **MEASURED** | A = 3/8, B = 3/8, C = 3/8 |
+| **POST-HOC COUNTERFACTUAL** | A = 6/8, B = 6/8, C = 6/8 |
+
+Semantic repair, application repair and LLM hunk-format repair all remain
+**DEFERRED**. Observed applied-but-verification-failed cases: still 0.
+
+### Gates
+
+Run at $0, offline, with the exactly-pinned toolchain (ruff 0.16.3, mypy 2.3.1,
+pytest 9.1.1) installed from a host-fetched wheelhouse.
+
+| | |
+|---|---|
+| `ruff check src tests` | clean |
+| `ruff format --check` | 51 files, clean |
+| `mypy src/riftagent` | 8 source files, clean |
+| canonicaliser suites (DAR-030/031/032) | **78 passed** |
+| full suite | **845 passed, 5 skipped, 4 failed** |
+| runtime | **10,221 / 10,235** (ceiling amended, governed) |
+| runtime_hash | `a7fe7d27ebe26381edd544832df93739cc593a5f67337cc6d8a87714efceb798` |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+**`NOT_RUN_REFERENCE_ENVIRONMENT` — disclosed, not passed.** Container egress
+failed mid-pass (DNS resolves, TCP hangs; the host is unaffected and a full
+Docker Desktop and WSL restart did not fix it), so the suite ran in a substitute
+image rather than `python:3.12-slim`. Four tests fail there for reasons proven
+to be image differences, none of which touches the candidate pipeline:
+
+| test | cause, verified |
+|---|---|
+| `test_r07_an_interrupt_kills_the_child_process_tree` | the substitute image ships `/usr/bin/bwrap`; the test's one-shot `Popen` patch intercepts the isolation probe instead of the child. `python:3.12-slim` has no bwrap. |
+| `test_a_merge_commit_is_rejected_until_a_protocol_governs_it` | the substitute image's git defaults to branch `main`; the fixture assumes `master`, so its `--no-ff` merge fast-forwards and produces one parent. |
+| `test_v16_clean_wheel_install_exposes_the_shipped_commands` | `pip wheel` build isolation fetches `setuptools>=68` from PyPI: `Temporary failure in name resolution`. |
+| `test_v16_installed_package_runs_a_real_verification` | same. |
+
+No test was modified to accommodate the substitute image. These four should be
+re-run in `python:3.12-slim` once egress is restored; until then this is an
+evidence gap for a human reviewer to accept or reject, not a green gate.
+
+**CONDITIONALLY_READY** — `NOT_RUN_REFERENCE_ENVIRONMENT` on four environment-blocked tests, itemised above.
+
+---
+
+## DAR-033 — candidate artifacts are attempt-addressed and immutable
+
+$0.00 spend, no provider call, BM-06 not rerun. Frozen benchmark result untouched.
+Artifact **lifetime** only; no candidate transformation changed.
+
+**The defect.** DAR-032 gave the three stages distinct names but one fixed path
+each, so attempt 2 overwrote `raw-candidate.diff` while attempt 1's ledger event
+still named it. The recorded hash then matched nothing on disk. Every rejected
+candidate was requested, charged and refused on evidence that the next proposal
+destroyed.
+
+**The layout.** `<task>/candidate-attempt-NNN/{raw,normalized,canonical}.diff`,
+zero-padded so a listing sorts in attempt order — a convenience for a reader,
+never an authority.
+
+**Attempt identity propagates.** `cmd_fix`'s loop variable flows through
+`_request_change(..., attempt, td)` into `_canonicalize_proposal(flow, td,
+attempt, proposal)`. No global counter, no directory scan, no timestamp
+ordering, no reconstruction from the ledger. `candidate_attempt_dir` refuses an
+attempt below 1.
+
+**Immutability.** `persist_candidate` accepts an identical rewrite (a resumed run
+may legitimately repeat a completed write) and raises on differing bytes. Silent
+overwrite is indistinguishable from the idempotent case, and only one of the two
+is honest.
+
+**Every event names its own artifacts** — `attempt` plus three record paths
+(relative to the task dir) and three hashes. Earlier events are never edited: a
+test asserts the ledger after attempt 2 begins with its exact bytes after
+attempt 1. `candidate_record_mismatches` resolves each stage through the path the
+event recorded, not a path recomputed from today's naming rule — recomputing it
+would hide exactly this defect.
+
+**The accepted ChangeSet addresses its own attempt.** Attempt 1 rejected, attempt
+2 accepted: `ChangeSet.patch_hash ==` attempt 2's `canonical_candidate_hash` and
+differs from attempt 1's. Asserted, not assumed.
+
+**Unchanged.** `canonicalize_patch`, `authorized_change_only`,
+`normalize_candidate` and `canonical_diff` were not modified. Re-proven on the
+frozen corpus: **9/9 recovered, 0 working candidates modified, recovery set
+identical to DAR-031's**. `max_attempts`, semantic-repair and application-repair
+policy untouched; both repair loops remain **DEFERRED**, observed
+applied-but-verification-failed cases still 0.
+
+**Stale docstring corrected.** `canonical_diff` no longer claims it runs "before
+the patch is hashed and stored"; it states the real chain and notes each stage is
+attempt-addressed and immutable.
+
+| | |
+|---|---|
+| **MEASURED** | A = 3/8, B = 3/8, C = 3/8 |
+| **POST-HOC COUNTERFACTUAL** | A = 6/8, B = 6/8, C = 6/8 |
+
+### Gates
+
+Run at $0, offline, with the exactly-pinned toolchain (ruff 0.16.3, mypy 2.3.1,
+pytest 9.1.1) installed from a host-fetched wheelhouse.
+
+| | |
+|---|---|
+| `ruff check src tests` | clean |
+| `ruff format --check` | 52 files, clean |
+| `mypy src/riftagent` | 8 source files, clean |
+| candidate-pipeline suites (DAR-030/031/032/033) | **92 passed** |
+| full suite | **859 passed, 5 skipped, 4 failed** |
+| historical matrix | **9/9 recovered, 0 working candidates modified** |
+| runtime | **10,286 / 10,300** (ceiling amended, governed) |
+| runtime_hash | `b303ece3d5355db80cbd2ae6d8207610e9c13d63e12bee473e9e580ef48874af` |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+**`NOT_RUN_REFERENCE_ENVIRONMENT` — disclosed, not passed.** The same four tests
+DAR-032 recorded still fail, for the same verified reasons, and for the same
+reason they cannot be cleared: container egress remains broken (DNS resolves,
+TCP hangs; the host is unaffected, and a full Docker Desktop and WSL restart did
+not fix it), so the suite runs in a substitute image rather than
+`python:3.12-slim`. None touches the candidate pipeline:
+
+| test | cause, verified |
+|---|---|
+| `test_r07_an_interrupt_kills_the_child_process_tree` | the substitute image ships `/usr/bin/bwrap`; the test's one-shot `Popen` patch intercepts the isolation probe instead of the child. `python:3.12-slim` has no bwrap. |
+| `test_a_merge_commit_is_rejected_until_a_protocol_governs_it` | that image's git defaults to branch `main`; the fixture assumes `master`, so its `--no-ff` merge fast-forwards to one parent. |
+| `test_v16_clean_wheel_install_exposes_the_shipped_commands` | `pip wheel` build isolation fetches `setuptools>=68`: `Temporary failure in name resolution`. |
+| `test_v16_installed_package_runs_a_real_verification` | same. |
+
+No test was modified to accommodate the substitute image. These four need a
+re-run in `python:3.12-slim` once egress is restored; until then this is an
+evidence gap for a human reviewer to accept or reject, **not a green gate**.
+
+**CONDITIONALLY_READY** — `NOT_RUN_REFERENCE_ENVIRONMENT` on four environment-blocked tests, itemised above.
+
+---
+
+## DAR-034 — provenance auditor hardened: mandatory stages, task-directory confinement
+
+$0.00 spend, no provider call, BM-06 not rerun. Audit hardening only; the
+candidate-generation path is unchanged.
+
+**Two gaps, reproduced against the shipped runtime before being closed.**
+`candidate_record_mismatches(td, {})` returned `()` — the auditor agreeing with a
+record that says nothing. And a recorded path was resolved as `td / recorded`
+with no confinement, so `"../outside.txt"` paired with that file's real hash
+passed. A third variant was caught only incidentally: an event for attempt 2
+satisfied by attempt 1's artifact passed whenever that file existed.
+
+Neither was reachable from the product — `_canonicalize_proposal` builds safe
+relative attempt-owned paths itself. That is why it was worth fixing: an auditor
+is useful only to the extent it is stricter than what it audits, and one that
+agrees by default is a second opinion, not a check.
+
+**The strengthened invariant.** Event says attempt N -> all three stages present
+with a path and a hash -> every path relative, confined to the task directory,
+owned by attempt N -> every file exists -> every hash reconstructs.
+`_confined_candidate_path` refuses absolute paths (POSIX, Windows, UNC), any
+`..` segment, anything resolving outside the task directory, and anything outside
+`candidate-attempt-NNN/` — all **before any bytes are read**, since a hash over
+the wrong file is a passing check and a false statement. `True` is refused as an
+attempt number: it is an `int` and would address `candidate-attempt-001`.
+
+**The retry loop, end to end.** A model-free test now drives `cmd_fix` through the
+CLI with `--max-attempts 2`: attempt 1 edits the frozen judge and is refused by
+`kernel.validate_patch`, attempt 2 is the real fix. Exactly one ChangeSet is
+registered; its `patch_hash` equals attempt 2's `canonical_candidate_hash`; its
+bytes equal attempt 2's canonical artifact on disk; attempt 1's raw artifact is
+still byte-for-byte what the model sent. Writing it corrected an assumption: the
+loop re-proposes only on `validate_patch` rejection — a gate failure does not
+produce another attempt, because the repair loop is deferred.
+
+**Unchanged.** `canonicalize_patch`, `authorized_change_only`,
+`normalize_candidate`, `canonical_diff`, `persist_candidate` and
+`_canonicalize_proposal` were not modified. Historical corpus re-proven: **9/9
+recovered, 0 working candidates modified, recovery set identical to DAR-031's**.
+Repair-loop policy untouched; both loops remain **DEFERRED**.
+
+| | |
+|---|---|
+| **MEASURED** | A = 3/8, B = 3/8, C = 3/8 |
+| **POST-HOC COUNTERFACTUAL** | A = 6/8, B = 6/8, C = 6/8 |
+
+### Gates
+
+Run at $0, offline, with the exactly-pinned toolchain (ruff 0.16.3, mypy 2.3.1,
+pytest 9.1.1) installed from a host-fetched wheelhouse.
+
+| | |
+|---|---|
+| `ruff check src tests` | clean |
+| `ruff format --check` | 53 files, clean |
+| `mypy src/riftagent` | 8 source files, clean |
+| provenance suites (DAR-030 … DAR-034) | **121 passed** |
+| full suite | **888 passed, 5 skipped, 4 failed** |
+| historical matrix | **9/9 recovered, 0 working candidates modified** |
+| runtime | **10,351 / 10,365** (ceiling amended, governed) |
+| runtime_hash | `60cc1431bfb3aa41a5971c465e5e45e29e96eb87bd9636061be817457128c8a1` |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+**`NOT_RUN_REFERENCE_ENVIRONMENT` — disclosed, not passed.** The same four tests
+DAR-032 and DAR-033 recorded still fail, for the same verified reasons, and for
+the same reason they cannot be cleared: container egress remains broken (DNS
+resolves, TCP hangs; the host is unaffected, and a full Docker Desktop and WSL
+restart did not fix it), so the suite runs in a substitute image rather than
+`python:3.12-slim`. None touches the candidate pipeline or the auditor:
+
+| test | cause, verified |
+|---|---|
+| `test_r07_an_interrupt_kills_the_child_process_tree` | the substitute image ships `/usr/bin/bwrap`; the test's one-shot `Popen` patch intercepts the isolation probe instead of the child. `python:3.12-slim` has no bwrap. |
+| `test_a_merge_commit_is_rejected_until_a_protocol_governs_it` | that image's git defaults to branch `main`; the fixture assumes `master`, so its `--no-ff` merge fast-forwards to one parent. |
+| `test_v16_clean_wheel_install_exposes_the_shipped_commands` | `pip wheel` build isolation fetches `setuptools>=68`: `Temporary failure in name resolution`. |
+| `test_v16_installed_package_runs_a_real_verification` | same. |
+
+No test was modified to accommodate the substitute image. These four need a
+re-run in `python:3.12-slim` once egress is restored; until then this is an
+evidence gap for a human reviewer to accept or reject, **not a green gate**.
+
+**CONDITIONALLY_READY** — `NOT_RUN_REFERENCE_ENVIRONMENT` on four environment-blocked tests, itemised above.
+
+---
+
+## DAR-035 — auditor proves stage identity; symlinked artifacts refused
+
+$0.00 spend, no provider call, BM-06 not rerun. Audit hardening only; the
+candidate-generation path is unchanged.
+
+**Three cases, reproduced against the shipped runtime before being closed** —
+every file real, in the right attempt directory, hashing correctly:
+
+```
+raw_candidate_record = "candidate-attempt-001/normalized.diff"  -> ()
+raw_candidate_record = "candidate-attempt-001/foo.diff"         -> ()
+candidate-attempt-001/raw.diff -> symlink to actualraw.diff     -> ()
+```
+
+The first matters most. DAR-032 split the pipeline into raw, normalised and
+canonical precisely so the model's own bytes could be told from the transformed
+ones. An auditor accepting any stage's artifact for any stage hands that back:
+the event relabels normalised bytes as the model's output and every digest
+reconciles. What was proven was *this artifact belongs to attempt N and has the
+claimed hash*, not *this is attempt N's exact raw artifact*.
+
+The symlink case is the same weakness in another dimension: `Path.is_file()`
+follows links, so a link named `raw.diff` pointing elsewhere satisfies both the
+path check and the hash. An immutable record that can be re-aimed is not
+immutable.
+
+**The complete invariant.** Event says attempt N -> all three stages present
+with a path and a hash -> raw/normalized/canonical each exactly
+`candidate-attempt-NNN/<stage>.diff` -> confined to the task directory ->
+regular files, neither artifact nor attempt directory a symlink -> every hash
+reconstructs.
+
+`_confined_candidate_path` resolves the expected location through
+`STAGE_RECORDS` — the same record functions `_canonicalize_proposal` writes
+through — with an import-time assertion that the mapping covers
+`CANDIDATE_STAGES`, so auditor and writer cannot drift. Symlinks are refused
+before resolution, so the reason reported is the link rather than its target. A
+symlinked attempt directory is refused too.
+
+**Unchanged.** `canonicalize_patch`, `authorized_change_only`,
+`normalize_candidate`, `canonical_diff`, `persist_candidate` and
+`_canonicalize_proposal` were not modified. No existing expectation was
+weakened: the attempt-mismatch message was kept distinct from the new stage
+message, so DAR-033 and DAR-034 assertions still hold as written. Historical
+corpus re-proven: **9/9 recovered, 0 working candidates modified, recovery set
+identical to DAR-031's**. Both repair loops remain **DEFERRED**.
+
+| | |
+|---|---|
+| **MEASURED** | A = 3/8, B = 3/8, C = 3/8 |
+| **POST-HOC COUNTERFACTUAL** | A = 6/8, B = 6/8, C = 6/8 |
+
+### Gates
+
+Run at $0, offline, with the exactly-pinned toolchain (ruff 0.16.3, mypy 2.3.1,
+pytest 9.1.1) installed from a host-fetched wheelhouse.
+
+| | |
+|---|---|
+| `ruff check src tests` | clean |
+| `ruff format --check` | 53 files, clean |
+| `mypy src/riftagent` | 8 source files, clean |
+| provenance suites (DAR-030 … DAR-035) | **128 passed** |
+| full suite | **895 passed, 5 skipped, 4 failed** |
+| historical matrix | **9/9 recovered, 0 working candidates modified** |
+| runtime | **10,385 / 10,400** (ceiling amended, governed) |
+| runtime_hash | `75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26` |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+**`NOT_RUN_REFERENCE_ENVIRONMENT` — disclosed, not passed.** The same four tests
+DAR-032, DAR-033 and DAR-034 recorded still fail, for the same verified reasons,
+and for the same reason they cannot be cleared: container egress remains broken
+(DNS resolves, TCP hangs; the host is unaffected, and a full Docker Desktop and
+WSL restart did not fix it), so the suite runs in a substitute image rather than
+`python:3.12-slim`. None touches the candidate pipeline or the auditor, and none
+should be reinterpreted as a candidate-pipeline failure:
+
+| test | cause, verified |
+|---|---|
+| `test_r07_an_interrupt_kills_the_child_process_tree` | the substitute image ships `/usr/bin/bwrap`; the test's one-shot `Popen` patch intercepts the isolation probe instead of the child. `python:3.12-slim` has no bwrap. |
+| `test_a_merge_commit_is_rejected_until_a_protocol_governs_it` | that image's git defaults to branch `main`; the fixture assumes `master`, so its `--no-ff` merge fast-forwards to one parent. |
+| `test_v16_clean_wheel_install_exposes_the_shipped_commands` | `pip wheel` build isolation fetches `setuptools>=68`: `Temporary failure in name resolution`. |
+| `test_v16_installed_package_runs_a_real_verification` | same. |
+
+No test was modified to accommodate the substitute image. These four need a
+re-run in `python:3.12-slim` once egress is restored; until then this is an
+evidence gap for a human reviewer to accept or reject, **not a green gate**.
+
+**CONDITIONALLY_READY** — `NOT_RUN_REFERENCE_ENVIRONMENT` on four environment-blocked tests, itemised above.
+
+### Handover packaging correction (no product change)
+
+The DAR-035 handover archive claimed "128 passed" for the provenance suites and
+shipped no fixture source, so a reviewer extracting it measured 127 passed and
+one setup error: the end-to-end retry test needs `simple_repo`, `run_cli`,
+`correct_diff` and `judge_diff` from `tests/conftest.py`. That was a defect in
+the archive, not in the product or the suites.
+
+The archive now includes `tests/conftest.py`, `pyproject.toml` and
+`requirements-dev.txt`, and the builder proves the claim rather than asserting
+it: it extracts the finished archive to a clean directory, runs the included
+suites there, refuses to emit an archive whose own suites do not pass, and
+writes the measured count into the README. Verified: **128 passed** from an
+extraction.
+
+**A reviewed, accepted non-defect.** Python path normalisation means
+`candidate-attempt-001/./raw.diff` and `candidate-attempt-001//raw.diff` audit
+successfully. They identify the same attempt, stage, file and bytes, so no
+provenance property is weakened; only the spelling of the recorded string
+differs, and the product writes exactly one spelling. Requiring byte-for-byte
+canonical spelling would be a one-line change and is deliberately not made:
+canonical path spelling is not a governed requirement, and adding a runtime
+invariant without an amendment to justify it is how ungoverned rules accumulate.
+Recorded so it is not rediscovered as a finding.
+
+---
+
+## DAR-036 — BM-07 curation measurement corrected; same-candidate shadow gating frozen
+
+$0.00 spend, no provider call, BM-07 not started. **RIFT runtime unchanged** —
+`runtime_hash 75196d87…` identical before and after; nothing under `src/riftagent`
+was touched.
+
+**Two curation-measurement defects, not product defects.**
+
+1. *Target nodes could omit an enclosing class.* The node id was built from the
+   diff alone, which carries only `+    def test_x(self):` — the class
+   declaration is context it never contained. Targets are now resolved from the
+   full test file at the fix commit with `ast`; only module-level functions and
+   one-deep class methods are returned, and anything nested further is excluded
+   rather than guessed. **59 of 181** mined candidates were dropped for
+   `no_resolvable_target`, and 8 of the 10 finally validated cases have
+   class-qualified targets that the old extractor would have emitted bare.
+
+2. *Preservation counted tests the fix had modified.* A candidate must now exist
+   at the parent, still exist at the fix, and have no changed line anywhere in
+   its own span, decorators included. A change inside a class but outside every
+   test taints that whole class; a module-level helper change taints nothing on
+   its own. Measured effect: attrs 71→68, pluggy 56→54, humanize 19→18.
+
+**Corpus, model-free.** 181 mined → 51 passing corrected curation → 21
+best-per-repository → **10 validated** over **9 distinct target behaviours**.
+Each validated case: parent checked out, the commit's test half applied as the
+frozen reproducer, target **fails**; the commit's source half applied, target
+**passes**; untouched preservation checks **pass**. Nothing was repaired by hand.
+
+The binding constraint turned out to be commit **era**, not case quality: 28 of
+41 rejections are repositories that cannot import on Python 3.12 at all. Cases
+are tried newest-first for that reason. No threshold was relaxed.
+
+**Same-candidate shadow evaluation frozen** as BM-07's protocol-isolation method,
+with `same-candidate harmful weak acceptances prevented` as the primary metric,
+always reported beside strong-rejects-a-correct-candidate. A/B/C yields stay
+secondary. Canonicaliser common to all arms. Diagnosis ontology frozen; semantic
+and application repair remain DEFERRED. BM-07 is a mechanism benchmark, not a
+representative coding benchmark.
+
+### Gates
+
+Run at $0 in the governed reference environment (`python:3.12-slim`, Python
+3.12.14, git 2.47.3) with the pinned toolchain (ruff 0.16.3, mypy 2.3.1,
+pytest 9.1.1):
+
+| | |
+|---|---|
+| `ruff check src tests benchmark` | clean |
+| `ruff format --check` | 90 files clean |
+| `mypy src/riftagent` | 8 source files clean |
+| full suite | **927 passed, 5 skipped, 0 failed** (16:23) |
+| BM-07 curation regressions | **28 passed** |
+| `runtime_hash` | `75196d87…` — **unchanged**, identical to the checkpoint |
+| governed LOC | 10,385 / 10,400 — unchanged |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+`test_r07_an_interrupt_kills_the_child_process_tree` failed once during an
+earlier run of this pass and passed on a clean re-run, 3/3 in isolation and again
+in the full suite. Its failure mode was an empty pidfile after the fixture's
+30-second deadline — a process-startup race that lost while a dozen containers
+were competing for the machine. The runtime hash was identical across both runs,
+so nothing under `src/riftagent` could have caused it. Recorded rather than
+quietly re-run: the test is load-sensitive, which is a property worth knowing
+before it is seen again in CI.
+
+**READY_FOR_CORPUS_REVIEW** — model-free corpus validation complete; 10 validated cases over 9 distinct behaviours. No paid run authorized.
+
+---
+
+## DAR-037 — BM-07 curation integrity
+
+$0.00 spend, no provider call, BM-07 not started. **RIFT runtime unchanged**;
+`runtime_hash 75196d87…` identical before and after.
+
+Five measurement defects corrected, two of which could have manufactured BM-07's
+headline result:
+
+1. **Preservation truncation removed.** Curation persisted `nodes[:12]`,
+   validation ran `nodes[:8]`; cases with 83, 58, 22, 16 nodes were judged on
+   eight. The complete set is now persisted and executed — 233 nodes across 10
+   validated cases, largest 83 — batched into one pytest process with a recorded
+   chunk size, never sampled.
+
+2. **Preservation must now pass on the buggy baseline too.** Otherwise a node
+   already failing before the fix would later read as a candidate regression,
+   fabricating a `weak ACCEPT / strong REJECT` event out of curation rather than
+   verification. It caught contamination at once: 8 of 41 rejections are cases
+   whose preservation set fails *entirely* on the buggy tree (werkzeug 81/81,
+   64/64, 37/37, 36/36; jinja 48/48; pluggy 54/54; pygments 3/3).
+
+3. **Selection now matches the protocol.** Highest pre-model score per
+   repository, chosen before any provider call: **primary 6, fallback 4** of 10
+   validated. Fallback substitution is not permitted.
+
+4. **Nested tests can no longer alias runnable ones.** Added `def` lines bind to
+   the AST node at exactly that line and resolve only if module-level or a method
+   of a top-level class; no name/span fallback.
+
+5. **Class-level insertions taint their class**, decided structurally: non-test
+   class members, bases and decorators are compared between parent and fix.
+   Anchors alone could not work — appending `setup_method` and appending a test
+   method share an anchor.
+
+**Corpus:** 181 mined → 51 curated → 10 validated (6 repositories) → **6
+primary**, 4 fallback. Every validated case is 10/10 on direct parent, baseline
+target FAIL, baseline preservation PASS, fixed target PASS, fixed preservation
+PASS.
+
+**Manifest frozen** after validation: 6 cases, 71 preservation nodes,
+`manifest_hash 5e2b54d1…`, `driver_hash d54e7658…`, no historical patch content.
+
+Same-candidate shadow protocol, primary metric, diagnosis ontology and the
+deferral of semantic and application repair are all unchanged.
+
+### Gates
+
+Governed reference environment (`python:3.12-slim`, Python 3.12.14, git 2.47.3),
+pinned toolchain (ruff 0.16.3, mypy 2.3.1, pytest 9.1.1):
+
+| | |
+|---|---|
+| `ruff check src tests benchmark` | clean |
+| `ruff format --check` | 91 files clean |
+| `mypy src/riftagent` | 8 source files clean |
+| full suite | **936 passed, 5 skipped, 0 failed** (15:19) |
+| BM-07 curation regressions | **37 passed** |
+| `runtime_hash` | `75196d87…` — **UNCHANGED** |
+| governed LOC | 10,385 / 10,400 — unchanged |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+**READY_FOR_BM07_REVIEW** — corpus and manifest frozen. No paid run authorized or
+started.
+
+---
+
+## DAR-038 — BM-07 execution infrastructure
+
+$0.00 spend, 0 provider calls, BM-07 not started. **RIFT runtime unchanged**;
+`runtime_hash 75196d87…` identical before and after.
+
+Ground truth is now independent of RIFT: `benchmark/bm07/bm07_oracle.py` imports
+no `riftagent` module (asserted by AST test) and decides correctness from the
+frozen case oracle alone — applies, protected paths, target, **complete**
+preservation set. BM-06's circularity, where truth was the gate's own verdict, is
+gone.
+
+Weak, strong and truth each run in their own freshly materialised baseline whose
+tree hash must equal the manifest's; the candidate is hashed once and all three
+verdicts record that same hash. Failure identity is captured through
+`riftagent.checks.run_check`, the component that enforces it — which immediately
+corrected a hand-written assumption, since a bare `assert` is reported as
+`Failure`, not `AssertionError`.
+
+**Two defects the dry run caught in the driver itself.** Running the six real
+cases with the projects' own historical fixes first reported 4 of 6 as
+`strong_false_rejection`. That was not RIFT: `python -m riftagent` could not
+start for flat-layout repositories, and a missing receipt was being mapped to
+`REJECT`. A false-rejection rate was being manufactured from harness breakage.
+Both fixed; all six now read `weak accept / strong accept / truth correct`.
+
+**One cell is structurally unreachable.** Every reason the oracle returns WRONG
+is also checked by the strong gate, so `weak ACCEPT / strong ACCEPT / truth
+WRONG` cannot occur — and consequently the primary metric's cell is *guaranteed*
+whenever the weak protocol accepts a preservation-breaking patch. The metric
+therefore measures how often target-pass acceptance admits such a patch, not
+whether RIFT catches one. Stated before execution rather than discovered after.
+
+Frozen: `driver_hash 71fecb03…`, `manifest_hash 6359d0d0…`, 6 cases, 71
+preservation nodes, budget ceiling $6.00 with reserve-before-send.
+
+### A defect this pass introduced, and the rename that fixed it
+
+`tests/test_bm07_driver.py` inserted `benchmark/bm07` at the **front** of
+`sys.path` at import time. `benchmark/bm06` also defines a module named
+`driver`, so for the rest of the pytest session every `import driver` resolved to
+BM-07's — and **70 tests failed**. `runtime_hash` was unchanged throughout, which
+is what identified it as benchmark tooling rather than the product.
+
+Fixed by giving the BM-07 modules distinct names, `bm07_driver` and
+`bm07_oracle`, rather than relying on path ordering. Two benchmarks sharing a
+module name is a trap that would otherwise recur every time a third arrives.
+
+### Gates
+
+Governed reference environment (`python:3.12-slim`, Python 3.12.14, git 2.47.3),
+pinned toolchain (ruff 0.16.3, mypy 2.3.1, pytest 9.1.1):
+
+| | |
+|---|---|
+| `ruff check src tests benchmark` | clean |
+| `ruff format --check` | 96 files clean |
+| `mypy src/riftagent` | 8 source files clean |
+| full suite | **972 passed, 5 skipped, 0 failed** (34:25) |
+| `validate_manifest` on the real manifest | **0 failures** |
+| six-case model-free preflight | **0 failures** |
+| fake-provider dry run | 6/6, identical canonical bytes in all three verdicts |
+| `runtime_hash` | `75196d87…` — **UNCHANGED** |
+| `driver_hash` manifest vs observed | **MATCH** |
+| `manifest_hash` recorded vs recomputed | **MATCH** |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+**READY_FOR_BM07_REVIEW** — execution wiring frozen and green. No paid run
+authorized or started.
+
+---
+
+## DAR-039 — BM-07 paid execution harness
+
+**Status: IMPLEMENTED.** 0 provider calls; additional spend **$0.00**. BM-07 was
+not executed. **The RIFT runtime is unchanged** — `runtime_hash` identical before
+and after; nothing under `src/riftagent` touched.
+
+> BM-07's corpus and RIFT runtime remain frozen. This pass completes only the
+> paid execution harness: full truth protected-path semantics, independent oracle
+> identity binding, actual A/B/C provider orchestration, reservation-based
+> spending, response-bound model identity, and full fake-provider execution
+> through the same run path intended for paid BM-07.
+
+### 1 — Ground truth now enforces the whole protected-path contract
+
+The correctness contract says a candidate is wrong if it modifies the frozen
+tests **or the runner configuration**. The manifest listed only test files, so a
+patch that fixed the target and edited `pyproject.toml` would have been recorded
+`weak ACCEPT / strong REJECT / truth CORRECT` — a false-rejection reading
+produced by an incomplete protected set rather than by a policy difference.
+
+`protected_paths` is now the union of the test files owning the target and
+preservation nodes, and every runner-configuration file actually present at the
+parent: `conftest.py`, `pytest.ini`, `pyproject.toml`, `setup.cfg`, `tox.ini`.
+Only files that exist are listed, so the set names real artifacts. The policy
+lives in `bm07_oracle.RUNNER_CONFIG_FILES`, beside the code that enforces it.
+
+### 2 — The dishonest false-rejection fixture is gone
+
+The previous fixture produced `strong REJECT / truth CORRECT` by **narrowing
+`protected_paths` for the truth evaluator only**. Strong and truth were therefore
+judging different cases, which is precisely the substitution that voids a
+comparison. It was deleted rather than repaired, and a test now asserts no
+evaluator receives a modified copy of the case.
+
+Under the frozen semantics the strong gate checks a superset of the oracle's
+conditions — it applies the patch, runs the target, runs the same complete
+preservation set, and enforces the same protected paths. **A model-free candidate
+that is CORRECT by the oracle and REJECTED by the gate has therefore not been
+demonstrated**, and is reported that way rather than manufactured. The classifier
+still recognises the outcome, so a real run producing one records it correctly.
+
+### 3 — The program that defines truth is now pinned
+
+The benchmark froze runtime, driver and manifest identities but not the oracle.
+A benchmark that pins everything except the code deciding right from wrong has
+not pinned its result.
+
+`oracle_hash` is in the manifest and is checked twice: with the other identities
+before any provider call, and **again before scoring**, so the truth program
+cannot drift between deciding and aggregating. It is deliberately not folded into
+`runtime_hash` — it is benchmark infrastructure and stays independently
+identifiable.
+
+### 4 — The actual paid runner
+
+`benchmark/bm07/bm07_runner.py`, invoked as:
+
+```
+python benchmark/bm07/bm07_runner.py run --manifest benchmark/bm07/manifest-executable.json
+```
+
+One command performs preflight, budget, provider, identity, candidate pipeline,
+arm evaluation, the Arm-A same-candidate shadow, independent truth, settlement
+and the durable record. Nothing requires an operator to call functions between
+provider responses.
+
+**Nothing RIFT owns was re-implemented.** Arms are invoked through the frozen
+`rift fix` CLI exactly as BM-06 invoked them — `--model-alone` for A,
+`--probe-policy random` for B, the default kernel for C — so the provider
+adapter, the reserve/request/settle ledger, the schema-repair policy, the
+model-response evidence and the raw → normalized → canonical pipeline are the
+shipped ones. A test forbids `urllib`, `http.client`, `requests` and `httpx` in
+the runner: a benchmark with its own HTTP path would be measuring a different
+client.
+
+**The reservation is derived, not supplied.** `required_reservation(manifest)`
+takes one argument — there is no `reserve_usd` parameter a caller could set to
+zero. It is computed from the manifest's own pricing and token ceilings,
+including the one authorised schema repair, and floored at the declared per-arm
+cap. A case-arm whose reservation exceeds remaining budget is skipped with **no
+adapter call**.
+
+**Model identity comes from the response evidence.** Every
+`MODEL_RESPONSE_RECEIVED` in the task ledger is read, schema-repair responses
+included, and any reported model differing from the manifest's blocks the record.
+Configuration, pricing metadata and the request body are not treated as proof.
+
+**A crash cannot re-spend.** Records are appended and fsynced; a case-arm already
+recorded `completed` is not re-run.
+
+### 5 — The fake-provider run, and what it caught
+
+The dry run drives the **same** `run` entry point with `RIFT_LLM_URL` pointed at
+a scripted OpenAI-compatible server on loopback, so the real adapter, ledger and
+repair policy are exercised. No network, no spend.
+
+The first attempt looked successful — 18 records, settlement, exit 0 — and was
+not: **17 of 18 arms reported `unverifiable` and only 1 of 6 Arm-A comparisons
+carried a candidate.** The fake served replies from a flat queue while arms make
+differing numbers of calls, so after the first case every arm received a reply
+meant for something else. Reporting "full-path dry run passed" on that would have
+been true and misleading.
+
+The fake now dispatches on the request: a handles request gets handles, a change
+request gets the candidate scripted for *that* case, matched by the target node
+id in the prompt. Order-independent and deterministic.
+
+| case | arm | status | arm verdict | classification | $ |
+|---|---|---|---|---|---|
+| `cachetools-462e8679` | A | completed | accepted_by_target_pass | both_correct_accept | 0.0081 |
+| `cachetools-462e8679` | B | completed | verified_against_approved_chec | — | 0.0081 |
+| `cachetools-462e8679` | C | completed | verified_against_approved_chec | — | 0.0081 |
+| `click-2bc3b2c1` | A | completed | unverifiable | both_reject | 0.0081 |
+| `click-2bc3b2c1` | B | completed | unverifiable | — | 0.0081 |
+| `click-2bc3b2c1` | C | completed | unverifiable | — | 0.0081 |
+| `croniter-7d319c51` | A | completed | unverifiable | both_reject | 0.0081 |
+| `croniter-7d319c51` | B | completed | unverifiable | — | 0.0081 |
+| `croniter-7d319c51` | C | completed | unverifiable | — | 0.0081 |
+| `icalendar-63fcf743` | A | completed | unverifiable | — | 0.0162 |
+| `icalendar-63fcf743` | B | completed | verified_against_approved_chec | — | 0.0081 |
+| `icalendar-63fcf743` | C | completed | verified_against_approved_chec | — | 0.0081 |
+| `structlog-bf80fa60` | A | completed | unverifiable | — | 0.0162 |
+| `structlog-bf80fa60` | B | completed | unverifiable | — | 0.0162 |
+| `structlog-bf80fa60` | C | completed | unverifiable | — | 0.0162 |
+| `tenacity-0b1cef0b` | A | completed | accepted_by_target_pass | both_correct_accept | 0.0081 |
+| `tenacity-0b1cef0b` | B | completed | verified_against_approved_chec | — | 0.0081 |
+| `tenacity-0b1cef0b` | C | completed | verified_against_approved_chec | — | 0.0081 |
+
+18 arm records · 22 loopback requests · **4 of 6 Arm-A same-candidate comparisons** carried a candidate and had identical bytes in all three verdicts · 0 real provider calls · $0.00 real spend.
+
+Outcomes exercised: correct acceptance, mutual rejection, an unapplicable
+candidate, a malformed reply consuming the one authorised schema repair (two
+requests on that case), and an abstention that produced no candidate.
+
+**One limitation, stated plainly.** The "wrong candidate" script uses an
+unapplicable patch rather than a genuinely target-passing-but-preservation-
+breaking one. Constructing the latter generically across six unrelated real
+repositories is not something a harness can do, and hand-authoring one per
+repository would be the synthetic trap the corpus protocol forbids. That shape is
+covered deterministically by the driver's own fixtures, where the repository is
+controlled; the full-path run drives the reject path via the unapplicable
+candidate.
+
+### Unchanged
+
+```
+RIFT runtime            unchanged; runtime_hash identical before and after
+corpus                  unchanged; six cases, same targets and preservation sets
+canonicalizer           unchanged
+diagnosis ontology      unchanged
+repair semantics        unchanged; one schema repair, no semantic or application retry
+```
+
+Changed: the driver, the oracle's metadata and policy constant, and the
+executable manifest.
+
+### Frozen identities
+
+```
+runtime_hash    75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26  (unchanged)
+driver_hash     91a7717f130bebe070ee18e50723be10a5b55094a743b48777c2c632cb461034
+oracle_hash     6c159fed18f3258d6d30f01811c99b0264bc3f3d5b95ec3be7c1bcc25c0aa83a
+manifest_hash   cbf8354939466b0678699e37c612669db53c64885c9378fa2f2a346dd4011a76
+```
+
+### Gates
+
+Governed reference environment (`python:3.12-slim`, Python 3.12.14, git 2.47.3),
+pinned toolchain (ruff 0.16.3, mypy 2.3.1, pytest 9.1.1):
+
+| | |
+|---|---|
+| identity chain | runtime **UNCHANGED**, driver **MATCH**, oracle **MATCH**, manifest **MATCH** |
+| `validate_manifest` | **0 failures** |
+| six-case preflight through the real runner | **0 failures** |
+| fake-provider full `run` | 18 arm records, 4/6 Arm-A same-candidate, $0.00 real spend |
+| `ruff check src tests benchmark` | clean |
+| `ruff format --check` | 99 files clean |
+| `mypy src/riftagent` | 8 source files clean |
+| BM-07 suites | **89 passed** |
+| full suite | **983 passed, 5 skipped, 5 failed under load** |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+**The five full-suite failures are load artifacts, and were checked rather than
+assumed.** All five are timing, PTY or concurrency tests —
+`test_r07_an_interrupt_kills_the_child_process_tree`, two streaming-PTY tests,
+`test_concurrent_processes_never_share_a_task_directory`, and one signature-only
+integrity case. Re-run in isolation on the same image they pass **30/30**, and
+`runtime_hash` was identical across both runs, so nothing under `src/riftagent`
+could have caused them. The machine was running several containers concurrently
+at the time. Recorded rather than quietly re-run, because load sensitivity in
+this group is worth knowing before it is met in CI.
+
+**READY_FOR_PAID_BM07_REVIEW** — the paid run path is frozen and green. No paid
+run authorized or started.
+
+---
+
+## DAR-040 — BM-07 paid-run harness: preflight before spend, durable state, independent truth for every arm
+
+**Status: IMPLEMENTED.** 0 provider calls; additional spend **$0.00**. BM-07 was
+not executed. **The RIFT runtime is unchanged** — `runtime_hash` identical before
+and after; nothing under `src/riftagent` touched.
+
+> The frozen RIFT runtime and six-case corpus remain unchanged. This pass closes
+> only paid-run harness gaps: all-case preflight before spend, configured-model
+> precheck, deterministic Arm-B seeds, Git-authoritative protected-path
+> detection, durable request-start state, full failure-signature enforcement,
+> authoritative usage metrics, and independent truth scoring for secondary A/B/C
+> correctness metrics.
+
+### 1 — The whole corpus is proven before the first request
+
+The separate preflight was green, but `run` did not require it. Discovering that
+case 5 is invalid after paying for cases 1–4 is not a preflight, it is a receipt.
+
+`run` now performs, in order: identity checks, configured-model check, then the
+**complete six-case preflight** — every baseline reconstructed, tree hash
+matched, frozen failure identity matched, target failing, complete preservation
+set passing. Any failure stops the whole benchmark with zero provider calls, and
+a test asserts the adapter is never reached when a case fails.
+
+### 2 — Configured model is checked before spending, not only after
+
+`RIFT_LLM_MODEL` must equal the manifest's requested model **before** any
+request. Catching a wrong model only from the response evidence means catching it
+with the money already gone. Both checks now exist and neither replaces the
+other:
+
+```
+pre-spend      configured model == manifest model
+post-response  provider-reported model == manifest model   (every response,
+                                                            schema repair included)
+```
+
+### 3 — Arm B's probe seed was not reproducible
+
+The seed came from `hash(case_id)`. Python randomises `hash()` per process, so
+arm B would have drawn a different probe in the paid run than in any replay of
+it — the arm would not have been reproducible **from its own manifest**, and
+nothing in the record would have shown why.
+
+Seeds are now frozen in the manifest, derived once from `SHA256(case_id)`:
+
+```
+cachetools 69587 · click 97363 · croniter 50993
+icalendar   2358 · structlog 90962 · tenacity 23409
+```
+
+`validate_manifest` requires the field; a test asserts identical values from two
+fresh interpreters.
+
+### 4 — Protected-path detection asks git, not the patch header
+
+The oracle parsed `+++ b/<path>` lines. That sees what a patch *claims* to write,
+so a deletion, a rename or a mode change could leave a protected file altered
+without the parser noticing.
+
+`changed_paths_from_git` now reads `git status --porcelain` in the applied
+worktree — the repository's own answer — covering modification, deletion, rename
+(both names) and untracked additions. Regressions cover modify, delete and rename
+of a protected runner-config file, and that a source-only candidate is still
+allowed.
+
+### 5 — A crash can no longer silently double-spend
+
+The previous claim rested on skipping completed rows, which cannot distinguish
+"never asked" from "asked, outcome unknown".
+
+An append-only arm-state log outside the disposable worktrees now records
+`request_started` **before** the adapter is reached:
+
+```
+not_started -> request_started -> completed | blocked
+```
+
+On restart, `completed` is skipped, `blocked` is not automatically retried, and
+`request_started` without settlement **halts the run for reconciliation** rather
+than re-sending a request that may already have been paid for. A test proves the
+state is durable at the moment of the adapter call.
+
+### 6 — The paid arm enforces the complete failure identity
+
+`--expect-signature` received only the exception type, which would accept a
+different failure of the same class. It now receives the full frozen identity, so
+curation's observer, preflight's comparison and the paid arm all use one
+vocabulary.
+
+### 7 — Usage and command counts come from the ledger
+
+The runner read a receipt field that does not exist, leaving `input_tokens` and
+`output_tokens` null. They are now summed from every `MODEL_RESPONSE_RECEIVED` in
+the task ledger — schema-repair responses included — alongside `request_count`
+and `commands` from `command_finished` events. Missing usage is recorded as
+**unavailable**, never as zero: zero reads as "free", which is a different claim
+from "unmeasured".
+
+### 8 — Every arm's candidate is scored by the independent oracle
+
+Truth previously ran only for arm A. Reporting secondary "A/B/C false-fix
+acceptance" on protocol verdicts would have meant *"C accepted it"* being the
+evidence that C was right — a number that can only agree with itself.
+
+B and C candidates now get a fresh identity-checked baseline and the same
+independent oracle, with `truth_candidate_hash == canonical_candidate_hash`
+enforced for every arm and the full four-way binding for arm A.
+
+### 9 — Aggregation refuses mixed evidence
+
+Before any summary, runtime, driver, oracle and manifest identities are
+re-verified, and every record must carry the same five identities as the manifest
+being scored. Mismatch yields **NO FINAL SCORE** rather than an average across two
+harnesses.
+
+### The full fake run, through the real command
+
+`python benchmark/bm07/bm07_runner.py run --adapter fake` against the frozen
+manifest, with a scripted OpenAI-compatible provider on loopback:
+
+```
+preflight        6 cases reconstructed, 0 failures   (before request 1)
+reservation      $0.4800 per case-arm, derived from the manifest
+arm records      18
+classifications  both_correct_accept 2, both_reject 2
+truth by arm     A correct 2 / wrong 2 · B correct 3 / wrong 2 · C correct 3 / wrong 2
+crash/resume     additional provider requests 0, run halted for reconciliation
+real provider calls  0
+real spend           $0.00
+```
+
+Arm-A same-candidate comparisons with identical bytes across weak, strong and
+truth: **4 of 6** — the other two are the abstention and repair scripts, which
+correctly produce no candidate to compare.
+
+### Unchanged
+
+```
+RIFT runtime        unchanged; runtime_hash identical before and after
+six-case corpus     unchanged; same targets, preservation sets, parents
+canonicalizer       unchanged
+diagnosis ontology  unchanged
+repair semantics    unchanged; one schema repair, no semantic or application retry
+```
+
+`strong_false_rejection` remains **not demonstrated model-free** and was not
+manufactured; the classifier supports it and a real run may produce it.
+
+### Frozen identities
+
+```
+runtime_hash    75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26  (unchanged)
+driver_hash     43fe46dc14a7c3316d7379bdd70ec9e356613ddf7851e32f8a99365eaacaf025
+oracle_hash     4829ceb823a30e1094b09de90322b2242b8b3dd0af7b2168946e1bb34bd3431c
+manifest_hash   3dc7a3ed6a1668facabd9d7ef4aa88c4c21ba200f02bd6b719c618b38e8a0ae9
+```
+
+### Gates
+
+| | |
+|---|---|
+| identity chain | runtime **UNCHANGED**, driver **MATCH**, oracle **MATCH**, manifest **MATCH** |
+| `validate_manifest` | **0 failures** |
+| six-case preflight inside `run` | **0 failures** |
+| full fake 18-arm run + crash/resume | green, 0 extra requests on resume |
+| ruff check / format / mypy | clean / 99 files / 8 source files |
+| BM-07 suites | **112 passed** |
+| full suite | **1010 passed, 5 skipped, 1 failed** |
+| provider calls | **0** |
+| additional spend | **$0.00** |
+
+The single full-suite failure was `Cannot allocate memory` while copying the repo
+tree, caused by **67 MB of stale `benchmark/work/staging/` directories left
+behind by an earlier verify-bench run of mine**. Those artifacts were removed and
+the test passes 4/4. It was a housekeeping failure in the working tree, not a
+product or harness defect, and `runtime_hash` was unchanged throughout.
+
+**READY_FOR_PAID_BM07_REVIEW** — the exact paid path is frozen and green. No paid
+run authorized or started.
+
+---
+
+## BM-07 harness transaction integrity (DAR-040a)
+
+Benchmark-harness-only pass. **No changes under `src/riftagent/*`**;
+`runtime_hash` identical before and after. 0 provider calls, additional spend
+**$0.00**, BM-07 not executed.
+
+### Changed
+
+```
+benchmark/bm07/bm07_runner.py       global reconciliation stop; terminal state
+                                    moved after durable evidence; official
+                                    completeness gate; named exit codes
+benchmark/bm07/fake_run.py          scenarios A/B/C on the real evidence; clears
+                                    its own arm-state log on a fresh run
+tests/test_bm07_transactions.py     new, 30 tests
+benchmark/bm07/PROTOCOL.md          run-status vocabulary and the 18/18 rule
+DESIGN_AMENDMENT_RECORD.md          DAR-040a
+```
+
+`bm07_driver.py` and `bm07_oracle.py` were **not** touched, so `driver_hash` and
+`oracle_hash` — each a file's own bytes — are unchanged and no manifest rebuild
+was required.
+
+### Commands actually executed
+
+```
+ruff check benchmark/ tests/ src/                        all checks passed
+ruff format --check benchmark/ tests/ src/               100 files already formatted
+mypy src/riftagent                                       no issues, 8 source files
+pytest tests/test_bm07_{transactions,driver,curation}.py 142 passed
+pytest -q                                                1041 passed, 5 skipped, 0 failed
+python benchmark/bm07/fake_run.py                        18/18 OFFICIAL_COMPLETE
+```
+
+### Fake run, real command, loopback provider
+
+```
+full run     18 of 18 official case-arm records -> OFFICIAL_COMPLETE, exit 0
+             both_correct_accept 2, both_reject 2
+             truth A 2/2 · B 3/2 · C 3/2      (identical to the pre-pass run)
+scenario A   request_started, no result   -> BLOCKED_FOR_RECONCILIATION, +0 requests
+scenario B   result durable, no terminal  -> BLOCKED_FOR_RECONCILIATION, +0 requests
+scenario C   17 of 18                     -> INCOMPLETE_RUN, NO OFFICIAL SCORE
+```
+
+### Identities — all four unchanged
+
+```
+runtime_hash    75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26
+driver_hash     43fe46dc14a7c3316d7379bdd70ec9e356613ddf7851e32f8a99365eaacaf025
+oracle_hash     4829ceb823a30e1094b09de90322b2242b8b3dd0af7b2168946e1bb34bd3431c
+manifest_hash   3dc7a3ed6a1668facabd9d7ef4aa88c4c21ba200f02bd6b719c618b38e8a0ae9
+runtime lines   10,385 of 10,400
+```
+
+### Remaining uncertainty
+
+`strong_false_rejection` is still **not demonstrated model-free** and was not
+manufactured. The completeness gate is enforcement, not a claim that the paid
+run will produce 18 clean records — an arm that blocks on model identity is
+`blocked` and still counts as complete evidence of that outcome.
+
+**READY_FOR_PAID_BM07_REVIEW** — no paid run authorized or started.
+
+---
+
+## BM-07 runner identity (DAR-040b)
+
+Benchmark-infrastructure pass. **No changes under `src/riftagent/*`**;
+`runtime_hash` identical before and after. 0 provider calls, additional spend
+**$0.00**, BM-07 not executed.
+
+### Changed
+
+```
+benchmark/bm07/bm07_runner.py             runner_hash(); checked pre-spend and
+                                          pre-scoring; carried in ArmRecord;
+                                          stamped on each durable state row
+benchmark/bm07/bm07_driver.py             runner_hash required + format-checked
+benchmark/bm07/build_executable_manifest.py  freezes runner_hash
+benchmark/bm07/manifest-executable.json   runner_hash added; chain refrozen
+benchmark/bm07/fake_run.py                scenarios D (runner mismatch) and
+                                          E (mixed-runner aggregation)
+tests/test_bm07_runner_identity.py        new, 23 tests
+tests/test_bm07_driver.py                 fixtures carry runner_hash
+tests/test_bm07_transactions.py           fixtures carry runner_hash
+DESIGN_AMENDMENT_RECORD.md                DAR-040b
+```
+
+`bm07_oracle.py` untouched — `oracle_hash` unchanged.
+
+### Commands actually executed
+
+```
+ruff check benchmark/ tests/ src/          all checks passed
+ruff format --check benchmark/ tests/ src/ 101 files already formatted
+mypy src/riftagent                         no issues, 8 source files
+pytest tests/test_bm07_*.py                165 passed
+pytest -q                                  1064 passed, 5 skipped, 0 failed
+python benchmark/bm07/fake_run.py          18/18 OFFICIAL_COMPLETE, scenarios A-E
+```
+
+### Frozen identity chain, in dependency order
+
+```
+runtime_hash    75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26   unchanged
+driver_hash     e2154631641a6e9b3fb4bfcbcd36a66d5440a4a2416631af57ed448eceb6ebfd   changed
+runner_hash     d1b2fd312d2eacd7436f7401981c302bc2fb025f9bb675680ea15ab93212da48   new
+oracle_hash     4829ceb823a30e1094b09de90322b2242b8b3dd0af7b2168946e1bb34bd3431c   unchanged
+manifest_hash   183f9e6d731f513d9f60ef296372ca040d8bf562cff224e4026efae5fc5061fc   changed
+runtime lines   10,385 of 10,400
+```
+
+`driver_hash` moved because the driver had to require the new field; its
+definition is unchanged. The manifest was rewritten surgically and the freeze
+script asserts no non-identity key moved.
+
+### Fake run
+
+```
+full run     18/18 OFFICIAL_COMPLETE, exit 0; all 18 records share one runner_hash
+             both_correct_accept 2, both_reject 2; truth A 2/2 · B 3/2 · C 3/2
+scenario A   BLOCKED_FOR_RECONCILIATION, +0 requests
+scenario B   BLOCKED_FOR_RECONCILIATION, +0 duplicate requests
+scenario C   17/18 -> INCOMPLETE_RUN, NO OFFICIAL SCORE
+scenario D   runner mismatch -> refused, provider requests = 0
+scenario E   17 frozen + 1 foreign runner -> NO FINAL SCORE
+```
+
+### Remaining uncertainty
+
+`strong_false_rejection` is still **not demonstrated model-free** and was not
+manufactured. `runner_hash` binds the orchestration bytes; it does not and
+cannot attest to the interpreter, installed packages or OS, which the reference
+environment covers separately.
+
+**READY_FOR_PAID_BM07_REVIEW** — no paid run authorized or started.

@@ -1,0 +1,32 @@
+--- a/rich/spinner.py
++++ b/rich/spinner.py
+@@ -1,4 +1,4 @@
+-from typing import cast, List, Optional, TYPE_CHECKING
++from typing import cast, List, Optional, Union, TYPE_CHECKING
+ 
+ from ._spinners import SPINNERS
+ from .measure import Measurement
+@@ -35,7 +35,10 @@ class Spinner:
+         try:
+             spinner = SPINNERS[name]
+         except KeyError:
+             raise KeyError(f"no spinner called {name!r}")
+-        self.text = text
++        if isinstance(text, str):
++            self.text = Text.from_markup(text)
++        else:
++            self.text = text
+         self.frames = cast(List[str], spinner["frames"])[:]
+         self.interval = cast(float, spinner["interval"])
+         self.start_time: Optional[float] = None
+@@ -96,7 +99,10 @@ class Spinner:
+         """
+         if text:
+-            self.text = text
++            if isinstance(text, str):
++                self.text = Text.from_markup(text)
++            else:
++                self.text = text
+         if style:
+             self.style = style
+         if speed:

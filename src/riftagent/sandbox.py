@@ -705,3 +705,28 @@ __all__ = [
     "tracked_files",
     "tree_hash",
 ]
+
+
+def structural_parse(diff: str, recount: bool = False) -> int:
+    """Does git *parse* this diff? Returns git's exit code.
+
+    `--numstat` asks git to read the patch and report what it would change, so
+    it exercises the full unified-diff grammar without needing a repository or
+    touching one. That separation matters: whether a diff is well-formed and
+    whether it applies to particular content are different questions, and
+    conflating them would let repository state decide whether metadata is
+    canonical (DAR-031).
+
+    Run in a temporary directory precisely so no worktree can influence the
+    answer.
+    """
+    with tempfile.TemporaryDirectory(prefix="rift-parse-") as tmp:
+        blob = Path(tmp) / "candidate.diff"
+        blob.write_text(diff, encoding="utf-8", newline="")
+        argv = ["git", "apply", "--numstat", *(["--recount"] if recount else []), str(blob)]
+        try:
+            return subprocess.run(argv, cwd=tmp, capture_output=True, timeout=120).returncode
+        except (OSError, subprocess.SubprocessError):
+            # No git, or it would not run. Callers treat a non-zero code as
+            # "not proven parseable", which keeps the fallback conservative.
+            return -1

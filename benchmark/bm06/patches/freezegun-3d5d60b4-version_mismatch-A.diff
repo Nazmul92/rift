@@ -1,0 +1,29 @@
+--- a/freezegun/api.py
++++ b/freezegun/api.py
+@@ -626,10 +626,18 @@ class _freeze_time:
+             for base_klass in klasses:
+                 for (attr, attr_value) in base_klass.__dict__.items():
+                     if attr.startswith('_') or attr in seen:
+                         continue
+                     seen.add(attr)
+ 
+-                    if not callable(attr_value) or inspect.isclass(attr_value):
++                    if inspect.isclass(attr_value):
+                         continue
+ 
++                    is_static = isinstance(attr_value, staticmethod)
++                    if is_static:
++                        attr_value = attr_value.__func__
++
++                    if not callable(attr_value):
++                        continue
++
+                     try:
+-                        setattr(klass, attr, self(attr_value))
++                        decorated = self(attr_value)
++                        if is_static:
++                            decorated = staticmethod(decorated)
++                        setattr(klass, attr, decorated)
+                     except (AttributeError, TypeError):
+                         # Sometimes we can't set this for built-in types and custom callables
+                         continue

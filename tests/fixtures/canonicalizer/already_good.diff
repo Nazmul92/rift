@@ -1,0 +1,15 @@
+--- a/src/cachetools/__init__.py
++++ b/src/cachetools/__init__.py
+@@ -628,6 +628,11 @@ class TLRUCache(_TimedCache):
+     def __setitem__(self, key, value, cache_setitem=Cache.__setitem__):
+         with self.timer as time:
+             expires = self.__ttu(key, value, time)
+             if not (time < expires):
++                # New value is already expired; evict the existing key if present
++                try:
++                    self.__delitem__(key)
++                except KeyError:
++                    pass
+                 return  # skip expired items
+             self.expire(time)
+             cache_setitem(self, key, value)

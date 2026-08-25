@@ -1,0 +1,13 @@
+--- a/click/decorators.py
++++ b/click/decorators.py
+@@ -146,7 +146,8 @@ def option(*param_decls, **attrs):
+     """
+     def decorator(f):
+         # Issue 926, copy attrs, so pre-defined options can reuse.
+-        Option = attrs.pop('cls', Option)
+-        _param_memo(f, Option(param_decls, **attrs))
++        option_attrs = attrs.copy()
++        Option = option_attrs.pop('cls', Option)
++        _param_memo(f, Option(param_decls, **option_attrs))
+         return f
+     return decorator

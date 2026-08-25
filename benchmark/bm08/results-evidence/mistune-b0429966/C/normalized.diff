@@ -1,0 +1,10 @@
+--- a/src/mistune/renderers/markdown.py
++++ b/src/mistune/renderers/markdown.py
+@@ -46,7 +46,9 @@ class MarkdownRenderer(BaseRenderer):
+     def text(self, token: Dict[str, Any], state: BlockState) -> str:
+         # a backtick always opens a code span, so it must stay escaped to
+         # survive a re-parse as literal text.
+-        return cast(str, token["raw"]).replace("`", "\\`")
++        raw = cast(str, token["raw"]).replace("`", "\\`")
++        raw = re.sub(r"([*_])", r"\\\1", raw)
++        return raw

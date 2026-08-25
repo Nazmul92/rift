@@ -1,0 +1,10 @@
+--- a/tabulate.py
++++ b/tabulate.py
+@@ -1255,6 +1255,8 @@ def tabulate(
+     list_of_lists, headers = _normalize_tabular_data(
+         tabular_data, headers, showindex=showindex
+     )
++    if not list_of_lists and not headers:
++        return ""
+ 
+     if maxcolwidths is not None:

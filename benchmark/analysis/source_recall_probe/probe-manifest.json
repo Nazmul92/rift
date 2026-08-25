@@ -1,0 +1,185 @@
+{
+ "bm08_corpus_manifest_hash": "e6bdd3f116981bc58daf7f21eb4a5e0a524e9a067227cd2cc40fc994a19ad3f9",
+ "budget": {
+  "derivation": "6 cases x 2 conditions x 2 requests x $0.1350 = $3.2400",
+  "max_input_tokens": 25000,
+  "max_output_tokens": 4000,
+  "max_requests_per_condition": 2,
+  "schema_repair_policy": "at most one schema repair per condition; no semantic retries",
+  "total_usd_ceiling": 4.0,
+  "worst_case_usd": 3.24
+ },
+ "canonicalizer_identity": {
+  "records_py_sha256": "507b141fcdc3cadd4cb934753334e6bffa8fc7e7563f43457ccb8e81fb3cba64",
+  "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26"
+ },
+ "cases": [
+  {
+   "baseline_tree_hash": "c22ec5cf23f5d03ee95fe6a6fffada8d2fdd9a000716b2facb2715b42d5a2fe5",
+   "bm08_arm": "C",
+   "case_id": "packaging-553582d9",
+   "context_chars": 12090,
+   "context_files": [
+    "src/packaging/__init__.py",
+    "src/packaging/errors.py",
+    "src/packaging/metadata.py",
+    "src/packaging/licenses/__init__.py",
+    "src/packaging/licenses/_spdx.py",
+    "src/packaging/specifiers.py"
+   ],
+   "context_hash": "0864f9531356d1af6945852201e2859145960cd397dc96d97d22c97fc3a93814",
+   "expected_signature": "AssertionError: Regex pattern did not match.",
+   "failure_class": "context_mismatch",
+   "node_id": "tests/test_metadata.py::TestMetadata::test_invalid_charset_error_message",
+   "order": [
+    "U",
+    "S"
+   ],
+   "order_label": "U->S",
+   "repository": "packaging",
+   "selection_digest": "0242be74b8944c66a7701001229d1ef3d57c8112711a6d31368593fd38444db8"
+  },
+  {
+   "baseline_tree_hash": "17eda88cad55260b06d3098c091f2b8fb8409dab5ef249efe4072fa7a89922ba",
+   "bm08_arm": "A",
+   "case_id": "xmltodict-927a025a",
+   "context_chars": 11624,
+   "context_files": [
+    "xmltodict.py"
+   ],
+   "context_hash": "b53dd5e6852f5552b4da114d2b1bc2313e09db12af596f3478969657aa0b719f",
+   "expected_signature": "TypeError: decoding to str: need a bytes-like object, int found",
+   "failure_class": "context_mismatch",
+   "node_id": "tests/test_dicttoxml.py::DictToXMLTestCase::test_non_string_text_with_attributes",
+   "order": [
+    "S",
+    "U"
+   ],
+   "order_label": "S->U",
+   "repository": "xmltodict",
+   "selection_digest": "0a25317320d9fc96f8a81c1404176fc245ab5e933cb3c4a1aae7df410d52ce43"
+  },
+  {
+   "baseline_tree_hash": "82805dc0b42bd92db84cf16b5ac9ed50dd533a6d0d39e50fc7b49916a8d41181",
+   "bm08_arm": "A",
+   "case_id": "tabulate-293ff59a",
+   "context_chars": 17047,
+   "context_files": [
+    "test/common.py",
+    "tabulate.py"
+   ],
+   "context_hash": "3e66e4681c1414e039637f9034fe497db51a06cf3e7d1cfbccc10bdbf3e51549",
+   "expected_signature": "Failure: AssertionError",
+   "failure_class": "context_mismatch",
+   "node_id": "test/test_input.py::test_blank_list_firstrow",
+   "order": [
+    "U",
+    "S"
+   ],
+   "order_label": "U->S",
+   "repository": "tabulate",
+   "selection_digest": "168f3919dc12ce7ea1911254e3c61e91367a2ae817ce7a80f4b6a90f4211a16d"
+  },
+  {
+   "baseline_tree_hash": "34e0f22976acd22cd720a15fee152f7428006393ef24668c2dd8ff80ec6c2ba5",
+   "bm08_arm": "C",
+   "case_id": "charset-normalizer-2bc26076",
+   "context_chars": 45572,
+   "context_files": [
+    "src/charset_normalizer/models.py",
+    "src/charset_normalizer/api.py",
+    "src/charset_normalizer/__init__.py",
+    "src/charset_normalizer/constant.py",
+    "src/charset_normalizer/utils.py",
+    "src/charset_normalizer/cd.py"
+   ],
+   "context_hash": "ba3abf50f43555ff239cbdbe07bc5f13c0e2f1a8be931ef15cd8db24f4a8abad",
+   "expected_signature": "UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 571: ordinal not in range(128)",
+   "failure_class": "context_mismatch",
+   "node_id": "tests/test_edge_case.py::test_regression_gh771_fallback_entry_on_undecodable_payload",
+   "order": [
+    "S",
+    "U"
+   ],
+   "order_label": "S->U",
+   "repository": "charset-normalizer",
+   "selection_digest": "264e8529c8a129e7da17c285a784cc83aee959e3dd6ea7aa8c94c379e15948f3"
+  },
+  {
+   "baseline_tree_hash": "ca95fb5b31aa32ab013f75a2ba2c67afcddb050333a36599a4a1c07288cffbed",
+   "bm08_arm": "A",
+   "case_id": "dnspython-227eace4",
+   "context_chars": 41225,
+   "context_files": [
+    "dns/btreezone.py",
+    "dns/exception.py",
+    "dns/message.py",
+    "dns/name.py",
+    "dns/node.py",
+    "dns/rdata.py"
+   ],
+   "context_hash": "963eb8ab73c608a890560213b6b768aa9aaece32ede69efc6bf36f285bcc1769",
+   "expected_signature": "AssertionError: False is not true",
+   "failure_class": "file_not_found_or_wrong_path",
+   "node_id": "tests/test_zone.py::ZoneTestCase::testToCompressOrNotToCompressAndCanonicalization",
+   "order": [
+    "U",
+    "S"
+   ],
+   "order_label": "U->S",
+   "repository": "dnspython",
+   "selection_digest": "4d593922fe226d242d049c1d8b41debb1efb32519f1654267cafa4a5f7e34796"
+  },
+  {
+   "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+   "bm08_arm": "C",
+   "case_id": "lark-96873d64",
+   "context_chars": 37085,
+   "context_files": [
+    "lark/utils.py",
+    "lark/tree.py",
+    "lark/indenter.py",
+    "lark/lexer.py",
+    "lark/exceptions.py",
+    "examples/calc.py"
+   ],
+   "context_hash": "9d983d97f9fa72fd6cd2ae22cbe8cff85b3a6167c87c41f34232b561dfc690d0",
+   "expected_signature": "AssertionError: Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'BAR')]) != Tree([22 chars]ransformed, []), Token(SOME_TERMINAL, 'token is transformed')])",
+   "failure_class": "file_not_found_or_wrong_path",
+   "node_id": "tests/test_tools.py::TestStandalone::test_transformer",
+   "order": [
+    "S",
+    "U"
+   ],
+   "order_label": "S->U",
+   "repository": "lark",
+   "selection_digest": "7c62c5eb73be5319a30b86ba77cac4cc82642d8c55008d94fd84c206c8f0642e"
+  }
+ ],
+ "counterbalance_rule": "even position in the frozen order -> U then S; odd position -> S then U",
+ "expected_result_count": 12,
+ "label": "POST-HOC SOURCE-RECALL / PROPOSAL-FORMAT PROBE \u2014 NOT BM-08 \u2014 NOT BM-09 \u2014 NOT OFFICIAL BENCHMARK EVIDENCE \u2014 EXPLORATORY, NOT CAUSAL",
+ "model": {
+  "requested_model_id": "claude-sonnet-4-6",
+  "required_reported_model_identity": "must equal requested"
+ },
+ "not_official": true,
+ "oracle_identity": {
+  "bm08_oracle_used": false,
+  "note": "target/truth evaluation is a secondary endpoint"
+ },
+ "pricing": {
+  "currency": "USD",
+  "input_per_mtok": 3.0,
+  "output_per_mtok": 15.0
+ },
+ "probe_id": "source-recall-probe-1",
+ "probe_manifest_hash": "dd94f6c1509efa68d349e88240ee83fa5a8d2e7312a32c87d2d56057faa278f7",
+ "s_prompt_hash": "4ab808eada23741c9ffb52501a5204d790957205f352a413bfc3188e944496f7",
+ "s_prompt_template": "You are fixing one failing test in a Python repository.\n\nFailing test:\n{node_id}\n\nObserved failure:\n{signature}\n\nSource context (exactly the files and line ranges available to the original\nattempt; nothing else in the repository is shown):\n\n{context}\n\nPropose a fix as exact search/replace edits against this exact source.\n\nOutput ONLY a JSON object of this shape:\n\n{{\"edits\": [{{\"path\": \"pkg/module.py\", \"search\": \"<exact source text>\", \"replace\": \"<replacement text>\"}}]}}\n\nRules:\n- `search` must be text copied verbatim from the source shown above, including\n  indentation and line breaks.\n- Each `search` must occur EXACTLY ONCE in the original file.\n- Every `search` is matched against the ORIGINAL file, not against the result of\n  any other edit in this list.\n- Search regions must not overlap.\n- `path` must be a file that already exists. Do not create new files.\n- Do not modify test files.\n- No line numbers, no wildcards, no regular expressions, no fuzzy matching.\n",
+ "search_replace_executor_hash": "8e8ce44aa691c627401852c4c2061fccc0b873fcc1696e6f2137570b8f5f9ee9",
+ "selection_rule": "from the 29 BM-08 canonical-stage failures in canonicalization-replay.json, order every failure by sha256('source-recall-probe:<case_id>:<arm>'), then take the first 4 with failure_class_canonical == context_mismatch and the first 2 with file_not_found_or_wrong_path, at most one arm per case_id; frozen before any provider response",
+ "transaction_implementation_hash": "341c026a99008330f1e0026f272a16f4907557231097cbe5e8eebb87f71b84df",
+ "u_prompt_hash": "14f8395164fc36d2cc732e1796c65493f012b10800261a8a6a100515c2825a1a",
+ "u_prompt_template": "You are fixing one failing test in a Python repository.\n\nFailing test:\n{node_id}\n\nObserved failure:\n{signature}\n\nSource context (exactly the files and line ranges available to the original\nattempt; nothing else in the repository is shown):\n\n{context}\n\nPropose a fix as a single unified diff against this exact source.\n\nRules:\n- Output ONLY the unified diff. No prose, no fences, no commentary.\n- Use `--- a/<path>` and `+++ b/<path>` headers with paths relative to the\n  repository root.\n- Do not modify test files.\n- Do not create new files.\n- The diff must apply cleanly to the source shown above.\n"
+}

@@ -1,0 +1,20 @@
+--- a/sortedcontainers/sortedlist.py
++++ b/sortedcontainers/sortedlist.py
+@@ -1876,7 +1876,7 @@ class SortedKeyList(SortedList):
+             if _len == 0:
+                 self._lists = [values]
+                 self._keys = [[_key(val) for val in values]]
+-                self._len = len(values)
++                self._len = len(self._lists[0])
+                 self._expand()
+             elif len(values) * 4 >= _len:
+                 _lists = self._lists
+@@ -1887,7 +1887,7 @@ class SortedKeyList(SortedList):
+                 self._rebuild()
+             else:
+                 _add = self.add
+                 for val in values:
+                     _add(val)
+ 
+-        def _check(self):
++        def _check(self):  # noqa

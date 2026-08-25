@@ -1,0 +1,528 @@
+[
+ {
+  "applies": true,
+  "arm": "A",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "1cd75b9200814a11ba8560d1084eba2ae793666c28be80ba9476f58ca91b9c51",
+  "case": "cachetools-c0fdf6ab-genuine_source_bug",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "cachetools-c0fdf6ab-genuine_source_bug-A.diff",
+  "raw_hash": "1cd75b9200814a11ba8560d1084eba2ae793666c28be80ba9476f58ca91b9c51",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "B",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "fdeb44e80e74ed450208646c8ae9140c447aa0c9daad6873b038587762409219",
+  "case": "cachetools-c0fdf6ab-genuine_source_bug",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     7,
+     13
+    ],
+    "hunk_old_start": 628,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     7,
+     16
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "cachetools-c0fdf6ab-genuine_source_bug-B.diff",
+  "raw_hash": "984b5a15702e7a9dc9698edf10aa8403dd39cc76dfdde3bd1724bc483430254e",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "C",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "f00401e000b7729ea4efa9ef59230eb6a45b991dfe74062b2c296b0f420894ed",
+  "case": "cachetools-c0fdf6ab-genuine_source_bug",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     7,
+     11
+    ],
+    "hunk_old_start": 628,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     8,
+     11
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "cachetools-c0fdf6ab-genuine_source_bug-C.diff",
+  "raw_hash": "2fef6eed764df03093425b1464005c2b450ea5724d360d6ed8432a0749be624f",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "A",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "8ed61e86e154f595933d1cdfa043c492c45e99a7c416b634e282b7849c6b15a8",
+  "case": "pygments-2f0d713b-genuine_source_bug",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "pygments-2f0d713b-genuine_source_bug-A.diff",
+  "raw_hash": "8ed61e86e154f595933d1cdfa043c492c45e99a7c416b634e282b7849c6b15a8",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "B",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "8ed61e86e154f595933d1cdfa043c492c45e99a7c416b634e282b7849c6b15a8",
+  "case": "pygments-2f0d713b-genuine_source_bug",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "pygments-2f0d713b-genuine_source_bug-B.diff",
+  "raw_hash": "8ed61e86e154f595933d1cdfa043c492c45e99a7c416b634e282b7849c6b15a8",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "C",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "8c17039d9762c310dc99aa779d147ab054a59a16517bb4d15e33aa93b86119f2",
+  "case": "pygments-2f0d713b-genuine_source_bug",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "pygments-2f0d713b-genuine_source_bug-C.diff",
+  "raw_hash": "8c17039d9762c310dc99aa779d147ab054a59a16517bb4d15e33aa93b86119f2",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "A",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "2d96ae44256dd98f887afd3f4ac74f3935de260d7b2666bb95c45c359302727b",
+  "case": "pyparsing-13065174-genuine_source_bug",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "pyparsing-13065174-genuine_source_bug-A.diff",
+  "raw_hash": "2d96ae44256dd98f887afd3f4ac74f3935de260d7b2666bb95c45c359302727b",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "B",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "fbb6698ec029707b61f0d19ffb18f7d13e92b27f4ba1147cf13efd195387f80a",
+  "case": "pyparsing-13065174-genuine_source_bug",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "pyparsing-13065174-genuine_source_bug-B.diff",
+  "raw_hash": "fbb6698ec029707b61f0d19ffb18f7d13e92b27f4ba1147cf13efd195387f80a",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "C",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "dd7b680b48e473e03988441911ace1a9371a62e42e26e1f5b76f14943edc2cf5",
+  "case": "pyparsing-13065174-genuine_source_bug",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "pyparsing-13065174-genuine_source_bug-C.diff",
+  "raw_hash": "dd7b680b48e473e03988441911ace1a9371a62e42e26e1f5b76f14943edc2cf5",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "A",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "a0a09911fe6425fc35680d64d12fff1fce6713fa6287a2b8347d937d5365d007",
+  "case": "icalendar-60a10375-locale_timezone",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     7,
+     7
+    ],
+    "hunk_old_start": 76,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     3,
+     3
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "icalendar-60a10375-locale_timezone-A.diff",
+  "raw_hash": "d08d7a2f2e6da364a78aff2994cc4ac57bd2d12dadc2dd6c33f1d985b19a5573",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "B",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "41d14b09ceca8e82989de67cd4e509118942b075c4fd2c123220abc683e9e8a3",
+  "case": "icalendar-60a10375-locale_timezone",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     7,
+     7
+    ],
+    "hunk_old_start": 71,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     3,
+     3
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "icalendar-60a10375-locale_timezone-B.diff",
+  "raw_hash": "d6e23c50c8f90977570e0cedbd2c75b798a705b4f0c52c79e0d295f6db07a7aa",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "C",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "a0a09911fe6425fc35680d64d12fff1fce6713fa6287a2b8347d937d5365d007",
+  "case": "icalendar-60a10375-locale_timezone",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     7,
+     7
+    ],
+    "hunk_old_start": 76,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     3,
+     3
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "icalendar-60a10375-locale_timezone-C.diff",
+  "raw_hash": "d08d7a2f2e6da364a78aff2994cc4ac57bd2d12dadc2dd6c33f1d985b19a5573",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": false,
+  "arm": "A",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "3bcaec1e15cf48907ba699459f86f4f1cac64742f95c421db8e522fff8b1e69d",
+  "case": "icalendar-781eeda8-locale_timezone",
+  "operations": [
+   {
+    "from": [
+     6,
+     19
+    ],
+    "hunk_old_start": 152,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     7,
+     25
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "icalendar-781eeda8-locale_timezone-A.diff",
+  "raw_hash": "65118b4f56a2d6ec57b85acd2bb6042091de2da039f87718a520fca799f86163",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": false,
+  "arm": "B",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "9bde8455adf86fda39f52a3cce86052240069846fd655e5b24a3251a4a871d41",
+  "case": "icalendar-781eeda8-locale_timezone",
+  "operations": [
+   {
+    "from": [
+     7,
+     22
+    ],
+    "hunk_old_start": 149,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     10,
+     28
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "icalendar-781eeda8-locale_timezone-B.diff",
+  "raw_hash": "7190394f8c5572778da6468378135477f9d898f92e58df133da64d00d45f6565",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": false,
+  "arm": "C",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "37eca292fb1aa44eb75105793af558ecada0160dce5bd3f2fdab24f545721c0d",
+  "case": "icalendar-781eeda8-locale_timezone",
+  "operations": [],
+  "originally_failed": true,
+  "patch": "icalendar-781eeda8-locale_timezone-C.diff",
+  "raw_hash": "37eca292fb1aa44eb75105793af558ecada0160dce5bd3f2fdab24f545721c0d",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "A",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "39e6cf03b3af59921637e444c50257778244727193c31b7bc2ab27eb33f73c00",
+  "case": "dateutil-f2293200-version_mismatch",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     7,
+     7
+    ],
+    "hunk_old_start": 34,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     6,
+     6
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "dateutil-f2293200-version_mismatch-A.diff",
+  "raw_hash": "560c8f12c4ad5e009e48dc59b54a8730171f248a182ab96f414251a3ad9d56e8",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "B",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "240b910a141bb57dbdfec5ded8fcc4ef95525f9950280811b10bd116b5c129d2",
+  "case": "dateutil-f2293200-version_mismatch",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     7,
+     7
+    ],
+    "hunk_old_start": 34,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     4,
+     4
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "dateutil-f2293200-version_mismatch-B.diff",
+  "raw_hash": "568fee28a1b942a8107ca0fce5fcd9db1ce542aa2d8f6f26505933efaadf0485",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "C",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "39e6cf03b3af59921637e444c50257778244727193c31b7bc2ab27eb33f73c00",
+  "case": "dateutil-f2293200-version_mismatch",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     7,
+     7
+    ],
+    "hunk_old_start": 34,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     6,
+     6
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "dateutil-f2293200-version_mismatch-C.diff",
+  "raw_hash": "560c8f12c4ad5e009e48dc59b54a8730171f248a182ab96f414251a3ad9d56e8",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "A",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "e7f1d6fe276271752ca979b820450337a7a4fc97eb9994cccacaeb8df7333d37",
+  "case": "freezegun-3d5d60b4-version_mismatch",
+  "gate_verdict": "verified_against_approved_checks",
+  "operations": [
+   {
+    "from": [
+     10,
+     18
+    ],
+    "hunk_old_start": 626,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     14,
+     24
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "freezegun-3d5d60b4-version_mismatch-A.diff",
+  "raw_hash": "06f9cd8e5b48b1cc122b515337e0d0789e1304c67001abf696e308c5e1c0d36c",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "B",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "2819911e5325643380f62dd85ee658f9f3930ce503a045db43f57f5970ecf78c",
+  "case": "freezegun-3d5d60b4-version_mismatch",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "freezegun-3d5d60b4-version_mismatch-B.diff",
+  "raw_hash": "2819911e5325643380f62dd85ee658f9f3930ce503a045db43f57f5970ecf78c",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": true,
+  "arm": "C",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "dba34409e1858c39bf36b4995d3dacc1e671f088d0065e1f328d7b8800712a8c",
+  "case": "freezegun-3d5d60b4-version_mismatch",
+  "operations": [],
+  "originally_failed": false,
+  "patch": "freezegun-3d5d60b4-version_mismatch-C.diff",
+  "raw_hash": "dba34409e1858c39bf36b4995d3dacc1e671f088d0065e1f328d7b8800712a8c",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": false,
+  "arm": "A",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "bdf238bc48291acc501340735a16528cea02b14ac4a0b047f95c7c97d056c919",
+  "case": "icalendar-62cbf833-version_mismatch",
+  "operations": [],
+  "originally_failed": true,
+  "patch": "icalendar-62cbf833-version_mismatch-A.diff",
+  "raw_hash": "bdf238bc48291acc501340735a16528cea02b14ac4a0b047f95c7c97d056c919",
+  "status": "UNCHANGED",
+  "structural_raw": 0,
+  "structural_recount": 0
+ },
+ {
+  "applies": false,
+  "arm": "B",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "98ed33e4a0b4d7d56f4d5da398dd348cda61bf49095f67d802fa0878cbfaf6c3",
+  "case": "icalendar-62cbf833-version_mismatch",
+  "operations": [
+   {
+    "from": [
+     8,
+     8
+    ],
+    "hunk_old_start": 493,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     7,
+     7
+    ]
+   },
+   {
+    "from": [
+     10,
+     10
+    ],
+    "hunk_old_start": 575,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     8,
+     8
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "icalendar-62cbf833-version_mismatch-B.diff",
+  "raw_hash": "fa66bf51aa2f9b25844fc3fed31e0ffa9b07dd898b1feb76b891457846632661",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ },
+ {
+  "applies": false,
+  "arm": "C",
+  "authorized_byte_changes_only": true,
+  "canonical_hash": "428b0931ede1ddea40ff0cc141f5d207cc12c9b5d302d68cedd06a4f1beab302",
+  "case": "icalendar-62cbf833-version_mismatch",
+  "operations": [
+   {
+    "from": [
+     9,
+     9
+    ],
+    "hunk_old_start": 564,
+    "kind": "recompute_hunk_counts",
+    "to": [
+     8,
+     8
+    ]
+   }
+  ],
+  "originally_failed": true,
+  "patch": "icalendar-62cbf833-version_mismatch-C.diff",
+  "raw_hash": "c172e9fdb50fb8c381d14b78416592629f4de02e9155ff59c2f59170f32201c4",
+  "status": "CANONICALIZED",
+  "structural_raw": 128,
+  "structural_recount": 0
+ }
+]

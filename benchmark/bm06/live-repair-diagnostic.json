@@ -1,0 +1,64 @@
+{
+ "case": "cachetools-c0fdf6ab-genuine_source_bug",
+ "diff_chars": 709,
+ "invalid_reasons": [
+  {
+   "finish_reason": "stop",
+   "output_exhausted": false,
+   "reason": "malformed JSON object: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+   "repair_exhausted": null,
+   "response_chars": 2243
+  }
+ ],
+ "ledger_kinds": [
+  "spend_reserved",
+  "model_request_started",
+  "model_response_received",
+  "spend_settled",
+  "model_response_invalid",
+  "spend_reserved",
+  "model_repair_requested",
+  "model_response_received",
+  "spend_settled"
+ ],
+ "manifest_sha256": "64aa5f7777d27fadc178fa3e93b3fb68d97bb0c5442e5252b347ab199b584f19",
+ "max_output_tokens": 4000,
+ "max_provider_calls": 2,
+ "model": "claude-sonnet-4-6",
+ "provider_calls": [
+  {
+   "cost_usd": 0.015342,
+   "finish_reason": "stop",
+   "first_120_chars": "Looking at the failing test, it's about `TLRUCache` where overwriting an existing key with an expired entry should work ",
+   "input_tokens": 2024,
+   "is_repair": false,
+   "model_reported": "claude-sonnet-4-6",
+   "n": 1,
+   "output_exhausted": false,
+   "output_tokens": 618,
+   "response_chars": 2243
+  },
+  {
+   "cost_usd": 0.006777,
+   "finish_reason": "stop",
+   "first_120_chars": "{\"diff\": \"--- a/src/cachetools/__init__.py\\n+++ b/src/cachetools/__init__.py\\n@@ -388,6 +388,10 @@ class TLRUCache(Cache",
+   "input_tokens": 894,
+   "is_repair": true,
+   "model_reported": "claude-sonnet-4-6",
+   "n": 2,
+   "output_exhausted": false,
+   "output_tokens": 273,
+   "response_chars": 901
+  }
+ ],
+ "provider_calls_made": 2,
+ "purpose": "live end-to-end _request_change including the DAR-020 repair path",
+ "repair_requested": true,
+ "result": "PASS",
+ "summary_not_evidence": "In TLRUCache.__setitem__, delete an expired key before reinserting so the parent Cache treats it as a new entry and properly handles size accounting.",
+ "timestamp_utc": "2026-08-19T13:38:16+00:00",
+ "total_cost_usd": 0.022119,
+ "touched_paths": [
+  "src/cachetools/__init__.py"
+ ]
+}

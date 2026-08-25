@@ -1,0 +1,12 @@
+--- a/freezegun/api.py
++++ b/freezegun/api.py
+@@ -632,6 +632,9 @@ class _freeze_time:
+                     if not callable(attr_value) or inspect.isclass(attr_value):
+                         continue
+ 
++                    if isinstance(attr_value, staticmethod):
++                        continue
++
+                     try:
+                         setattr(klass, attr, self(attr_value))
+                     except (AttributeError, TypeError):

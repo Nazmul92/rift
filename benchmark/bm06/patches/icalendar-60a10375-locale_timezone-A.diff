@@ -1,0 +1,7 @@
+--- a/src/icalendar/timezone/windows_to_olson.py
++++ b/src/icalendar/timezone/windows_to_olson.py
+@@ -76,7 +76,7 @@ WINDOWS_TO_OLSON = {
+     "Mountain Standard Time": "America/Denver",
+-    "Mountain Standard Time (Mexico)": "America/Chihuahua",
++    "Mountain Standard Time (Mexico)": "America/Mazatlan",
+     "Myanmar Standard Time": "Asia/Yangon",

@@ -21,11 +21,11 @@ import os
 import re
 import shlex
 import sys
-from collections.abc import Iterable, Iterator
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import asdict, dataclass, field, replace
 from datetime import UTC, datetime
 from enum import StrEnum
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 SCHEMA_VERSION = 1
@@ -685,13 +685,303 @@ def canonical_diff(text: str) -> str:
     itself newline-terminated. CRLF is normalised for the same reason: the bytes
     must mean the same thing to `git apply` on every platform.
 
-    It runs at ingestion, before the patch is hashed and stored, so the bytes
-    that are recorded are the bytes that are applied and reapplied.
+    It is the **normalisation** stage of the candidate pipeline, and it no longer
+    runs before the patch is stored. The exact model-authored diff is persisted
+    and hashed first; this transformation then produces the normalised stage,
+    which is persisted and hashed in its own right before hunk-count
+    canonicalisation sees it (DAR-032):
+
+        raw persisted + hashed -> canonical_diff() -> normalised persisted +
+        hashed -> hunk canonicaliser -> canonical persisted + hashed
+
+    Each stage of that chain lives under its own attempt-addressed directory and
+    is immutable once written (DAR-033).
     """
     if not text:
         return text
     normalised = text.replace("\r\n", "\n").replace("\r", "\n")
     return normalised if normalised.endswith("\n") else normalised + "\n"
+
+
+@dataclass(frozen=True)
+class Normalization:
+    """What transport normalisation did to one candidate.
+
+    Kept apart from `Canonicalization` deliberately. A receipt that reported a
+    single "changed" flag could not answer the only question a reviewer has
+    when raw and canonical bytes differ: was that line endings, or was that the
+    patch metadata?
+    """
+
+    diff: str
+    operations: tuple[str, ...] = ()
+    changed: bool = False
+
+    def to_dict(self) -> dict[str, Any]:
+        return {"changed": self.changed, "operations": list(self.operations)}
+
+
+def normalize_candidate(raw: str) -> Normalization:
+    r"""Stage one: `canonical_diff()`, with a record of what it did.
+
+    The transformation is `canonical_diff` itself — called, not reimplemented —
+    so this can never drift from the behaviour it claims to describe. The
+    operation names are derived from the input by the same tests `canonical_diff`
+    applies, and the invariant below fails closed if they ever disagree with the
+    outcome.
+    """
+    normalized = canonical_diff(raw)
+    operations: list[str] = []
+    if "\r\n" in raw:
+        operations.append("crlf_to_lf")
+    if "\r" in raw.replace("\r\n", ""):
+        operations.append("cr_to_lf")
+    if raw and not raw.replace("\r\n", "\n").replace("\r", "\n").endswith("\n"):
+        operations.append("ensure_final_newline")
+
+    changed = normalized != raw
+    # An unnamed change is an unexplained one. Either would make the receipt a
+    # worse record than no receipt, because it would look complete.
+    require(bool(operations) == changed, "normalisation changed bytes it could not name")
+    return Normalization(normalized, tuple(operations), changed)
+
+
+_HUNK_HEADER = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@(.*)$")
+
+CANON_UNCHANGED = "UNCHANGED"
+CANON_CANONICALIZED = "CANONICALIZED"
+CANON_UNSAFE = "UNSAFE"
+
+
+def authorized_change_only(raw: str, canonical: str) -> bool:
+    r"""Did *only* hunk-header count fields change? Byte-exact everywhere else.
+
+    The safety invariant, stated as the narrowest thing that is true: the
+    canonicaliser may rewrite the two count numbers inside a well-formed
+    `@@ -a,b +c,d @@` header and nothing else. Start lines, spacing, the
+    optional section text after the header, file headers, every context, added
+    and deleted line, and the `\ No newline at end of file` marker must all
+    survive byte-for-byte.
+
+    Proved structurally rather than by re-parsing content: line counts must
+    match, each line pair must be identical *or* both be valid hunk headers
+    whose only difference is the counts. Nothing about what a line "looks like"
+    enters into it, which is precisely how the previous invariant went wrong.
+    """
+    raw_lines = raw.splitlines(keepends=True)
+    canon_lines = canonical.splitlines(keepends=True)
+    if len(raw_lines) != len(canon_lines):
+        return False
+
+    for a, b in zip(raw_lines, canon_lines, strict=True):
+        if a == b:
+            continue
+        ma = _HUNK_HEADER.match(a.rstrip("\n"))
+        mb = _HUNK_HEADER.match(b.rstrip("\n"))
+        if not ma or not mb:
+            return False
+        # Same start lines, same trailing section text, same line terminator.
+        if ma.group(1) != mb.group(1) or ma.group(3) != mb.group(3):
+            return False
+        if ma.group(5) != mb.group(5):
+            return False
+        if a.endswith("\n") != b.endswith("\n"):
+            return False
+        # Rebuilding `a` with `b`'s counts must reproduce `b` exactly; any other
+        # byte difference — a changed space, a dropped comma — fails here.
+        rebuilt = f"@@ -{ma.group(1)},{mb.group(2) or 1} +{ma.group(3)},{mb.group(4) or 1} @@{ma.group(5)}"
+        if b.rstrip("\n") != rebuilt:
+            return False
+    return True
+
+
+@dataclass(frozen=True)
+class Canonicalization:
+    """What canonicalisation did to one candidate, and the proof it was safe."""
+
+    status: str
+    diff: str
+    operations: tuple[dict[str, Any], ...] = ()
+    authorized_byte_changes_only: bool = True
+    reason: str = ""
+    structural_raw: int | None = None
+    structural_recount: int | None = None
+
+    @property
+    def changed(self) -> bool:
+        return self.status == CANON_CANONICALIZED
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "attempted": True,
+            "changed": self.changed,
+            "status": self.status,
+            "operations": [dict(op) for op in self.operations],
+            "authorized_byte_changes_only": self.authorized_byte_changes_only,
+            "structural_parse_raw": self.structural_raw,
+            "structural_parse_recount": self.structural_recount,
+            "reason": self.reason,
+        }
+
+
+def canonicalize_patch(
+    diff: str, structural_raw: int | None = None, structural_recount: int | None = None
+) -> Canonicalization:
+    r"""Recompute unified-diff hunk counts. Nothing else, ever.
+
+    A model that chooses the right change and then miscounts the lines it wrote
+    produces a patch `git apply` calls *corrupt* — a representation failure
+    wearing the costume of a wrong answer. 13 of 15 candidate failures in the
+    preliminary benchmark were exactly this (DAR-029).
+
+    **Structural eligibility is git's decision, not ours.** Pass the exit codes
+    of `git apply --numstat` and `git apply --numstat --recount` — neither needs
+    a worktree, because this asks whether the diff *parses*, not whether it
+    applies to anything:
+
+        raw parses            -> UNCHANGED. Never touch a patch git accepts.
+        raw fails, recount ok -> eligible; recompute counts.
+        both fail             -> UNSAFE. Counts are not the whole problem.
+
+    DAR-030 approximated this by comparing body length to declared counts and
+    repairing only short bodies. That was conservative for a real reason — an
+    unconditional recount rewrote `cachetools` arm A, a patch that had applied
+    *and verified*, because git reads exactly the declared counts and ignores
+    trailing extras. Asking git directly removes the guesswork in both
+    directions: it protects that patch (which parses) and admits the three the
+    heuristic declined (which do not).
+
+    With no verdicts supplied the conservative DAR-030 rule still applies, so
+    callers without git behave safely rather than unpredictably.
+
+    Whatever the route in, `authorized_change_only()` gates the result: only
+    count fields may differ, byte-for-byte everywhere else, or UNSAFE.
+    """
+    lines = diff.splitlines(keepends=True)
+    out: list[str] = []
+    operations: list[dict[str, Any]] = []
+    i = 0
+
+    git_says_valid = structural_raw == 0
+    git_says_recountable = structural_recount == 0
+    have_verdict = structural_raw is not None
+
+    if git_says_valid:
+        return Canonicalization(
+            CANON_UNCHANGED,
+            diff,
+            structural_raw=structural_raw,
+            structural_recount=structural_recount,
+            reason="git parses the raw patch; a patch git accepts is never rewritten",
+        )
+    if have_verdict and not git_says_recountable:
+        return Canonicalization(
+            CANON_UNSAFE,
+            diff,
+            structural_raw=structural_raw,
+            structural_recount=structural_recount,
+            reason="git rejects the patch even with counts recomputed; the defect is not the counts",
+        )
+
+    while i < len(lines):
+        line = lines[i]
+        if not line.startswith("@@"):
+            out.append(line)
+            i += 1
+            continue
+
+        match = _HUNK_HEADER.match(line.rstrip("\n"))
+        if not match:
+            return Canonicalization(
+                CANON_UNSAFE,
+                diff,
+                structural_raw=structural_raw,
+                structural_recount=structural_recount,
+                reason=f"hunk header will not parse: {line.strip()[:60]!r}",
+            )
+
+        body: list[str] = []
+        j = i + 1
+        while j < len(lines):
+            nxt = lines[j]
+            if nxt.startswith(("@@", "diff --git", "index ")):
+                break
+            # A `---`/`+++` line inside a hunk body is content, not a header:
+            # source beginning `-- ` or `++ ` renders exactly that way. Only a
+            # header *outside* a body ends one, and a body ends at the next
+            # `@@`, `diff --git` or `index` line.
+            if nxt[:1] not in (" ", "+", "-", "\\"):
+                return Canonicalization(
+                    CANON_UNSAFE,
+                    diff,
+                    structural_raw=structural_raw,
+                    structural_recount=structural_recount,
+                    reason=f"body line {j + 1} has no diff prefix: {nxt[:40]!r}",
+                )
+            body.append(nxt)
+            j += 1
+
+        if not body:
+            return Canonicalization(
+                CANON_UNSAFE,
+                diff,
+                structural_raw=structural_raw,
+                structural_recount=structural_recount,
+                reason=f"hunk at line {i + 1} has no body",
+            )
+
+        # `\ No newline at end of file` annotates the line above and counts
+        # towards neither side.
+        old = sum(1 for b in body if b[:1] in (" ", "-"))
+        new = sum(1 for b in body if b[:1] in (" ", "+"))
+        stated_old = int(match.group(2)) if match.group(2) is not None else 1
+        stated_new = int(match.group(4)) if match.group(4) is not None else 1
+        old_start, new_start, tail = match.group(1), match.group(3), match.group(5)
+
+        # Without a git verdict, fall back to DAR-030: only a header claiming
+        # *more* than its body provides is safe to recompute.
+        eligible = git_says_recountable if have_verdict else (old < stated_old or new < stated_new)
+
+        if eligible and (stated_old, stated_new) != (old, new):
+            operations.append(
+                {
+                    "kind": "recompute_hunk_counts",
+                    "hunk_old_start": int(old_start),
+                    "from": [stated_old, stated_new],
+                    "to": [old, new],
+                }
+            )
+            out.append(f"@@ -{old_start},{old} +{new_start},{new} @@{tail}\n")
+        else:
+            out.append(line)
+        out.extend(body)
+        i = j
+
+    if not operations:
+        return Canonicalization(
+            CANON_UNCHANGED, diff, structural_raw=structural_raw, structural_recount=structural_recount
+        )
+
+    canonical = "".join(out)
+    if not authorized_change_only(diff, canonical):
+        # A runtime invariant, not a test. A canonicaliser that altered anything
+        # but a count would be indistinguishable from a model that proposed
+        # something else, and no later check could tell the difference.
+        return Canonicalization(
+            CANON_UNSAFE,
+            diff,
+            authorized_byte_changes_only=False,
+            structural_raw=structural_raw,
+            structural_recount=structural_recount,
+            reason="canonicalisation would have changed bytes outside hunk-count fields",
+        )
+    return Canonicalization(
+        CANON_CANONICALIZED,
+        canonical,
+        tuple(operations),
+        structural_raw=structural_raw,
+        structural_recount=structural_recount,
+    )
 
 
 # What a handoff archive may contain. Local state, caches, build output and
@@ -1409,6 +1699,11 @@ class EventKind(StrEnum):
     TASK_STARTED = "task_started"
     SANDBOX_PROBED = "sandbox_probed"
     SANDBOX_AUTHORIZED = "sandbox_authorized"
+    # The deterministic canonicalisation applied between a validated proposal
+    # and the ChangeSet built from it. Recorded even when nothing changed, so a
+    # later evaluation can measure how often models emit malformed metadata
+    # rather than inferring it from absence.
+    CANDIDATE_CANONICALIZED = "candidate_canonicalized"
     CHANGESET_REGISTERED = "changeset_registered"
     CHANGESET_REJECTED = "changeset_rejected"
     CHANGESET_RELOADED = "changeset_reloaded"
@@ -1448,6 +1743,8 @@ class EventKind(StrEnum):
     MODEL_REQUEST_STARTED = "model_request_started"
     MODEL_RESPONSE_RECEIVED = "model_response_received"
     MODEL_RESPONSE_INVALID = "model_response_invalid"
+    # The one schema-repair request the design allows, for a *completed* reply
+    # that failed extraction or validation. Never appended for a truncated one.
     MODEL_REPAIR_REQUESTED = "model_repair_requested"
     MODEL_UNAVAILABLE = "model_unavailable"
     SPEND_RESERVED = "spend_reserved"
@@ -1765,6 +2062,218 @@ def task_dir(repo_root: Path, task_id: str) -> Path:
     return Path(repo_root) / ".rift" / "tasks" / task_id
 
 
+def candidate_attempt_dir(td: Path, attempt: int) -> Path:
+    """One immutable directory per candidate attempt.
+
+    DAR-032 gave the three pipeline stages distinct names but one fixed path
+    each, so a second proposal overwrote the first. Attempt 1's ledger event
+    still named `raw-candidate.diff`; after attempt 2 that file held attempt 2's
+    bytes, and the recorded hash no longer matched the file it pointed at. Every
+    rejected proposal — each of which was requested, charged and refused on the
+    evidence — became unreconstructable the moment another was made (DAR-033).
+
+    Zero-padded to three digits so a directory listing sorts in attempt order,
+    which is a convenience for a reader and never an authority: the number comes
+    from the repair loop, not from the filesystem.
+    """
+    require(attempt >= 1, f"candidate attempt must be positive, got {attempt}")
+    return td / f"candidate-attempt-{attempt:03d}"
+
+
+def raw_candidate_record(td: Path, attempt: int) -> Path:
+    r"""The model's diff, byte-exact, before **any** transformation.
+
+    DAR-031 persisted a file under this name but filled it from the value
+    `llm.validate_change` returned — and that value had already been through
+    `canonical_diff()`, which rewrites CRLF and appends a missing final newline.
+    The artifact called raw was ingestion-normalised, not model-authored, so a
+    reviewer comparing it against the provider transcript would have found
+    differences the ledger could not explain (DAR-032).
+
+    The exact string is captured at the validation boundary and written here
+    first. It is never reconstructed from normalised bytes, and since DAR-033
+    never overwritten by a later attempt either.
+    """
+    return candidate_attempt_dir(td, attempt) / "raw.diff"
+
+
+def normalized_candidate_record(td: Path, attempt: int) -> Path:
+    r"""The raw candidate after transport normalisation, and nothing else.
+
+    `canonical_diff()` alone: CRLF → LF, bare CR → LF, and a final newline when
+    one is missing. These are properties of how text crossed the wire, not of
+    what the patch says, which is exactly why they are governed separately from
+    hunk-count canonicalisation — one rewrites line terminators everywhere, the
+    other may touch only digits inside `@@` headers. Collapsing them would mean
+    no single invariant could describe either.
+    """
+    return candidate_attempt_dir(td, attempt) / "normalized.diff"
+
+
+def canonical_candidate_record(td: Path, attempt: int) -> Path:
+    """The bytes the gate applies, withdraws and reapplies for this attempt."""
+    return candidate_attempt_dir(td, attempt) / "canonical.diff"
+
+
+def persist_candidate(path: Path, text: str) -> str:
+    """Write one pipeline stage immutably, and hash the bytes that reached disk.
+
+    Read back before hashing, so the recorded digest cannot describe anything
+    but the file a reviewer will open. `newline=""` disables Python's line-ending
+    translation — without it a raw candidate carrying CRLF would be silently
+    rewritten on the way to a file whose whole purpose is to prove it was not.
+
+    An existing path is never overwritten. Identical bytes are accepted so a
+    replayed write is idempotent; different bytes raise, because the durable
+    record is append-only evidence and a filesystem overwrite is not a
+    permission to revise it (DAR-033).
+    """
+    if path.exists():
+        existing = path.read_bytes()
+        require(
+            existing == text.encode("utf-8"),
+            f"{path.name}: candidate artifact already exists with different bytes; "
+            f"attempt-addressed records are immutable",
+        )
+        return content_hash(existing)
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8", newline="")
+    written = path.read_bytes()
+    require(written == text.encode("utf-8"), f"{path.name}: persisted bytes differ from the candidate")
+    return content_hash(written)
+
+
+CANDIDATE_STAGES = ("raw", "normalized", "canonical")
+
+# The auditor resolves expected paths through the same functions the product
+# writes with, so the two cannot drift into disagreeing about where a stage
+# lives. A stage added here without a record function fails loudly at import.
+STAGE_RECORDS: dict[str, Callable[[Path, int], Path]] = {
+    "raw": raw_candidate_record,
+    "normalized": normalized_candidate_record,
+    "canonical": canonical_candidate_record,
+}
+assert tuple(STAGE_RECORDS) == CANDIDATE_STAGES
+
+
+def _confined_candidate_path(td: Path, attempt: int, stage: str, recorded: str) -> tuple[Path | None, str | None]:
+    """Resolve one recorded artifact path, or say why it cannot be trusted.
+
+    The path must be **exactly** the durable location of this stage for this
+    attempt. Checking only that it lands somewhere inside the attempt directory
+    proved too weak: an event could name `normalized.diff` as its raw artifact,
+    supply that file's real hash, and pass — relabelling the normalised bytes as
+    the model's own output while every digest reconciled. DAR-032 and DAR-033
+    created three distinct stages precisely so raw could be told from normalised;
+    an auditor that accepts any of them for any stage gives that back (DAR-035).
+
+    Checked before the bytes are ever read, because a hash computed over the
+    wrong file is a passing check and a false statement:
+
+    * **relative** — an absolute path escapes the task directory by definition,
+      and on Windows a leading separator is drive-relative rather than absolute,
+      so both forms are refused explicitly;
+    * **stage-exact** — the recorded path must equal
+      `candidate-attempt-NNN/<stage>.diff`, attempt and filename both;
+    * **confined** — the resolved path must stay under the task directory, which
+      `..` segments defeat and which resolution is the only reliable way to test;
+    * **a regular file** — neither the artifact nor its attempt directory may be
+      a symlink. `Path.is_file()` follows links, so a symlink named `raw.diff`
+      pointing at other bytes would otherwise satisfy both the path check and the
+      hash. An immutable record that can be re-aimed after the fact is not
+      immutable.
+
+    The generation path has never produced anything but exact, safe, regular
+    paths. This is the independent auditor, and it must not be more permissive
+    than the invariant it exists to check.
+    """
+    if (
+        recorded.startswith(("/", "\\"))
+        or PurePosixPath(recorded).is_absolute()
+        or PureWindowsPath(recorded).is_absolute()
+    ):
+        return None, f"{recorded!r} is an absolute path; candidate records are relative to the task directory"
+    parts = PureWindowsPath(recorded).parts  # splits on both separators
+    if ".." in parts:
+        return None, f"{recorded!r} traverses outside its attempt directory"
+
+    base = Path(td).resolve()
+    expected = STAGE_RECORDS[stage](base, attempt)
+    candidate = base / Path(recorded)
+
+    if candidate.parent != expected.parent:
+        return None, f"{recorded!r} does not belong to attempt {attempt:03d}"
+    if candidate.name != expected.name:
+        return None, (
+            f"{recorded!r} is not the {stage} artifact; attempt {attempt:03d}'s {stage} stage is {expected.name}"
+        )
+
+    # Symlinks are refused before resolution, so the reason reported is the
+    # link itself rather than wherever it happened to point.
+    if candidate.is_symlink():
+        return None, f"{recorded!r} is a symlink; candidate artifacts must be regular files"
+    if expected.parent.is_symlink():
+        return None, f"{recorded!r} sits under a symlinked attempt directory"
+    if candidate.exists() and not candidate.resolve().is_relative_to(base):
+        return None, f"{recorded!r} resolves outside the task directory"
+    return candidate, None
+
+
+def candidate_record_mismatches(td: Path, payload: dict[str, Any]) -> tuple[str, ...]:
+    """Re-check one attempt's artifacts from disk and name every disagreement.
+
+    Fails closed on an incomplete record. A `CANDIDATE_CANONICALIZED` event
+    describes three mandatory stages, so a stage that names neither a path nor a
+    hash is a **missing** stage, not an absent question — returning "no
+    mismatch" for an empty payload would be the auditor agreeing with a record
+    that says nothing.
+
+    The complete invariant:
+
+        event says attempt N
+          -> all three stages present, each with a path and a hash
+          -> raw        is exactly candidate-attempt-NNN/raw.diff
+             normalized is exactly candidate-attempt-NNN/normalized.diff
+             canonical  is exactly candidate-attempt-NNN/canonical.diff
+          -> every path confined to the task directory
+          -> every artifact a regular file, not a symlink
+          -> every hash reconstructs from the bytes on disk
+
+    Paths are judged against the path the event **recorded**, never one silently
+    substituted from the naming rule: recomputing the location would hide an
+    event pointing somewhere else, which is the whole class of defect this
+    function exists to catch.
+    """
+    attempt = payload.get("attempt")
+    if isinstance(attempt, bool) or not isinstance(attempt, int) or attempt < 1:
+        return (f"attempt: {attempt!r} is not a candidate attempt number; the record cannot be checked",)
+
+    out: list[str] = []
+    for stage in CANDIDATE_STAGES:
+        recorded_hash = payload.get(f"{stage}_candidate_hash")
+        recorded_path = payload.get(f"{stage}_candidate_record")
+
+        if recorded_hash is None and recorded_path is None:
+            out.append(f"{stage}: the stage is absent from the record; all three stages are mandatory")
+            continue
+        if recorded_hash is None:
+            out.append(f"{stage}: an artifact path was recorded with no hash")
+            continue
+        if not isinstance(recorded_path, str) or not recorded_path:
+            out.append(f"{stage}: a hash was recorded with no artifact path")
+            continue
+
+        path, refusal = _confined_candidate_path(td, attempt, stage, recorded_path)
+        if refusal is not None:
+            out.append(f"{stage}: {refusal}")
+        elif path is None or not path.is_file():
+            out.append(f"{stage}: {recorded_path} is recorded but absent")
+        elif content_hash(path.read_bytes()) != recorded_hash:
+            out.append(f"{stage}: {recorded_path} does not hash to the recorded {stage}_candidate_hash")
+    return tuple(out)
+
+
 def changeset_record(td: Path) -> Path:
     """The durable content-addressed ChangeSet.
 
@@ -1865,6 +2374,7 @@ __all__ = [
     "Ledger",
     "LedgerCorrupt",
     "ModelUsage",
+    "Normalization",
     "Outcome",
     "Phase",
     "Pricing",
@@ -1884,11 +2394,17 @@ __all__ = [
     "VerificationReceipt",
     "archive_manifest",
     "canonical",
+    "CANDIDATE_STAGES",
+    "STAGE_RECORDS",
+    "candidate_attempt_dir",
+    "candidate_record_mismatches",
     "canonical_diff",
     "changeset_record",
     "content_hash",
     "iter_task_dirs",
     "load_projection",
+    "normalize_candidate",
+    "persist_candidate",
     "read_events",
     "reduce",
     "replace",

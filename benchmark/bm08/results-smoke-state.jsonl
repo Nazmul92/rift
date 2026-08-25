@@ -1,0 +1,4 @@
+{"case_id": "click-a17b5447", "arm": "A", "state": "request_started", "detail": "", "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17"}
+{"case_id": "click-a17b5447", "arm": "A", "state": "completed", "detail": "", "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17"}
+{"case_id": "click-a17b5447", "arm": "C", "state": "request_started", "detail": "", "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17"}
+{"case_id": "click-a17b5447", "arm": "C", "state": "completed", "detail": "", "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17"}

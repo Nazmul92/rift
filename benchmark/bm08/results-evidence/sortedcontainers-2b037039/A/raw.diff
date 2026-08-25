@@ -1,0 +1,21 @@
+--- a/sortedcontainers/sorteddict.py
++++ b/sortedcontainers/sorteddict.py
+@@ -174,6 +174,16 @@ class SortedDict(dict):
+         self._update(*args, **kwargs)
+ 
+ 
++    def __del__(self):
++        """Break reference cycles to allow garbage collection."""
++        try:
++            self._dict_clear = None
++            self._dict_delitem = None
++            self._dict_iter = None
++            self._dict_pop = None
++            self._dict_setitem = None
++            self._dict_update = None
++        except AttributeError:
++            pass
++
+     @property
+     def key(self):
+         """Function used to extract comparison key from keys.

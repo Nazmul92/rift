@@ -1,0 +1,11 @@
+--- a/sortedcontainers/sortedlist.py
++++ b/sortedcontainers/sortedlist.py
+@@ -1572,7 +1572,7 @@ class SortedKeyList(SortedList):
+ 
+         values = list(iterable)
+         if len(values) * 3 > _len * 2:
+-            values.sort(key=_key)
++            values.sort(key=lambda v, _k=_key: (_k(v),))
+             self._keys = list(map(_key, values))
+             lists = self._lists
+             keys = self._keys

@@ -1,0 +1,15 @@
+--- a/click/decorators.py
++++ b/click/decorators.py
+@@ -148,9 +148,10 @@ def option(*param_decls, **attrs):
+     This is equivalent to creating an :class:`Option` instance manually
+     and attaching it to the :class:`Command`.
+     """
++    from .core import Option as _Option
+     def decorator(f):
+         # Issue 926, copy attrs, so reusing the decorator won't fail
+         option_attrs = attrs.copy()
+-        Option = option_attrs.pop('cls', Option)
++        Option = option_attrs.pop('cls', _Option)
+         _param_memo(f, Option(param_decls, **option_attrs))
+         return f
+     return decorator

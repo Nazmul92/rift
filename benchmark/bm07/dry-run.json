@@ -1,0 +1,217 @@
+{
+ "cases": [
+  {
+   "applied": true,
+   "candidate_hash": "2c20d5fa0035f108eeff293d9ce097eff31f6bbed89d20f6a092bf2a291d58f4",
+   "canonical_candidate_hash": "2c20d5fa0035f108eeff293d9ce097eff31f6bbed89d20f6a092bf2a291d58f4",
+   "case_id": "cachetools-462e8679",
+   "classification": "both_correct_accept",
+   "ground_truth_preservation_results": {
+    "all_passed": true,
+    "executed": 3,
+    "failures": [],
+    "requested": 3
+   },
+   "ground_truth_protected_path_result": "ok",
+   "ground_truth_target_result": "pass",
+   "ground_truth_verdict": "correct",
+   "modified_paths": [
+    "cachetools/keys.py"
+   ],
+   "normalized_candidate_hash": "2c20d5fa0035f108eeff293d9ce097eff31f6bbed89d20f6a092bf2a291d58f4",
+   "raw_candidate_hash": "2c20d5fa0035f108eeff293d9ce097eff31f6bbed89d20f6a092bf2a291d58f4",
+   "reason": "",
+   "same_bytes_everywhere": true,
+   "strong_candidate_hash": "2c20d5fa0035f108eeff293d9ce097eff31f6bbed89d20f6a092bf2a291d58f4",
+   "strong_gate_receipt": {
+    "exit_code": 0,
+    "seconds": 3.87,
+    "stderr_tail": "",
+    "verdict": "verified_against_approved_checks"
+   },
+   "strong_verdict": "accept",
+   "truth_candidate_hash": "2c20d5fa0035f108eeff293d9ce097eff31f6bbed89d20f6a092bf2a291d58f4",
+   "weak_candidate_hash": "2c20d5fa0035f108eeff293d9ce097eff31f6bbed89d20f6a092bf2a291d58f4",
+   "weak_target_result": "pass",
+   "weak_verdict": "accept"
+  },
+  {
+   "applied": true,
+   "candidate_hash": "06ad6ccac4724f4df3f86ddc27e9502dd126e0f1b97f52d057f5b9cc972b31c1",
+   "canonical_candidate_hash": "06ad6ccac4724f4df3f86ddc27e9502dd126e0f1b97f52d057f5b9cc972b31c1",
+   "case_id": "click-2bc3b2c1",
+   "classification": "both_correct_accept",
+   "ground_truth_preservation_results": {
+    "all_passed": true,
+    "executed": 11,
+    "failures": [],
+    "requested": 11
+   },
+   "ground_truth_protected_path_result": "ok",
+   "ground_truth_target_result": "pass",
+   "ground_truth_verdict": "correct",
+   "modified_paths": [
+    "click/testing.py"
+   ],
+   "normalized_candidate_hash": "06ad6ccac4724f4df3f86ddc27e9502dd126e0f1b97f52d057f5b9cc972b31c1",
+   "raw_candidate_hash": "06ad6ccac4724f4df3f86ddc27e9502dd126e0f1b97f52d057f5b9cc972b31c1",
+   "reason": "",
+   "same_bytes_everywhere": true,
+   "strong_candidate_hash": "06ad6ccac4724f4df3f86ddc27e9502dd126e0f1b97f52d057f5b9cc972b31c1",
+   "strong_gate_receipt": {
+    "exit_code": 0,
+    "seconds": 10.841,
+    "stderr_tail": "",
+    "verdict": "verified_against_approved_checks"
+   },
+   "strong_verdict": "accept",
+   "truth_candidate_hash": "06ad6ccac4724f4df3f86ddc27e9502dd126e0f1b97f52d057f5b9cc972b31c1",
+   "weak_candidate_hash": "06ad6ccac4724f4df3f86ddc27e9502dd126e0f1b97f52d057f5b9cc972b31c1",
+   "weak_target_result": "pass",
+   "weak_verdict": "accept"
+  },
+  {
+   "applied": true,
+   "candidate_hash": "df43d8971841e064c3096a833c04e6df14f816aab47d7ecd12d028588c7fa18b",
+   "canonical_candidate_hash": "df43d8971841e064c3096a833c04e6df14f816aab47d7ecd12d028588c7fa18b",
+   "case_id": "croniter-7d319c51",
+   "classification": "both_correct_accept",
+   "ground_truth_preservation_results": {
+    "all_passed": true,
+    "executed": 22,
+    "failures": [],
+    "requested": 22
+   },
+   "ground_truth_protected_path_result": "ok",
+   "ground_truth_target_result": "pass",
+   "ground_truth_verdict": "correct",
+   "modified_paths": [
+    "src/croniter/croniter.py"
+   ],
+   "normalized_candidate_hash": "df43d8971841e064c3096a833c04e6df14f816aab47d7ecd12d028588c7fa18b",
+   "raw_candidate_hash": "df43d8971841e064c3096a833c04e6df14f816aab47d7ecd12d028588c7fa18b",
+   "reason": "",
+   "same_bytes_everywhere": true,
+   "strong_candidate_hash": "df43d8971841e064c3096a833c04e6df14f816aab47d7ecd12d028588c7fa18b",
+   "strong_gate_receipt": {
+    "exit_code": 0,
+    "seconds": 16.942,
+    "stderr_tail": "",
+    "verdict": "verified_against_approved_checks"
+   },
+   "strong_verdict": "accept",
+   "truth_candidate_hash": "df43d8971841e064c3096a833c04e6df14f816aab47d7ecd12d028588c7fa18b",
+   "weak_candidate_hash": "df43d8971841e064c3096a833c04e6df14f816aab47d7ecd12d028588c7fa18b",
+   "weak_target_result": "pass",
+   "weak_verdict": "accept"
+  },
+  {
+   "applied": true,
+   "candidate_hash": "cb3f843754667d9d14188d574038fb00d3cf172ed5302b44c9a54a0fa747b7a1",
+   "canonical_candidate_hash": "cb3f843754667d9d14188d574038fb00d3cf172ed5302b44c9a54a0fa747b7a1",
+   "case_id": "icalendar-63fcf743",
+   "classification": "both_correct_accept",
+   "ground_truth_preservation_results": {
+    "all_passed": true,
+    "executed": 16,
+    "failures": [],
+    "requested": 16
+   },
+   "ground_truth_protected_path_result": "ok",
+   "ground_truth_target_result": "pass",
+   "ground_truth_verdict": "correct",
+   "modified_paths": [
+    "src/icalendar/cal.py"
+   ],
+   "normalized_candidate_hash": "cb3f843754667d9d14188d574038fb00d3cf172ed5302b44c9a54a0fa747b7a1",
+   "raw_candidate_hash": "cb3f843754667d9d14188d574038fb00d3cf172ed5302b44c9a54a0fa747b7a1",
+   "reason": "",
+   "same_bytes_everywhere": true,
+   "strong_candidate_hash": "cb3f843754667d9d14188d574038fb00d3cf172ed5302b44c9a54a0fa747b7a1",
+   "strong_gate_receipt": {
+    "exit_code": 0,
+    "seconds": 15.113,
+    "stderr_tail": "",
+    "verdict": "verified_against_approved_checks"
+   },
+   "strong_verdict": "accept",
+   "truth_candidate_hash": "cb3f843754667d9d14188d574038fb00d3cf172ed5302b44c9a54a0fa747b7a1",
+   "weak_candidate_hash": "cb3f843754667d9d14188d574038fb00d3cf172ed5302b44c9a54a0fa747b7a1",
+   "weak_target_result": "pass",
+   "weak_verdict": "accept"
+  },
+  {
+   "applied": true,
+   "candidate_hash": "d02077ec8b80096fb31a80138d4d00190dc12c93321cbc91d7bc431bb34f1b84",
+   "canonical_candidate_hash": "d02077ec8b80096fb31a80138d4d00190dc12c93321cbc91d7bc431bb34f1b84",
+   "case_id": "structlog-bf80fa60",
+   "classification": "both_correct_accept",
+   "ground_truth_preservation_results": {
+    "all_passed": true,
+    "executed": 9,
+    "failures": [],
+    "requested": 9
+   },
+   "ground_truth_protected_path_result": "ok",
+   "ground_truth_target_result": "pass",
+   "ground_truth_verdict": "correct",
+   "modified_paths": [
+    "structlog/threadlocal.py"
+   ],
+   "normalized_candidate_hash": "d02077ec8b80096fb31a80138d4d00190dc12c93321cbc91d7bc431bb34f1b84",
+   "raw_candidate_hash": "d02077ec8b80096fb31a80138d4d00190dc12c93321cbc91d7bc431bb34f1b84",
+   "reason": "",
+   "same_bytes_everywhere": true,
+   "strong_candidate_hash": "d02077ec8b80096fb31a80138d4d00190dc12c93321cbc91d7bc431bb34f1b84",
+   "strong_gate_receipt": {
+    "exit_code": 0,
+    "seconds": 8.415,
+    "stderr_tail": "",
+    "verdict": "verified_against_approved_checks"
+   },
+   "strong_verdict": "accept",
+   "truth_candidate_hash": "d02077ec8b80096fb31a80138d4d00190dc12c93321cbc91d7bc431bb34f1b84",
+   "weak_candidate_hash": "d02077ec8b80096fb31a80138d4d00190dc12c93321cbc91d7bc431bb34f1b84",
+   "weak_target_result": "pass",
+   "weak_verdict": "accept"
+  },
+  {
+   "applied": true,
+   "candidate_hash": "ded60ae1a88c693fb83845a4e4b0f95d720e42fc933619d1ca737d62402de7ac",
+   "canonical_candidate_hash": "ded60ae1a88c693fb83845a4e4b0f95d720e42fc933619d1ca737d62402de7ac",
+   "case_id": "tenacity-0b1cef0b",
+   "classification": "both_correct_accept",
+   "ground_truth_preservation_results": {
+    "all_passed": true,
+    "executed": 10,
+    "failures": [],
+    "requested": 10
+   },
+   "ground_truth_protected_path_result": "ok",
+   "ground_truth_target_result": "pass",
+   "ground_truth_verdict": "correct",
+   "modified_paths": [
+    "tenacity/_asyncio.py"
+   ],
+   "normalized_candidate_hash": "ded60ae1a88c693fb83845a4e4b0f95d720e42fc933619d1ca737d62402de7ac",
+   "raw_candidate_hash": "ded60ae1a88c693fb83845a4e4b0f95d720e42fc933619d1ca737d62402de7ac",
+   "reason": "",
+   "same_bytes_everywhere": true,
+   "strong_candidate_hash": "ded60ae1a88c693fb83845a4e4b0f95d720e42fc933619d1ca737d62402de7ac",
+   "strong_gate_receipt": {
+    "exit_code": 0,
+    "seconds": 9.483,
+    "stderr_tail": "",
+    "verdict": "verified_against_approved_checks"
+   },
+   "strong_verdict": "accept",
+   "truth_candidate_hash": "ded60ae1a88c693fb83845a4e4b0f95d720e42fc933619d1ca737d62402de7ac",
+   "weak_candidate_hash": "ded60ae1a88c693fb83845a4e4b0f95d720e42fc933619d1ca737d62402de7ac",
+   "weak_target_result": "pass",
+   "weak_verdict": "accept"
+  }
+ ],
+ "manifest_hash": "6359d0d0971ae24bb70b2c4e9324a39c740863c50cd870169cff1ebafab6d988",
+ "provider_calls": 0,
+ "spend_usd": 0.0
+}

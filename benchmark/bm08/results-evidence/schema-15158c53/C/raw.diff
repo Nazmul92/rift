@@ -1,0 +1,30 @@
+--- a/schema/__init__.py
++++ b/schema/__init__.py
+@@ -519,7 +519,22 @@ class Schema:
+                 wrong_keys = set(data.keys()) - set(new.keys())
+                 s_wrong_keys = ", ".join(repr(k) for k in sorted(wrong_keys, key=repr))
+                 message = "Wrong key%s %s in %r" % (
+                     _plural_s(wrong_keys),
+                     s_wrong_keys,
+                     data,
+                 )
+                 message = self._prepend_schema_name(message)
+-                raise SchemaWrongKeyError(message, e.format(data) if e else None)
++                # Check if any schema key's validation of wrong keys gives a custom error
++                custom_error = None
++                for wkey in wrong_keys:
++                    for skey in sorted_skeys:
++                        try:
++                            Schema(skey).validate(wkey, **kwargs)
++                        except SchemaError as x:
++                            # If the schema key has a custom error, use it
++                            err_msg = x.errors[0] if x.errors else None
++                            if err_msg is not None:
++                                custom_error = err_msg
++                                break
++                    if custom_error:
++                        break
++                raise SchemaWrongKeyError(
++                    message,
++                    custom_error if custom_error else (e.format(data) if e else None),
++                )

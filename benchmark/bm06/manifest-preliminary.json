@@ -12,16 +12,77 @@
    "description": "the full kernel: disagreement-per-cost selection and the counterfactual gate"
   }
  },
+ "baseline_identity": {
+  "excluded_dirs": [
+   ".eggs",
+   ".git",
+   ".mypy_cache",
+   ".nox",
+   ".pytest_cache",
+   ".rift",
+   ".ruff_cache",
+   ".tox",
+   ".venv",
+   "__pycache__",
+   "htmlcov",
+   "venv"
+  ],
+  "excluded_suffixes": [
+   ".pyc",
+   ".pyo"
+  ],
+  "exclusion_rationale": "Version-control internals, this run's own ledger, and regenerable caches only. Nothing is excluded for being inconvenient: src/, tests/, conftest.py and every configuration file are inside the identity.",
+  "frozen_on": "2026-08-19",
+  "method": "sha256 over every file in the constructed worktree, sorted by normalised relative path, each contributing path || 0x00 || bytes || 0x00. Untracked files are included: a stray module on the import path changes what runs.",
+  "why_not_the_commit": "Several cases lay the fix commit's test half over the parent's source, so `git rev-parse HEAD` identifies a commit rather than the tree that executes. Both are checked."
+ },
  "budget": {
-  "max_usd": 3.43,
-  "scope": "one frozen authorization scope for all 90 tasks (DAR-005)",
-  "worst_case_note": "per-task worst case $0.1269 at the frozen caps, three arms per case. NOT AUTHORIZED."
+  "max_usd": 6.77,
+  "reservation_model": {
+   "arm_a_usd": 0.20259,
+   "arm_bc_usd": 0.321819,
+   "arm_runs": 24,
+   "computed_total_usd": 6.769824,
+   "method": "riftagent.records.reserve_cost at the frozen caps; token_ceiling = chars/3 + 1500",
+   "per_operation": {
+    "propose_change": {
+     "input_ceiling": 23666,
+     "max_output": 4000
+    },
+    "propose_change_repair": {
+     "input_ceiling": 3864,
+     "max_output": 4000
+    },
+    "propose_handles": {
+     "input_ceiling": 3633,
+     "max_output": 800
+    },
+    "propose_handles_repair": {
+     "input_ceiling": 3865,
+     "max_output": 800
+    },
+    "propose_hypotheses": {
+     "input_ceiling": 4166,
+     "max_output": 1600
+    },
+    "propose_hypotheses_repair": {
+     "input_ceiling": 4079,
+     "max_output": 1600
+    }
+   },
+   "repair_note": "Every model operation carries the one schema-repair entitlement CLAUDE.md grants it, not propose_change alone (DAR-021). Each repair is reserved and settled under its own <operation>_repair key. A repair is made only for a completed reply that failed extraction or validation; a reply with finish_reason 'length' or no visible text is recorded as a failure and not repaired, because there is no completed response to re-serialise. Each repair reuses its operation's output cap. This ceiling assumes every arm-run needs every repair; none may.",
+   "supersedes": "The $7.62 ceiling covered 27 arm-runs over 9 cases. One case was quarantined as invalid, so the corpus is 8 cases and 24 arm-runs."
+  },
+  "scope": "one frozen authorization scope for all 24 arm-runs, 8 cases x 3 arms (DAR-005)",
+  "scope_note": "The denominator is 8 valid cases: icalendar-30ec6eef was quarantined for a fix-parent mismatch (DAR-023) and its record is preserved under manifest.quarantined. 8 cases x 3 arms = 24 arm-runs. Case membership, labels, signatures, preservation checks, pinned commits and the claim limit are otherwise unchanged.",
+  "worst_case_note": "per-arm-run worst case $0.3218 for arms B and C and $0.2026 for arm A at the frozen caps, each assuming every model operation needs its one schema repair. NOT AUTHORIZED."
  },
  "cases": [
   {
    "adversarial_review": {
     "required": false
    },
+   "baseline_tree_hash": "b032739e397b7651884accd788efcd3f44cc94941a9bd9f1fa5f9729bf4aa135",
    "case_id": "cachetools-c0fdf6ab-genuine_source_bug",
    "cause_class": "genuine_source_bug",
    "commit": "c0fdf6abab38040947d6fe2e38c507401d5e2350",
@@ -90,6 +151,7 @@
    "adversarial_review": {
     "required": false
    },
+   "baseline_tree_hash": "5606e3783033073a127aa5ba5f62f74aee8e1db2f3c63663e76ab8931fa9f6b0",
    "case_id": "pygments-2f0d713b-genuine_source_bug",
    "cause_class": "genuine_source_bug",
    "commit": "2f0d713b396de53e8780c114b00a7adad99cbffc",
@@ -148,6 +210,7 @@
    "adversarial_review": {
     "required": false
    },
+   "baseline_tree_hash": "b67872120801b6f2e8c70ac096e0e5cf637771b4fb9682aa7b882aa6734ff0c0",
    "case_id": "pyparsing-13065174-genuine_source_bug",
    "cause_class": "genuine_source_bug",
    "commit": "13065174b69ff9b412795b1bc043d0acedfdf6d6",
@@ -203,7 +266,7 @@
     "tests/test_util.py::test_flatten[Nested list-input_list2-expected_output2]"
    ],
    "repo": "pyparsing",
-   "signature": "assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]",
+   "signature": "Failure: assert [ParseResults...s([3, 4], {})] == [1, 2, 3, 4]",
    "src_layout": "flat",
    "status": "OK",
    "target": "tests/test_util.py::test_flatten[ParseResults instead of lists-input_list9-expected_output9]",
@@ -214,99 +277,7 @@
    "adversarial_review": {
     "required": false
    },
-   "case_id": "icalendar-30ec6eef-locale_timezone",
-   "cause_class": "locale_timezone",
-   "commit": "30ec6eef144e730e4cb688e30a0e986f62c0ab17",
-   "confirmation": {
-    "commands": [
-     "git checkout 0675760687d6",
-     "git checkout b0860ac7375b + apply test half"
-    ],
-    "container_image": "bm06-confirm:1",
-    "fixed_outcome": "PASSED",
-    "isolated_at_parent": null,
-    "parent_outcome": "FAILED",
-    "target_origin": "test file in the fix commit"
-   },
-   "curation": {
-    "commands": [
-     "git worktree add --detach icalendar-30ec6eef-locale_timezone-parent b0860ac7375b (parent)",
-     "git worktree add --detach icalendar-30ec6eef-locale_timezone-fix 30ec6eef144e (fix)",
-     "layout detected: src",
-     "applied the commit's test half to the parent (19 file(s)) -> rc=0",
-     "pytest src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent at the parent -> FAILED",
-     "pytest src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent at the fix -> PASSED",
-     "preservation candidates from src/icalendar/tests/attr/test_alarm.py -> 3 kept"
-    ],
-    "rejected": "",
-    "validated": true
-   },
-   "expected_diagnostic_scope": "source",
-   "fix_worktree": "/repos/.cases/icalendar-30ec6eef-locale_timezone-fix",
-   "ground_truth": {
-    "fixable": true,
-    "rationale": "A PERIOD written with dates read as midnight date-times; date and time semantics.",
-    "source_files": [
-     "generate_windows_to_olson_mapping.py",
-     "src/icalendar/__init__.py",
-     "src/icalendar/alarms.py",
-     "src/icalendar/attr.py",
-     "src/icalendar/cal/alarm.py",
-     "src/icalendar/cal/component.py",
-     "src/icalendar/cal/component_factory.py",
-     "src/icalendar/cal/event.py",
-     "src/icalendar/cal/free_busy.py",
-     "src/icalendar/cal/journal.py",
-     "src/icalendar/cal/lazy.py",
-     "src/icalendar/cal/todo.py",
-     "src/icalendar/enums.py",
-     "src/icalendar/error.py",
-     "src/icalendar/parser/ical/component.py",
-     "src/icalendar/parser/ical/lazy.py",
-     "src/icalendar/parser/parameter.py",
-     "src/icalendar/prop/adr.py",
-     "src/icalendar/prop/boolean.py",
-     "src/icalendar/prop/categories.py",
-     "src/icalendar/prop/dt/date.py",
-     "src/icalendar/prop/dt/datetime.py",
-     "src/icalendar/prop/dt/duration.py",
-     "src/icalendar/prop/dt/list.py",
-     "src/icalendar/prop/dt/period.py",
-     "src/icalendar/prop/dt/time.py",
-     "src/icalendar/prop/dt/types.py",
-     "src/icalendar/prop/dt/utc_offset.py",
-     "src/icalendar/prop/factory.py",
-     "src/icalendar/prop/geo.py",
-     "src/icalendar/prop/image.py",
-     "src/icalendar/prop/n.py",
-     "src/icalendar/prop/org.py",
-     "src/icalendar/prop/recur/recur.py",
-     "src/icalendar/prop/recur/weekday.py",
-     "src/icalendar/timezone/tzp.py",
-     "src/icalendar/timezone/windows_to_olson.py"
-    ]
-   },
-   "invalidation": null,
-   "label": "gateable",
-   "ordering_precondition": null,
-   "parent": "b0860ac7375bc7cf0057ad396217fb6b54435924",
-   "preserve": [
-    "src/icalendar/tests/attr/test_alarm.py::test_repeat_absent",
-    "src/icalendar/tests/attr/test_alarm.py::test_repeat_number",
-    "src/icalendar/tests/attr/test_alarm.py::test_set_REPEAT"
-   ],
-   "repo": "icalendar",
-   "signature": "AttributeError: 'Alarm' object has no attribute 'ACTION'",
-   "src_layout": "src",
-   "status": "OK",
-   "target": "src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent",
-   "url": "https://github.com/collective/icalendar",
-   "worktree": "/repos/.cases/icalendar-30ec6eef-locale_timezone-parent"
-  },
-  {
-   "adversarial_review": {
-    "required": false
-   },
+   "baseline_tree_hash": "16d57207a211a56fca8effdac563c8003dc299ae0404b60d7b26b88500912fc9",
    "case_id": "icalendar-60a10375-locale_timezone",
    "cause_class": "locale_timezone",
    "commit": "60a1037502a5025ac5b505313a46c1cde7cf187e",
@@ -365,6 +336,7 @@
    "adversarial_review": {
     "required": false
    },
+   "baseline_tree_hash": "5c13eac54adab00222386d55eab13f6866c18f9ee51135ee5fb87bca3166e055",
    "case_id": "icalendar-781eeda8-locale_timezone",
    "cause_class": "locale_timezone",
    "commit": "781eeda80bbea6ad57b2b4bac2f0db9e860da7aa",
@@ -410,7 +382,7 @@
     "src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_unknown_global_tzid_returns_none[zoneinfo]"
    ],
    "repo": "icalendar",
-   "signature": "assert None is not None",
+   "signature": "Failure: assert None is not None",
    "src_layout": "src",
    "status": "OK",
    "target": "src/icalendar/tests/test_issue_313_globally_unique_tzid.py::test_global_tzid_is_parsed_with_timezone[pytz]",
@@ -421,6 +393,7 @@
    "adversarial_review": {
     "required": false
    },
+   "baseline_tree_hash": "5350407907d77a0d8529e1edc1de001b253ce47aa57c3744bd40017e71f41d59",
    "case_id": "dateutil-f2293200-version_mismatch",
    "cause_class": "version_mismatch",
    "commit": "f2293200747fb03d56c6c5997bfebeabe703576f",
@@ -477,6 +450,7 @@
    "adversarial_review": {
     "required": false
    },
+   "baseline_tree_hash": "70b3e14cfe32c02d285a9f2a19e89f808649603de3abdc08a383a464b2007bf9",
    "case_id": "freezegun-3d5d60b4-version_mismatch",
    "cause_class": "version_mismatch",
    "commit": "3d5d60b461381271d0cffcd343b6459174f65141",
@@ -533,6 +507,7 @@
    "adversarial_review": {
     "required": false
    },
+   "baseline_tree_hash": "8c956bcaafb14dd49355137a2e0215696ac6f6d92dfeb9be7c95bd78603ebd62",
    "case_id": "icalendar-62cbf833-version_mismatch",
    "cause_class": "version_mismatch",
    "commit": "62cbf8338777a8097d4350675a770dc48f42c65b",
@@ -593,7 +568,7 @@
     "src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.__init__]"
    ],
    "repo": "icalendar",
-   "signature": "AssertionError: 2 errors in icalendar.cal.alarm",
+   "signature": "Failure: assert 2 == 0",
    "src_layout": "src",
    "status": "OK",
    "target": "src/icalendar/tests/test_with_doctest.py::test_docstring_of_python_file[icalendar.cal.alarm]",
@@ -602,19 +577,137 @@
   }
  ],
  "claim_limit": "A preliminary benchmark. It does NOT satisfy the frozen BM-06 denominator of 30 cases across eight cause classes and must not be reported as BM-06 or as evidence for the eight-class thesis.",
+ "corpus_status": {
+  "denominator_note": "The valid denominator is 8. Any figure reported over this corpus is out of 8, not 9, and not out of the frozen BM-06 denominator of 30.",
+  "quarantined_cases": 1,
+  "valid_cases": 8
+ },
  "model": {
-  "id": "claude-sonnet-5",
+  "id": "claude-sonnet-4-6",
   "max_attempts": 1,
   "max_commands": 400,
   "max_output_tokens": 4000,
   "max_probes": 16,
-  "price_input_per_mtok": 2.0,
-  "price_note": "introductory rates verified 2026-08-17 by documentation lookup; they expire 2026-08-31 and must be reconfirmed before execution",
-  "price_output_per_mtok": 10.0,
+  "model_change_note": "Changed from claude-sonnet-5 on 2026-08-19. Under the OpenAI-compatible endpoint, extended thinking is on by default for Claude 5 models and its tokens are charged, counted against max_tokens and not returned; four of five propose_change requests in the aborted run consumed the entire output allowance and emitted zero visible characters, at 4,000 and again at 8,000. reasoning_effort and response_format are both ignored by that layer, so no OpenAI-shaped lever reaches the behaviour, and the only lever that does is an Anthropic-specific request field that adapter neutrality (M1-S03) forbids. Nothing else about the benchmark changed: cases, labels, signatures, preservation checks, commits, arms, seeds and the claim limit are as frozen.",
+  "price_input_per_mtok": 3.0,
+  "price_note": "claude-sonnet-4-6 at $3.00/MTok input and $15.00/MTok output, the published list rate. No introductory or promotional rate applies to this model. See pricing_provenance.",
+  "price_output_per_mtok": 15.0,
   "timeout_s": 600.0
  },
  "name": "preliminary",
+ "pricing_provenance": {
+  "introductory_pricing": "None applies to claude-sonnet-4-6. The introductory note on that page concerns claude-sonnet-5 only.",
+  "observed_rates": "claude-sonnet-4-6: $3.00/MTok input, $15.00/MTok output",
+  "observed_row_verbatim": "| Claude Sonnet 4.6 | $3 / MTok | $3.75 / MTok | $6 / MTok | $0.30 / MTok | $15 / MTok |",
+  "operational_rule": "Reconfirm the published rate immediately before execution; stop without spending if it cannot be confirmed.",
+  "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+  "superseded_note": "This manifest previously priced claude-sonnet-5 at $2.00/$10.00 and recorded a disagreement about whether that rate was permanent. The same page, re-fetched 2026-08-19, still states that the scheduled increase 'will not occur'. That disagreement is now moot for this benchmark: the model is no longer claude-sonnet-5. It is retained here so the ceiling change is not mistaken for a repricing.",
+  "tokenizer_note": "The pricing page records that Claude 4.7 and later use a newer tokenizer producing about 30% more tokens for the same text, and that Sonnet 4.6 and earlier use the previous one. The input ceilings above are unchanged from the claude-sonnet-5 configuration and are therefore, if anything, over-estimates for this model. Over-estimating the reservation is the safe direction.",
+  "verified_on": "2026-08-19"
+ },
  "protocol_sha256": "ddf35a8379501f8343aa54f72aaefc8932bca26d3c85ab856c52a2549e53789b",
+ "quarantined": [
+  {
+   "case": {
+    "adversarial_review": {
+     "required": false
+    },
+    "case_id": "icalendar-30ec6eef-locale_timezone",
+    "cause_class": "locale_timezone",
+    "commit": "30ec6eef144e730e4cb688e30a0e986f62c0ab17",
+    "confirmation": {
+     "commands": [
+      "git checkout 0675760687d6",
+      "git checkout b0860ac7375b + apply test half"
+     ],
+     "container_image": "bm06-confirm:1",
+     "fixed_outcome": "PASSED",
+     "isolated_at_parent": null,
+     "parent_outcome": "FAILED",
+     "target_origin": "test file in the fix commit"
+    },
+    "curation": {
+     "commands": [
+      "git worktree add --detach icalendar-30ec6eef-locale_timezone-parent b0860ac7375b (parent)",
+      "git worktree add --detach icalendar-30ec6eef-locale_timezone-fix 30ec6eef144e (fix)",
+      "layout detected: src",
+      "applied the commit's test half to the parent (19 file(s)) -> rc=0",
+      "pytest src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent at the parent -> FAILED",
+      "pytest src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent at the fix -> PASSED",
+      "preservation candidates from src/icalendar/tests/attr/test_alarm.py -> 3 kept"
+     ],
+     "rejected": "",
+     "validated": true
+    },
+    "expected_diagnostic_scope": "source",
+    "fix_worktree": "/repos/.cases/icalendar-30ec6eef-locale_timezone-fix",
+    "ground_truth": {
+     "fixable": true,
+     "rationale": "A PERIOD written with dates read as midnight date-times; date and time semantics.",
+     "source_files": [
+      "generate_windows_to_olson_mapping.py",
+      "src/icalendar/__init__.py",
+      "src/icalendar/alarms.py",
+      "src/icalendar/attr.py",
+      "src/icalendar/cal/alarm.py",
+      "src/icalendar/cal/component.py",
+      "src/icalendar/cal/component_factory.py",
+      "src/icalendar/cal/event.py",
+      "src/icalendar/cal/free_busy.py",
+      "src/icalendar/cal/journal.py",
+      "src/icalendar/cal/lazy.py",
+      "src/icalendar/cal/todo.py",
+      "src/icalendar/enums.py",
+      "src/icalendar/error.py",
+      "src/icalendar/parser/ical/component.py",
+      "src/icalendar/parser/ical/lazy.py",
+      "src/icalendar/parser/parameter.py",
+      "src/icalendar/prop/adr.py",
+      "src/icalendar/prop/boolean.py",
+      "src/icalendar/prop/categories.py",
+      "src/icalendar/prop/dt/date.py",
+      "src/icalendar/prop/dt/datetime.py",
+      "src/icalendar/prop/dt/duration.py",
+      "src/icalendar/prop/dt/list.py",
+      "src/icalendar/prop/dt/period.py",
+      "src/icalendar/prop/dt/time.py",
+      "src/icalendar/prop/dt/types.py",
+      "src/icalendar/prop/dt/utc_offset.py",
+      "src/icalendar/prop/factory.py",
+      "src/icalendar/prop/geo.py",
+      "src/icalendar/prop/image.py",
+      "src/icalendar/prop/n.py",
+      "src/icalendar/prop/org.py",
+      "src/icalendar/prop/recur/recur.py",
+      "src/icalendar/prop/recur/weekday.py",
+      "src/icalendar/timezone/tzp.py",
+      "src/icalendar/timezone/windows_to_olson.py"
+     ]
+    },
+    "invalidation": null,
+    "label": "gateable",
+    "ordering_precondition": null,
+    "parent": "b0860ac7375bc7cf0057ad396217fb6b54435924",
+    "preserve": [
+     "src/icalendar/tests/attr/test_alarm.py::test_repeat_absent",
+     "src/icalendar/tests/attr/test_alarm.py::test_repeat_number",
+     "src/icalendar/tests/attr/test_alarm.py::test_set_REPEAT"
+    ],
+    "repo": "icalendar",
+    "signature": "AttributeError: 'Alarm' object has no attribute 'ACTION'",
+    "src_layout": "src",
+    "status": "OK",
+    "target": "src/icalendar/tests/attr/test_alarm.py::test_ACTION_absent",
+    "url": "https://github.com/collective/icalendar",
+    "worktree": "/repos/.cases/icalendar-30ec6eef-locale_timezone-parent"
+   },
+   "detail": "manifest parent b0860ac7375b is not the direct parent of fix commit 30ec6eef; the direct parent is 583107582d07 and the two are 71 commits apart. The fix commit does not modify src/icalendar/tests/attr/test_alarm.py, the frozen target. The case reproduced correctly at the pinned parent, which is why reproduction was never sufficient as the invariant.",
+   "invariant": "manifest.parent == git rev-parse <commit>^",
+   "quarantined_on": "2026-08-19",
+   "reason": "fix-parent mismatch; target not part of fix commit",
+   "replacement": "none. No previously curated case with full provenance is available, so the corpus reports 8 valid cases rather than being back-filled with an uncurated one."
+  }
+ ],
  "rejected": [
   {
    "case_id": "croniter-b4014c9b-genuine_source_bug",
@@ -641,5 +734,6 @@
    "reason": "the target does not fail at the pinned parent (observed UNOBSERVED): ERROR: found no collectors for /repos/.cases/filelock-059cca26-state_leakage-parent/tests/test_async_filelock.py::test_failed_acquire_keeps_holder_registered"
   }
  ],
- "schema": 1
+ "schema": 1,
+ "signature_encoding_note": "Signatures are RIFT-canonical `ExceptionType: message`. Three were originally frozen as raw pytest `E ` lines; where assertion rewriting emits a bare `assert ...` RIFT records the type as `Failure`, so those three were re-encoded to the observed canonical form. No failure, target, commit, patch, preservation check or label changed."
 }

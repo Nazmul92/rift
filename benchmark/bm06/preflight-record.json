@@ -1,0 +1,33 @@
+{
+ "configured_model_in_env": "claude-haiku-4-5-20251001",
+ "endpoint_type": "OpenAI-compatible chat-completions",
+ "endpoint_url": "https://api.anthropic.com/v1/chat/completions",
+ "finish_reason": "stop",
+ "http_status": 200,
+ "model_reported": "claude-sonnet-5",
+ "model_requested": "claude-sonnet-5",
+ "pricing_used": {
+  "input_per_mtok": 2.0,
+  "output_per_mtok": 10.0
+ },
+ "purpose": "provider compatibility preflight for the 9-case preliminary benchmark",
+ "reply_text": "ok",
+ "request_parameters": {
+  "max_tokens": 16,
+  "messages": 1,
+  "stream": false,
+  "temperature": "OMITTED \u2014 the shipped adapter sends no sampling parameter by default (DAR-014)",
+  "tools": "none sent"
+ },
+ "requests_made": 1,
+ "response_parsed_by_adapter": true,
+ "result": "OK",
+ "smoke_cost_usd": 7.2e-05,
+ "temperature_0_0_accepted": "not applicable - not sent",
+ "timestamp_utc": "2026-08-19T03:09:25+00:00",
+ "usage": {
+  "input_tokens": 16,
+  "output_tokens": 4,
+  "source": "provider-reported"
+ }
+}

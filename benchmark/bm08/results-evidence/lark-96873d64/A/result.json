@@ -1,0 +1,68 @@
+{
+ "actual_usd": 0.085665,
+ "arm": "A",
+ "arm_receipt": {
+  "exit_code": 2,
+  "seconds": 0.633,
+  "verdict": "unverifiable"
+ },
+ "arm_verdict": "unverifiable",
+ "baseline_tree_hash": "a2a3de4fdf385719522d506f72b17264d02f00cfc101093bb80703f5b9273353",
+ "benchmark_id": "BM-08",
+ "canonical_candidate_hash": "ad9bf1cef8c3c219b9a56644e21913bb18c54f278cf2c1390dbaee3e744df3f2",
+ "case_id": "lark-96873d64",
+ "classification": "both_reject",
+ "commands": 1,
+ "corpus_manifest_hash": "e6bdd3f116981bc58daf7f21eb4a5e0a524e9a067227cd2cc40fc994a19ad3f9",
+ "detail": "",
+ "driver_hash": "0676ebe54b9dafd032b4005354cdd7f7676dfc32d837d061bebeb8160971eee5",
+ "exclusion_set_hash": "d4090113b0670321b1d5a9c48ebe3949adeb60f865e8b07bb414aea21f137e87",
+ "execution_environment_hash": "9de6886df3d526affb979312048437580a6860ce5491abfd84371c36fed83de3",
+ "ground_truth": {
+  "applied": false,
+  "ground_truth_preservation_results": {
+   "all_passed": null,
+   "executed": 0,
+   "failures": [],
+   "requested": 0
+  },
+  "ground_truth_protected_path_result": "ok",
+  "ground_truth_target_result": null,
+  "ground_truth_verdict": "wrong",
+  "modified_paths": [],
+  "reason": "candidate does not apply: error: patch failed: lark/tools/standalone.py:1\nerror: lark/tools/standalone.py: patch does not apply"
+ },
+ "identity_problems": [],
+ "input_tokens": 13605,
+ "manifest_hash": "b0ea08dc9ae7fb6c9317260fdc606d3772168570477b3055b0525a759ff7e26b",
+ "normalized_candidate_hash": "acb0b7e38163004d42e4eb248125bc57250c63b9a7219d3bcd4612dab16a8f92",
+ "oracle_hash": "25ac41827067f0de175b321ac800f6ddd3cadfefbef11da3e713dcc3d518cf91",
+ "output_tokens": 2990,
+ "probe_seed": null,
+ "provider_reported_model": [
+  "claude-sonnet-4-6",
+  "claude-sonnet-4-6"
+ ],
+ "raw_candidate_hash": "6908832318988d8dd15c394cd833c176ca1e6c6186bf9bf51063a0ae7954f0be",
+ "repository_population_hash_v5": "4645de61c549bf8ad06697e1b8279ddfee51d19af24379e1dd45880f350fe0bc",
+ "request_count": 2,
+ "request_started": true,
+ "requested_model": "claude-sonnet-4-6",
+ "reserved_usd": 0.48,
+ "runner_hash": "7d630230847fbb7ad582db90e233a92f2a5ede026bee5edd20437765b0f26b17",
+ "runtime_hash": "75196d8756b749d6105e520c97e927a8f8bd57dccc70e726aabf00a955775b26",
+ "status": "completed",
+ "strong_candidate_hash": "ad9bf1cef8c3c219b9a56644e21913bb18c54f278cf2c1390dbaee3e744df3f2",
+ "strong_gate_receipt": {
+  "exit_code": 2,
+  "seconds": 0.641,
+  "stderr_tail": "",
+  "verdict": "unverifiable"
+ },
+ "strong_verdict": "reject",
+ "truth_candidate_hash": "ad9bf1cef8c3c219b9a56644e21913bb18c54f278cf2c1390dbaee3e744df3f2",
+ "usage_available": true,
+ "wall_seconds": 56.7,
+ "weak_candidate_hash": "ad9bf1cef8c3c219b9a56644e21913bb18c54f278cf2c1390dbaee3e744df3f2",
+ "weak_verdict": "reject"
+}

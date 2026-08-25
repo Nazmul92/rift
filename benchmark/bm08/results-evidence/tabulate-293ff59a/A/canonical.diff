@@ -1,0 +1,15 @@
+--- a/tabulate.py
++++ b/tabulate.py
+@@ -1639,6 +1639,10 @@ def tabulate(
+     if tabular_data is None:
+         tabular_data = []
+     list_of_lists, headers = _normalize_tabular_data(
+         tabular_data, headers, showindex=showindex
+     )
+ 
++    # If headers were supposed to come from firstrow but data was empty,
++    # headers will still be the string "firstrow" - treat as no data/headers.
++    if isinstance(headers, str) and headers == "firstrow":
++        return ""
++
+     if maxcolwidths is not None:

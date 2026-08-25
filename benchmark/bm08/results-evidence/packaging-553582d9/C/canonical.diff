@@ -1,0 +1,9 @@
+--- a/src/packaging/metadata.py
++++ b/src/packaging/metadata.py
+@@ -700,5 +700,5 @@ class Metadata:
+                     raise InvalidMetadata(
+                         "description-content-type",
+                         f"'description-content-type' can only specify the UTF-8 "
+-                        f"charset, not {list(charset)}",
++                        f"charset, not {charset!r}",
+                     )
